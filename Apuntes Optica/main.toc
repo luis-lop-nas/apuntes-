@@ -1,0 +1,131 @@
+\babel@toc {spanish}{}\relax 
+\contentsline {section}{\numberline {1}Tema 1: Ondas Electromagnéticas en el Vacío}{5}{section.1}%
+\contentsline {subsection}{\numberline {1.1}Introducción}{5}{subsection.1.1}%
+\contentsline {subsection}{\numberline {1.2}Ecuaciones de Maxwell}{5}{subsection.1.2}%
+\contentsline {subsubsection}{\numberline {1.2.1}Ecuaciones de Maxwell en el vacío}{6}{subsubsection.1.2.1}%
+\contentsline {subsection}{\numberline {1.3}Ecuación de Onda}{6}{subsection.1.3}%
+\contentsline {subsection}{\numberline {1.4}Ondas Armónicas o Monocromáticas}{7}{subsection.1.4}%
+\contentsline {subsubsection}{\numberline {1.4.1}Espectro electromagnético}{8}{subsubsection.1.4.1}%
+\contentsline {subsection}{\numberline {1.5}Representación Compleja de una Onda Armónica}{8}{subsection.1.5}%
+\contentsline {subsubsection}{\numberline {1.5.1}Repaso de números complejos}{9}{subsubsection.1.5.1}%
+\contentsline {subsubsection}{\numberline {1.5.2}Ejemplos de identificación de armonicidad}{9}{subsubsection.1.5.2}%
+\contentsline {subsection}{\numberline {1.6}Frentes de Onda}{10}{subsection.1.6}%
+\contentsline {subsection}{\numberline {1.7}Ondas Planas}{10}{subsection.1.7}%
+\contentsline {subsubsection}{\numberline {1.7.1}Ondas homogéneas e inhomogéneas}{10}{subsubsection.1.7.1}%
+\contentsline {subsection}{\numberline {1.8}Ondas Armónicas Planas}{11}{subsection.1.8}%
+\contentsline {subsubsection}{\numberline {1.8.1}Condiciones impuestas por las ecuaciones de Maxwell}{11}{subsubsection.1.8.1}%
+\contentsline {subsubsection}{\numberline {1.8.2}Propiedades fundamentales de las OAP}{11}{subsubsection.1.8.2}%
+\contentsline {subsection}{\numberline {1.9}Polarización de las Ondas Armónicas Planas}{13}{subsection.1.9}%
+\contentsline {subsubsection}{\numberline {1.9.1}Elipse de polarización}{13}{subsubsection.1.9.1}%
+\contentsline {subsubsection}{\numberline {1.9.2}Vector de Jones}{14}{subsubsection.1.9.2}%
+\contentsline {subsubsection}{\numberline {1.9.3}Tipos de polarización}{14}{subsubsection.1.9.3}%
+\contentsline {paragraph}{Polarización lineal}{14}{subsubsection.1.9.3}%
+\contentsline {paragraph}{Polarización circular}{15}{equation.26}%
+\contentsline {paragraph}{Polarización elíptica}{15}{equation.27}%
+\contentsline {paragraph}{Luz despolarizada}{15}{equation.28}%
+\contentsline {subsection}{\numberline {1.10}Intensidad de las Ondas Armónicas}{16}{subsection.1.10}%
+\contentsline {subsubsection}{\numberline {1.10.1}Intensidad de una onda armónica plana}{16}{subsubsection.1.10.1}%
+\contentsline {subsubsection}{\numberline {1.10.2}Intensidad de una onda armónica no plana}{17}{subsubsection.1.10.2}%
+\contentsline {section}{\numberline {2}Tema 2: Interacción Radiación--Materia}{18}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Introducción}{18}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}Cargas Libres y Cargas Ligadas}{18}{subsection.2.2}%
+\contentsline {subsubsection}{\numberline {2.2.1}Aproximación para cargas libres}{18}{subsubsection.2.2.1}%
+\contentsline {subsection}{\numberline {2.3}Modelo Atómico de Lorentz}{19}{subsection.2.3}%
+\contentsline {subsubsection}{\numberline {2.3.1}Hipótesis del modelo}{19}{subsubsection.2.3.1}%
+\contentsline {subsubsection}{\numberline {2.3.2}Ecuación de evolución}{20}{subsubsection.2.3.2}%
+\contentsline {subsubsection}{\numberline {2.3.3}Aproximaciones para resolver la ecuación}{20}{subsubsection.2.3.3}%
+\contentsline {subsubsection}{\numberline {2.3.4}Solución de la ecuación de evolución}{20}{subsubsection.2.3.4}%
+\contentsline {subsubsection}{\numberline {2.3.5}Análisis de la solución: desfase}{21}{subsubsection.2.3.5}%
+\contentsline {subsection}{\numberline {2.4}Potencia Transferida a la Carga}{21}{subsection.2.4}%
+\contentsline {subsection}{\numberline {2.5}Potencia Esparcida por la Carga}{22}{subsection.2.5}%
+\contentsline {subsubsection}{\numberline {2.5.1}Tipos de medios ópticos}{22}{subsubsection.2.5.1}%
+\contentsline {subsubsection}{\numberline {2.5.2}Esparcimiento (\emph {scattering})}{23}{subsubsection.2.5.2}%
+\contentsline {subsubsection}{\numberline {2.5.3}Casos particulares}{23}{subsubsection.2.5.3}%
+\contentsline {paragraph}{Frecuencia muy alta: $\omega \gg \omega _0$}{23}{subsubsection.2.5.3}%
+\contentsline {paragraph}{Resonancia: $\omega =\omega _0$}{23}{equation.42}%
+\contentsline {paragraph}{Frecuencia muy baja: $\omega \ll \omega _0$ — Esparcimiento de Rayleigh}{23}{equation.43}%
+\contentsline {subsection}{\numberline {2.6}Esparcimiento del Cielo — Color del Cielo}{24}{subsection.2.6}%
+\contentsline {subsubsection}{\numberline {2.6.1}Esparcimiento de Rayleigh en la atmósfera}{24}{subsubsection.2.6.1}%
+\contentsline {subsubsection}{\numberline {2.6.2}Los tres casos del cielo}{24}{subsubsection.2.6.2}%
+\contentsline {subsection}{\numberline {2.7}Polarización de la Luz Esparcida}{25}{subsection.2.7}%
+\contentsline {subsubsection}{\numberline {2.7.1}Distribución angular de la emisión}{25}{subsubsection.2.7.1}%
+\contentsline {subsubsection}{\numberline {2.7.2}Polarización del cielo}{25}{subsubsection.2.7.2}%
+\contentsline {section}{\numberline {3}Tema 3: Propagación de Ondas en Medios Materiales}{27}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Introducción}{27}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Medios Ópticamente Densos}{27}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}Ecuaciones de Maxwell en la Materia: Ecuaciones Macroscópicas}{28}{subsection.3.3}%
+\contentsline {subsubsection}{\numberline {3.3.1}Del nivel microscópico al macroscópico}{28}{subsubsection.3.3.1}%
+\contentsline {subsubsection}{\numberline {3.3.2}Descomposición de cargas y corrientes}{28}{subsubsection.3.3.2}%
+\contentsline {subsubsection}{\numberline {3.3.3}Ecuaciones de Maxwell macroscópicas}{29}{subsubsection.3.3.3}%
+\contentsline {subsection}{\numberline {3.4}Relaciones de Constitución y Permitividad Generalizada}{29}{subsection.3.4}%
+\contentsline {subsubsection}{\numberline {3.4.1}Primera relación: permitividad eléctrica}{29}{subsubsection.3.4.1}%
+\contentsline {subsubsection}{\numberline {3.4.2}Segunda relación: permeabilidad magnética}{29}{subsubsection.3.4.2}%
+\contentsline {subsubsection}{\numberline {3.4.3}Tercera relación: conductividad (ley de Ohm)}{30}{subsubsection.3.4.3}%
+\contentsline {subsubsection}{\numberline {3.4.4}Permitividad dieléctrica generalizada}{30}{subsubsection.3.4.4}%
+\contentsline {subsection}{\numberline {3.5}Clasificación Óptica de los Medios Materiales}{30}{subsection.3.5}%
+\contentsline {subsection}{\numberline {3.6}Propagación en Medios Homogéneos e Isótropos}{31}{subsection.3.6}%
+\contentsline {subsubsection}{\numberline {3.6.1}Ecuación de Helmholtz}{32}{subsubsection.3.6.1}%
+\contentsline {subsubsection}{\numberline {3.6.2}Solución: ondas armónicas planas con vector de onda complejo}{32}{subsubsection.3.6.2}%
+\contentsline {subsubsection}{\numberline {3.6.3}Clasificación de medios según $\kappa $}{34}{subsubsection.3.6.3}%
+\contentsline {paragraph}{Medios no absorbentes: $\kappa = 0$}{34}{subsubsection.3.6.3}%
+\contentsline {paragraph}{Medios absorbentes: $\kappa \neq 0$}{34}{equation.68}%
+\contentsline {subsubsection}{\numberline {3.6.4}Vector de Poynting en la materia}{34}{subsubsection.3.6.4}%
+\contentsline {subsection}{\numberline {3.7}Modelo Microscópico del Índice de Refracción}{34}{subsection.3.7}%
+\contentsline {subsubsection}{\numberline {3.7.1}Medios dieléctricos poco densos}{35}{subsubsection.3.7.1}%
+\contentsline {paragraph}{Bandas de absorción y transparencia}{35}{equation.75}%
+\contentsline {paragraph}{Dispersión normal y anómala}{35}{figure.caption.11}%
+\contentsline {paragraph}{Casos límite: leyes de Cauchy}{36}{figure.caption.11}%
+\contentsline {subsubsection}{\numberline {3.7.2}Medios dieléctricos densos: ecuación de Clausius-Mossotti}{36}{subsubsection.3.7.2}%
+\contentsline {subsubsection}{\numberline {3.7.3}Medios conductores ($\sigma \neq 0$)}{37}{subsubsection.3.7.3}%
+\contentsline {section}{\numberline {4}Tema 4: Reflexión y Refracción en Medios Homogéneos e Isótropos}{39}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Introducción}{39}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Dieléctrico--Dieléctrico Transparente}{40}{subsection.4.2}%
+\contentsline {subsubsection}{\numberline {4.2.1}Leyes de reflexión y de Snell}{40}{subsubsection.4.2.1}%
+\contentsline {subsubsection}{\numberline {4.2.2}Fórmulas de Fresnel (amplitudes)}{41}{subsubsection.4.2.2}%
+\contentsline {paragraph}{Condiciones de contorno}{42}{subsubsection.4.2.2}%
+\contentsline {paragraph}{Resolución para la polarización $p$}{42}{AMS.21}%
+\contentsline {paragraph}{Resolución para la polarización $s$}{43}{AMS.21}%
+\contentsline {subsubsection}{\numberline {4.2.3}Incidencia normal}{43}{subsubsection.4.2.3}%
+\contentsline {subsubsection}{\numberline {4.2.4}Ángulo de Brewster}{44}{subsubsection.4.2.4}%
+\contentsline {subsubsection}{\numberline {4.2.5}Reflexión total interna y onda evanescente}{45}{subsubsection.4.2.5}%
+\contentsline {paragraph}{Onda evanescente}{45}{Item.21}%
+\contentsline {subsubsection}{\numberline {4.2.6}Reflectancia y Transmitancia}{46}{subsubsection.4.2.6}%
+\contentsline {subsection}{\numberline {4.3}Dieléctrico--Medio Absorbente}{47}{subsection.4.3}%
+\contentsline {subsubsection}{\numberline {4.3.1}Campo transmitido (onda inhomogénea)}{47}{subsubsection.4.3.1}%
+\contentsline {subsubsection}{\numberline {4.3.2}Campo reflejado (coeficientes de Fresnel complejos)}{48}{subsubsection.4.3.2}%
+\contentsline {subsubsection}{\numberline {4.3.3}Caso particular: incidencia normal sobre un metal}{48}{subsubsection.4.3.3}%
+\contentsline {section}{\numberline {5}Tema 4.2: Introducción a los Medios Anisótropos}{50}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Introducción}{50}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}Medios Uniáxicos}{50}{subsection.5.2}%
+\contentsline {subsubsection}{\numberline {5.2.1}Conceptos básicos}{50}{subsubsection.5.2.1}%
+\contentsline {subsubsection}{\numberline {5.2.2}Medio uniáxico positivo y negativo}{51}{subsubsection.5.2.2}%
+\contentsline {subsection}{\numberline {5.3}Birrefringencia o Doble Refracción}{51}{subsection.5.3}%
+\contentsline {subsection}{\numberline {5.4}Láminas Retardadoras}{51}{subsection.5.4}%
+\contentsline {subsubsection}{\numberline {5.4.1}Lámina de cuarto de onda}{52}{subsubsection.5.4.1}%
+\contentsline {subsubsection}{\numberline {5.4.2}Lámina de media onda}{52}{subsubsection.5.4.2}%
+\contentsline {subsection}{\numberline {5.5}Matrices de Jones}{52}{subsection.5.5}%
+\contentsline {subsection}{\numberline {5.6}Polarizadores}{52}{subsection.5.6}%
+\contentsline {section}{\numberline {6}Tema 5: Difracción}{54}{section.6}%
+\contentsline {subsection}{\numberline {6.1}Introducción}{54}{subsection.6.1}%
+\contentsline {subsection}{\numberline {6.2}Principio de Huygens-Fresnel}{54}{subsection.6.2}%
+\contentsline {subsection}{\numberline {6.3}Aproximación de Fresnel (campo cercano)}{54}{subsection.6.3}%
+\contentsline {subsection}{\numberline {6.4}Aproximación de Fraunhofer (campo lejano)}{55}{subsection.6.4}%
+\contentsline {subsubsection}{\numberline {6.4.1}Criterio de validez y número de Fresnel}{55}{subsubsection.6.4.1}%
+\contentsline {subsection}{\numberline {6.5}Principio de Babinet}{55}{subsection.6.5}%
+\contentsline {subsection}{\numberline {6.6}Difracción por abertura rectangular}{56}{subsection.6.6}%
+\contentsline {subsubsection}{\numberline {6.6.1}Caso límite: rendija simple}{56}{subsubsection.6.6.1}%
+\contentsline {subsection}{\numberline {6.7}Difracción por abertura circular}{56}{subsection.6.7}%
+\contentsline {subsection}{\numberline {6.8}Poder de resolución}{57}{subsection.6.8}%
+\contentsline {section}{\numberline {7}Tema 6: Interferencia}{58}{section.7}%
+\contentsline {subsection}{\numberline {7.1}Introducción y definición}{58}{subsection.7.1}%
+\contentsline {subsection}{\numberline {7.2}Condiciones de interferencia estable}{58}{subsection.7.2}%
+\contentsline {subsection}{\numberline {7.3}Interferómetro de Young}{58}{subsection.7.3}%
+\contentsline {subsubsection}{\numberline {7.3.1}Biprisma de Fresnel}{59}{subsubsection.7.3.1}%
+\contentsline {subsection}{\numberline {7.4}Doble rendija: difracción e interferencia}{59}{subsection.7.4}%
+\contentsline {subsection}{\numberline {7.5}Red de difracción}{59}{subsection.7.5}%
+\contentsline {subsection}{\numberline {7.6}Interferómetro de Michelson}{60}{subsection.7.6}%
+\contentsline {subsubsection}{\numberline {7.6.1}Conteo de franjas y sensibilidad}{60}{subsubsection.7.6.1}%
+\contentsline {subsection}{\numberline {7.7}Interferómetro de Fabry-Perot}{61}{subsection.7.7}%
+\contentsline {subsubsection}{\numberline {7.7.1}Rango espectral libre, fineza y resolución}{61}{subsubsection.7.7.1}%
+\contentsline {subsection}{\numberline {7.8}Marco de coherencia (complementario)}{62}{subsection.7.8}%
+\contentsline {section}{\numberline {8}Formulario General}{63}{section.8}%

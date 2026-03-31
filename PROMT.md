@@ -38,15 +38,23 @@ Eres un experto en LaTeX encargado de convertir y redactar apuntes universitario
 
 % ── Encabezado y pie ──────────────────────────────────────────────────────
 \usepackage{fancyhdr}
+\setlength{\headheight}{15pt}
 \pagestyle{fancy}
 \fancyhf{}
 \fancyhead[L]{\small\nouppercase{\leftmark}}   % sección actual a la izquierda
 \fancyhead[R]{\small\thepage}                  % número de página a la derecha
 \renewcommand{\headrulewidth}{0.4pt}
 
+% Portada e índice sin encabezado
+\fancypagestyle{plain}{%
+  \fancyhf{}%
+  \renewcommand{\headrulewidth}{0pt}%
+}
+
 % ── Figuras y diagramas ───────────────────────────────────────────────────
 \usepackage{tikz}
-\usetikzlibrary{arrows.meta, calc, angles, quotes, decorations.pathreplacing}
+\usetikzlibrary{arrows.meta, calc, angles, quotes,
+                decorations.pathreplacing, babel}   % babel: fix conflicto español
 \usepackage{pgfplots}
 \pgfplotsset{compat=1.18}
 \usepackage{float}              % control de posición de figuras [H]
@@ -55,6 +63,32 @@ Eres un experto en LaTeX encargado de convertir y redactar apuntes universitario
 
 % ── Hipervínculos y referencias ───────────────────────────────────────────
 \usepackage[hidelinks]{hyperref}
+
+% ── Cajas para resultados destacados ──────────────────────────────────────
+\usepackage{mdframed}
+\mdfdefinestyle{resultado}{%
+  linewidth=0.8pt,
+  innertopmargin=6pt,
+  innerbottommargin=6pt,
+  innerleftmargin=10pt,
+  innerrightmargin=10pt,
+  skipabove=8pt,
+  skipbelow=8pt,
+}
+
+% ── Formato de secciones ──────────────────────────────────────────────────
+\usepackage{titlesec}
+\titleformat{\section}
+  {\large\bfseries}{\thesection.}{0.6em}{}
+  [\vspace{2pt}\titlerule\vspace{4pt}]
+\titleformat{\subsection}
+  {\normalsize\bfseries}{\thesubsection.}{0.5em}{}
+\titleformat{\subsubsection}
+  {\normalsize\itshape}{\thesubsubsection.}{0.5em}{}
+
+% ── Espaciado entre párrafos ──────────────────────────────────────────────
+\setlength{\parskip}{4pt}
+\setlength{\parindent}{0pt}
 
 % ── Numeración de ecuaciones: solo las finales/resultado ──────────────────
 % Usar \begin{equation} únicamente para resultados finales.
@@ -93,20 +127,47 @@ Eres un experto en LaTeX encargado de convertir y redactar apuntes universitario
 ```latex
 \begin{document}
 
-\title{Apuntes de <Asignatura>}
-\author{Luis López}
-\date{<Mes> <Año>}
-\maketitle
+% ── PORTADA (página propia, sin encabezado) ───────────────────────────────
+\begin{titlepage}
+  \centering
+  \vspace*{3cm}
+  {\Large\scshape <Asignatura>\par}
+  \vspace{1.2cm}
+  \rule{\linewidth}{0.8pt}\\[0.6em]
+  {\LARGE\bfseries <Número de tema>\par}
+  \vspace{0.4em}
+  {\large <Título del tema>\par}
+  \rule{\linewidth}{0.8pt}
+  \vspace{1.5cm}
+  {\large Luis López\par}
+  \vspace{0.4em}
+  {\normalsize <Mes> <Año>\par}
+  \vfill
+  % Diagrama TikZ esquemático relacionado con el tema (opcional pero recomendado)
+  \vfill
+  {\small Grado en Física — Universidad\par}
+\end{titlepage}
+
+% ── ÍNDICE (página propia) ────────────────────────────────────────────────
 \tableofcontents
-\newpage
+\clearpage
 
-% ── Secciones ─────────────────────────────────────────────────────────────
+% ── SECCIONES (cada una comienza en página nueva con \clearpage) ──────────
 \section{Nombre del tema}
+...contenido...
 
+\clearpage
+\section{Siguiente tema}
 ...contenido...
 
 \end{document}
 ```
+
+### Regla de paginación — OBLIGATORIA
+- **Portada**: `\begin{titlepage}...\end{titlepage}` — página completa, sin encabezado ni número.
+- **Índice**: `\tableofcontents` seguido de `\clearpage` — página propia.
+- **Cada sección**: comenzar SIEMPRE con `\clearpage` antes del `\section{}`.
+- Nunca usar `\newpage` para separar secciones; usar siempre `\clearpage`.
 
 ---
 
@@ -115,11 +176,24 @@ Eres un experto en LaTeX encargado de convertir y redactar apuntes universitario
 ### Teoría
 - Toda definición va en el entorno `definicion`.
 - Toda propiedad relevante va en `proposicion` o `teorema`.
+- **Los resultados finales más importantes** se envuelven en:
+  ```latex
+  \begin{mdframed}[style=resultado]
+  \begin{equation}...\end{equation}
+  \end{mdframed}
+  ```
 - Los resultados menores van en `lema` o `corolario`.
+
+### Tablas de resumen
+Usar `\begin{center}\begin{tabular}...\end{tabular}\end{center}` para:
+- Comparar casos o condiciones (p. ej. tipos de polarización).
+- Resumir clasificaciones con múltiples sub-casos.
+- Presentar relaciones entre ecuaciones de Maxwell y sus resultados.
 
 ### Demostraciones
 - **Siempre completas**, aunque no estén en los apuntes originales.
-- Si la demostración es larga o técnica y no está en los apuntes, búscala, verifícala y añádela. Si no puedes garantizar su corrección al 100%, omítela y deja un comentario `% TODO: demostración pendiente de verificar`.
+- Si no puedes garantizar su corrección al 100%, omítela y deja:
+  `% TODO: demostración pendiente de verificar`
 - Usa siempre el entorno `proof` de `amsthm`.
 
 ### Ejemplos
@@ -131,39 +205,57 @@ Eres un experto en LaTeX encargado de convertir y redactar apuntes universitario
 - **Pasos intermedios**: usar `\[ ... \]` o `align*` → **sin número**.
 - **Resultado final o ecuación de referencia**: usar `equation` con `\label{eq:nombre}` → **con número**.
 - Para referenciar en el texto: `la ecuación~\eqref{eq:nombre}`.
-- Ejemplo de criterio: en un desarrollo de 6 pasos, solo el resultado final lleva número.
+- El símbolo de grados en modo math: `^{\circ}` — nunca el carácter `°` directamente.
 
 ### Vectores y notación física
-- Vectores: `\vec{F}` o el macro `\ve{F}` → produce $\vec{F}$
-- Vectores unitarios: `\hat{r}` o `\uvec{r}` → produce $\hat{r}$
-- Gradiente, divergencia, rotacional: usar el paquete `physics` → `\grad`, `\div`, `\curl`
-- Derivadas parciales: `\pdv{f}{x}` del paquete `physics`
-- Integrales de línea/superficie/volumen cerradas: `\oint`, `\oiint` (con `esint` si hace falta)
+- Vectores: `\ve{F}` → $\vec{F}$
+- Vectores unitarios: `\uvec{r}` → $\hat{r}$
+- Gradiente, divergencia, rotacional: `\grad`, `\div`, `\curl` (paquete `physics`)
+- Derivadas parciales: `\pdv{f}{x}`, `\pdv[2]{f}{x}` (paquete `physics`)
+- Integrales cerradas: `\oint`, `\oiint` (con `esint` si hace falta)
+
+---
+
+## REGLAS VISUALES Y DE LAYOUT
+
+### Armonía visual
+- Usar `\medskip` o `\bigskip` para separar bloques conceptuales dentro de
+  una sección (no abusar).
+- Las tablas de resumen van centradas con `\begin{center}...\end{center}`.
+- Los resultados más importantes van enmarcados con `mdframed` (estilo `resultado`).
+- Si una sección usa tabla de resumen, las secciones análogas también.
+
+### Secciones con línea decorativa
+El paquete `titlesec` genera una línea bajo cada `\section`. No añadir
+separadores manuales adicionales.
+
+### Párrafos
+- Sin sangría (`\parindent=0pt`), con separación mínima (`\parskip=4pt`).
+- Un párrafo por idea; no mezclar conceptos distintos en el mismo párrafo.
 
 ---
 
 ## REGLAS DE DIAGRAMAS (TikZ)
 
 - **Estilo**: trazo negro fino, sin colores, blanco y negro estricto.
-- **Cuando hay imagen de referencia**: reproducir fielmente la geometría con TikZ.
-- **Cuando no hay imagen**: generar un diagrama esquemático simple con:
+- **Portada**: incluir un diagrama TikZ esquemático relacionado con el tema.
+- **Cuando hay imagen de referencia**: reproducir fielmente la geometría.
+- **Cuando no hay imagen**: generar un diagrama esquemático con:
   - Ejes cartesianos etiquetados ($x$, $y$, $z$)
   - Vectores como flechas (`-{Stealth}`)
   - Puntos como nodos pequeños (`fill=black, circle, inner sep=1.5pt`)
-  - Etiquetas matemáticas en modo `$...$`
+  - Etiquetas en modo `$...$`
   - Sin sombreados, sin colores, sin rellenos grises
-- Todas las figuras van dentro de `\begin{figure}[H]` con `\caption{}` y `\label{fig:nombre}`.
-- El caption describe brevemente la figura en español.
+- Todas las figuras dentro de `\begin{figure}[H]` con `\caption{}` y `\label{}`.
+- **SIEMPRE** incluir `babel` en `\usetikzlibrary` para evitar conflictos con español.
 
 ### Plantilla de figura TikZ mínima
 ```latex
 \begin{figure}[H]
   \centering
   \begin{tikzpicture}[scale=1.2, >=Stealth]
-    % Ejes
     \draw[->] (-0.3,0) -- (3,0) node[right] {$x$};
     \draw[->] (0,-0.3) -- (0,3) node[above] {$y$};
-    % Contenido
     \draw[->, thick] (0,0) -- (2,1.5) node[midway, above left] {$\vec{F}$};
     \filldraw (2,1.5) circle (1.5pt) node[right] {$P$};
   \end{tikzpicture}
@@ -176,13 +268,9 @@ Eres un experto en LaTeX encargado de convertir y redactar apuntes universitario
 
 ## REGLAS DE NOTAS PERSONALES
 
-Si en los apuntes originales aparecen anotaciones del tipo:
-- *"Hacer esquemas visuales"*
-- *"Revisar esto"*
-- *"Falta demostración"*
-- *"Completar con ejercicio"*
-
-→ Conviértelas en comentarios LaTeX **invisibles en el PDF**:
+Si en los apuntes originales aparecen anotaciones del tipo «revisar esto»,
+«falta demostración», «completar con ejercicio», etc., convertirlas en
+comentarios LaTeX **invisibles en el PDF**:
 ```latex
 % TODO: hacer esquema visual de coordenadas cilíndricas
 % TODO: revisar esta demostración
@@ -200,20 +288,28 @@ Si en los apuntes originales aparecen anotaciones del tipo:
 5. **Crear** diagramas TikZ esquemáticos donde haya figuras o se necesiten.
 6. **Numerar** solo las ecuaciones finales/resultado con `\label`.
 7. **Guardar** el resultado como `main.tex` en el directorio del proyecto.
-8. **Compilar** con `pdflatex main.tex` para verificar que no hay errores.
+8. **Compilar** con `pdflatex main.tex` dos veces (para referencias cruzadas).
 9. Si hay errores de compilación, **corregirlos** antes de entregar.
 
 ---
 
 ## CRITERIOS DE CALIDAD (verificar antes de entregar)
 
-- [ ] Compila sin errores ni warnings relevantes con pdfLaTeX
+- [ ] Compila sin errores con pdfLaTeX (dos pasadas)
+- [ ] **Portada** en página propia (`titlepage`)
+- [ ] **Índice** en página propia (`\tableofcontents` + `\clearpage`)
+- [ ] **Cada sección** comienza en página nueva (`\clearpage` antes de `\section`)
+- [ ] Resultados importantes enmarcados con `mdframed`
+- [ ] Tablas de resumen para clasificaciones con múltiples casos
 - [ ] Todas las ecuaciones finales tienen `\label` y están numeradas
 - [ ] Los pasos intermedios NO están numerados
+- [ ] El símbolo de grados usa `^{\circ}` en modo math
 - [ ] Todos los ejemplos tienen solución completa paso a paso
 - [ ] Todas las demostraciones están presentes y son correctas
 - [ ] Los diagramas TikZ son en blanco y negro, sin colores
+- [ ] `babel` está en `\usetikzlibrary` (fix de conflicto español/TikZ)
+- [ ] `\headheight` fijado a 15pt (evita warning de fancyhdr)
 - [ ] El encabezado muestra la sección actual y el número de página
-- [ ] Las notas personales del alumno están como comentarios `% TODO:`
+- [ ] Las notas del alumno están como comentarios `% TODO:`
 - [ ] No hay texto hardcodeado en inglés (usar babel spanish)
-- [ ] El índice (`\tableofcontents`) refleja la estructura real del documento
+- [ ] El índice refleja la estructura real del documento

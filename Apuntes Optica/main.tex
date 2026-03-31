@@ -1,0 +1,4431 @@
+\documentclass[12pt, a4paper]{article}
+
+% ── Idioma y codificación ──────────────────────────────────────────────────
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish, es-nodecimaldot]{babel}
+
+% ── Matemáticas ───────────────────────────────────────────────────────────
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{mathtools}
+\usepackage{physics}
+
+% ── Fuente ────────────────────────────────────────────────────────────────
+\usepackage{lmodern}
+\usepackage{microtype}
+
+% ── Geometría de página ───────────────────────────────────────────────────
+\usepackage[
+  top=2.5cm, bottom=2.5cm,
+  left=2.8cm, right=2.8cm
+]{geometry}
+
+% ── Encabezado y pie ──────────────────────────────────────────────────────
+\usepackage{fancyhdr}
+\setlength{\headheight}{15pt}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\nouppercase{\leftmark}}
+\fancyhead[R]{\small\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% Portada e índice sin encabezado
+\fancypagestyle{plain}{%
+  \fancyhf{}%
+  \renewcommand{\headrulewidth}{0pt}%
+}
+
+% ── Figuras y diagramas ───────────────────────────────────────────────────
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta, calc, angles, quotes, decorations.pathreplacing, babel}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{setspace}
+\usepackage{enumitem}
+
+% ── Estilo visual global ──────────────────────────────────────────────────
+\definecolor{brandblue}{HTML}{000000}
+\definecolor{softblue}{HTML}{FFFFFF}
+\definecolor{linegray}{HTML}{000000}
+\colorlet{blue}{black}
+\colorlet{red}{black}
+\colorlet{green}{black}
+\colorlet{orange}{black}
+
+\captionsetup{
+  font=small,
+  labelfont={bf,color=brandblue},
+  textfont=it,
+  justification=centering
+}
+
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\newcolumntype{C}{>{\centering\arraybackslash}X}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{B}[1]{>{\bfseries\raggedright\arraybackslash}p{#1}}
+\setlength{\tabcolsep}{7pt}
+\renewcommand{\arraystretch}{1.18}
+
+\tikzset{
+  every picture/.style={line cap=round, line join=round, >=Stealth},
+  every path/.append style={draw=black},
+  every node/.append style={
+    font=\footnotesize,
+    text=black,
+    fill=white,
+    fill opacity=1,
+    text opacity=1,
+    inner sep=1.2pt
+  },
+  opticslabel/.style={
+    fill=white,
+    fill opacity=0.9,
+    text opacity=1,
+    rounded corners=1pt,
+    inner sep=1.2pt,
+    font=\footnotesize
+  }
+}
+
+% ── Hipervínculos ─────────────────────────────────────────────────────────
+\usepackage[hidelinks]{hyperref}
+
+% ── Cajas para resultados destacados ──────────────────────────────────────
+\usepackage{mdframed}
+\usepackage[skins,breakable]{tcolorbox}
+\mdfdefinestyle{resultado}{%
+  linecolor=black,
+  backgroundcolor=white,
+  linewidth=0.8pt,
+  innertopmargin=6pt,
+  innerbottommargin=6pt,
+  innerleftmargin=8pt,
+  innerrightmargin=8pt,
+  skipabove=8pt,
+  skipbelow=8pt,
+}
+
+\tcbset{
+  demostracionbox/.style={
+    enhanced,
+    breakable,
+    frame hidden,
+    interior hidden,
+    borderline west={0.7pt}{0pt}{black},
+    left=8pt, right=6pt,
+    top=4pt, bottom=4pt,
+    before skip=8pt, after skip=8pt,
+  }
+}
+
+% ── Entornos matemáticos ──────────────────────────────────────────────────
+\theoremstyle{plain}
+\newtheorem{teorema}{Teorema}[section]
+\newtheorem{proposicion}[teorema]{Proposición}
+\newtheorem{lema}[teorema]{Lema}
+\newtheorem{corolario}[teorema]{Corolario}
+
+\theoremstyle{definition}
+\newtheorem{definicion}[teorema]{Definición}
+\newtheorem{ejemplo}{Ejemplo}[section]
+
+\theoremstyle{remark}
+\newtheorem*{nota}{Nota}
+\newtheorem*{observacion}{Observación}
+
+% ── Formato de secciones ──────────────────────────────────────────────────
+\usepackage{titlesec}
+\usepackage{etoolbox}
+\titleformat{\section}
+  {\large\bfseries\color{brandblue}}
+  {\thesection.}{0.6em}{}
+  [\vspace{2pt}\color{linegray}\titlerule\vspace{4pt}]
+
+\titleformat{\subsection}
+  {\normalsize\bfseries\color{brandblue!90!black}}
+  {\thesubsection.}{0.5em}{}
+
+\titleformat{\subsubsection}
+  {\normalsize\bfseries\color{brandblue!75!black}}
+  {\thesubsubsection.}{0.5em}{}
+
+\titlespacing*{\section}{0pt}{0pt}{0.75\baselineskip}
+\titlespacing*{\subsection}{0pt}{0.95\baselineskip}{0.45\baselineskip}
+\titlespacing*{\subsubsection}{0pt}{0.75\baselineskip}{0.35\baselineskip}
+
+% Nueva página automática al comenzar cada sección
+\pretocmd{\section}{\clearpage}{}{}
+
+% ── Macros de conveniencia ────────────────────────────────────────────────
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\ve}[1]{\vec{#1}}
+\newcommand{\uvec}[1]{\hat{#1}}
+
+% ── Separación vertical y ritmo de lectura ────────────────────────────────
+\raggedbottom
+\setstretch{1.08}
+\setlength{\parskip}{4pt}
+\setlength{\parindent}{0pt}
+\setlength{\abovedisplayskip}{7pt}
+\setlength{\belowdisplayskip}{7pt}
+\setlength{\abovedisplayshortskip}{6pt}
+\setlength{\belowdisplayshortskip}{6pt}
+
+% ── Listas con márgenes homogéneos ────────────────────────────────────────
+\setlist[itemize]{leftmargin=1.35em, itemsep=2pt, topsep=4pt, parsep=0pt, partopsep=0pt}
+\setlist[enumerate]{leftmargin=1.55em, itemsep=2pt, topsep=4pt, parsep=0pt, partopsep=0pt}
+\setlist[description]{style=nextline, leftmargin=0pt, labelwidth=\linewidth, labelindent=0pt, labelsep=0pt, itemindent=0pt, listparindent=0pt, itemsep=4pt, topsep=4pt, parsep=0pt, partopsep=0pt}
+
+% ── Estilo visual de demostraciones (tipo paper) ──────────────────────────
+\renewcommand{\proofname}{Demostración}
+\renewcommand{\qedsymbol}{$\square$}
+\BeforeBeginEnvironment{proof}{\begin{tcolorbox}[demostracionbox]}
+\AfterEndEnvironment{proof}{\end{tcolorbox}}
+\apptocmd{\proof}{\small\itshape}{}{}
+
+% ── Utilidad para formulario final ────────────────────────────────────────
+\newcommand{\formulaname}[1]{\textbf{#1}\par\vspace{2pt}}
+
+% ─────────────────────────────────────────────────────────────────────────
+\begin{document}
+
+% ══════════════════════════════════════════════════════════════════════════
+%  PORTADA GENERAL
+% ══════════════════════════════════════════════════════════════════════════
+\begin{titlepage}
+  \thispagestyle{plain}
+  \centering
+  \vspace*{1.6cm}
+
+  \begin{tikzpicture}[remember picture,overlay]
+    \draw[line width=0.8pt]
+      ($(current page.north west)+(1.6cm,-1.6cm)$)
+      rectangle
+      ($(current page.south east)+(-1.6cm,1.6cm)$);
+  \end{tikzpicture}
+
+  {\Large\scshape Óptica\par}
+  \vspace{0.25cm}
+  {\large Curso 2025--2026\par}
+
+  \vspace{0.9cm}
+  {\Huge\bfseries Apuntes Unificados\par}
+  \vspace{0.4cm}
+  {\large Teoría, demostraciones y formulario\par}
+
+  \vspace{0.8cm}
+  \rule{0.78\linewidth}{0.8pt}
+  \vspace{0.6cm}
+  {\normalsize
+  Temas 1--6: ondas en vacío, interacción radiación-materia,\\
+  medios materiales, refracción y reflexión, difracción e interferencia\par}
+  \vspace{0.6cm}
+  \rule{0.78\linewidth}{0.8pt}
+
+  \vspace{1.2cm}
+  \begin{tikzpicture}[>=Stealth, scale=1.25]
+    \draw[->] (-0.3,0) -- (5.4,0) node[right] {$\ve{k}$};
+    \draw[->] (0,-1.15) -- (0,1.15) node[above] {$\ve{E}$};
+    \draw[domain=0:5, samples=120, thick] plot (\x, {sin(3.14159*\x r)});
+    \draw[->] (0,0) -- (0,0,-1.0) node[below right] {$\ve{B}$};
+    \node[opticslabel, anchor=west] at (3.55,0.68) {Onda plana armónica};
+  \end{tikzpicture}
+
+  \vfill
+  \begin{tabular}{@{}rl@{}}
+    \textbf{Autor:} & Luis López \\
+    \textbf{Titulación:} & Grado en Física \\
+    \textbf{Fecha:} & Marzo 2026
+  \end{tabular}
+\end{titlepage}
+
+% ══════════════════════════════════════════════════════════════════════════
+%  ÍNDICE
+% ══════════════════════════════════════════════════════════════════════════
+\tableofcontents
+
+% ══════════════════════════════════════════════════════════════════════════
+\section{Tema 1: Ondas Electromagnéticas en el Vacío}
+% ══════════════════════════════════════════════════════════════════════════
+
+\subsection{Introducción}
+
+La óptica es la rama de la física que estudia la luz: cómo se genera, cómo
+se transmite y cómo interacciona con la materia para su detección. Existen
+tres modelos que explican su naturaleza:
+
+\begin{description}
+  \item[\textbf{Óptica geométrica.}] Trata la luz como \emph{rayos} que se
+        propagan en línea recta. Es útil cuando los efectos ondulatorios son
+        despreciables (escala macroscópica). Aplicación: diseño de sistemas
+        ópticos.
+
+  \item[\textbf{Óptica electromagnética.}] Trata la luz como una \emph{onda
+        electromagnética} descrita por las ecuaciones de Maxwell. Esencial para
+        fenómenos a nivel microscópico. Aplicaciones: láseres, espectroscopia,
+        fibra óptica.
+
+  \item[\textbf{Óptica cuántica.}] Estudia la interacción luz-materia a nivel
+        cuántico (dualidad onda-partícula, estados cuánticos de la luz).
+        Aplicaciones: computación cuántica, criptografía cuántica, metrología.
+\end{description}
+
+En este tema nos centramos en la \textbf{óptica electromagnética}: la luz
+como onda que satisface las ecuaciones de Maxwell.
+
+% ══════════════════════════════════════════════════════════════════════════
+\subsection{Ecuaciones de Maxwell}
+% ══════════════════════════════════════════════════════════════════════════
+
+\begin{definicion}[Ecuaciones de Maxwell]
+Las ecuaciones de Maxwell describen el comportamiento de los campos
+electromagnéticos en presencia de cargas $\rho$ (densidad volumétrica,
+C/m$^{3}$) y corrientes $\ve{j}$ (densidad de corriente, A/m$^{2}$):
+\begin{align}
+  \div \ve{E} &= \frac{\rho}{\varepsilon_0}, \label{eq:maxwell1}\\[4pt]
+  \div \ve{B} &= 0, \label{eq:maxwell2}\\[4pt]
+  \curl \ve{E} + \pdv{\ve{B}}{t} &= \ve{0}, \label{eq:maxwell3}\\[4pt]
+  \frac{1}{\mu_0}\curl \ve{B} - \varepsilon_0 \pdv{\ve{E}}{t} &= \ve{j}.
+  \label{eq:maxwell4}
+\end{align}
+Constantes fundamentales: $\mu_0 = 4\pi\times10^{-7}\ \mathrm{N\,s^2/C^2}$
+(permeabilidad magnética del vacío) y $\varepsilon_0 = 1/(\mu_0 c^2)$
+(permitividad eléctrica del vacío). Los campos $\ve{E}(\ve{r},t)$ y
+$\ve{B}(\ve{r},t)$ son funciones del punto $\ve{r}$ y del tiempo $t$.
+\end{definicion}
+
+\begin{definicion}[Fuerza de Maxwell-Lorentz]
+La fuerza que ejercen los campos sobre una carga $q$ que se mueve con
+velocidad $\ve{v}$ es:
+\begin{equation}
+  \ve{F} = q\ve{E} + q\ve{v}\times\ve{B} = \ve{F}_E + \ve{F}_B.
+  \label{eq:lorentz}
+\end{equation}
+\end{definicion}
+
+\begin{observacion}
+Las cargas y corrientes variables en el tiempo generan $\ve{E}$ y $\ve{B}$;
+a su vez, campos variables implican la presencia de cargas y corrientes.
+Ambas realidades están intrínsecamente ligadas.
+\end{observacion}
+
+\begin{nota}
+James Clerk Maxwell (1831--1879) unificó electricidad, magnetismo y luz
+en una única teoría de campos. Sus ecuaciones son la base del modelo
+electromagnético de la luz y uno de los pilares de la física moderna.
+\end{nota}
+
+\subsubsection{Ecuaciones de Maxwell en el vacío}
+
+En el vacío no hay cargas libres ni corrientes: $\rho=0$, $\ve{j}=\ve{0}$.
+Nos interesa estudiar la \emph{propagación} de los campos, no su generación.
+
+\begin{proposicion}[Ecuaciones de Maxwell en el vacío]
+Con $\rho=0$ y $\ve{j}=\ve{0}$, las
+ecuaciones~\eqref{eq:maxwell1}--\eqref{eq:maxwell4} se simplifican a:
+\begin{mdframed}[style=resultado]
+\begin{align}
+  \div \ve{E} &= 0, \label{eq:vac1}\\[4pt]
+  \div \ve{B} &= 0, \label{eq:vac2}\\[4pt]
+  \curl \ve{E} + \pdv{\ve{B}}{t} &= \ve{0}, \label{eq:vac3}\\[4pt]
+  \frac{1}{\mu_0}\curl \ve{B} &= \varepsilon_0 \pdv{\ve{E}}{t}. \label{eq:vac4}
+\end{align}
+\end{mdframed}
+\end{proposicion}
+
+% ══════════════════════════════════════════════════════════════════════════
+\subsection{Ecuación de Onda}
+% ══════════════════════════════════════════════════════════════════════════
+
+\begin{definicion}[Ecuación de onda]
+Una onda es una perturbación que se propaga en el espacio transportando
+energía y momento. Matemáticamente, cualquier campo ondulatorio
+$\ve{A}(\ve{r},t)$ satisface la \emph{ecuación de onda}:
+\begin{equation}
+  \nabla^2\ve{A} = \frac{1}{v^2}\pdv[2]{\ve{A}}{t}, \label{eq:onda}
+\end{equation}
+donde $v$ es la velocidad de propagación.
+\end{definicion}
+
+\begin{teorema}[La luz es una onda electromagnética]
+Los campos $\ve{E}$ y $\ve{B}$ que satisfacen las ecuaciones de Maxwell en
+el vacío~\eqref{eq:vac1}--\eqref{eq:vac4} cumplen la ecuación de
+onda~\eqref{eq:onda} con velocidad $c = 1/\sqrt{\mu_0\varepsilon_0}
+\approx 3\times10^8\ \mathrm{m/s}$:
+\begin{mdframed}[style=resultado]
+\begin{equation}
+  \nabla^2\ve{E} = \frac{1}{c^2}\pdv[2]{\ve{E}}{t}, \qquad
+  \nabla^2\ve{B} = \frac{1}{c^2}\pdv[2]{\ve{B}}{t}. \label{eq:ondaEM}
+\end{equation}
+\end{mdframed}
+\end{teorema}
+
+\begin{proof}
+Aplicamos el rotacional a la ecuación~\eqref{eq:vac3}:
+\[
+  \curl(\curl\ve{E}) + \curl\!\left(\pdv{\ve{B}}{t}\right) = \ve{0}.
+\]
+Usamos la identidad del doble rotacional y conmutamos
+el rotacional con la derivada temporal:
+\[
+  \grad(\div\ve{E}) - \nabla^2\ve{E}
+  + \pdv{}{t}(\curl\ve{B}) = \ve{0}.
+  \tag*{\normalfont\footnotesize(en vacío, $\div\ve{E}=0$)}
+\]
+Sustituyendo la ecuación~\eqref{eq:vac4}:
+\[
+  -\nabla^2\ve{E} + \mu_0\varepsilon_0\pdv[2]{\ve{E}}{t} = \ve{0},
+\]
+identificamos:
+\[
+  c^2 = \frac{1}{\mu_0\varepsilon_0}.
+\]
+Por tanto:
+\[
+  \nabla^2\ve{E} - \frac{1}{c^2}\pdv[2]{\ve{E}}{t}= \ve{0}.
+\]
+
+Para $\ve{B}$ se procede de forma análoga.
+Partimos de~\eqref{eq:vac4}:
+\[
+  \curl\ve{B} - \mu_0\varepsilon_0\pdv{\ve{E}}{t}= \ve{0}.
+\]
+Aplicamos rotacional y usamos~\eqref{eq:vac3}:
+\[
+  \curl(\curl\ve{B}) - \mu_0\varepsilon_0\pdv{}{t}(\curl\ve{E})=\ve{0},
+\]
+\[
+  \grad(\div\ve{B})-\nabla^2\ve{B}
+  +\mu_0\varepsilon_0\pdv[2]{\ve{B}}{t}=\ve{0}.
+  \tag*{\normalfont\footnotesize(en vacío, $\div\ve{B}=0$)}
+\]
+Finalmente:
+\[
+  \nabla^2\ve{B} - \frac{1}{c^2}\pdv[2]{\ve{B}}{t}= \ve{0}.
+\]
+\end{proof}
+
+\begin{observacion}
+De este teorema se desprenden tres conclusiones fundamentales:
+\begin{enumerate}
+  \item La luz es una onda que se propaga desde las fuentes.
+  \item La luz puede propagarse en el vacío; no necesita soporte material.
+  \item La luz es una onda \textbf{vectorial}.
+\end{enumerate}
+\end{observacion}
+
+% ══════════════════════════════════════════════════════════════════════════
+\subsection{Ondas Armónicas o Monocromáticas}
+% ══════════════════════════════════════════════════════════════════════════
+
+\begin{definicion}[Onda armónica]
+Una onda armónica (o monocromática) es aquella cuya dependencia temporal es
+periódica y sinusoidal. Sus componentes son de la forma:
+\begin{equation}
+  E_j(\ve{r},t) = A_j(\ve{r})\cos\!\bigl(\omega t - \delta_j(\ve{r})\bigr),
+  \qquad j = x,y,z, \label{eq:armonicacomp}
+\end{equation}
+donde $A_j(\ve{r})$ es la amplitud, $\delta_j(\ve{r})$ la fase inicial,
+$\omega = 2\pi\nu$ la frecuencia angular (rad/s) y $\nu = 1/T$ la frecuencia
+(Hz).
+\end{definicion}
+
+\begin{proposicion}[Condición de armonicidad]
+Una onda es armónica si y solo si satisface:
+\begin{equation}
+  \pdv[2]{E}{t} = -\omega^2 E. \label{eq:armonicacond}
+\end{equation}
+\end{proposicion}
+
+\begin{proof}
+Derivando dos veces~\eqref{eq:armonicacomp}:
+\[
+  \pdv[2]{E_j}{t}
+  = -\omega^2 A_j\cos(\omega t-\delta_j)
+  = -\omega^2 E_j.
+\]
+Recíprocamente, si se cumple~\eqref{eq:armonicacond}, la solución temporal
+se obtiene resolviendo:
+\[
+  \ddot E + \omega^2 E = 0.
+\]
+La ecuación característica es:
+\[
+  r^2+\omega^2=0 \quad\Rightarrow\quad r=\pm i\omega.
+\]
+Por tanto:
+\[
+  E(t)=C_1\cos(\omega t)+C_2\sin(\omega t)
+  \equiv A\cos(\omega t-\delta).
+\]
+\end{proof}
+
+\begin{observacion}
+Las ondas armónicas forman una \textbf{base de funciones}: cualquier onda
+puede construirse como superposición de ellas (análisis de Fourier).
+\end{observacion}
+
+\subsubsection{Espectro electromagnético}
+
+Las ondas armónicas se clasifican por su frecuencia $\nu$, con la relación
+$\lambda\nu = c$.
+
+\begin{definicion}[Espectro visible]
+La luz visible corresponde al rango:
+\begin{equation}
+  4\times10^{14}\ \mathrm{Hz} \leq \nu \leq 7{,}5\times10^{14}\ \mathrm{Hz},
+  \qquad
+  400\ \mathrm{nm} \leq \lambda \leq 750\ \mathrm{nm}. \label{eq:espectro}
+\end{equation}
+\end{definicion}
+
+\begin{center}
+\begin{tabular}{@{}cc@{}}
+  \toprule
+  $\lambda$ (nm) & Color \\
+  \midrule
+  450 & Violeta \\
+  490 & Azul    \\
+  555 & Verde   \\
+  589 & Amarillo \\
+  630 & Rojo    \\
+  \bottomrule
+\end{tabular}
+\end{center}
+
+% ══════════════════════════════════════════════════════════════════════════
+\subsection{Representación Compleja de una Onda Armónica}
+% ══════════════════════════════════════════════════════════════════════════
+
+\begin{definicion}[Representación compleja]
+Usando la fórmula de Euler, cualquier onda armónica puede identificarse con
+la parte real de una exponencial compleja:
+\begin{equation}
+  E_j(\ve{r},t)
+  = \operatorname{Re}\!\left[A_j(\ve{r})\,e^{i\omega t}\,
+    e^{-i\delta_j(\ve{r})}\right]. \label{eq:compleja}
+\end{equation}
+En los cálculos se trabaja con la exponencial compleja completa; al finalizar
+se toma la parte real.
+\end{definicion}
+
+\begin{proposicion}[Ventajas e inconvenientes]
+\begin{itemize}
+  \item[\checkmark] La derivada e integral de una exponencial compleja sigue
+        siendo una exponencial compleja.
+  \item[\checkmark] Válida para operaciones \emph{lineales} (sumas, derivadas,
+        integrales):
+        \[
+          \operatorname{Re}(A+B)=\operatorname{Re}(A)+\operatorname{Re}(B).
+        \]
+  \item[$\boldsymbol{\times}$] \textbf{No válida} para operaciones no lineales
+        (productos, potencias):
+        \[
+          \operatorname{Re}(A\cdot B)\neq\operatorname{Re}(A)\cdot\operatorname{Re}(B).
+        \]
+\end{itemize}
+\end{proposicion}
+
+\subsubsection{Repaso de números complejos}
+
+Sea $z = a + ib$:
+\[
+  \bar{z} = a-ib,\quad
+  |z|^2 = a^2+b^2,\quad
+  \operatorname{Re}\{z\} = \frac{z+\bar{z}}{2},\quad
+  \operatorname{Im}\{z\} = \frac{z-\bar{z}}{2i}.
+\]
+Forma polar: $z = |z|\,e^{i\alpha}$ con $\tan\alpha = b/a$. Fórmulas de Euler:
+\[
+  e^{i\alpha} = \cos\alpha + i\sin\alpha, \qquad
+  \cos\alpha = \frac{e^{i\alpha}+e^{-i\alpha}}{2}, \qquad
+  \sin\alpha = \frac{e^{i\alpha}-e^{-i\alpha}}{2i}.
+\]
+
+\subsubsection{Ejemplos de identificación de armonicidad}
+
+\begin{ejemplo}
+Determinar cuáles de las siguientes ondas son armónicas usando la
+condición~\eqref{eq:armonicacond}: $\partial^2E/\partial t^2 = -\omega^2 E$.
+
+\begin{enumerate}
+
+  \item $E = A\cos(\omega_1 t - kz) + B\sin(\omega_2 t - kz)$
+
+  Si $\omega_1=\omega_2\equiv\omega$:
+  \[
+    \pdv[2]{E}{t} = -\omega^2(A\cos + B\sin) = -\omega^2 E.
+  \]
+  \checkmark\ \textbf{Armónica.} \quad
+  Si $\omega_1\neq\omega_2$: no existe $\omega$ común $\Rightarrow$ \textbf{No armónica.}
+
+  \item $E = A\,e^{\cos(\omega t-kz)}$
+  \[
+    \pdv[2]{E}{t} = e^{\cos(\cdots)}\!\bigl(-\omega^2\cos + \omega^2\sin^2\bigr)
+    \neq -\omega^2 E.
+  \]
+  \textbf{No armónica.}
+
+  \item $E = \cos(\omega t)\cos(kz)$
+  \[
+    \pdv[2]{E}{t} = -\omega^2\cos(\omega t)\cos(kz) = -\omega^2 E.
+  \]
+  \checkmark\ \textbf{Armónica} (onda estacionaria).
+
+  \item $E = A\sin(\omega t - \delta)$
+  \[
+    \pdv[2]{E}{t} = -\omega^2 A\sin(\omega t-\delta) = -\omega^2 E.
+  \]
+  \checkmark\ \textbf{Armónica.}
+
+\end{enumerate}
+\end{ejemplo}
+
+% ══════════════════════════════════════════════════════════════════════════
+\subsection{Frentes de Onda}
+% ══════════════════════════════════════════════════════════════════════════
+
+\begin{definicion}[Frente de onda]
+El frente de onda es el lugar geométrico de todos los puntos del espacio
+que, en un instante $t_0$ fijo, tienen la misma fase:
+\begin{equation}
+  \omega t_0 - \delta(\ve{r}) = \mathrm{cte}. \label{eq:frente}
+\end{equation}
+\end{definicion}
+
+Los tipos de frente de onda quedan determinados por la forma de $\delta(\ve{r})$:
+
+\medskip
+\begin{center}
+\begin{tabularx}{0.95\linewidth}{@{}L{2.1cm}Y Y@{}}
+  \toprule
+  Tipo & $\delta(\ve{r})$ & Campo \\
+  \midrule
+  Plano    & $kz$                     & $\ve{E}_0\,e^{i\omega t}e^{-ikz}$ \\
+  Esférico & $k\sqrt{x^2+y^2+z^2}$   & $\dfrac{\ve{E}_0}{r}\,e^{i\omega t}e^{-ikr}$ \\
+  General  & $\delta(\ve{r})$ arbitraria & cualquier superficie de fase cte \\
+  \bottomrule
+\end{tabularx}
+\end{center}
+
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[>=Stealth, scale=1.1]
+    % Onda plana
+    \begin{scope}[xshift=-3.8cm]
+      \draw[->] (-0.3,0) -- (3.3,0) node[right] {$z$};
+      \foreach \x in {0.4, 1.1, 1.8, 2.5}{
+        \draw[thick] (\x,-1.1) -- (\x,1.1);
+      }
+      \draw[->, thick] (0.75,0.5) -- (1.45,0.5)
+            node[midway, above=2pt] {$\uvec{k}$};
+    \end{scope}
+    % Onda esférica
+    \begin{scope}[xshift=3.2cm]
+      \filldraw (0,0) circle (2pt) node[below left=2pt] {$O$};
+      \foreach \r in {0.55, 1.0, 1.5}{
+        \draw[thick] (0,0) circle (\r);
+      }
+      \draw[->, thick] (0,0) -- (0.72,0.72)
+            node[midway, above left] {$r$};
+    \end{scope}
+    \node[align=left, anchor=west] at (5.1,0.5)
+      {\footnotesize Izquierda: frente plano\\
+       \footnotesize Derecha: frente esférico};
+  \end{tikzpicture}
+  \caption{Frentes de onda plano (izquierda) y esférico (derecha).}
+  \label{fig:frentes}
+\end{figure}
+
+% ══════════════════════════════════════════════════════════════════════════
+\subsection{Ondas Planas}
+% ══════════════════════════════════════════════════════════════════════════
+
+\begin{definicion}[Onda plana]
+Una onda plana es aquella en la que el campo es constante para todos los
+puntos de un plano perpendicular a la dirección de propagación:
+\begin{equation}
+  \ve{E}(\ve{r},t) = \ve{E}_0\,e^{i\omega t}\,e^{-i\ve{k}\cdot\ve{r}},
+  \label{eq:ondaplana}
+\end{equation}
+donde $\ve{k}=(k_x,k_y,k_z)$ es el vector de onda y $\ve{E}_0$ no depende
+de $\ve{r}$ ni de $t$.
+\end{definicion}
+
+\begin{definicion}[Velocidad de fase]
+La velocidad a la que se propagan los frentes de onda:
+\[
+  \omega t_0 - kz = \mathrm{cte} \implies z = \frac{\omega}{k}\,t
+  + \mathrm{cte},
+\]
+\begin{equation}
+  v_f = \pdv{z}{t} = \frac{\omega}{k} = c \quad(\text{en el vacío}).
+  \label{eq:vfase}
+\end{equation}
+\end{definicion}
+
+\subsubsection{Ondas homogéneas e inhomogéneas}
+
+\begin{description}
+  \item[\textbf{Homogénea.}] Los planos de fase constante y los de amplitud
+        constante coinciden. La amplitud $\ve{E}_0$ es uniforme en todo el
+        frente de onda.
+
+  \item[\textbf{Inhomogénea.}] Los planos de fase y amplitud no coinciden:
+        \[
+          \ve{E}(\ve{r},t) = \ve{E}_0\,e^{i\omega t}\,e^{-ikz}\,e^{-az},
+        \]
+        donde la amplitud efectiva $E_0\,e^{-az}$ varía dentro del frente.
+\end{description}
+
+% ══════════════════════════════════════════════════════════════════════════
+\subsection{Ondas Armónicas Planas}
+% ══════════════════════════════════════════════════════════════════════════
+
+\begin{definicion}[Onda armónica plana (OAP)]
+Una OAP es la combinación de una onda armónica y una onda plana:
+\begin{equation}
+  \ve{E}(\ve{r},t) = \ve{E}_0\,e^{i\omega t}\,e^{-i\ve{k}\cdot\ve{r}},
+  \qquad
+  \ve{B}(\ve{r},t) = \ve{B}_0\,e^{i\omega t}\,e^{-i\ve{k}\cdot\ve{r}},
+  \label{eq:OAP}
+\end{equation}
+con $\ve{E}_0$ y $\ve{B}_0$ independientes de $\ve{r}$ y $t$.
+\end{definicion}
+
+\subsubsection{Condiciones impuestas por las ecuaciones de Maxwell}
+
+Para una OAP, los operadores diferenciales se convierten en multiplicadores:
+\[
+  \pdv{\ve{F}}{t} \;\to\; i\omega\ve{F}, \qquad
+  \div\ve{F} \;\to\; -i\,\ve{k}\cdot\ve{F}, \qquad
+  \curl\ve{F} \;\to\; -i\,\ve{k}\times\ve{F}.
+\]
+Sustituyendo en las ecuaciones~\eqref{eq:vac1}--\eqref{eq:vac4}:
+
+\medskip
+\begin{center}
+\begin{tabularx}{0.95\linewidth}{@{}L{4.8cm}Y@{}}
+  \toprule
+  Ecuación de Maxwell & Resultado \\
+  \midrule
+  $\div\ve{E}=0$                         & $\ve{k}\cdot\ve{E}=0$ \\
+  $\div\ve{B}=0$                         & $\ve{k}\cdot\ve{B}=0$ \\
+  $\curl\ve{E}+\partial_t\ve{B}=\ve{0}$  & $\omega\ve{B}=\ve{k}\times\ve{E}$ \\
+  $(1/\mu_0)\curl\ve{B}=\varepsilon_0\partial_t\ve{E}$ &
+  $\ve{k}\times\ve{B}=\mu_0\varepsilon_0\omega\ve{E}$ \\
+  \bottomrule
+\end{tabularx}
+\end{center}
+
+\subsubsection{Propiedades fundamentales de las OAP}
+
+\begin{proposicion}[Transversalidad]
+En una OAP, $\ve{E}$, $\ve{B}$ y $\ve{k}$ son mutuamente perpendiculares:
+\begin{mdframed}[style=resultado]
+\begin{equation}
+  \ve{k}\perp\ve{E}, \quad \ve{k}\perp\ve{B}, \quad \ve{E}\perp\ve{B}.
+  \label{eq:transversal}
+\end{equation}
+\end{mdframed}
+La luz es una onda \textbf{transversal}.
+\end{proposicion}
+
+\begin{proof}
+De las ecuaciones de divergencia:
+\[
+  \ve{k}\cdot\ve{E}=0,
+  \qquad
+  \ve{k}\cdot\ve{B}=0.
+\]
+Por tanto, $\ve{k}\perp\ve{E}$ y $\ve{k}\perp\ve{B}$.
+
+Además:
+\[
+  \omega\ve{B}=\ve{k}\times\ve{E}.
+\]
+Como el producto vectorial es perpendicular a $\ve{E}$, se concluye
+$\ve{B}\perp\ve{E}$.
+\end{proof}
+
+\begin{proposicion}[Relación de dispersión]
+\begin{equation}
+  k = \frac{\omega}{c} = \frac{2\pi}{\lambda}, \qquad \lambda\nu = c.
+  \label{eq:dispersion}
+\end{equation}
+donde $k$ es el número de onda, $\lambda$ la longitud de onda y $c$ la velocidad de la luz en el vacío.
+\end{proposicion}
+
+\begin{proof}
+Partimos de:
+\[
+  \omega\ve{B}=\ve{k}\times\ve{E}.
+\]
+Aplicamos $\ve{k}\times$ y usamos:
+\[
+  \ve{k}\times\ve{B}=\mu_0\varepsilon_0\omega\ve{E}.
+\]
+\[
+  \ve{k}\times(\ve{k}\times\ve{E})
+  = \ve{k}(\ve{k}\cdot\ve{E})
+    - \ve{E}(\ve{k}\cdot\ve{k})
+  = \mu_0\varepsilon_0\omega^2\ve{E}.
+  \tag*{\normalfont\footnotesize(en OAP, $\ve{k}\cdot\ve{E}=0$)}
+\]
+Luego:
+\[
+  -k^2\ve{E}=\mu_0\varepsilon_0\omega^2\ve{E}
+  \quad\Rightarrow\quad
+  k^2=\mu_0\varepsilon_0\omega^2.
+\]
+Usando:
+\[
+  c^{-2}=\mu_0\varepsilon_0,
+\]
+\[
+  k^2=\frac{\omega^2}{c^2}
+  \quad\Rightarrow\quad
+  k=\frac{\omega}{c}.
+\]
+\end{proof}
+
+\begin{proposicion}[Relación entre amplitudes]
+\begin{equation}
+  E = c\,B. \label{eq:amplitudes}
+\end{equation}
+Por eso en la práctica se trabaja únicamente con el campo eléctrico.
+\end{proposicion}
+
+\begin{proof}
+Partimos de:
+\[
+  \omega\ve{B}=\ve{k}\times\ve{E}.
+\]
+Como $\ve{k}\perp\ve{E}$, en módulo:
+\[
+  \omega B = kE.
+\]
+Además:
+\[
+  k=\frac{\omega}{c}.
+\]
+Sustituyendo:
+\[
+  E=cB.
+\]
+\end{proof}
+
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[>=Stealth, scale=1.4]
+    \coordinate (O) at (0,0);
+    \draw[->, very thick] (O) -- (2.8,0)  node[right]       {$\ve{k}$};
+    \draw[->, very thick] (O) -- (0,1.7)  node[above]       {$\ve{E}$};
+    \draw[->, very thick] (O) -- (-1.2,-0.8) node[below left] {$\ve{B}$};
+    \draw (0.28,0) -- (0.28,0.28) -- (0,0.28);
+    \filldraw (O) circle (1.5pt);
+    \node[align=left, anchor=west] at (3.25,1.25)
+      {\footnotesize $\ve{E}\perp\ve{k}$\\
+       \footnotesize $\ve{B}\perp\ve{k}$\\
+       \footnotesize $\ve{E}\perp\ve{B}$};
+  \end{tikzpicture}
+  \caption{Triedro ortogonal de una OAP.}
+  \label{fig:triedro}
+\end{figure}
+
+% ══════════════════════════════════════════════════════════════════════════
+\subsection{Polarización de las Ondas Armónicas Planas}
+% ══════════════════════════════════════════════════════════════════════════
+
+\begin{definicion}[Polarización]
+La polarización describe el estado de vibración del campo eléctrico en una
+OAP. Para propagación en la dirección $z$, el campo está confinado al plano
+$XY$ ($E_z=0$). Tomando $\delta_x=0$ y $\delta=\delta_y-\delta_x$:
+\begin{equation}
+  E_x = E_{0x}\cos(\omega t - kz), \qquad
+  E_y = E_{0y}\cos(\omega t - kz + \delta). \label{eq:polcomps}
+\end{equation}
+El estado de polarización queda determinado por el cociente
+$E_{0y}/E_{0x}$ y la diferencia de fase $\delta$.
+\end{definicion}
+
+\subsubsection{Elipse de polarización}
+
+\begin{proposicion}[Ecuación de la elipse]
+Eliminando el argumento temporal de~\eqref{eq:polcomps}:
+\begin{equation}
+  \left(\frac{E_x}{E_{0x}}\right)^{\!2}
+  + \left(\frac{E_y}{E_{0y}}\right)^{\!2}
+  - 2\,\frac{E_x E_y}{E_{0x}E_{0y}}\cos\delta
+  = \sin^2\!\delta. \label{eq:elipse}
+\end{equation}
+\end{proposicion}
+
+\begin{proof}
+De~\eqref{eq:polcomps}:
+\[
+  \cos(\omega t-kz)=\frac{E_x}{E_{0x}}.
+\]
+Expandiendo $E_y$:
+\[
+  \frac{E_y}{E_{0y}} = \frac{E_x}{E_{0x}}\cos\delta
+  - \sin(\omega t-kz)\sin\delta.
+\]
+Despejando el seno y elevando al cuadrado:
+\[
+  \sin^2(\omega t-kz)
+  = \frac{1}{\sin^2\!\delta}
+    \!\left(\frac{E_y}{E_{0y}}-\frac{E_x}{E_{0x}}\cos\delta\right)^{\!2}.
+\]
+Usando la identidad:
+\[
+  \sin^2\phi+\cos^2\phi=1,
+\]
+sustituimos:
+\[
+  \cos\phi=\frac{E_x}{E_{0x}},
+\]
+y obtenemos:
+\[
+  1-\left(\frac{E_x}{E_{0x}}\right)^2
+  = \frac{1}{\sin^2\!\delta}
+    \left(\frac{E_y}{E_{0y}}-\frac{E_x}{E_{0x}}\cos\delta\right)^2.
+\]
+Multiplicando por $\sin^2\delta$:
+\[
+  \sin^2\delta-\sin^2\delta\left(\frac{E_x}{E_{0x}}\right)^2
+  = \left(\frac{E_y}{E_{0y}}\right)^2
+  +\left(\frac{E_x}{E_{0x}}\right)^2\cos^2\delta
+  -2\frac{E_xE_y}{E_{0x}E_{0y}}\cos\delta.
+\]
+Reordenando términos y usando:
+\[
+  \sin^2\delta+\cos^2\delta=1,
+\]
+\[
+  \left(\frac{E_x}{E_{0x}}\right)^2
+  +\left(\frac{E_y}{E_{0y}}\right)^2
+  -2\frac{E_xE_y}{E_{0x}E_{0y}}\cos\delta
+  = \sin^2\delta.
+\]
+que es~\eqref{eq:elipse}.
+\end{proof}
+
+\subsubsection{Vector de Jones}
+
+\begin{definicion}[Vector de Jones]
+Toda la información de polarización queda contenida en el \emph{vector de
+Jones}:
+\begin{equation}
+  \ve{J} = \begin{pmatrix}E_{0x}\\E_{0y}\,e^{i\delta}\end{pmatrix}.
+  \label{eq:jones}
+\end{equation}
+\end{definicion}
+
+\subsubsection{Tipos de polarización}
+
+\paragraph{Polarización lineal}
+
+\begin{proposicion}
+La luz está linealmente polarizada cuando $\delta = m\pi$ ($m\in\Z$).
+El campo vibra en una dirección fija de azimut $\alpha$:
+\begin{equation}
+  \tan\alpha = \frac{E_{0y}}{E_{0x}}, \qquad
+  \ve{J} = \begin{pmatrix}\cos\alpha\\\pm\sin\alpha\end{pmatrix}.
+  \label{eq:jones_lineal}
+\end{equation}
+Casos particulares normalizados:
+\[
+  \alpha=0^{\circ}:\;\ve{J}=\begin{pmatrix}1\\0\end{pmatrix},\quad
+  \alpha=90^{\circ}:\;\ve{J}=\begin{pmatrix}0\\1\end{pmatrix},\quad
+  \alpha=45^{\circ}:\;\ve{J}=\tfrac{1}{\sqrt{2}}\begin{pmatrix}1\\1\end{pmatrix}.
+\]
+\end{proposicion}
+
+\begin{proof}
+Tomamos la condición:
+\[
+  \delta=m\pi.
+\]
+Entonces, la ecuación~\eqref{eq:elipse} se reduce a:
+\[
+  \left(\frac{E_y}{E_{0y}} \mp \frac{E_x}{E_{0x}}\right)^2 = 0.
+\]
+De ahí:
+\[
+  \frac{E_y}{E_x} = \pm\frac{E_{0y}}{E_{0x}}.
+\]
+La pendiente de esa recta es:
+\[
+  \tan\alpha=\pm\frac{E_{0y}}{E_{0x}}.
+\]
+\end{proof}
+
+\paragraph{Polarización circular}
+
+\begin{proposicion}
+La luz está circularmente polarizada cuando $E_{0x}=E_{0y}=E_0$ y
+$\delta=(2m+1)\pi/2$. La elipse degenera en una circunferencia:
+\begin{equation}
+  \text{Dextrógira }(\delta=+\tfrac{\pi}{2}):\;
+    \ve{J}=E_0\!\begin{pmatrix}1\\i\end{pmatrix};\qquad
+  \text{Levógira }(\delta=-\tfrac{\pi}{2}):\;
+    \ve{J}=E_0\!\begin{pmatrix}1\\-i\end{pmatrix}.
+  \label{eq:jones_circ}
+\end{equation}
+\end{proposicion}
+
+\begin{proof}
+Tomamos:
+\[
+  E_{0x}=E_{0y}=E_0,
+  \qquad
+  \cos\delta=0.
+\]
+Entonces, la ecuación~\eqref{eq:elipse} queda:
+\[
+  \frac{E_x^2}{E_0^2} + \frac{E_y^2}{E_0^2} = 1.
+\]
+Esta es una circunferencia de radio $E_0$.
+\end{proof}
+
+\paragraph{Polarización elíptica}
+
+\begin{proposicion}
+La luz está elípticamente polarizada cuando $E_{0x}\neq E_{0y}$ y
+$\delta=(2m+1)\pi/2$:
+\begin{equation}
+  \text{Dextrógira:}\;
+    \ve{J}=\begin{pmatrix}E_{0x}\\iE_{0y}\end{pmatrix};\qquad
+  \text{Levógira:}\;
+    \ve{J}=\begin{pmatrix}E_{0x}\\-iE_{0y}\end{pmatrix}.
+  \label{eq:jones_elip}
+\end{equation}
+\end{proposicion}
+
+\paragraph{Luz despolarizada}
+
+\begin{definicion}[Luz natural]
+La luz natural o despolarizada es aquella en la que $E_{0x}$, $E_{0y}$ y
+$\delta(t)$ varían rápida y aleatoriamente. No puede describirse con un
+vector de Jones fijo. La \emph{luz parcialmente polarizada} es superposición
+de luz completamente polarizada y luz despolarizada.
+\end{definicion}
+
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[>=Stealth, scale=1.05]
+    % Lineal
+    \begin{scope}[xshift=-5.5cm]
+      \draw[->] (-1.3,0)--(1.3,0) node[right]{$x$};
+      \draw[->] (0,-1.3)--(0,1.3) node[above]{$y$};
+      \draw[thick, <->] (-0.9,-0.9)--(0.9,0.9);
+      \node[below=0.25cm] at (0,-1.3) {\footnotesize Lineal ($45^\circ$)};
+    \end{scope}
+    % Circular
+    \begin{scope}[xshift=0cm]
+      \draw[->] (-1.3,0)--(1.3,0) node[right]{$x$};
+      \draw[->] (0,-1.3)--(0,1.3) node[above]{$y$};
+      \draw[thick] (0,0) circle (0.95);
+      \draw[->, thick] (0,0.95)
+            arc[start angle=90, end angle=115, radius=0.95];
+      \node[below=0.25cm] at (0,-1.3) {\footnotesize Circular};
+    \end{scope}
+    % Elíptica
+    \begin{scope}[xshift=5.5cm]
+      \draw[->] (-1.3,0)--(1.3,0) node[right]{$x$};
+      \draw[->] (0,-1.3)--(0,1.3) node[above]{$y$};
+      \draw[thick] (0,0) ellipse (0.95 and 0.55);
+      \draw[->, thick] (0,0.55)
+            arc[start angle=90, end angle=115, x radius=0.95, y radius=0.55];
+      \node[below=0.25cm] at (0,-1.3) {\footnotesize Elíptica};
+    \end{scope}
+  \end{tikzpicture}
+  \caption{Tipos de polarización: lineal, circular y elíptica. Las flechas
+           indican el sentido de rotación dextrógiro.}
+  \label{fig:polarizacion}
+\end{figure}
+
+\medskip
+\begin{center}
+\begin{tabularx}{0.95\linewidth}{@{}L{2.2cm}L{4.0cm}Y@{}}
+  \toprule
+  Tipo & Condición sobre $\delta$ & Condición sobre amplitudes \\
+  \midrule
+  Lineal    & $\delta = m\pi$              & cualquiera \\
+  Circular  & $\delta = (2m+1)\pi/2$      & $E_{0x} = E_{0y}$ \\
+  Elíptica  & $\delta = (2m+1)\pi/2$      & $E_{0x} \neq E_{0y}$ \\
+  General   & $\delta$ arbitrario          & amplitudes arbitrarias \\
+  \bottomrule
+\end{tabularx}
+\end{center}
+
+% ══════════════════════════════════════════════════════════════════════════
+\subsection{Intensidad de las Ondas Armónicas}
+% ══════════════════════════════════════════════════════════════════════════
+
+\begin{definicion}[Vector de Poynting]
+El vector de Poynting describe la potencia por unidad de área transportada
+por una onda electromagnética y su dirección de propagación (W/m$^2$):
+\begin{equation}
+  \ve{S} = \frac{1}{\mu_0}\,\ve{E}_r\times\ve{B}_r. \label{eq:poynting}
+\end{equation}
+La energía viene determinada exclusivamente por la parte real de los campos.
+\end{definicion}
+
+\subsubsection{Intensidad de una onda armónica plana}
+
+\begin{proposicion}
+Para una OAP $\ve{E}=\ve{E}_0\cos(\omega t - \ve{k}\cdot\ve{r})$, la
+intensidad (promedio temporal) es:
+\begin{mdframed}[style=resultado]
+\begin{equation}
+  I = \langle S\rangle = \frac{E_0^2}{2\mu_0 c}. \label{eq:intensOAP}
+\end{equation}
+\end{mdframed}
+donde $I$ es la intensidad (promedio temporal del módulo del vector de Poynting), $E_0$ la amplitud del campo eléctrico, $\mu_0$ la permeabilidad del vacío y $\langle\cdot\rangle$ denota el promedio temporal.
+La energía se propaga en la dirección de $\ve{k}$ y es proporcional al
+cuadrado de la amplitud del campo eléctrico.
+\end{proposicion}
+
+\begin{proof}
+Partimos de:
+\[
+  \ve{B}=\frac{1}{\omega}\,\ve{k}\times\ve{E}.
+\]
+Usando esta relación en el vector de Poynting:
+\[
+  \ve{S} = \frac{1}{\mu_0\omega}\,\ve{E}\times(\ve{k}\times\ve{E})
+         = \frac{1}{\mu_0\omega}\!\left[
+             \ve{k}E^2 - \ve{E}(\ve{k}\cdot\ve{E})
+           \right]
+         = \frac{E^2}{\mu_0\omega}\,\ve{k}.
+\]
+\noindent\normalfont\footnotesize(onda transversal: $\ve{k}\cdot\ve{E}=0$)\par\small\itshape
+Para una OAP real:
+\[
+  E(t)=E_0\cos(\omega t-\ve{k}\cdot\ve{r})
+  \quad\Rightarrow\quad
+  E^2(t)=E_0^2\cos^2(\omega t-\ve{k}\cdot\ve{r}).
+\]
+Entonces:
+\[
+  S(t)=\frac{k}{\mu_0\omega}E_0^2\cos^2(\omega t-\ve{k}\cdot\ve{r}).
+\]
+Promediando en un periodo:
+\[
+  \langle S\rangle = \frac{k}{\mu_0\omega}E_0^2\langle\cos^2\rangle
+  = \frac{k}{\mu_0\omega}E_0^2\cdot\frac{1}{2}
+  = \frac{E_0^2\,k}{2\mu_0\omega}
+  = \frac{E_0^2}{2\mu_0 c}.
+\]
+\end{proof}
+
+\subsubsection{Intensidad de una onda armónica no plana}
+
+Para $\ve{E}=\ve{E}_0(\ve{r})\,e^{i\omega t}$, $\ve{B}=\ve{B}_0(\ve{r})\,e^{i\omega t}$,
+tomando partes reales y promediando en el tiempo (los términos a $e^{\pm 2i\omega t}$
+se anulan en el promedio):
+
+\begin{mdframed}[style=resultado]
+\begin{equation}
+  \langle\ve{S}\rangle
+  = \frac{1}{2\mu_0}\operatorname{Re}\!\left(\ve{E}_0\times\ve{B}_0^*\right).
+  \label{eq:intensNP}
+\end{equation}
+\end{mdframed}
+
+\begin{observacion}
+La ecuación~\eqref{eq:intensNP} es el resultado general. Para una OAP,
+$\ve{B}_0=(k/\omega)\,\uvec{k}\times\ve{E}_0$, y se recupera~\eqref{eq:intensOAP}.
+\end{observacion}
+
+% ══════════════════════════════════════════════════════════════════════════
+\section{Tema 2: Interacción Radiación--Materia}
+% ══════════════════════════════════════════════════════════════════════════
+
+\subsection{Introducción}
+
+El Tema 1 estableció que la luz es una onda electromagnética armónica plana
+(OAP) que se propaga en el vacío y satisface las ecuaciones de Maxwell. Sus
+propiedades fundamentales son:
+
+\begin{itemize}
+  \item $\ve{B}\perp\ve{E}\perp\ve{k}$: onda transversal.
+  \item $k = \omega/c = 2\pi/\lambda$, con $\lambda\nu = c$.
+  \item $E = cB$.
+  \item Polarización definida por el vector de Jones
+        $\ve{J}=\bigl(E_{0x},\,E_{0y}\,e^{i\delta}\bigr)^T$.
+\end{itemize}
+
+Ahora pasamos a estudiar la \textbf{interacción de la radiación con la
+materia} desde el punto de vista clásico microscópico. La idea central es:
+
+\begin{enumerate}
+  \item La onda incidente ejerce una fuerza sobre las cargas del medio.
+  \item Estas cargas, al acelerarse, emiten a su vez radiación electromagnética.
+  \item La competencia entre la frecuencia incidente y la frecuencia de
+        resonancia del átomo determina qué cantidad de energía se intercambia.
+\end{enumerate}
+
+\begin{observacion}
+Trabajamos en el límite de átomos muy separados: la onda interacciona con
+cada uno de ellos de forma independiente (medio ópticamente diluido).
+\end{observacion}
+
+% ══════════════════════════════════════════════════════════════════════════
+\subsection{Cargas Libres y Cargas Ligadas}
+% ══════════════════════════════════════════════════════════════════════════
+
+\begin{definicion}[Carga libre]
+Una carga libre es aquella sin estructura interna relevante para el problema
+(típicamente un electrón). Se caracteriza por su carga $q$, masa $m$ y
+posición $\ve{r}(t)$. Puede moverse libremente bajo la acción de los campos.
+\end{definicion}
+
+\subsubsection{Aproximación para cargas libres}
+
+La fuerza de Lorentz sobre una carga libre es:
+\[
+  \ve{F} = q\ve{E} + q\ve{v}\times\ve{B}.
+\]
+Usando $E = c B$ y estimando los órdenes de magnitud:
+\[
+  \left|\frac{q\ve{v}\times\ve{B}}{q\ve{E}}\right|
+  = \frac{|\ve{v}||\ve{B}|\sin\alpha}{|\ve{E}|}
+  = \frac{|\ve{v}|\sin\alpha}{c} \ll 1
+  \quad \text{para } |\ve{v}| \ll c.
+\]
+
+\begin{proposicion}[Aproximación no relativista]
+Para cargas cuya velocidad es no relativista ($|\ve{v}|\ll c$), el término
+magnético es despreciable y la fuerza de Lorentz se reduce a:
+\begin{equation}
+  \ve{F} \approx q\ve{E}. \label{eq:fuerza_libre}
+\end{equation}
+\end{proposicion}
+
+\begin{definicion}[Carga ligada]
+Una carga ligada es aquella con estructura interna relevante (típicamente un
+átomo). Se describe mediante la distancia $\ve{r}(t)$ entre los centros de
+gravidad de las cargas positiva y negativa.
+
+El campo eléctrico externo polariza el átomo, separando el núcleo del
+electrón y generando un \emph{momento dipolar}:
+\begin{equation}
+  \mathbb{p} = q\,\ve{r}(t). \label{eq:dipolo}
+\end{equation}
+Una vez perturbado, el átomo tiende a volver a su posición de equilibrio
+mediante una \textbf{fuerza recuperadora} proporcional al desplazamiento:
+\begin{equation}
+  \ve{F}_\text{rec} = -m\omega_0^2\,\ve{r}, \label{eq:frecup}
+\end{equation}
+análoga a la de un oscilador armónico con frecuencia natural $\omega_0$.
+\end{definicion}
+
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[>=Stealth, scale=1.2]
+    % t=0: átomo en equilibrio
+    \begin{scope}[xshift=-3.5cm]
+      \node[circle, draw, thick, minimum size=14pt,
+            inner sep=0pt] (n0) at (0,0) {$+$};
+      \node[circle, draw, thick, fill=black!10,
+            minimum size=14pt, inner sep=0pt] (e0) at (0,0) {};
+    \end{scope}
+    % Campo E aplicado
+    \draw[->, very thick] (-1.0,-1.2) -- (1.0,-1.2)
+          node[right] {$\ve{E}$};
+    % t>0: átomo polarizado
+    \begin{scope}[xshift=3.5cm]
+      \node[circle, draw, thick, minimum size=14pt,
+            inner sep=0pt] (np) at (-0.5,0) {$+$};
+      \node[circle, draw, thick, fill=black!10,
+            minimum size=14pt, inner sep=0pt] (ep) at (0.6,0) {$-$};
+      \draw[->, thick] (-0.5,-0.6) -- (0.6,-0.6);
+    \end{scope}
+    \node[align=left, anchor=west] at (5.1,0.9)
+      {\footnotesize Izquierda: equilibrio ($t=0$, $\ve{r}=0$)\\
+       \footnotesize Derecha: átomo polarizado ($t>0$)\\
+       \footnotesize Flecha inferior: $\mathbb{p}=q\ve{r}$};
+  \end{tikzpicture}
+  \caption{Polarización de un átomo bajo un campo eléctrico externo.
+           En equilibrio ($t=0$) los centros de gravedad coinciden; bajo
+           $\ve{E}$ se separan generando un dipolo $\mathbb{p}=q\ve{r}$.}
+  \label{fig:dipolo}
+\end{figure}
+
+% ══════════════════════════════════════════════════════════════════════════
+\subsection{Modelo Atómico de Lorentz}
+% ══════════════════════════════════════════════════════════════════════════
+
+El modelo de Lorentz es un modelo \textbf{clásico} de la interacción
+radiación-materia. Describe el átomo como un oscilador armónico amortiguado
+y forzado.
+
+\subsubsection{Hipótesis del modelo}
+
+\begin{description}
+  \item[\textbf{H1. Estado fundamental estable.}]
+        Existe un estado natural en el que no se produce radiación. En
+        ausencia de excitación, los centros de gravedad de las cargas
+        positiva y negativa coinciden: $\ve{r}(t)=0$ y $\mathbb{p}=0$.
+
+  \item[\textbf{H2. Fuerza recuperadora interna.}]
+        Una fuerza lineal se opone a que el átomo sea desplazado de su
+        estado fundamental:
+        \[
+          \ve{F}_\text{rec} = -m\omega_0^2\,\ve{r},
+        \]
+        donde $\omega_0$ es la \emph{frecuencia de resonancia natural} del
+        átomo. Simboliza el carácter armónico del potencial interno.
+
+  \item[\textbf{H3. Sistema abierto: amortiguamiento.}]
+        Se introduce una fuerza de rozamiento que describe las pérdidas
+        irreversibles de energía (radiación emitida u otros mecanismos):
+        \[
+          \ve{F}_\text{roz} = -m\gamma\,\dot{\ve{r}},
+        \]
+        con coeficiente de amortiguamiento:
+        \begin{equation}
+          \gamma = \frac{q^2\omega^2}{6\pi\varepsilon_0 m c^3}.
+          \label{eq:gamma}
+        \end{equation}
+\end{description}
+
+\begin{observacion}
+De las ecuaciones de Maxwell sabemos que las cargas aceleradas emiten
+ondas electromagnéticas, y estas transportan energía. El término de
+amortiguamiento~\eqref{eq:gamma} es precisamente la tasa a la que el
+sistema pierde esa energía.
+\end{observacion}
+
+\subsubsection{Ecuación de evolución}
+
+Aplicando la segunda ley de Newton con las tres fuerzas descritas más la
+fuerza de Lorentz del campo incidente (y utilizando la
+aproximación~\eqref{eq:fuerza_libre}):
+
+\begin{mdframed}[style=resultado]
+\begin{equation}
+  \ddot{\ve{r}} + \gamma\,\dot{\ve{r}} + \omega_0^2\,\ve{r}
+  = \frac{q}{m}\ve{E}_0\,e^{i\omega t}.
+  \label{eq:lorentz_atom}
+\end{equation}
+\end{mdframed}
+
+Esta es la ecuación de un \textbf{oscilador armónico amortiguado y forzado}:
+\begin{itemize}
+  \item Término armónico: $-\omega_0^2\ve{r}$.
+  \item Término amortiguado: $-\gamma\dot{\ve{r}}$.
+  \item Forzamiento: $(q/m)\ve{E}_0\,e^{i\omega t}$.
+\end{itemize}
+
+\begin{observacion}
+Para \emph{cargas libres} ($\omega_0=0$) la ecuación~\eqref{eq:lorentz_atom}
+se recupera con $\ve{r}$ como posición absoluta de la carga.
+Para \emph{cargas ligadas} $\ve{r}$ es la separación entre centros de
+gravidad.
+\end{observacion}
+
+\subsubsection{Aproximaciones para resolver la ecuación}
+
+La ecuación~\eqref{eq:lorentz_atom} se simplifica con dos aproximaciones:
+
+\begin{description}
+  \item[\textbf{Ap. 1: Aproximación dipolar.}]
+        Se ignora la dependencia espacial del campo eléctrico en la posición
+        del electrón. Esto está justificado porque:
+        \[
+          k\cdot r \sim \frac{2\pi}{\lambda}\cdot r
+          \approx \frac{1\,\text{\AA}}{400\,\text{nm}} \approx 2.5\times10^{-4} \ll 1,
+        \]
+        por lo que $e^{-i\ve{k}\cdot\ve{r}}\approx 1$ y el campo actúa
+        uniformemente sobre el átomo: $\ve{E}(\ve{r},t)\approx\ve{E}_0 e^{i\omega t}$.
+
+  \item[\textbf{Ap. 2: Despreciar el campo magnético.}]
+        Usando $B=E/c$ y la aproximación no relativista, el término magnético
+        de la fuerza de Lorentz es despreciable frente al eléctrico
+        (ecuación~\eqref{eq:fuerza_libre}).
+\end{description}
+
+\subsubsection{Solución de la ecuación de evolución}
+
+\begin{proposicion}[Solución estacionaria]
+La solución particular de~\eqref{eq:lorentz_atom} en régimen estacionario es:
+\begin{equation}
+  \ve{r}(t) = \frac{q/m}{\omega_0^2 - \omega^2 + i\gamma\omega}
+              \,\ve{E}_0\,e^{i\omega t}. \label{eq:sol_lorentz}
+\end{equation}
+\end{proposicion}
+
+\begin{proof}
+Proponemos la solución armónica:
+\[
+  \ve{r}(t) = \ve{r}_0\,e^{i\omega t}.
+\]
+Entonces:
+\[
+  \dot{\ve{r}}=i\omega\ve{r}_0e^{i\omega t},
+  \qquad
+  \ddot{\ve{r}}=-\omega^2\ve{r}_0e^{i\omega t}.
+\]
+Sustituyendo en~\eqref{eq:lorentz_atom}:
+\[
+  \bigl(-\omega^2 + i\gamma\omega + \omega_0^2\bigr)\ve{r}_0\,e^{i\omega t}
+  = \frac{q}{m}\ve{E}_0\,e^{i\omega t}.
+\]
+Simplificando $e^{i\omega t}$ y despejando $\ve{r}_0$:
+\[
+  \ve{r}_0 = \frac{q/m}{\omega_0^2 - \omega^2 + i\gamma\omega}\,\ve{E}_0.
+\]
+\end{proof}
+
+\subsubsection{Análisis de la solución: desfase}
+
+Separando $r_0$ en partes real e imaginaria (con $E_0$ real):
+\[
+  r_0 = \frac{q}{m}\,E_0\left[
+    \frac{\omega_0^2-\omega^2}{(\omega_0^2-\omega^2)^2+\gamma^2\omega^2}
+    - i\frac{\gamma\omega}{(\omega_0^2-\omega^2)^2+\gamma^2\omega^2}
+  \right] = |r_0|\,e^{-i\alpha},
+\]
+con el ángulo de desfase:
+\begin{equation}
+  \tan\alpha = \frac{\gamma\omega}{\omega_0^2-\omega^2}. \label{eq:desfase}
+\end{equation}
+El módulo de la amplitud de oscilación es:
+\begin{equation}
+  |r_0| = \frac{(q/m)\,E_0}
+  {\sqrt{(\omega_0^2-\omega^2)^2+\gamma^2\omega^2}},
+  \qquad \mathbb{p}_0 = q\,r_0.
+  \label{eq:modulo_lorentz}
+\end{equation}
+
+\medskip
+\begin{center}
+\begin{tabularx}{0.98\linewidth}{@{}L{2.5cm}L{2.8cm}L{1.4cm}Y@{}}
+  \toprule
+  Régimen & Condición & $\alpha$ & Interpretación \\
+  \midrule
+  En fase       & $\omega \ll \omega_0$ & $0$      & Campo y movimiento en fase \\
+  Resonancia    & $\omega = \omega_0$   & $\pi/2$  & Transferencia máxima de energía \\
+  Oposición     & $\omega \gg \omega_0$ & $\pi$    & Campo y movimiento en oposición \\
+  Carga libre   & $\omega_0 = 0$        & $\pi$    & \\
+  \bottomrule
+\end{tabularx}
+\end{center}
+
+% ══════════════════════════════════════════════════════════════════════════
+\subsection{Potencia Transferida a la Carga}
+% ══════════════════════════════════════════════════════════════════════════
+
+\begin{definicion}[Potencia transferida]
+La potencia instantánea que el campo electromagnético transfiere a la carga
+es el trabajo que la fuerza de Lorentz realiza por unidad de tiempo:
+\[
+  W_\text{inst} = \ve{F}\cdot\dot{\ve{r}} \approx q\ve{E}\cdot\dot{\ve{r}}.
+\]
+Al ser una cantidad oscilatoria, se toma el promedio temporal, análogamente
+a como se hace con el vector de Poynting:
+\[
+  \langle\ve{S}\rangle = \frac{1}{2\mu_0}\operatorname{Re}(\ve{E}_0\times\ve{B}_0^*).
+\]
+\end{definicion}
+
+\begin{proposicion}[Potencia media transferida]
+La potencia media transferida a la carga es:
+\begin{mdframed}[style=resultado]
+\begin{equation}
+  \langle W\rangle = \frac{q^2}{2m}
+  \frac{\gamma\omega^2}{\bigl(\omega_0^2-\omega^2\bigr)^2+\gamma^2\omega^2}
+  \,E_0^2. \label{eq:potencia_transferida}
+\end{equation}
+\end{mdframed}
+\end{proposicion}
+
+\begin{proof}
+Usando la regla del promedio para productos de campos armónicos:
+\[
+  \langle W\rangle = \frac{1}{2}\operatorname{Re}\{q\ve{E}\cdot\dot{\ve{r}}^*\}.
+\]
+Tomamos:
+\[
+  \ve{E} = \ve{E}_0 e^{i\omega t},
+  \qquad
+  \dot{\ve{r}}^* = (-i\omega)\ve{r}_0^* e^{-i\omega t}.
+\]
+\[
+  \langle W\rangle = \frac{1}{2}\operatorname{Re}\{q E_0\,e^{i\omega t}
+  \cdot(-i\omega) r_0^* e^{-i\omega t}\}
+  = \frac{q\omega E_0}{2}\operatorname{Im}\{r_0^*\}.
+\]
+Tomando la parte imaginaria de $r_0$:
+\[
+  r_0=\frac{q/m}{\omega_0^2-\omega^2+i\gamma\omega}E_0
+  =\frac{q}{m}\frac{\omega_0^2-\omega^2-i\gamma\omega}
+    {(\omega_0^2-\omega^2)^2+\gamma^2\omega^2}E_0,
+\]
+\[
+  \operatorname{Im}\{r_0^*\}
+  = \frac{q/m\cdot\gamma\omega}{(\omega_0^2-\omega^2)^2+\gamma^2\omega^2}E_0.
+\]
+Sustituyendo se obtiene~\eqref{eq:potencia_transferida}.
+\end{proof}
+
+\begin{observacion}
+La potencia transferida tiene carácter dispersivo en $\omega$: es máxima
+cuando $\omega\approx\omega_0$ (resonancia) y decrece rápidamente fuera de
+ella.
+\end{observacion}
+
+% ══════════════════════════════════════════════════════════════════════════
+\subsection{Potencia Esparcida por la Carga}
+% ══════════════════════════════════════════════════════════════════════════
+
+\subsubsection{Tipos de medios ópticos}
+
+\begin{definicion}[Medio ópticamente diluido]
+Un medio es \emph{ópticamente diluido} cuando el número de partículas por
+volumen de longitud de onda es pequeño:
+\[
+  \frac{N_\text{átomos}}{\lambda^3} \leq 1.
+\]
+Las cargas están muy separadas entre sí y no interactúan mutuamente. Cada
+átomo puede tratarse de forma independiente.
+\end{definicion}
+
+\begin{definicion}[Medio ópticamente denso]
+Un medio es \emph{ópticamente denso} cuando:
+\[
+  \frac{N_\text{átomos}}{\lambda^3} > 1.
+\]
+Las interacciones entre cargas producen efectos constructivos o destructivos
+(interferencias, dispersión, absorción).
+\end{definicion}
+
+\subsubsection{Esparcimiento (\emph{scattering})}
+
+En un medio diluido, la potencia reemitida por la carga es igual a la
+potencia que el campo le transfiere. Sustituyendo $\gamma$ de~\eqref{eq:gamma}
+en~\eqref{eq:potencia_transferida}:
+
+\begin{mdframed}[style=resultado]
+\begin{equation}
+  P_\text{esp} = A\,
+  \frac{\omega^4}{\bigl(\omega_0^2-\omega^2\bigr)^2+\gamma^2\omega^2},
+  \qquad
+  A = \frac{q^4 E_0^2}{12\pi\varepsilon_0 m^2 c^3} = \mathrm{cte}.
+  \label{eq:P_esp}
+\end{equation}
+\end{mdframed}
+
+Este fenómeno —la reemisión de radiación en todas las direcciones por una
+carga excitada— se denomina \textbf{esparcimiento} o \emph{scattering}.
+
+\subsubsection{Casos particulares}
+
+Analizamos tres regímenes de frecuencia:
+
+\paragraph{Frecuencia muy alta: $\omega\gg\omega_0$}
+
+\[
+  \bigl(\omega_0^2-\omega^2\bigr)^2+\gamma^2\omega^2 \approx \omega^4,
+\]
+\begin{equation}
+  P_\text{esp} \approx A = \mathrm{cte}. \label{eq:P_alta_freq}
+\end{equation}
+La potencia reemitida es constante e independiente de $\omega$. La carga
+responde como libre ($\omega_0\to 0$).
+
+\paragraph{Resonancia: $\omega=\omega_0$}
+
+\[
+  \bigl(\omega_0^2-\omega^2\bigr)^2+\gamma^2\omega^2 \approx \gamma^2\omega_0^2,
+\]
+\begin{equation}
+  P_\text{esp} \approx A\,\frac{\omega_0^2}{\gamma^2}. \label{eq:P_resonancia}
+\end{equation}
+La potencia es muy grande (máximo), ya que $\gamma\ll\omega_0$ en general.
+Su valor depende de la frecuencia propia del átomo.
+
+\paragraph{Frecuencia muy baja: $\omega\ll\omega_0$ — Esparcimiento de Rayleigh}
+
+\[
+  \bigl(\omega_0^2-\omega^2\bigr)^2+\gamma^2\omega^2 \approx \omega_0^4,
+\]
+\begin{mdframed}[style=resultado]
+\begin{equation}
+  P_\text{esp} \approx A\,\frac{\omega^4}{\omega_0^4}
+  \propto \frac{1}{\lambda^4}. \label{eq:rayleigh}
+\end{equation}
+\end{mdframed}
+La potencia esparcida crece con la cuarta potencia de la frecuencia
+(o inversamente con $\lambda^4$). Este es el \textbf{esparcimiento de
+Rayleigh}.
+
+\medskip
+\begin{center}
+\begin{tabularx}{0.98\linewidth}{@{}L{2.5cm}L{2.8cm}Y L{2.7cm}@{}}
+  \toprule
+  Régimen & Condición & $P_\text{esp}$ & Nombre \\
+  \midrule
+  Alta frecuencia & $\omega\gg\omega_0$ & $\approx A$              & -- \\
+  Resonancia      & $\omega=\omega_0$   & $\approx A\omega_0^2/\gamma^2$ & Resonancia óptica \\
+  Baja frecuencia & $\omega\ll\omega_0$ & $\propto\omega^4/\omega_0^4$   & Rayleigh \\
+  \bottomrule
+\end{tabularx}
+\end{center}
+
+% ══════════════════════════════════════════════════════════════════════════
+\subsection{Esparcimiento del Cielo — Color del Cielo}
+% ══════════════════════════════════════════════════════════════════════════
+
+\subsubsection{Esparcimiento de Rayleigh en la atmósfera}
+
+La atmósfera está compuesta principalmente por moléculas de $\mathrm{N_2}$,
+$\mathrm{O_2}$, $\mathrm{H_2O}$, $\mathrm{CO_2}$, cuya frecuencia de
+resonancia se encuentra en el ultravioleta:
+\[
+  \omega_0^\text{atm} \sim 3\times10^{15}\ \text{rad/s}
+  \quad (\lambda_0\approx 300\ \text{nm}).
+\]
+Como la luz visible cumple $\omega_\text{vis}\ll\omega_0^\text{atm}$,
+se aplica el régimen de Rayleigh~\eqref{eq:rayleigh}:
+\[
+  P_\text{esp} \propto \omega^4 \propto \frac{1}{\lambda^4}.
+\]
+A menor longitud de onda, mayor esparcimiento:
+
+\begin{center}
+\begin{tabularx}{0.9\linewidth}{@{}L{2.8cm}L{2.4cm}Y@{}}
+  \toprule
+  Color & $\lambda$ (nm) & $\omega$ relativo \\
+  \midrule
+  Violeta/Azul & 400--490 & mayor $\omega$ → mayor esparcimiento \\
+  Verde        & 555       &  \\
+  Amarillo     & 589       &  \\
+  Rojo         & 630--750 & menor $\omega$ → menor esparcimiento \\
+  \bottomrule
+\end{tabularx}
+\end{center}
+
+\subsubsection{Los tres casos del cielo}
+
+\begin{description}
+  \item[\textbf{Caso 1: Observador mirando al Sol directamente.}]
+        La luz solar (blanca) llega al observador sin atravesar grandes
+        capas de atmósfera. Los colores se esparcen poco por la trayectoria
+        directa, pero el azul y violeta se esparcen lateralmente hacia el
+        resto del cielo. La componente que llega al observador se enriquece
+        en los colores menos esparcidos: \textbf{amarillo-blanco}.
+
+  \item[\textbf{Caso 2: Observador mirando en una dirección oblicua.}]
+        La luz llega al observador \emph{indirectamente}, tras haberse
+        esparcido en la atmósfera. Los fotones azules y violetas son los más
+        esparcidos y, por tanto, los que con mayor probabilidad alcanzan al
+        observador desde cualquier dirección lateral. El cielo aparece
+        \textbf{azul}.
+
+  \item[\textbf{Caso 3: Atardecer (luz rasante).}]
+        La luz solar debe atravesar un espesor de atmósfera unas 40 veces
+        mayor que al mediodía. Los fotones azules y violetas se esparcen
+        casi completamente a lo largo de ese trayecto y son absorbidos;
+        solo llegan al observador los colores de baja frecuencia. El cielo
+        y el Sol aparecen \textbf{naranja-rojizo}.
+\end{description}
+
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[>=Stealth, scale=1.1]
+    % Tierra
+    \draw[thick] (-4.5, -0.5) -- (4.5, -0.5);
+
+    % Atmósfera (banda)
+    \draw[thick, dashed] (-4.5, 1.2) -- (4.5, 1.2);
+
+    % Sol (derecha, arriba)
+    \filldraw[black] (4.0, 2.5) circle (5pt);
+
+    % Caso 1: rayo directo
+    \draw[->, thick] (4.0, 2.5) -- (0.8, -0.5);
+
+    % Caso 2: rayo esparcido
+    \draw[->, thick] (4.0, 2.5) -- (0.0, 0.9);
+    \draw[->, thick, dashed] (0.0, 0.9) -- (-1.5, -0.5);
+    \filldraw (0.0, 0.9) circle (2pt);
+
+    % Caso 3: rayo rasante (atardecer)
+    \draw[->, thick] (-4.0, 2.0) -- (-2.5, 0.7);
+    \filldraw (-2.5, 0.7) circle (2pt);
+    \draw[->, thick] (-2.5, 0.7) -- (-1.0, -0.5);
+
+    % Observadores
+    \filldraw (0.8,-0.5) circle (2pt) node[below=3pt] {Obs. 1};
+    \filldraw (-1.5,-0.5) circle (2pt) node[below=3pt] {Obs. 2};
+    \filldraw (-1.0,-0.5) circle (2pt) node[below=3pt] {Obs. 3};
+    \node[align=left, anchor=west] at (5.0,1.1)
+      {\footnotesize Línea base: superficie terrestre\\
+       \footnotesize Línea discontinua: atmósfera\\
+       \footnotesize Caso 1 (Obs. 1): luz directa\\
+       \footnotesize Caso 2 (Obs. 2): luz azul esparcida\\
+       \footnotesize Caso 3 (Obs. 3): trayectoria rojiza};
+  \end{tikzpicture}
+  \caption{Esquema del esparcimiento de Rayleigh para los tres casos:
+           visión directa del Sol (Obs.~1), cielo lateral (Obs.~2)
+           y atardecer (Obs.~3).}
+  \label{fig:rayleigh_cielo}
+\end{figure}
+
+% ══════════════════════════════════════════════════════════════════════════
+\subsection{Polarización de la Luz Esparcida}
+% ══════════════════════════════════════════════════════════════════════════
+
+\begin{definicion}[Dipolo oscilante]
+Cuando un campo eléctrico linealmente polarizado incide sobre una carga, la
+excita a oscilar a lo largo de la dirección de $\ve{E}$. El electrón
+acelerado actúa como un \emph{dipolo oscilante}, emitiendo radiación en
+todas las direcciones salvo a lo largo del propio eje de oscilación.
+\end{definicion}
+
+\subsubsection{Distribución angular de la emisión}
+
+La potencia emitida por un dipolo oscilante en función del ángulo $\theta$
+(medido respecto al eje de oscilación) es:
+\begin{equation}
+  \frac{dP}{d\Omega} \propto \sin^2\theta. \label{eq:dipolo_angular}
+\end{equation}
+donde $\Omega$ es el ángulo sólido de observación y $\theta$ el ángulo medido respecto al eje de oscilación del dipolo.
+
+Consecuencias:
+\begin{itemize}
+  \item En la dirección $\theta=0^{\circ}$ (eje de oscilación): $dP/d\Omega=0$.
+        No hay emisión.
+  \item En la dirección $\theta=90^{\circ}$ (perpendicular al eje): emisión
+        máxima.
+\end{itemize}
+
+\subsubsection{Polarización del cielo}
+
+Cuando luz solar no polarizada incide sobre las moléculas de la atmósfera,
+cada molécula responde en el plano de $\ve{E}$. Para un observador que mire
+en una dirección perpendicular al Sol:
+
+\begin{proposicion}[Polarización de la luz esparcida]
+La luz esparcida en dirección perpendicular al rayo solar está
+\textbf{completamente polarizada linealmente}, con $\ve{E}$ perpendicular
+al plano que contiene el Sol, la molécula y el observador.
+\end{proposicion}
+
+\begin{proof}
+Descomponemos la luz no polarizada en dos componentes lineales ortogonales:
+\[
+  \ve{E}_\parallel,
+  \qquad
+  \ve{E}_\perp.
+\]
+La componente $\ve{E}_\parallel$ induce un dipolo oscilando en el plano
+Sol--molécula--observador.
+Para esa componente, la dirección hacia el observador coincide con el eje de
+oscilación del dipolo, de modo que:
+\[
+  \theta=0^{\circ}
+  \quad\Rightarrow\quad
+  \left.\frac{dP}{d\Omega}\right|_{\parallel}\propto \sin^2\theta=0.
+\]
+
+La componente $\ve{E}_\perp$ induce un dipolo perpendicular a ese plano.
+Hacia el observador, en ese caso:
+\[
+  \theta=90^{\circ},
+\]
+por tanto:
+\[
+  \left.\frac{dP}{d\Omega}\right|_{\perp}\propto \sin^2\theta=1.
+\]
+Así, la radiación observada procede solo de $\ve{E}_\perp$.
+Por tanto, la luz observada queda polarizada en la dirección $\ve{E}_\perp$.
+\end{proof}
+
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[>=Stealth, scale=1.2]
+    % Sol
+    \filldraw (0,0) circle (4pt);
+
+    % Molécula
+    \filldraw (3.5,0) circle (3pt);
+
+    % Observador (perpendicular)
+    \draw[->, thick] (3.5, 0) -- (3.5, -1.8);
+
+    % Rayo incidente
+    \draw[->, thick] (0,0) -- (3.2,0);
+
+    % E_perp (perpendicular al plano): doble flecha en la molécula
+    \draw[<->, very thick] (3.5, 0.5) -- (3.5, -0.5);
+
+    % E_parallel: no llega al obs.
+    \draw[<->, thick, dashed] (3.0, 0) -- (4.0, 0);
+    \node[align=left, anchor=west] at (5.0,1.0)
+      {\footnotesize Punto izquierdo: Sol\\
+       \footnotesize Punto central: molécula\\
+       \footnotesize Flecha vertical: observador\\
+       \footnotesize Segmento sólido: componente $\ve{E}_\perp$\\
+       \footnotesize Segmento discontinuo: $\ve{E}_\parallel\to 0$};
+  \end{tikzpicture}
+  \caption{Polarización de la luz esparcida a $90^{\circ}$ del Sol.
+           Solo la componente $\ve{E}_\perp$ llega al observador.}
+  \label{fig:pol_esparcida}
+\end{figure}
+
+\begin{observacion}
+Este efecto es observable experimentalmente: el cielo lateral al Sol
+(a $90^{\circ}$) está parcialmente polarizado y puede detectarse con un
+filtro polarizador. Las abejas y otros insectos usan esta polarización
+para orientarse.
+\end{observacion}
+
+% ══════════════════════════════════════════════════════════════════════════
+\section{Tema 3: Propagación de Ondas en Medios Materiales}
+% ══════════════════════════════════════════════════════════════════════════
+
+\subsection{Introducción}
+
+Los temas anteriores estudiaron la propagación de la luz en el vacío y su
+interacción con cargas individuales. Ahora afrontamos la pregunta más
+general: \textbf{¿cómo se propaga la luz dentro de un medio material?}
+
+Los objetivos del tema son dos:
+\begin{enumerate}
+  \item Resolver las ecuaciones de Maxwell generales en la materia para
+        obtener una \emph{permitividad dieléctrica generalizada}
+        $\varepsilon_\text{gen}$ que clasifique los medios.
+  \item Obtener el \emph{índice de refracción complejo} $n_c$, parámetro
+        que determina completamente la propagación de la luz en la materia
+        (velocidad de fase, atenuación, absorción).
+\end{enumerate}
+
+\begin{observacion}
+Las ecuaciones de Maxwell siguen siendo la base, pero ahora las fuentes
+$\rho$ y $\ve{j}$ incluyen contribuciones tanto de cargas libres como de
+cargas ligadas (polarización y magnetización del medio).
+\end{observacion}
+
+% ══════════════════════════════════════════════════════════════════════════
+\subsection{Medios Ópticamente Densos}
+% ══════════════════════════════════════════════════════════════════════════
+
+\begin{definicion}[Medio ópticamente diluido]
+Un medio es ópticamente diluido cuando el número de átomos por volumen de
+longitud de onda es pequeño:
+\[
+  \frac{N_\text{átomos}}{\lambda^3} \leq 1.
+\]
+Las cargas están muy separadas y no interactúan entre sí. Cada átomo puede
+tratarse de forma independiente (Tema~2).
+\end{definicion}
+
+\begin{definicion}[Medio ópticamente denso]
+Un medio es ópticamente denso cuando:
+\[
+  \frac{N_\text{átomos}}{\lambda^3} > 1.
+\]
+Las interacciones entre cargas producen efectos constructivos o destructivos.
+El campo total sobre cada átomo es la suma del campo incidente y los campos
+reemitidos por todos los demás:
+\begin{equation}
+  \ve{E}_\text{tot} = \ve{E}_\text{inc} + \sum_{i=1}^{N} \ve{E}_i.
+  \label{eq:campo_total}
+\end{equation}
+\end{definicion}
+
+\begin{ejemplo}[Densidad óptica según $\lambda$]
+Consideramos un sólido con densidad $10^{22}\ \text{átomos/cm}^3$.
+
+\begin{itemize}
+  \item Para $\lambda = 600\ \text{nm}$:
+        $N/\lambda^3 = 10^{22}/(600\times10^{-7})^3\ \text{cm}^{-3}
+        \approx 4.6\times10^{3} \gg 1$. \textbf{Medio denso.}
+  \item Para $\lambda = 0{,}1\ \text{nm}$ (rayos X):
+        $N/\lambda^3 = 10^{22}/(10^{-8})^3 = 10^{22}/10^{-24}
+        = 10^{46}\ \text{cm}^{-3}$.
+        Todos los átomos interactúan coherentemente.
+\end{itemize}
+\end{ejemplo}
+
+% ══════════════════════════════════════════════════════════════════════════
+\subsection{Ecuaciones de Maxwell en la Materia: Ecuaciones Macroscópicas}
+% ══════════════════════════════════════════════════════════════════════════
+
+\subsubsection{Del nivel microscópico al macroscópico}
+
+Las ecuaciones de Maxwell son exactas a nivel microscópico, pero contienen
+las contribuciones de cada carga individual. Para describir la materia a
+nivel macroscópico es necesario \textbf{promediar espacialmente} sobre un
+volumen $\Delta V$ que contenga muchos átomos pero sea mucho menor que
+$\lambda^3$:
+\[
+  a^3 \ll \Delta V \ll \lambda^3,
+\]
+donde $a$ es el tamaño atómico. Las derivadas y el promedio conmutan:
+\begin{equation}
+  \left\langle \pdv{\ve{E}}{x}\right\rangle
+  = \pdv{\langle\ve{E}\rangle}{x}. \label{eq:conmuta}
+\end{equation}
+Por lo tanto, las ecuaciones de Maxwell promediadas tienen la misma forma
+que las microscópicas, pero con $\rho$ y $\ve{j}$ promediados.
+
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[>=Stealth, scale=1.0]
+    \draw[rounded corners, fill=gray!10] (0,0) rectangle (2.8,1.2);
+    \node at (1.4,0.8) {$a^3$};
+    \node[below=3pt] at (1.4,0) {\footnotesize escala atómica};
+
+    \draw[rounded corners, fill=gray!6] (4.2,0) rectangle (8.0,1.2);
+    \node at (6.1,0.8) {$\Delta V$};
+    \node[below=3pt] at (6.1,0) {\footnotesize volumen de promedio};
+
+    \draw[rounded corners, fill=gray!3] (9.4,0) rectangle (13.2,1.2);
+    \node at (11.3,0.8) {$\lambda^3$};
+    \node[below=3pt] at (11.3,0) {\footnotesize escala óptica};
+
+    \draw[->, thick] (2.9,0.6) -- (4.1,0.6) node[midway, above=3pt] {$\ll$};
+    \draw[->, thick] (8.1,0.6) -- (9.3,0.6) node[midway, above=3pt] {$\ll$};
+  \end{tikzpicture}
+  \caption{Jerarquía de escalas usada para pasar de la descripción
+           microscópica a la macroscópica: $a^3 \ll \Delta V \ll \lambda^3$.}
+  \label{fig:escalas_promedio}
+\end{figure}
+
+\subsubsection{Descomposición de cargas y corrientes}
+
+\begin{proposicion}[Densidad de carga promediada]
+La densidad de carga total se descompone en cargas libres y ligadas:
+\begin{equation}
+  \langle\rho\rangle = \rho_\text{libre} - \div\ve{P}, \label{eq:rho_macro}
+\end{equation}
+donde $\ve{P}$ es la \emph{polarización eléctrica} (momento dipolar por
+unidad de volumen):
+\begin{equation}
+  \ve{P} = \frac{1}{\Delta V}\sum_{j\in\Delta V} q_j\,\ve{r}_j.
+  \label{eq:polarizacion}
+\end{equation}
+\end{proposicion}
+
+\begin{proposicion}[Densidad de corriente promediada]
+La densidad de corriente total se descompone en:
+\begin{equation}
+  \langle\ve{j}\rangle = \ve{j}_\text{libre}
+  + \curl\ve{M} + \pdv{\ve{P}}{t}, \label{eq:j_macro}
+\end{equation}
+donde $\ve{M}$ es la \emph{magnetización} (momento dipolar magnético por
+unidad de volumen).
+\end{proposicion}
+
+\subsubsection{Ecuaciones de Maxwell macroscópicas}
+
+Sustituyendo~\eqref{eq:rho_macro} y~\eqref{eq:j_macro} en las ecuaciones
+microscópicas y definiendo los vectores auxiliares:
+\begin{equation}
+  \ve{D} = \varepsilon_0\ve{E} + \ve{P}, \qquad
+  \ve{H} = \frac{1}{\mu_0}\ve{B} - \ve{M}, \label{eq:DH}
+\end{equation}
+donde $\ve{D}$ es el desplazamiento eléctrico, $\ve{H}$ el campo magnético auxiliar, $\ve{P}$ la polarización eléctrica y $\ve{M}$ la magnetización del medio.
+se obtienen las \textbf{ecuaciones de Maxwell macroscópicas}:
+
+\begin{mdframed}[style=resultado]
+\begin{align}
+  \div\ve{D} &= \rho_\text{libre}, \label{eq:maxmat1}\\[4pt]
+  \div\ve{B} &= 0, \label{eq:maxmat2}\\[4pt]
+  \curl\ve{E} + \pdv{\ve{B}}{t} &= \ve{0}, \label{eq:maxmat3}\\[4pt]
+  \curl\ve{H} &= \ve{j}_\text{libre} + \pdv{\ve{D}}{t}. \label{eq:maxmat4}
+\end{align}
+\end{mdframed}
+
+% ══════════════════════════════════════════════════════════════════════════
+\subsection{Relaciones de Constitución y Permitividad Generalizada}
+% ══════════════════════════════════════════════════════════════════════════
+
+Las ecuaciones de Maxwell macroscópicas~\eqref{eq:maxmat1}--\eqref{eq:maxmat4}
+contienen cuatro vectores ($\ve{D}$, $\ve{E}$, $\ve{B}$, $\ve{H}$) y la
+densidad de corriente libre. Las \emph{relaciones de constitución} conectan
+estos vectores mediante propiedades del medio.
+
+\subsubsection{Primera relación: permitividad eléctrica}
+
+La respuesta dieléctrica del medio es lineal con el campo:
+$\ve{P} = \varepsilon_0\chi_e\ve{E}$, donde $\chi_e$ es la susceptibilidad
+eléctrica. Entonces:
+\begin{equation}
+  \ve{D} = \varepsilon_0(1+\chi_e)\ve{E}
+         = \varepsilon_0\varepsilon_r\ve{E}
+         = \varepsilon\ve{E}, \qquad
+  \varepsilon_r = 1+\chi_e. \label{eq:const1}
+\end{equation}
+donde $\varepsilon_r$ es la permitividad relativa del medio.
+
+\subsubsection{Segunda relación: permeabilidad magnética}
+
+Análogamente, $\ve{M} = \chi_m\ve{H}$:
+\begin{equation}
+  \ve{B} = \mu_0(1+\chi_m)\ve{H}
+         = \mu_0\mu_r\ve{H}
+         = \mu\ve{H}, \qquad
+  \mu_r = 1+\chi_m. \label{eq:const2}
+\end{equation}
+donde $\mu_r$ es la permeabilidad relativa del medio.
+
+\subsubsection{Tercera relación: conductividad (ley de Ohm)}
+
+Para cargas libres, la ley de Ohm establece:
+\begin{equation}
+  \ve{j}_\text{libre}(\ve{r},t) = \sigma\ve{E}(\ve{r},t). \label{eq:ohm}
+\end{equation}
+donde $\sigma$ es la conductividad eléctrica del medio.
+Aplicando el teorema de conservación de carga y trabajando con ondas
+armónicas ($\partial/\partial t \to i\omega$):
+\[
+  \pdv{\rho_\text{libre}}{t} + \div\ve{j}_\text{libre} = 0
+  \implies \rho_\text{libre} = \div\!\left(\frac{i\sigma}{\omega}\ve{E}\right).
+\]
+
+\subsubsection{Permitividad dieléctrica generalizada}
+
+Sustituyendo las tres relaciones de constitución en la
+ecuación~\eqref{eq:maxmat4} y trabajando con ondas armónicas, el término
+de corriente libre y el de desplazamiento se pueden combinar:
+\[
+  \curl\ve{H} = \ve{j}_\text{libre} + \pdv{(\varepsilon\ve{E})}{t}
+  = \sigma\ve{E} + i\omega\varepsilon\ve{E}
+  = i\omega\!\left(\varepsilon - \frac{i\sigma}{\omega}\right)\ve{E}.
+\]
+Las ecuaciones de Maxwell en la materia para ondas armónicas se escriben
+de forma idéntica a las del vacío pero con la \emph{permitividad
+dieléctrica generalizada}:
+
+\begin{mdframed}[style=resultado]
+\begin{equation}
+  \varepsilon_\text{gen} = \varepsilon - \frac{i\sigma}{\omega}
+  = \varepsilon' + i\varepsilon'' - \frac{i\sigma}{\omega},
+  \label{eq:epsilongen}
+\end{equation}
+\end{mdframed}
+
+donde $\varepsilon'$ y $\varepsilon''$ son las partes real e imaginaria de
+$\varepsilon$, debidas a las cargas ligadas, y el término $-i\sigma/\omega$
+proviene de las cargas libres.
+
+Las ecuaciones de Maxwell en la materia quedan entonces:
+\begin{align}
+  \div(\varepsilon_\text{gen}\ve{E}) &= 0, \label{eq:mat1}\\[4pt]
+  \div\ve{H} &= 0, \label{eq:mat2}\\[4pt]
+  \curl\ve{E} &= -i\omega\mu\ve{H}, \label{eq:mat3}\\[4pt]
+  \curl\ve{H} &= i\omega\varepsilon_\text{gen}\ve{E}. \label{eq:mat4}
+\end{align}
+
+El vector de Poynting en la materia es $\ve{S} = \ve{E}\times\ve{H}$.
+
+% ══════════════════════════════════════════════════════════════════════════
+\subsection{Clasificación Óptica de los Medios Materiales}
+% ══════════════════════════════════════════════════════════════════════════
+
+Toda la información sobre las propiedades ópticas del medio está contenida
+en $\varepsilon_\text{gen}(\ve{r},\omega)$, que determina frecuencia,
+dirección de propagación, velocidad, energía y polarización de la onda.
+
+\begin{center}
+\begin{tabularx}{0.95\linewidth}{@{}B{3.2cm}Y Y@{}}
+  \toprule
+  Clasificación & \textbf{Homogéneo} & \textbf{Inhomogéneo} \\
+  \midrule
+  Definición & $\varepsilon_\text{gen}\neq\varepsilon_\text{gen}(\ve{r})$ &
+               $\varepsilon_\text{gen}=\varepsilon_\text{gen}(\ve{r})$ \\
+  Ejemplo & Cristal, vidrio & Capas de aire a distinta $T$ \\
+  \bottomrule
+\end{tabularx}
+\end{center}
+
+\medskip
+\begin{center}
+\begin{tabularx}{0.95\linewidth}{@{}B{3.2cm}Y Y@{}}
+  \toprule
+  Clasificación & \textbf{Dispersivo} & \textbf{No dispersivo} \\
+  \midrule
+  Definición & $\varepsilon_\text{gen}=\varepsilon_\text{gen}(\omega)$ &
+               $\varepsilon_\text{gen}\neq\varepsilon_\text{gen}(\omega)$ \\
+  Nota & Todos los medios reales son dispersivos & Aproximación en
+         $\omega\gg\omega_0$ o $\omega\ll\omega_0$ \\
+  \bottomrule
+\end{tabularx}
+\end{center}
+
+\medskip
+\begin{center}
+\begin{tabularx}{0.95\linewidth}{@{}B{3.2cm}Y Y@{}}
+  \toprule
+  Clasificación & \textbf{Isótropo} & \textbf{Anisótropo} \\
+  \midrule
+  Definición & $\varepsilon_\text{gen}$ es un \textbf{escalar} &
+               $\varepsilon_\text{gen}$ es un \textbf{tensor} \\
+  Ejemplo & Vidrio, gas & Cristal birrefringente \\
+  \bottomrule
+\end{tabularx}
+\end{center}
+
+\medskip
+\begin{center}
+\begin{tabularx}{0.95\linewidth}{@{}B{3.2cm}Y Y@{}}
+  \toprule
+  Clasificación & \textbf{Conductor} & \textbf{No conductor} \\
+  \midrule
+  Definición & $\sigma\neq 0$ & $\sigma = 0$ \\
+  Consecuencia & $\varepsilon_\text{gen}$ compleja & $\varepsilon_\text{gen}$
+                 puede ser real \\
+  \bottomrule
+\end{tabularx}
+\end{center}
+
+\medskip
+\begin{center}
+\begin{tabularx}{0.95\linewidth}{@{}B{3.2cm}Y Y@{}}
+  \toprule
+  Clasificación & \textbf{Absorbente} & \textbf{Transparente} \\
+  \midrule
+  Definición & $\varepsilon_\text{gen}\notin\R$ & $\varepsilon_\text{gen}\in\R$ \\
+  Origen & $\sigma\neq 0$ y/o $\varepsilon''\neq 0$ & $\sigma=0$ y $\varepsilon''=0$ \\
+  \bottomrule
+\end{tabularx}
+\end{center}
+
+\begin{ejemplo}[Clasificación de un medio]
+Sea un medio con $\varepsilon_\text{gen} = \varepsilon_0\!\left(5 +
+\dfrac{i\cdot10^{13}}{\omega}\right)$.
+
+\medskip
+\begin{itemize}
+  \item $\varepsilon_\text{gen}\neq\varepsilon_\text{gen}(\ve{r})$:
+        \textbf{homogéneo}.
+  \item $\varepsilon_\text{gen}=\varepsilon_\text{gen}(\omega)$:
+        \textbf{dispersivo}.
+  \item $\varepsilon_\text{gen}$ escalar: \textbf{isótropo}.
+  \item Parte imaginaria $\neq 0$: \textbf{absorbente} (tiene conductividad
+        $\sigma = \varepsilon_0\cdot10^{13}\ \text{Hz}$).
+\end{itemize}
+\end{ejemplo}
+
+% ══════════════════════════════════════════════════════════════════════════
+\subsection{Propagación en Medios Homogéneos e Isótropos}
+% ══════════════════════════════════════════════════════════════════════════
+
+En un medio homogéneo ($\varepsilon_\text{gen}\neq\varepsilon_\text{gen}(\ve{r})$)
+e isótropo ($\varepsilon_\text{gen}$ escalar), buscamos soluciones armónicas
+de las ecuaciones de Maxwell.
+
+\subsubsection{Ecuación de Helmholtz}
+
+\begin{teorema}[Ecuación de Helmholtz]
+En un medio homogéneo e isótropo, el campo eléctrico satisface:
+\begin{mdframed}[style=resultado]
+\begin{equation}
+  \nabla^2\ve{E} + \frac{\omega^2}{c^2}n_c^2\,\ve{E} = 0,
+  \label{eq:helmholtz}
+\end{equation}
+\end{mdframed}
+donde el \emph{índice de refracción complejo} es:
+\begin{equation}
+  n_c = \sqrt{\mu_r\varepsilon_\text{gen}^r} = \eta - i\kappa,
+  \label{eq:nc}
+\end{equation}
+con $\varepsilon_\text{gen}^r = \varepsilon_\text{gen}/\varepsilon_0$,
+$\eta$ la parte real y $\kappa$ el \emph{coeficiente de absorción}.
+\end{teorema}
+
+\begin{proof}
+Aplicamos el rotacional a~\eqref{eq:mat3} y usamos~\eqref{eq:mat4}:
+\[
+  \curl(\curl\ve{E})
+  = -i\omega\mu(\curl\ve{H})
+  = -i\omega\mu\cdot i\omega\varepsilon_\text{gen}\ve{E}
+  = \omega^2\mu\varepsilon_\text{gen}\ve{E}.
+\]
+Además:
+\[
+  \div(\varepsilon_\text{gen}\ve{E})=0
+  \quad\Rightarrow\quad
+  \div\ve{E}=0.
+\]
+Entonces:
+\[
+  -\nabla^2\ve{E} = \omega^2\mu\varepsilon_\text{gen}\ve{E}.
+\]
+Con:
+\[
+  \mu = \mu_0\mu_r,
+  \qquad
+  \varepsilon_\text{gen} = \varepsilon_0\varepsilon_\text{gen}^r,
+  \qquad
+  \mu_0\varepsilon_0 = \frac{1}{c^2},
+\]
+y tomando $\mu_r\approx 1$ en frecuencias ópticas:
+\[
+  \nabla^2\ve{E} + \frac{\omega^2}{c^2}\varepsilon_\text{gen}^r\ve{E} = 0.
+\]
+Al identificar:
+\[
+  n_c^2 = \mu_r\varepsilon_\text{gen}^r \approx \varepsilon_\text{gen}^r,
+\]
+se obtiene~\eqref{eq:helmholtz}.
+\end{proof}
+
+\subsubsection{Solución: ondas armónicas planas con vector de onda complejo}
+
+Proponemos una solución de onda plana con \textbf{vector de onda complejo}:
+\[
+  \ve{k}_c = \ve{k} - i\ve{a},
+\]
+donde $\ve{k}$ es el vector de fase y $\ve{a}$ es el vector de atenuación.
+El campo resulta:
+\begin{equation}
+  \ve{E} = \ve{E}_0\,e^{i\omega t}\,e^{-i\ve{k}\cdot\ve{r}}\,e^{-\ve{a}\cdot\ve{r}}.
+  \label{eq:onda_compleja}
+\end{equation}
+Los frentes de \emph{fase constante} vienen dados por $\omega t - \ve{k}\cdot\ve{r} = \mathrm{cte}$,
+y los de \emph{amplitud constante} por $\ve{a}\cdot\ve{r}=\mathrm{cte}$.
+
+Sustituyendo en las ecuaciones de Maxwell~\eqref{eq:mat1}--\eqref{eq:mat4}
+con el reemplazo $\nabla\to -i\ve{k}_c$:
+
+\begin{center}
+\begin{tabularx}{0.95\linewidth}{@{}L{5.2cm}Y@{}}
+  \toprule
+  Ecuación & Resultado \\
+  \midrule
+  $\div(\varepsilon_\text{gen}\ve{E})=0$ & $\ve{k}_c\cdot\ve{E}=0$ \\
+  $\div\ve{H}=0$                          & $\ve{k}_c\cdot\ve{H}=0$ \\
+  $\curl\ve{E}=-i\omega\mu\ve{H}$         & $\ve{k}_c\times\ve{E}=\omega\mu\ve{H}$ \\
+  $\curl\ve{H}=i\omega\varepsilon_\text{gen}\ve{E}$ &
+    $\ve{k}_c\times\ve{H}=-\omega\varepsilon_\text{gen}\ve{E}$ \\
+  \bottomrule
+\end{tabularx}
+\end{center}
+
+\begin{proposicion}[Relaciones entre $k$, $a$, $\eta$ y $\kappa$]
+Aplicando $\ve{k}_c\times(\ve{k}_c\times\ve{E})$ y usando la identidad
+vectorial se obtienen:
+\begin{mdframed}[style=resultado]
+\begin{equation}
+  k^2 - a^2 = \frac{\omega^2}{c^2}(\eta^2-\kappa^2), \qquad
+  \ve{k}\cdot\ve{a} = \frac{\omega^2}{c^2}\,\eta\kappa.
+  \label{eq:relaciones_ka}
+\end{equation}
+\end{mdframed}
+\end{proposicion}
+
+\begin{proof}
+Partimos de:
+\[
+  \ve{k}_c\times\ve{E}=\omega\mu\ve{H}.
+\]
+Aplicando $\ve{k}_c\times$:
+\[
+  \ve{k}_c\times(\ve{k}_c\times\ve{E})
+  = \omega\mu(\ve{k}_c\times\ve{H})
+  = \omega\mu\cdot(-\omega\varepsilon_\text{gen})\ve{E}
+  = -\omega^2\mu\varepsilon_\text{gen}\ve{E}.
+\]
+Usamos la identidad del doble producto vectorial:
+\[
+  \ve{A}\times(\ve{B}\times\ve{C})
+  = \ve{B}(\ve{A}\cdot\ve{C})-\ve{C}(\ve{A}\cdot\ve{B}).
+\]
+Y la condición de transversalidad:
+\[
+  \ve{k}_c\cdot\ve{E}=0.
+\]
+\[
+  -\ve{E}(\ve{k}_c\cdot\ve{k}_c) = -\omega^2\mu\varepsilon_\text{gen}\ve{E}
+  \implies k_c^2 = \frac{\omega^2}{c^2}n_c^2.
+\]
+Expandimos:
+\[
+  k_c^2 = (k-ia)^2 = k^2-a^2-2i\ve{k}\cdot\ve{a},
+\]
+\[
+  n_c^2=(\eta-i\kappa)^2=\eta^2-\kappa^2-2i\eta\kappa.
+\]
+Sustituyendo ambas expansiones en:
+\[
+  k_c^2=\frac{\omega^2}{c^2}\,n_c^2,
+\]
+\[
+  k^2-a^2-2i\ve{k}\cdot\ve{a}
+  =
+  \frac{\omega^2}{c^2}\left(\eta^2-\kappa^2-2i\eta\kappa\right).
+\]
+Igualando parte real:
+\[
+  k^2-a^2=\frac{\omega^2}{c^2}(\eta^2-\kappa^2).
+\]
+Igualando parte imaginaria:
+\[
+  \ve{k}\cdot\ve{a}=\frac{\omega^2}{c^2}\eta\kappa.
+\]
+que coincide con~\eqref{eq:relaciones_ka}.
+\end{proof}
+
+\subsubsection{Clasificación de medios según $\kappa$}
+
+\paragraph{Medios no absorbentes: $\kappa = 0$}
+
+Las ecuaciones~\eqref{eq:relaciones_ka} se simplifican a
+$k^2 - a^2 = \omega^2\eta^2/c^2$ y $\ve{k}\cdot\ve{a}=0$.
+
+\begin{description}
+  \item[\textbf{Caso 1: $\ve{a}=0$ (onda homogénea).}]
+        No hay atenuación. La onda se propaga sin pérdidas con:
+        \begin{equation}
+          k = k_0\eta = \frac{\omega}{c}\eta, \qquad
+          v_f = \frac{\omega}{k} = \frac{c}{\eta}, \qquad
+          \lambda_\text{medio} = \frac{\lambda_0}{\eta}. \label{eq:homogenea}
+        \end{equation}
+
+  \item[\textbf{Caso 2: $\ve{k}\perp\ve{a}$ (onda evanescente).}]
+        La fase se propaga en una dirección ($z$) y la amplitud decae en
+        otra ($x$):
+        \[
+          \ve{E} = \ve{E}_0\,e^{-ax}\,e^{-ikz}\,e^{i\omega t}.
+        \]
+        Es una \textbf{onda inhomogénea} o evanescente: los frentes de
+        amplitud constante no coinciden con los de fase constante.
+\end{description}
+
+\paragraph{Medios absorbentes: $\kappa \neq 0$}
+
+\begin{description}
+  \item[\textbf{Caso 1: $\ve{k}\parallel\ve{a}$ (onda amortiguada).}]
+        $k = \eta k_0$ y $a = \kappa k_0$. El campo vale:
+        \begin{equation}
+          \ve{E} = \ve{E}_0\,e^{-\kappa k_0 r}\,e^{-i\eta k_0 r}\,e^{i\omega t}.
+          \label{eq:absorbente}
+        \end{equation}
+        La \emph{longitud de penetración} $d$ es la distancia a la que la
+        amplitud cae a $1/e$ de su valor inicial:
+        \begin{mdframed}[style=resultado]
+        \begin{equation}
+          d = \frac{1}{k_0\kappa} = \frac{\lambda_0}{2\pi\kappa}.
+          \label{eq:long_penetracion}
+        \end{equation}
+        \end{mdframed}
+        donde $k_0 = 2\pi/\lambda_0$ es el número de onda en el vacío y $\kappa$ el coeficiente de extinción del índice complejo $n_c = \eta - i\kappa$.
+
+  \item[\textbf{Caso 2: $\ve{k}\not\parallel\ve{a}$ (caso general).}]
+        La atenuación tiene componentes en todas las direcciones. Se usan las
+        ecuaciones~\eqref{eq:relaciones_ka} con los valores concretos de
+        $\eta$ y $\kappa$ para hallar $\ve{k}$ y $\ve{a}$.
+\end{description}
+
+\subsubsection{Vector de Poynting en la materia}
+
+Para una onda con $\ve{H} = \frac{1}{\omega\mu}\ve{k}_c\times\ve{E}$, el
+promedio del vector de Poynting es (tomando solo la parte real de $\ve{k}_c$):
+\begin{equation}
+  \langle\ve{S}\rangle = \frac{\eta}{2\mu c}\,E_0^2\,\uvec{k}.
+  \label{eq:poynting_mat}
+\end{equation}
+
+% ══════════════════════════════════════════════════════════════════════════
+\subsection{Modelo Microscópico del Índice de Refracción}
+% ══════════════════════════════════════════════════════════════════════════
+
+El objetivo es conectar el índice de refracción complejo $n_c = \eta - i\kappa$
+con los parámetros microscópicos del medio (Tema~2).
+
+\subsubsection{Medios dieléctricos poco densos}
+
+En un medio diluido, las cargas no interactúan entre sí. El dipolo de cada
+átomo en el modelo de Lorentz es (Tema~2):
+\[
+  \ve{p} = q\ve{r} = \frac{q^2/m}{\omega_0^2-\omega^2+i\gamma\omega}\ve{E}_0.
+\]
+La polarización total del medio es $\ve{P} = N\ve{p}$, que igualada a la
+relación de constitución $\ve{P} = \varepsilon_0\chi_e\ve{E}$ da:
+\[
+  \chi_e = \frac{Nq^2}{m\varepsilon_0(\omega_0^2-\omega^2+i\gamma\omega)}.
+\]
+Usando $n_c^2 = 1 + \chi_e$ y separando real e imaginaria:
+
+\begin{mdframed}[style=resultado]
+\begin{align}
+  n_c^2 &= 1 + \frac{\omega_p^2}{\omega_0^2-\omega^2+i\gamma\omega},
+  \label{eq:nc2_diluido}\\[6pt]
+  \eta &= 1 + \frac{(\omega_0^2-\omega^2)\,\omega_p^2}
+              {(\omega_0^2-\omega^2)^2+\gamma^2\omega^2},
+  \label{eq:n_diluido}\\[6pt]
+  \kappa &= \frac{\gamma\omega\,\omega_p^2}
+              {(\omega_0^2-\omega^2)^2+\gamma^2\omega^2},
+  \label{eq:kappa_diluido}
+\end{align}
+\end{mdframed}
+donde la \emph{frecuencia de plasma} es:
+\begin{equation}
+  \omega_p^2 = \frac{Nq^2}{2m\varepsilon_0}. \label{eq:plasma}
+\end{equation}
+
+\paragraph{Bandas de absorción y transparencia}
+
+La función $\kappa(\omega)$ presenta un \textbf{pico de absorción} centrado
+en $\omega = \omega_0$ con anchura del orden de $\gamma$. Fuera de las bandas
+de absorción ($|\omega-\omega_0|\gg\gamma$), $\kappa\approx 0$ y el medio
+es transparente (\emph{zona de transparencia}).
+
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[>=Stealth, scale=1.1]
+    % Ejes
+    \draw[->] (0,0) -- (8.5,0) node[right] {$\omega$};
+    \draw[->] (0,-0.8) -- (0,2.8) node[above] {};
+    % Línea de referencia n=1
+    \draw[thin, dotted] (0,1.0) -- (8.5,1.0) node[right] {\small $1$};
+    % Línea de resonancia
+    \draw[thin, dotted] (4.0,-0.8) -- (4.0,2.8);
+    \node[below] at (4.0,-0.9) {$\omega_0$};
+
+    % eta(omega): dispersión normal izquierda, anómala en resonancia, normal derecha
+    % Izquierda (omega << omega0): crece lentamente
+    \draw[thick] plot[smooth] coordinates {
+      (0.2, 1.15) (0.8,1.18) (1.5,1.22) (2.2,1.28) (2.8,1.38)
+      (3.2,1.55) (3.6,1.90) (3.85, 2.50)};
+    % Salto y parte derecha
+    \draw[thick] plot[smooth] coordinates {
+      (4.15,-0.55) (4.4, 0.20) (4.7, 0.55) (5.2,0.72)
+      (5.8,0.82) (6.4,0.88) (7.5,0.93) (8.2,0.96)};
+    \node[left] at (0,1.0) {\small $\eta$};
+
+    % kappa(omega): pico en resonancia
+    \draw[thick, dashed] plot[smooth] coordinates {
+      (0.2,0.02) (1.5,0.04) (2.5,0.08) (3.2,0.20)
+      (3.6,0.55) (3.85,1.40) (4.0,1.80)
+      (4.15,1.40) (4.4,0.55) (4.7,0.20)
+      (5.2,0.08) (6.0,0.03) (7.5,0.01)};
+    \node[align=left, anchor=west] at (8.8,2.0)
+      {\footnotesize Línea continua: $\eta(\omega)$\\
+       \footnotesize Línea discontinua: $\kappa(\omega)$\\
+       \footnotesize Zona B: dispersión normal\\
+       \footnotesize Zona A: dispersión anómala};
+  \end{tikzpicture}
+  \caption{Variación cualitativa de $\eta(\omega)$ (línea continua) y
+           $\kappa(\omega)$ (línea discontinua) para un dieléctrico diluido.
+           La zona~B (izquierda de $\omega_0$) muestra dispersión normal;
+           la zona~A (en $\omega_0$) muestra dispersión anómala y máxima absorción.}
+  \label{fig:dispersion}
+\end{figure}
+
+\paragraph{Dispersión normal y anómala}
+
+\begin{description}
+  \item[\textbf{Dispersión normal.}] $d\eta/d\omega > 0$: el índice aumenta
+        con la frecuencia. Ocurre lejos de la resonancia.
+
+  \item[\textbf{Dispersión anómala.}] $d\eta/d\omega < 0$: el índice
+        disminuye con la frecuencia. Ocurre cerca de $\omega_0$ (dentro de
+        la banda de absorción).
+\end{description}
+
+\paragraph{Casos límite: leyes de Cauchy}
+
+\begin{proposicion}[Ley de Cauchy — $\omega\ll\omega_0$]
+Lejos de la resonancia por debajo ($\omega\ll\omega_0$, zona visible para
+muchos materiales), $\gamma\omega\ll\omega_0^2$:
+\[
+  \eta \approx 1 + \frac{\omega_p^2}{\omega_0^2-\omega^2}
+     \approx 1 + \frac{\omega_p^2}{\omega_0^2}\!\left(1+\frac{\omega^2}{\omega_0^2}\right),
+\]
+que en función de $\lambda$ (con $\omega=2\pi c/\lambda$) da:
+\begin{equation}
+  \eta = A + \frac{B}{\lambda^2} \quad\text{(Ley de Cauchy).}
+  \label{eq:cauchy}
+\end{equation}
+\end{proposicion}
+
+\begin{proof}
+Bajo las hipótesis:
+\[
+  \gamma\omega\ll(\omega_0^2-\omega^2),
+  \qquad
+  \omega\ll\omega_0,
+\]
+se desarrolla:
+\[
+  \left(1-\frac{\omega^2}{\omega_0^2}\right)^{-1}
+  \approx
+  1+\frac{\omega^2}{\omega_0^2}.
+\]
+Así:
+\[
+  \eta \approx 1 + \frac{\omega_p^2}{\omega_0^2-\omega^2}
+  = 1 + \frac{\omega_p^2}{\omega_0^2}
+      \left(1-\frac{\omega^2}{\omega_0^2}\right)^{-1}
+  \approx
+  1+\frac{\omega_p^2}{\omega_0^2}
+  +\frac{\omega_p^2}{\omega_0^4}\omega^2.
+\]
+Usando:
+\[
+  \omega=\frac{2\pi c}{\lambda},
+\]
+\[
+  \eta \approx
+  \left(1+\frac{\omega_p^2}{\omega_0^2}\right)
+  +\frac{\omega_p^2(2\pi c)^2}{\omega_0^4}\frac{1}{\lambda^2}.
+\]
+Identificando:
+\[
+  A=1+\frac{\omega_p^2}{\omega_0^2},
+  \qquad
+  B=\frac{\omega_p^2(2\pi c)^2}{\omega_0^4},
+\]
+se obtiene~\eqref{eq:cauchy}.
+\end{proof}
+
+\begin{proposicion}[Dispersión por encima de la resonancia — $\omega\gg\omega_0$]
+\begin{equation}
+  \eta = A - B\lambda^2 - C\lambda^4, \label{eq:cauchy_alta}
+\end{equation}
+siendo el término $-B\lambda^2$ dominante. El índice decrece con $\omega$
+(dispersión anómala).
+\end{proposicion}
+
+\subsubsection{Medios dieléctricos densos: ecuación de Clausius-Mossotti}
+
+En un medio denso, el campo que actúa sobre cada átomo no es el campo
+macroscópico $\ve{E}$ sino el \emph{campo local} $\ve{E}_\text{loc}$, que
+incluye la contribución de los dipolos vecinos. Para un cristal cúbico
+(resultado experimental de Lorentz):
+\[
+  \ve{E}_\text{loc} = \ve{E} + \frac{\ve{P}}{3\varepsilon_0}.
+\]
+Con $\ve{P} = N\chi_a\ve{E}_\text{loc}$, resolviendo para $\ve{P}$ y
+comparando con $\ve{P}=\varepsilon_0\chi_e\ve{E}$:
+
+\begin{mdframed}[style=resultado]
+\begin{equation}
+  \frac{n_c^2 - 1}{n_c^2 + 2} = \frac{N\chi_a}{3\varepsilon_0}
+  \qquad\text{(Clausius-Mossotti).} \label{eq:clausius}
+\end{equation}
+\end{mdframed}
+
+\begin{proof}
+Partimos de:
+\[
+  \ve{P}
+  = N\chi_a\ve{E}_\text{loc}
+  = N\chi_a\left(\ve{E}+\frac{\ve{P}}{3\varepsilon_0}\right).
+\]
+Despejando $\ve{P}$:
+\[
+  \ve{P} - \frac{N\chi_a}{3\varepsilon_0}\ve{P} = N\chi_a\ve{E},
+\]
+\[
+  \ve{P}\left(1-\frac{N\chi_a}{3\varepsilon_0}\right)=N\chi_a\ve{E},
+\]
+\[
+  \ve{P} = \frac{N\chi_a}{1 - N\chi_a/(3\varepsilon_0)}\ve{E}
+  \equiv \varepsilon_0\chi_e\ve{E}.
+\]
+Definimos:
+\[
+  n_c^2 = 1+\chi_e,
+  \qquad
+  x = \frac{N\chi_a}{3\varepsilon_0}.
+\]
+Entonces:
+\[
+  n_c^2 = 1 + \frac{3x}{1-x} = \frac{1+2x}{1-x}.
+\]
+Multiplicando en cruz:
+\[
+  n_c^2(1-x)=1+2x
+  \quad\Rightarrow\quad
+  n_c^2-1=x(n_c^2+2).
+\]
+Finalmente:
+\[
+  x=\frac{n_c^2-1}{n_c^2+2}
+  =\frac{N\chi_a}{3\varepsilon_0},
+\]
+que es~\eqref{eq:clausius}.
+\end{proof}
+
+\begin{observacion}
+Las bandas de absorción y las zonas de transparencia se ensanchan y
+desplazan ligeramente respecto al caso diluido, debido al campo local.
+\end{observacion}
+
+\subsubsection{Medios conductores ($\sigma\neq 0$)}
+
+En un conductor, las cargas libres contribuyen al índice de refracción.
+Partiendo de la ecuación de movimiento del electrón libre
+($\sum\ve{F} = q\ve{E} - m\Gamma\dot{\ve{r}}$, con $\Gamma$ el coeficiente
+de fricción cinético) y de $\ve{j} = Nq\dot{\ve{r}} = \sigma\ve{E}$:
+\[
+  \sigma = \frac{Nq^2}{m(\Gamma + i\omega)}, \qquad
+  \sigma_0 = \frac{Nq^2}{m\Gamma} \quad(\text{conductividad estática}).
+\]
+El índice de refracción complejo resulta:
+\begin{equation}
+  n_c^2 = 1 + \chi_e - i\frac{\omega_p^2}{\Gamma\omega + i\omega^2}
+        = 1 - \frac{\omega_p^2}{\Gamma^2\omega^2+\omega^4}(\Gamma^2\omega^2+\omega^4)^{-1}
+          \cdot(\omega^2 + i\Gamma\omega)\omega_p^2.
+  \label{eq:nc_conductor}
+\end{equation}
+
+\medskip
+Se distinguen dos regímenes:
+
+\medskip
+\begin{description}
+  \item[\textbf{Caso 1: $\Gamma\ll\omega$ (poco rozamiento).}]
+        $n_c^2 \approx 1 - \omega_p^2/\omega^2 - i\,2\omega_p^2\Gamma/\omega^3$.
+        \begin{itemize}
+          \item Si $\omega>\omega_p$: $\kappa\approx 0$, medio \textbf{transparente}.
+          \item Si $\omega<\omega_p$: $\kappa\neq 0$, medio \textbf{absorbente}.
+        \end{itemize}
+        La frecuencia de plasma $\omega_p$ actúa como frecuencia de corte.
+
+  \item[\textbf{Caso 2: $\Gamma\gg\omega$ (mucho rozamiento — buen conductor).}]
+        $\varepsilon_r \ll \sigma/(\varepsilon_0\omega)$. Entonces:
+        \[
+          n_c^2 \approx -i\frac{\omega_p^2}{\Gamma\omega}
+        \]
+        y la parte real e imaginaria del índice son iguales:
+        \begin{mdframed}[style=resultado]
+        \begin{equation}
+          \eta = \kappa = \sqrt{\frac{\omega_p^2}{2\Gamma\omega}}
+               = \sqrt{\frac{\sigma_0}{2\varepsilon_0\omega}}.
+          \label{eq:conductor_grueso}
+        \end{equation}
+        \end{mdframed}
+        La longitud de penetración es la \emph{profundidad de efecto piel}:
+        $d = 1/(k_0\kappa)$. A mayor frecuencia, menor penetración.
+\end{description}
+
+\begin{center}
+\begin{tabularx}{0.98\linewidth}{@{}L{2.6cm}L{2.4cm}L{2.7cm}Y@{}}
+  \toprule
+  Régimen & Condición & Transparente si & $\eta$ y $\kappa$ \\
+  \midrule
+  Poco rozamiento & $\Gamma\ll\omega$ & $\omega>\omega_p$ & $\eta\neq\kappa$ \\
+  Buen conductor  & $\Gamma\gg\omega$ & nunca & $\eta=\kappa=\sqrt{\sigma_0/(2\varepsilon_0\omega)}$ \\
+  \bottomrule
+\end{tabularx}
+\end{center}
+
+% ══════════════════════════════════════════════════════════════════════════
+\section{Tema 4: Reflexión y Refracción en Medios Homogéneos e Isótropos}
+% ══════════════════════════════════════════════════════════════════════════
+
+\subsection{Introducción}
+
+Los temas anteriores han estudiado la propagación de la luz en medios
+ilimitados. Ahora abordamos el problema más rico: \textbf{¿qué ocurre cuando
+una onda plana incide sobre la superficie de separación de dos medios?}
+
+Los objetivos del tema son tres:
+\begin{enumerate}
+  \item Determinar la \emph{dirección de propagación} de las ondas reflejada
+        y transmitida.
+  \item Determinar el \emph{estado de polarización} de los campos resultantes.
+  \item Cuantificar la \emph{energía} transmitida y reflejada en función del
+        ángulo y la polarización.
+\end{enumerate}
+
+\subsubsection*{Hipótesis de trabajo}
+
+\begin{enumerate}
+  \item Los medios son \textbf{isótropos y homogéneos}: el índice de refracción
+        $n$ es un escalar independiente de la posición y de la dirección de
+        propagación.
+  \item La superficie de separación es \textbf{plana}.
+  \item Cambio de índice $n_1 \to n_2$; si $n_1 = n_2$ no existe superficie
+        óptica.
+\end{enumerate}
+
+\subsubsection*{Notación geométrica}
+
+\begin{itemize}
+  \item El \emph{plano de incidencia} es el plano $XZ$; la interfaz está en
+        $z = 0$; la normal exterior apunta en $+\uvec{z}$.
+  \item Los subíndices $i$, $r$, $t$ denotan el campo incidente, reflejado
+        y transmitido, respectivamente.
+  \item $\theta_i$, $\theta_r$, $\theta_t$: ángulos que los vectores de onda
+        forman con la normal $\uvec{z}$.
+\end{itemize}
+
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[>=Stealth, scale=1.1]
+    % Interfaz y normal
+    \draw[thick] (-4,0) -- (4,0);
+    \node[left] at (-3.9,0.25) {$n_1$};
+    \node[left] at (-3.9,-0.25) {$n_2$};
+    \draw[->, thick] (0,0) -- (0,2.0) node[above] {$\uvec{n}$};
+
+    % Rayos
+    \draw[->, very thick] (-2.6,1.8) -- (0,0) node[midway, above left] {$\ve{k}_i$};
+    \draw[->, very thick] (0,0) -- (2.4,1.5) node[midway, above right] {$\ve{k}_r$};
+    \draw[->, very thick] (0,0) -- (2.8,-1.6) node[midway, below right] {$\ve{k}_t$};
+
+    % Angulos
+    \draw (0,0.75) arc[start angle=90, end angle=145, radius=0.75];
+    \node at (-0.55,0.95) {$\theta_i$};
+    \draw (0,0.9) arc[start angle=90, end angle=32, radius=0.9];
+    \node at (0.55,1.05) {$\theta_r$};
+    \draw (0,-0.9) arc[start angle=-90, end angle=-30, radius=0.9];
+    \node at (0.6,-1.0) {$\theta_t$};
+  \end{tikzpicture}
+  \caption{Geometría de incidencia en una interfaz plana entre dos medios:
+           haz incidente, reflejado y transmitido.}
+  \label{fig:interfaz_geo}
+\end{figure}
+
+Los tres campos son ondas planas armónicas:
+\begin{align}
+  \ve{E}_i &= \ve{E}\, e^{-i\ve{k}_i \cdot \ve{r}}\, e^{i\omega t},
+  & \ve{k}_i &= (k_x, 0, k_z),\quad |\ve{k}_i| = \frac{\omega}{c}n_1, \\
+  \ve{E}_r &= \ve{R}\, e^{-i\ve{k}_r \cdot \ve{r}}\, e^{i\omega t}, \\
+  \ve{E}_t &= \ve{T}\, e^{-i\ve{k}_t \cdot \ve{r}}\, e^{i\omega t}.
+\end{align}
+
+En el plano de incidencia $XZ$, una elección explícita útil es:
+\begin{align}
+  \ve{k}_i &= \frac{\omega}{c}n_1\left(\sin\theta_i,\,0,\,\cos\theta_i\right), \\
+  \ve{k}_r &= \frac{\omega}{c}n_1\left(\sin\theta_r,\,0,\,-\cos\theta_r\right), \\
+  \ve{k}_t &= \frac{\omega}{c}n_2\left(\sin\theta_t,\,0,\,\cos\theta_t\right).
+\end{align}
+
+La condición de frontera fundamental es la \textbf{continuidad de las
+componentes tangenciales} del campo eléctrico (y magnético) a ambos lados
+de la interfaz $z=0$.
+
+\begin{nota}
+Existe un doble enfoque para llegar a los mismos resultados:
+el \emph{microscópico} (Teorema de Oseen--Ewald: los campos esparcidos por
+los dipolos inducidos cancelan exactamente el haz incidente en el medio 1 y
+construyen la onda transmitida en el medio 2) y el \emph{macroscópico}
+(imponer las condiciones de contorno de Maxwell).
+En este tema se usa el enfoque macroscópico.
+\end{nota}
+
+% ══════════════════════════════════════════════════════════════════════════
+\subsection{Dieléctrico--Dieléctrico Transparente}
+% ══════════════════════════════════════════════════════════════════════════
+
+Consideramos ambos medios \textbf{transparentes}: $n_1, n_2 \in \R$,
+$n_1, n_2 > 0$. Los vectores de onda son reales.
+
+\subsubsection{Leyes de reflexión y de Snell}
+
+La condición de contorno en $z = 0$ (plano $XY$, posición $\ve{r} = (x,y,0)$)
+exige que las fases coincidan para todo $(x,y)$:
+\[
+  \ve{k}_i \cdot \ve{r}\big|_{z=0}
+  = \ve{k}_r \cdot \ve{r}\big|_{z=0}
+  = \ve{k}_t \cdot \ve{r}\big|_{z=0}
+  \quad \forall\, (x,y).
+\]
+
+Esto impone la igualdad de las componentes tangenciales:
+\[
+  k_{ix} = k_{rx} = k_{tx}, \qquad k_{iy} = k_{ry} = k_{ty} = 0.
+\]
+
+La segunda condición confirma que \textbf{el plano de incidencia se conserva}
+(los tres haces son coplanarios). De la primera, con
+$|\ve{k}_i| = |\ve{k}_r| = \frac{\omega}{c}n_1$ y
+$|\ve{k}_t| = \frac{\omega}{c}n_2$:
+
+\begin{proof}
+Escribimos las componentes tangenciales:
+\[
+  k_{ix} = \frac{\omega}{c}n_1 \sin\theta_i,
+  \qquad
+  k_{rx} = \frac{\omega}{c}n_1 \sin\theta_r,
+  \qquad
+  k_{tx} = \frac{\omega}{c}n_2 \sin\theta_t.
+\]
+La continuidad de fase en la interfaz impone:
+\[
+  \frac{\omega}{c}n_1\sin\theta_i = \frac{\omega}{c}n_1\sin\theta_r
+  \quad\Rightarrow\quad
+  \sin\theta_i=\sin\theta_r.
+\]
+Como $0\le\theta_i,\theta_r\le\pi/2$:
+\[
+  \theta_i = \theta_r,
+\]
+\[
+  \frac{\omega}{c}n_1\sin\theta_i = \frac{\omega}{c}n_2\sin\theta_t.
+\]
+Cancelando $\omega/c$:
+\[
+  n_1\sin\theta_i=n_2\sin\theta_t.
+\]
+\end{proof}
+
+\begin{mdframed}[style=resultado]
+\textbf{Ley de reflexión:}
+\begin{equation}
+  \theta_i = \theta_r.
+  \label{eq:ley_reflexion}
+\end{equation}
+\textbf{Ley de Snell (refracción):}
+\begin{equation}
+  n_1 \sin\theta_i = n_2 \sin\theta_t.
+  \label{eq:snell}
+\end{equation}
+\end{mdframed}
+
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[>=Stealth, scale=1.0]
+    % Prisma
+    \draw[thick, fill=gray!10] (-1.8,-0.9) -- (0,1.2) -- (1.8,-0.9) -- cycle;
+
+    % Haz blanco incidente
+    \draw[->, very thick] (-4.5,0.2) -- (-1.3,0.2);
+
+    % Haces dispersados
+    \draw[->, thick]    (1.0,0.1) -- (4.1,0.7);
+    \draw[->, thick] (1.0,0.05) -- (4.0,0.2);
+    \draw[->, thick]   (1.0,0.0) -- (4.0,-0.5);
+    \node[align=left, anchor=west] at (4.35,0.95)
+      {\footnotesize Triángulo: prisma\\
+       \footnotesize Flecha izquierda: haz incidente\\
+       \footnotesize Flechas derechas: longitudes\\
+       \footnotesize de onda separadas angularmente};
+  \end{tikzpicture}
+  \caption{Dispersión por refracción en prisma (base de la espectroscopia):
+           distintas longitudes de onda salen con diferentes ángulos.}
+  \label{fig:prisma_dispersion}
+\end{figure}
+
+\subsubsection{Fórmulas de Fresnel (amplitudes)}
+
+El campo eléctrico $\ve{E} \perp \ve{k}$ se descompone en dos polarizaciones:
+
+\begin{itemize}
+  \item \textbf{Polarización $p$ (TM, paralela):} $E_\parallel$, componente
+        contenida en el plano de incidencia $XZ$.
+  \item \textbf{Polarización $s$ (TE, perpendicular):} $E_\perp$, componente
+        perpendicular al plano de incidencia (dirección $y$).
+\end{itemize}
+
+En componentes cartesianas los campos incidente y reflejado son:
+\begin{align*}
+  \ve{E}_i &= (E_\parallel\cos\theta_i,\; E_\perp,\; -E_\parallel\sin\theta_i), \\
+  \ve{R}   &= (-R_\parallel\cos\theta_r,\; R_\perp,\; -R_\parallel\sin\theta_r), \\
+  \ve{T}   &= (T_\parallel\cos\theta_t,\; T_\perp,\; -T_\parallel\sin\theta_t).
+\end{align*}
+
+\paragraph{Condiciones de contorno}
+
+Continuidad de $\ve{E}$ tangencial (componentes $x$ e $y$) en $z=0$:
+\begin{align}
+  E_\parallel\cos\theta_i - R_\parallel\cos\theta_r
+    &= T_\parallel\cos\theta_t, \tag{a} \label{cc:Etg_p} \\
+  E_\perp + R_\perp &= T_\perp. \tag{b} \label{cc:Etg_s}
+\end{align}
+
+Continuidad de $\ve{H}$ tangencial
+($\ve{H} = \tfrac{n}{\mu_0 c}\,\uvec{k}\times\ve{E}$):
+\begin{align}
+  n_1 E_\parallel + n_1 R_\parallel
+    &= n_2 T_\parallel, \tag{c} \label{cc:Htg_p} \\
+  n_1(E_\perp - R_\perp)\cos\theta_i
+    &= n_2 T_\perp\cos\theta_t. \tag{d} \label{cc:Htg_s}
+\end{align}
+
+Una forma equivalente (y útil para comprobar signos) es escribir:
+\begin{align*}
+  \ve{H}_i &= \frac{n_1}{\mu_0 c}
+    \left(-E_\perp\cos\theta_i,\; E_\parallel,\; E_\perp\sin\theta_i\right), \\
+  \ve{H}_r &= \frac{n_1}{\mu_0 c}
+    \left(R_\perp\cos\theta_r,\; R_\parallel,\; R_\perp\sin\theta_r\right), \\
+  \ve{H}_t &= \frac{n_2}{\mu_0 c}
+    \left(-T_\perp\cos\theta_t,\; T_\parallel,\; T_\perp\sin\theta_t\right).
+\end{align*}
+
+\paragraph{Resolución para la polarización $p$}
+
+\begin{proof}
+Partimos de (\ref{cc:Etg_p}) y (\ref{cc:Htg_p}) con:
+\[
+  \theta_r = \theta_i.
+\]
+Las ecuaciones quedan:
+\[
+  E_\parallel\cos\theta_i - R_\parallel\cos\theta_i
+  = T_\parallel\cos\theta_t,
+\]
+\[
+  n_1(E_\parallel+R_\parallel)=n_2T_\parallel.
+\]
+Eliminamos $T_\parallel$ usando la segunda:
+\[
+  T_\parallel=\frac{n_1}{n_2}(E_\parallel+R_\parallel).
+\]
+Sustituyendo en la primera:
+\[
+  E_\parallel\cos\theta_i - R_\parallel\cos\theta_i
+  = \frac{n_1}{n_2}(E_\parallel+R_\parallel)\cos\theta_t.
+\]
+Reordenando términos en $R_\parallel$:
+\[
+  R_\parallel\!\left(n_2\cos\theta_i+n_1\cos\theta_t\right)
+  =E_\parallel\!\left(n_2\cos\theta_i-n_1\cos\theta_t\right).
+\]
+Entonces:
+\[
+  r_\parallel = \frac{R_\parallel}{E_\parallel}
+  = \frac{n_2\cos\theta_i - n_1\cos\theta_t}{n_2\cos\theta_i + n_1\cos\theta_t},
+\]
+Para $t_\parallel$:
+\[
+  t_\parallel
+  =\frac{T_\parallel}{E_\parallel}
+  =\frac{n_1}{n_2}\left(1+r_\parallel\right)
+  =\frac{2n_1\cos\theta_i}{n_2\cos\theta_i+n_1\cos\theta_t}.
+\]
+\end{proof}
+
+\paragraph{Resolución para la polarización $s$}
+
+\begin{proof}
+Partimos de (\ref{cc:Etg_s}) y (\ref{cc:Htg_s}).
+Estas ecuaciones son:
+\[
+  E_\perp+R_\perp=T_\perp,
+\]
+\[
+  n_1(E_\perp-R_\perp)\cos\theta_i=n_2T_\perp\cos\theta_t.
+\]
+Sustituyendo:
+\[
+  T_\perp=E_\perp+R_\perp,
+\]
+en la segunda ecuación:
+\[
+  n_1(E_\perp-R_\perp)\cos\theta_i
+  =n_2(E_\perp+R_\perp)\cos\theta_t.
+\]
+Reordenando:
+\[
+  R_\perp\!\left(n_1\cos\theta_i+n_2\cos\theta_t\right)
+  =E_\perp\!\left(n_1\cos\theta_i-n_2\cos\theta_t\right).
+\]
+\[
+  r_\perp=\frac{R_\perp}{E_\perp}
+  =\frac{n_1\cos\theta_i-n_2\cos\theta_t}
+         {n_1\cos\theta_i+n_2\cos\theta_t}.
+\]
+Luego:
+\[
+  t_\perp = \frac{T_\perp}{E_\perp}
+  = 1+r_\perp
+  = \frac{2n_1\cos\theta_i}{n_1\cos\theta_i+n_2\cos\theta_t}.
+\]
+\end{proof}
+
+\begin{mdframed}[style=resultado]
+\textbf{Fórmulas de Fresnel:}
+\begin{align}
+  r_\parallel &= \frac{n_2\cos\theta_i - n_1\cos\theta_t}
+                     {n_2\cos\theta_i + n_1\cos\theta_t}
+               = \frac{\tan(\theta_i-\theta_t)}{\tan(\theta_i+\theta_t)},
+  \label{eq:rp} \\
+  t_\parallel &= \frac{2n_1\cos\theta_i}
+                     {n_2\cos\theta_i + n_1\cos\theta_t}
+               = \frac{2\cos\theta_i\sin\theta_t}
+                      {\sin(\theta_i+\theta_t)\cos(\theta_i-\theta_t)},
+  \label{eq:tp} \\
+  r_\perp &= \frac{n_1\cos\theta_i - n_2\cos\theta_t}
+                  {n_1\cos\theta_i + n_2\cos\theta_t}
+           = -\frac{\sin(\theta_i-\theta_t)}{\sin(\theta_i+\theta_t)},
+  \label{eq:rs} \\
+  t_\perp &= \frac{2n_1\cos\theta_i}
+                  {n_1\cos\theta_i + n_2\cos\theta_t}
+           = \frac{2\cos\theta_i\sin\theta_t}{\sin(\theta_i+\theta_t)}.
+  \label{eq:ts}
+\end{align}
+\end{mdframed}
+
+\begin{nota}
+Las formas trigonométricas (columna derecha) son consecuencia directa de
+aplicar la ley de Snell a los cocientes de índices.
+\end{nota}
+
+\subsubsection{Incidencia normal}
+
+Para $\theta_i = \theta_r = \theta_t = 0^{\circ}$ las fórmulas de Fresnel se
+simplifican considerablemente. Tomando el límite $\theta_i \to 0$ en
+(\ref{eq:rp})--(\ref{eq:ts}):
+
+\begin{mdframed}[style=resultado]
+\textbf{Incidencia normal:}
+\begin{align}
+  r_\parallel &= \frac{n_2 - n_1}{n_1 + n_2} = -r_\perp,
+  \label{eq:r_normal} \\
+  t_\parallel &= t_\perp = \frac{2n_1}{n_1 + n_2}.
+  \label{eq:t_normal}
+\end{align}
+\end{mdframed}
+
+El campo reflejado resultante, en términos del campo incidente
+$(E_\parallel, E_\perp)^T$, es:
+\[
+  \ve{R} = r_\parallel \begin{pmatrix} E_\parallel \\ -E_\perp \end{pmatrix},
+\]
+es decir, la componente perpendicular adquiere un cambio de fase de
+$\pi$ respecto a $E_\perp$.
+
+\begin{itemize}
+  \item Si $n_1 < n_2$: $r_\parallel > 0$, no hay cambio de fase adicional.
+  \item Si $n_1 > n_2$: $r_\parallel < 0$, el campo reflejado experimenta
+        un desfase de $\pi$.
+\end{itemize}
+
+La reflectancia (fracción de intensidad reflejada) vale:
+\[
+  \mathcal{R} = |r_\parallel|^2 = \left(\frac{n_1 - n_2}{n_1 + n_2}\right)^2.
+\]
+
+\begin{ejemplo}[Aire--Vidrio]
+Para $n_1 = 1$ (aire) y $n_2 = 1{,}5$ (vidrio):
+\[
+  \mathcal{R} = \left(\frac{0{,}5}{2{,}5}\right)^2 = 0{,}04 = 4\%.
+\]
+El $4\%$ de la intensidad se refleja en cada interfaz.
+\end{ejemplo}
+
+\subsubsection{Ángulo de Brewster}
+
+De la forma trigonométrica de $r_\parallel$ [ec.~(\ref{eq:rp})]:
+\[
+  r_\parallel = \frac{\tan(\theta_i - \theta_t)}{\tan(\theta_i + \theta_t)}.
+\]
+Esta expresión se anula cuando $\tan(\theta_i + \theta_t) \to \infty$, es
+decir, cuando:
+\[
+  \theta_i + \theta_t = 90^{\circ}.
+\]
+
+\begin{proof}
+En el ángulo de Brewster:
+\[
+  \theta_t = 90^{\circ} - \theta_i.
+\]
+Sustituyendo en la ley de Snell~(\ref{eq:snell}):
+\[
+  n_1\sin\theta_i = n_2\sin(90^{\circ} - \theta_i) = n_2\cos\theta_i
+  \quad\Rightarrow\quad
+  \tan\theta_B = \frac{n_2}{n_1}.
+\]
+Es decir:
+\[
+  \theta_B=\arctan\!\left(\frac{n_2}{n_1}\right).
+\]
+\end{proof}
+
+\begin{mdframed}[style=resultado]
+\textbf{Ángulo de Brewster:}
+\begin{equation}
+  \tan\theta_B = \frac{n_2}{n_1}.
+  \label{eq:brewster}
+\end{equation}
+En $\theta_i = \theta_B$: $r_\parallel = 0$, el haz reflejado está
+completamente polarizado en $s$ (polarización perpendicular).
+\end{mdframed}
+
+\begin{ejemplo}[Aire--Vidrio]
+Para $n_1 = 1$, $n_2 = 1{,}5$:
+\[
+  \theta_B = \arctan(1{,}5) \approx 56{,}3^{\circ}.
+\]
+\end{ejemplo}
+
+Los coeficientes de transmisión en el ángulo de Brewster son:
+\[
+  t_\parallel = \frac{n_1}{n_2}, \qquad
+  t_\perp = \frac{2n_1^2}{n_1^2 + n_2^2}.
+\]
+
+\begin{observacion}
+El fenómeno de Brewster tiene aplicación directa en la fabricación de
+\emph{láminas polarizadoras}: una pila de láminas de vidrio orientadas al
+ángulo de Brewster transmite solo polarización $p$.
+\end{observacion}
+
+\subsubsection{Reflexión total interna y onda evanescente}
+
+Si $n_1 > n_2$, la ley de Snell $n_1\sin\theta_i = n_2\sin\theta_t$ exige
+$\sin\theta_t = (n_1/n_2)\sin\theta_i > \sin\theta_i$.
+Existe un \textbf{ángulo crítico} $\theta_c$ para el que $\sin\theta_t = 1$:
+
+\begin{mdframed}[style=resultado]
+\textbf{Ángulo crítico:}
+\begin{equation}
+  \sin\theta_c = \frac{n_2}{n_1} \qquad (n_1 > n_2).
+  \label{eq:angulo_critico}
+\end{equation}
+\end{mdframed}
+
+Para $\theta_i > \theta_c$ no existe $\theta_t$ real. Se analizan tres
+hipótesis para el campo transmitido:
+
+\begin{enumerate}
+  \item \textbf{H1}: $\ve{E}_t = 0$. Incompatible con las condiciones de
+        contorno (no se puede satisfacer la continuidad de campos si el
+        transmitido es nulo).
+  \item \textbf{H2}: $\ve{k}_t$ real con $|\ve{k}_t| = (\omega/c)n_2$.
+        Incompatible con la igualación de las fases tangenciales
+        $k_{tx} = k_{ix} = (\omega/c)n_1\sin\theta_i > (\omega/c)n_2$.
+  \item \textbf{H3}: $\ve{k}_t \in \C$. Solución correcta.
+\end{enumerate}
+
+\paragraph{Onda evanescente}
+
+Se escribe $\ve{k}_{tc} = \ve{k}_t - i\,\ve{a}$, con $\ve{k}_t \perp \ve{a}$
+(medio transparente, $\kappa = 0$). Las condiciones de contorno imponen:
+\[
+  k_{tx} = k_{ix} = \frac{\omega}{c}n_1\sin\theta_i \in \R, \qquad
+  a_x = 0.
+\]
+
+Así $\ve{a} = (0, 0, a_z)$ con:
+\[
+  a_z = \frac{\omega}{c}\sqrt{n_1^2\sin^2\theta_i - n_2^2} > 0
+  \quad (\theta_i > \theta_c).
+\]
+
+\begin{mdframed}[style=resultado]
+\textbf{Onda evanescente:}
+\begin{equation}
+  \ve{E}_t = \ve{T}\,e^{-a_z z}\,e^{-ik_{tx} x}\,e^{i\omega t}.
+  \label{eq:evanescente}
+\end{equation}
+La onda se \emph{propaga} a lo largo de $x$ (paralelo a la interfaz) y se
+\emph{atenúa exponencialmente} en $z$ (dentro del medio 2). La profundidad de
+penetración es $\delta = 1/a_z$.
+\end{mdframed}
+
+La ley de reflexión $\theta_i = \theta_r$ sigue siendo válida. Los
+coeficientes de Fresnel resultan ser números complejos de módulo unitario:
+\[
+  r_\parallel = e^{i\delta_\parallel}, \qquad r_\perp = e^{i\delta_\perp}.
+\]
+
+El desfase relativo entre polarizaciones satisface:
+\begin{equation}
+  \tan\!\left(\frac{\delta_\perp - \delta_\parallel}{2}\right)
+  = \frac{\cos\theta_i\,\sqrt{\sin^2\theta_i - n_2^2/n_1^2}}{\sin^2\theta_i}.
+  \label{eq:desfase_total}
+\end{equation}
+
+\begin{nota}
+En los extremos: $\delta_\perp - \delta_\parallel = 0$ tanto para
+$\theta_i = \theta_c$ como para incidencia rasante ($\theta_i \to 90^{\circ}$).
+El desfase máximo se produce para un ángulo intermedio, y es la base del
+\emph{rombo de Fresnel} para generar luz circularmente polarizada.
+\end{nota}
+
+\subsubsection{Reflectancia y Transmitancia}
+
+La energía transportada por la onda se cuantifica con la componente $z$ del
+vector de Poynting promediado:
+\[
+  S_{i,z} = \frac{n_1}{2\mu_0 c}|\ve{E}|^2\cos\theta_i, \quad
+  S_{r,z} = \frac{n_1}{2\mu_0 c}|\ve{R}|^2\cos\theta_r, \quad
+  S_{t,z} = \frac{n_2}{2\mu_0 c}|\ve{T}|^2\cos\theta_t.
+\]
+
+La conservación de energía $S_{i,z} = S_{r,z} + S_{t,z}$ implica
+$1 = \mathcal{R} + \mathcal{T}$.
+
+\begin{mdframed}[style=resultado]
+\textbf{Reflectancia y Transmitancia} (para cada polarización $j = \parallel, \perp$):
+\begin{align}
+  \mathcal{R}_j &= |r_j|^2,
+  \label{eq:reflectancia} \\
+  \mathcal{T}_j &= \frac{n_2\cos\theta_t}{n_1\cos\theta_i}\,|t_j|^2.
+  \label{eq:transmitancia}
+\end{align}
+Se cumple $\mathcal{R}_j + \mathcal{T}_j = 1$ para cada polarización.
+\end{mdframed}
+
+La reflectancia y transmitancia totales son:
+\[
+  \mathcal{R} = \frac{|E_\parallel|^2\,\mathcal{R}_\parallel + |E_\perp|^2\,\mathcal{R}_\perp}
+                     {|E_\parallel|^2 + |E_\perp|^2},
+  \qquad
+  \mathcal{T} = \frac{|E_\parallel|^2\,\mathcal{T}_\parallel + |E_\perp|^2\,\mathcal{T}_\perp}
+                     {|E_\parallel|^2 + |E_\perp|^2}.
+\]
+
+\begin{table}[H]
+  \centering
+  \caption{Resumen de casos especiales para dieléctrico--dieléctrico}
+  \label{tab:casos_especiales}
+  \begin{tabularx}{0.98\linewidth}{@{}L{5.2cm}Y Y@{}}
+    \toprule
+    \textbf{Caso} & $\mathcal{R}_\parallel$ & $\mathcal{R}_\perp$ \\
+    \midrule
+    Incidencia normal ($\theta_i = 0$)
+      & $\left(\dfrac{n_1-n_2}{n_1+n_2}\right)^2$
+      & $\left(\dfrac{n_1-n_2}{n_1+n_2}\right)^2$ \\
+    Ángulo de Brewster ($\theta_i = \theta_B$)
+      & $0$
+      & $\sin^2(\theta_B - \theta_t)/\sin^2(\theta_B + \theta_t)$ \\
+    Reflexión total ($\theta_i > \theta_c$, $n_1>n_2$)
+      & $1$
+      & $1$ \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+% ══════════════════════════════════════════════════════════════════════════
+\subsection{Dieléctrico--Medio Absorbente}
+% ══════════════════════════════════════════════════════════════════════════
+
+El Medio 1 es un dieléctrico transparente con índice $n_1 \in \R$.
+El Medio 2 es absorbente, descrito por un \textbf{índice complejo}:
+\[
+  n_c = n_2 - i\kappa, \qquad n_2, \kappa > 0.
+\]
+
+Las condiciones de contorno se mantienen formalmente iguales, pero ahora
+$k_{tcz} \in \C$. Se escribe:
+\[
+  \ve{k}_{tc} = \ve{k}_t - i\,\ve{a}, \qquad \ve{k}_t \perp \ve{a}.
+\]
+
+Las condiciones de fase tangencial en $z = 0$ imponen de nuevo:
+\[
+  k_{tx} = k_{ix} = \frac{\omega}{c}n_1\sin\theta_i \in \R,
+  \qquad a_x = 0.
+\]
+
+Por tanto $\ve{a} = (0, 0, a_z)$ con $a_z > 0$ (atenuación en la dirección
+de penetración).
+
+\subsubsection{Campo transmitido (onda inhomogénea)}
+
+El campo transmitido en el medio 2 es una \textbf{onda inhomogénea}:
+\begin{equation}
+  \ve{E}_t = \ve{T}\,e^{-a_z z}\,e^{-ik_{tx} x}\,e^{i\omega t}.
+  \label{eq:transmitida_metal}
+\end{equation}
+
+Los planos de fase constante (perpendiculares a $\ve{k}_t = (k_{tx}, 0, 0)$)
+son \textbf{verticales} (paralelos a $z$), mientras que los planos de
+amplitud constante (perpendiculares a $\ve{a} = (0, 0, a_z)$) son
+\textbf{horizontales} (paralelos a la interfaz). Estos dos conjuntos de
+planos no coinciden, de ahí el término \emph{inhomogénea}.
+
+La relación de dispersión en el medio 2 determina $k_{tz}$ a partir de:
+\[
+  k_{tx}^2 + k_{tz}^2 = \left(\frac{\omega}{c}\right)^2 n_c^2,
+\]
+con $k_{tx}$ real ya fijado, por lo que $k_{tz}$ resulta complejo en general.
+
+\subsubsection{Campo reflejado (coeficientes de Fresnel complejos)}
+
+La onda reflejada queda íntegramente en el Medio 1 (transparente). Aplicando
+las condiciones de contorno con $k_{tcz}$ complejo se obtienen los
+coeficientes de Fresnel generalizados:
+
+\begin{mdframed}[style=resultado]
+\textbf{Coeficientes de Fresnel para medio absorbente:}
+\begin{align}
+  r_\parallel &= \frac{n_c^2\, k_{iz} - n_1^2\, k_{tcz}}
+                     {n_c^2\, k_{iz} + n_1^2\, k_{tcz}}
+               = \rho_\parallel\, e^{i\Phi_\parallel},
+  \label{eq:rp_metal} \\
+  r_\perp     &= \frac{k_{iz} - k_{tcz}}
+                     {k_{iz} + k_{tcz}}
+               = \rho_\perp\, e^{i\Phi_\perp},
+  \label{eq:rs_metal}
+\end{align}
+donde $k_{iz} = (\omega/c)n_1\cos\theta_i$ es real y
+$k_{tcz}$ es en general complejo.
+\end{mdframed}
+
+El campo reflejado resultante puede escribirse:
+\[
+  \ve{R} = \begin{pmatrix} \rho_\parallel e^{i\Phi_\parallel} E_\parallel \\[4pt]
+                            \rho_\perp e^{i\Phi_\perp} E_\perp \end{pmatrix}
+         = \rho_\parallel e^{i\Phi_\parallel}
+           \begin{pmatrix} E_\parallel \\[4pt]
+                           \dfrac{\rho_\perp}{\rho_\parallel}
+                           e^{i(\Phi_\perp - \Phi_\parallel)} E_\perp
+           \end{pmatrix}.
+\]
+
+\begin{observacion}
+A diferencia del caso dieléctrico--dieléctrico por debajo del ángulo crítico,
+los módulos $\rho_\parallel$, $\rho_\perp$ pueden ser distintos, y los
+desfases $\Phi_\parallel$, $\Phi_\perp$ son en general no nulos y diferentes
+entre sí. Esto modifica el estado de polarización del haz reflejado.
+\end{observacion}
+
+\subsubsection{Caso particular: incidencia normal sobre un metal}
+
+Para $\theta_i = 0$ los vectores de onda son verticales:
+$\ve{k}_i = (0, 0, k_{iz})$, $\ve{a} = (0, 0, a_z)$.
+Los coeficientes de Fresnel (\ref{eq:rs_metal}) se reducen a:
+
+\begin{proof}
+Para incidencia normal:
+\[
+  \theta_i = 0.
+\]
+Luego:
+\[
+  k_{iz} = \frac{\omega}{c}n_1,
+  \qquad
+  k_{tcz} = \frac{\omega}{c}n_c
+          = \frac{\omega}{c}(n_2 - i\kappa).
+\]
+Sustituyendo:
+\[
+  r_\perp = \frac{n_1 - (n_2 - i\kappa)}{n_1 + (n_2 - i\kappa)}
+           = \frac{(n_1 - n_2) + i\kappa}{(n_1 + n_2) - i\kappa}.
+\]
+Multiplicando por el conjugado del denominador:
+\[
+  |r_\perp|^2
+  =\frac{(n_1-n_2)^2+\kappa^2}{(n_1+n_2)^2+\kappa^2}.
+\]
+\end{proof}
+
+\begin{mdframed}[style=resultado]
+\textbf{Reflectancia en incidencia normal sobre metal:}
+\begin{equation}
+  r_\perp = \frac{(n_1 - n_2) + i\kappa}{(n_1 + n_2) - i\kappa},
+  \qquad
+  \mathcal{R} = |r_\perp|^2 = \frac{(n_1 - n_2)^2 + \kappa^2}
+                                    {(n_1 + n_2)^2 + \kappa^2}.
+  \label{eq:R_metal_normal}
+\end{equation}
+\end{mdframed}
+
+En el límite de metal muy absorbente ($\kappa \gg n_2$):
+\[
+  r_\perp \approx \frac{n_1 + i\kappa}{n_1 - i\kappa}
+  = e^{2i\arctan(\kappa/n_1)},
+  \qquad
+  \mathcal{R} \approx 1 - \frac{4n_1}{n_1^2/\kappa + \kappa} \to 1.
+\]
+
+Los metales buenos conductores son por tanto casi perfectamente reflectantes
+en el rango óptico, con $\mathcal{R} \lesssim 1$.
+
+\begin{table}[H]
+  \centering
+  \caption{Comparación entre los dos tipos de interfaz estudiados}
+  \label{tab:comparacion_interfaces}
+  \begin{tabularx}{0.98\linewidth}{@{}L{2.9cm}Y Y@{}}
+    \toprule
+    \textbf{Magnitud} & \textbf{Diél.--Diél. ($n_1, n_2 \in \R$)}
+                      & \textbf{Diél.--Absorbente ($n_c \in \C$)} \\
+    \midrule
+    Ley de Snell & $n_1\sin\theta_i = n_2\sin\theta_t$ & Válida con $n_c$ \\
+    $r_j$ & Real (debajo de $\theta_c$) & Complejo en general \\
+    $|r_j|$ & $\leq 1$, $= 1$ solo si $\theta_i > \theta_c$ & $\leq 1$ \\
+    Desfase & 0 o $\pi$ (debajo de $\theta_c$) & Continuo ($\Phi_j \neq 0, \pi$) \\
+    Onda transmitida & Homogénea (planos coinciden) & Inhomogénea \\
+    Reflexión total & Si $n_1 > n_2$ y $\theta_i > \theta_c$ & No existe \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+\section{Tema 4.2: Introducción a los Medios Anisótropos}
+
+\subsection{Introducción}
+
+Un medio anisótropo es aquel en el que las propiedades ópticas dependen de
+la dirección de propagación y de la polarización del campo incidente.
+Matemáticamente:
+\[
+  \varepsilon_\text{gen} = \varepsilon_\text{gen}(\ve{r})
+  \;\;\Longrightarrow\;\;
+  n_c = n_c(\ve{r}).
+\]
+
+En el modelo microscópico de Lorentz, la fuerza recuperadora deja de ser
+isotrópica y se modela mediante un tensor:
+\[
+  \ve{F} = -\hat{c}\,\ve{r}.
+\]
+Esto conduce a una permitividad tensorial (en ejes principales):
+\[
+  \boldsymbol{\varepsilon}
+  =
+  \begin{pmatrix}
+    \varepsilon_x & 0 & 0 \\
+    0 & \varepsilon_y & 0 \\
+    0 & 0 & \varepsilon_z
+  \end{pmatrix}.
+\]
+
+\begin{mdframed}[style=resultado]
+\textbf{Clasificación básica:}
+\begin{itemize}
+  \item $\varepsilon_x=\varepsilon_y=\varepsilon_z$: medio isotrópico.
+  \item $\varepsilon_x=\varepsilon_y\neq\varepsilon_z$: medio uniáxico.
+  \item $\varepsilon_x\neq\varepsilon_y\neq\varepsilon_z$: medio biáxico.
+\end{itemize}
+\end{mdframed}
+
+\subsection{Medios Uniáxicos}
+
+\subsubsection{Conceptos básicos}
+
+\begin{itemize}
+  \item \textbf{Eje óptico}: dirección en la que el medio se comporta como
+        isotrópico.
+  \item \textbf{Sección principal}: plano que contiene el eje óptico y la
+        dirección de propagación.
+  \item \textbf{Componente ordinaria} ($o$): componente de $\ve{E}$ perpendicular
+        a la sección principal.
+  \item \textbf{Componente extraordinaria} ($e$): componente de $\ve{E}$ paralela
+        a la sección principal.
+\end{itemize}
+
+En un medio uniáxico:
+\[
+  \varepsilon_x=\varepsilon_y=\varepsilon_o,\qquad
+  \varepsilon_z=\varepsilon_e,
+\]
+\[
+  n_o=\sqrt{\varepsilon_o},\quad
+  n_e=\sqrt{\varepsilon_e},\quad
+  v_o=\frac{c}{n_o},\quad
+  v_e=\frac{c}{n_e},\quad
+  k_o=\frac{2\pi}{\lambda}n_o,\quad
+  k_e=\frac{2\pi}{\lambda}n_e.
+\]
+
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[>=Stealth, scale=1.1]
+    \draw[->, thick] (0,0) -- (0,2.2) node[above] {$E_y$};
+    \draw[->, thick] (0,0) -- (2.4,0) node[right] {$E_x$};
+    \draw[thick, dashed] (0,0) -- (1.8,1.4);
+    \draw[very thick] (2.8,-0.2) -- (2.8,2.2);
+    \node[align=left, anchor=west] at (3.3,1.4)
+      {\footnotesize Línea discontinua: sección principal\\
+       \footnotesize Línea vertical: eje óptico\\
+       \footnotesize $\ve{E}=\ve{E}_o+\ve{E}_e$};
+  \end{tikzpicture}
+  \caption{Descomposición del campo en componentes ordinaria y extraordinaria
+           respecto a la sección principal y al eje óptico.}
+  \label{fig:uniaxico_componentes}
+\end{figure}
+
+\subsubsection{Medio uniáxico positivo y negativo}
+
+\begin{itemize}
+  \item \textbf{Uniáxico positivo}: $n_o<n_e \Rightarrow v_o>v_e$.
+  \item \textbf{Uniáxico negativo}: $n_o>n_e \Rightarrow v_o<v_e$.
+\end{itemize}
+
+\subsection{Birrefringencia o Doble Refracción}
+
+Cuando una onda incide sobre un cristal uniáxico, las componentes ordinaria y
+extraordinaria se refractan con índices distintos. Para una interfaz con medio
+incidente de índice $n_1$:
+\begin{equation}
+  n_1\sin\theta_i = n_o\sin\theta_o,
+  \qquad
+  n_1\sin\theta_i = n_e\sin\theta_e.
+  \label{eq:snell_birrefringencia}
+\end{equation}
+
+Si $n_o\neq n_e$, entonces $\theta_o\neq\theta_e$: aparecen dos haces
+transmitidos con polarizaciones ortogonales.
+
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[>=Stealth, scale=1.05]
+    \draw[thick] (-3,0) -- (3,0);
+    \node[left] at (-2.9,0.25) {$n_1$};
+    \node[left] at (-2.9,-0.25) {cristal uniáxico};
+    \draw[->, thick] (0,0) -- (0,2) node[above] {$\uvec{n}$};
+
+    \draw[->, very thick] (-2.0,1.8) -- (0,0) node[midway, above left] {$\ve{k}_i$};
+    \draw[->, very thick] (0,0) -- (1.5,-1.4) node[midway, below right] {$\ve{k}_o$};
+    \draw[->, very thick, dashed] (0,0) -- (2.3,-1.0) node[midway, above right] {$\ve{k}_e$};
+    \node[align=left, anchor=west] at (3.3,-0.3)
+      {\footnotesize Haz ordinario: $\ve{k}_o$\\
+       \footnotesize Haz extraordinario: $\ve{k}_e$\\
+       \footnotesize Resultado: $\theta_o\neq\theta_e$};
+  \end{tikzpicture}
+  \caption{Birrefringencia: separación angular entre el haz ordinario y el
+           extraordinario.}
+  \label{fig:birrefringencia}
+\end{figure}
+
+\subsection{Láminas Retardadoras}
+
+Sea una lámina uniáxica de espesor $d$, con ejes neutros alineados con
+$x,y$. Si el campo incidente es $\ve{E}_i=(E_x,E_y)^T e^{i\omega t}$, el
+campo de salida es:
+\begin{equation}
+  \ve{E}_s
+  =
+  e^{i\omega t}e^{-ik_0 n_o d}
+  \begin{pmatrix}
+    E_x\\
+    E_y\,e^{-i\delta}
+  \end{pmatrix},
+  \qquad
+  \delta = k_0(n_e-n_o)d = \frac{2\pi}{\lambda}(n_e-n_o)d.
+  \label{eq:retardador_delta}
+\end{equation}
+
+El desfase depende de la birrefringencia $\Delta n=n_e-n_o$ y del espesor $d$.
+
+\subsubsection{Lámina de cuarto de onda}
+
+Para $\delta=\pi/2 + m\pi$:
+\[
+  L_{\lambda/4}
+  =
+  \begin{pmatrix}
+    1 & 0\\
+    0 & i
+  \end{pmatrix}
+  \quad\text{(equivalente salvo fase global).}
+\]
+Aplicaciones típicas:
+\begin{itemize}
+  \item Lineal a $45^\circ \to$ circular.
+  \item Circular $\to$ lineal.
+\end{itemize}
+
+\subsubsection{Lámina de media onda}
+
+Para $\delta=\pi + 2m\pi$:
+\[
+  L_{\lambda/2}
+  =
+  \begin{pmatrix}
+    1 & 0\\
+    0 & -1
+  \end{pmatrix}.
+\]
+Rota la polarización lineal (p. ej. de $45^\circ$ a $-45^\circ$) e invierte
+la helicidad de la polarización circular.
+
+\begin{observacion}
+En láminas ideales no hay absorción: la intensidad total se conserva
+($I_s=I_i$).
+\end{observacion}
+
+\subsection{Matrices de Jones}
+
+Para campos monocromáticos:
+\[
+  \ve{E}_s = L\,\ve{E}_i,
+\]
+donde $L$ es la matriz de Jones del sistema óptico.
+
+Para un retardador general alineado con ejes neutros:
+\[
+  L(\delta)=
+  \begin{pmatrix}
+    1 & 0\\
+    0 & e^{-i\delta}
+  \end{pmatrix}.
+\]
+Si la lámina se gira un ángulo $\alpha$:
+\begin{equation}
+  L_\alpha(\delta)=R^{-1}(\alpha)\,L(\delta)\,R(\alpha),
+  \qquad
+  R(\alpha)=
+  \begin{pmatrix}
+    \cos\alpha & -\sin\alpha\\
+    \sin\alpha & \cos\alpha
+  \end{pmatrix}.
+  \label{eq:jones_rotada}
+\end{equation}
+
+\subsection{Polarizadores}
+
+Un polarizador ideal transmite solo la componente del campo sobre su eje.
+Si el eje del polarizador forma ángulo $\alpha$ con $x$, su matriz de Jones es:
+\begin{equation}
+  P_\alpha=
+  \begin{pmatrix}
+    \cos^2\alpha & \cos\alpha\sin\alpha\\
+    \cos\alpha\sin\alpha & \sin^2\alpha
+  \end{pmatrix}.
+  \label{eq:polarizador_jones}
+\end{equation}
+
+Para una onda lineal incidente
+$\ve{E}_i=E_0(\cos\theta,\sin\theta)^T$:
+\[
+  \ve{E}_s = P_\alpha \ve{E}_i
+  = E_0\cos(\theta-\alpha)
+    \begin{pmatrix}\cos\alpha\\ \sin\alpha\end{pmatrix}.
+\]
+Por tanto:
+\begin{equation}
+  I_s = I_0\cos^2(\theta-\alpha).
+  \label{eq:malus}
+\end{equation}
+Esta es la \textbf{ley de Malus}.
+
+Si la entrada es circular
+$\ve{E}_i=\frac{E_0}{\sqrt{2}}(1,\pm i)^T$, entonces
+$I_s=I_0/2$, independiente de $\alpha$.
+
+\section{Tema 5: Difracción}
+
+\subsection{Introducción}
+
+En óptica geométrica, la luz se modela como rayos que se propagan en línea recta.
+Sin embargo, cuando el tamaño de la abertura es comparable con la longitud de onda
+($a\sim\lambda$), aparecen efectos ondulatorios: la energía se reparte en un patrón
+de máximos y mínimos de intensidad.
+
+\begin{itemize}
+  \item \textbf{Campo cercano (Fresnel):} la curvatura de frente de onda todavía es relevante.
+  \item \textbf{Campo lejano (Fraunhofer):} el patrón observado es la transformada de Fourier
+  de la abertura (o del campo transmitido por ella).
+\end{itemize}
+
+\subsection{Principio de Huygens-Fresnel}
+
+Cada punto de la abertura actúa como una fuente secundaria coherente. En la aproximación
+escalar, el campo complejo en un punto de observación $P$ se escribe:
+\begin{equation}
+  U(P)=\frac{1}{i\lambda}\iint_A
+  U_0(x_0,y_0)\,\frac{e^{-ikr}}{r}\,\cos\theta\,dx_0\,dy_0.
+  \label{eq:hf_integral_t5}
+\end{equation}
+donde $U$ es la amplitud compleja del campo óptico, $(x_0,y_0)$ las coordenadas en el plano de la abertura, $r$ la distancia entre el punto emisor y el punto de observación $P$, y $\theta$ el ángulo de oblicuidad respecto a la normal.
+
+\begin{itemize}
+  \item $U_0(x_0,y_0)$: amplitud en la abertura.
+  \item $\frac{e^{-ikr}}{r}$: propagación esférica desde cada punto.
+  \item $\cos\theta$: factor de oblicuidad.
+\end{itemize}
+
+\begin{figure}[ht]
+  \centering
+  \begin{tikzpicture}[scale=0.95]
+    \draw[thick] (-3.1,-1.9) -- (-3.1,1.9);
+    \draw[thick] (3.2,-1.9) -- (3.2,1.9);
+    \filldraw[black] (-3.1,0.4) circle (1.4pt);
+    \filldraw[black] (3.2,0.9) circle (1.4pt);
+    \draw[->,thick] (-2.95,0.45) -- (3.0,0.86);
+    \draw[->] (-4.4,-1.5) -- (-4.4,1.5) node[above,opticslabel] {$y_0$};
+    \draw[->] (-4.4,-1.5) -- (-2.7,-1.5) node[right,opticslabel] {$x_0$};
+    \draw[->] (4.5,-1.5) -- (4.5,1.5) node[above,opticslabel] {$y$};
+    \draw[->] (4.5,-1.5) -- (2.8,-1.5) node[left,opticslabel] {$x$};
+    \draw[dashed] (-2.5,-1.9) -- (2.6,-1.9) node[midway,below,opticslabel] {$z$};
+    \node[align=left, anchor=west, opticslabel] at (4.95,1.25)
+      {$P_0(x_0,y_0)$: punto fuente en abertura\\
+       $P(x,y)$: punto de observación\\
+       Flecha oblicua: distancia $r$\\
+       Línea izquierda: abertura\\
+       Línea derecha: pantalla};
+  \end{tikzpicture}
+  \caption{Geometría básica de difracción por una abertura.}
+  \label{fig:geometria_difraccion_t5}
+\end{figure}
+
+\subsection{Aproximación de Fresnel (campo cercano)}
+
+Para propagación paraxial:
+\[
+  r=\sqrt{(x-x_0)^2+(y-y_0)^2+z^2}
+  \approx
+  z+\frac{(x-x_0)^2+(y-y_0)^2}{2z}.
+\]
+Sustituyendo en \eqref{eq:hf_integral_t5}:
+\begin{equation}
+  U(x,y)=\frac{e^{-ikz}}{i\lambda z}
+  \iint_A U_0(x_0,y_0)
+  \exp\!\left[-i\frac{k}{2z}\left((x-x_0)^2+(y-y_0)^2\right)\right]
+  dx_0\,dy_0.
+  \label{eq:fresnel_t5}
+\end{equation}
+donde $z$ es la distancia abertura--pantalla y $(x,y)$ son coordenadas en el
+plano de observación.
+
+\subsection{Aproximación de Fraunhofer (campo lejano)}
+
+Si $x_0,y_0\ll z$, en el término cuadrático se desprecia $x_0^2,y_0^2$ y queda:
+\begin{equation}
+  U(x,y)\approx
+  \frac{e^{-ikz}}{i\lambda z}\,
+  e^{-i\frac{k}{2z}(x^2+y^2)}
+  \iint_{-\infty}^{+\infty}
+  t(x_0,y_0)\,U_0(x_0,y_0)\,
+  e^{\,i\frac{k}{z}(xx_0+yy_0)}\,dx_0\,dy_0.
+  \label{eq:fraunhofer_t5}
+\end{equation}
+Es decir, el campo en observación es la transformada de Fourier del campo
+transmitido por la abertura.
+
+Usando una lente y observando en su plano focal imagen ($z=f'$):
+\begin{equation}
+  U(x',y')=
+  \frac{e^{-ikf'}}{i\lambda f'}
+  e^{-i\frac{k}{2f'}(x'^2+y'^2)}
+  \iint
+  t(x_0,y_0)U_0(x_0,y_0)
+  e^{\,i\frac{k}{f'}(x'x_0+y'y_0)}dx_0dy_0.
+  \label{eq:fraunhofer_lente_t5}
+\end{equation}
+donde $f'$ es la focal imagen de la lente y $(x',y')$ son coordenadas en su
+plano focal.
+
+\subsubsection{Criterio de validez y número de Fresnel}
+
+Una forma práctica de separar regímenes de propagación es mediante el
+\textbf{número de Fresnel}:
+\begin{equation}
+  N_F=\frac{a^2}{\lambda z},
+  \label{eq:fresnel_number_t5}
+\end{equation}
+donde $a$ es una escala transversal característica de la abertura.
+\begin{itemize}
+  \item $N_F\gtrsim 1$: régimen de Fresnel (campo cercano).
+  \item $N_F\ll 1$: régimen de Fraunhofer (campo lejano), equivalente a
+  $z\gg a^2/\lambda$.
+\end{itemize}
+Esta distinción ayuda a escoger directamente el modelo integral adecuado.
+
+\subsection{Principio de Babinet}
+
+Si una abertura y un obstáculo son complementarios:
+\begin{equation}
+  t_a(x_0,y_0)+t_o(x_0,y_0)=1.
+  \label{eq:babinet_transmision_t5}
+\end{equation}
+En Fraunhofer:
+\[
+  U_a(x,y)+U_o(x,y)=U_{\text{inc}}(x,y).
+\]
+Para iluminación plana, los patrones de intensidad difractada de ambos sistemas
+coinciden (en la práctica, salvo la contribución del haz no desviado en el eje).
+
+\subsection{Difracción por abertura rectangular}
+
+Para una abertura $a\times b$:
+\[
+  t(x_0,y_0)=
+  \begin{cases}
+    1, & |x_0|\le a/2,\ |y_0|\le b/2,\\
+    0, & \text{resto.}
+  \end{cases}
+\]
+En Fraunhofer:
+\begin{equation}
+  U(x,y)=C\;ab\;
+  \operatorname{sinc}\!\left(\frac{kax}{2z}\right)
+  \operatorname{sinc}\!\left(\frac{kby}{2z}\right),
+  \qquad
+  \operatorname{sinc}(u)=\frac{\sin u}{u}.
+  \label{eq:rect_amplitud_t5}
+\end{equation}
+donde $C$ es una constante compleja global (fase y factor de escala).
+Luego la intensidad:
+\begin{equation}
+  I(x,y)=I_0\,
+  \operatorname{sinc}^2\!\left(\frac{kax}{2z}\right)
+  \operatorname{sinc}^2\!\left(\frac{kby}{2z}\right).
+  \label{eq:rect_intensidad_t5}
+\end{equation}
+Mínimos:
+\begin{equation}
+  x_m=\frac{m\lambda z}{a},\qquad
+  y_m=\frac{m\lambda z}{b},
+  \qquad m\in\mathbb{Z}\setminus\{0\}.
+  \label{eq:rect_minimos_t5}
+\end{equation}
+
+\subsubsection{Caso límite: rendija simple}
+
+Si $b\to\infty$:
+\begin{equation}
+  I(x)=I_{\max}\,
+  \operatorname{sinc}^2\!\left(\frac{kax}{2z}\right).
+  \label{eq:rendija_simple_t5}
+\end{equation}
+Aquí $I_{\max}$ es la intensidad del máximo central.
+Con incidencia oblicua $\alpha$, el patrón se desplaza:
+\begin{equation}
+  I(x)=I_{\max}\,
+  \operatorname{sinc}^2\!\left[\frac{ka}{2z}\left(x-z\sin\alpha\right)\right],
+  \qquad
+  x_m=\frac{m\lambda z}{a}+z\sin\alpha.
+  \label{eq:rendija_oblicua_t5}
+\end{equation}
+
+\subsection{Difracción por abertura circular}
+
+Para abertura circular (radio $a$), el patrón en Fraunhofer es radial.
+Definiendo
+\[
+  \xi=\frac{k\,a\,r}{f'},
+\]
+la amplitud e intensidad toman la forma:
+\begin{equation}
+  U(r)=U(0)\,\frac{2J_1(\xi)}{\xi},
+  \qquad
+  I(r)=I(0)\left[\frac{2J_1(\xi)}{\xi}\right]^2,
+  \label{eq:airy_t5}
+\end{equation}
+donde $J_1$ es la función de Bessel de primer orden.
+
+El primer mínimo se obtiene con $\xi_1\simeq3.8317\approx1.22\pi$:
+\begin{equation}
+  r_{\text{Airy}}=\frac{1.22\,\lambda f'}{D},
+  \qquad D=2a.
+  \label{eq:radio_airy_t5}
+\end{equation}
+
+\begin{figure}[ht]
+  \centering
+  \begin{tikzpicture}[scale=1.0]
+    \draw[fill=gray!8,draw=black] (0,0) circle (1.4);
+    \draw[fill=gray!20,draw=black] (1.4,0) circle (1.4);
+    \filldraw[black] (0,0) circle (1.2pt);
+    \filldraw[black] (1.4,0) circle (1.2pt);
+    \draw[<->,thick] (0,-1.95) -- (1.4,-1.95)
+      node[midway,below=2pt,opticslabel] {$\Delta\theta_{\min}$};
+    \node[align=left, anchor=west, opticslabel] at (3.0,1.3)
+      {Disco 1 y Disco 2:\\
+       máximos de Airy adyacentes\\
+       separados en el límite de Rayleigh};
+  \end{tikzpicture}
+  \caption{Criterio de Rayleigh: separación angular límite entre dos máximos.}
+  \label{fig:rayleigh_t5}
+\end{figure}
+
+\subsection{Poder de resolución}
+
+Usando el criterio de Rayleigh para una abertura circular:
+\begin{equation}
+  \Delta\theta_{\min}\simeq\frac{1.22\,\lambda}{D}.
+  \label{eq:rayleigh_angular_t5}
+\end{equation}
+En un plano focal imagen:
+\begin{equation}
+  d_{\min}\simeq f'\,\Delta\theta_{\min}
+  =\frac{1.22\,\lambda f'}{D}.
+  \label{eq:rayleigh_lineal_t5}
+\end{equation}
+
+\section{Tema 6: Interferencia}
+
+\subsection{Introducción y definición}
+
+La interferencia aparece al superponer dos o más ondas coherentes. La
+intensidad total no es, en general, la suma directa de intensidades:
+\begin{equation}
+  I \propto \left|E_1+E_2\right|^2
+  =|E_1|^2+|E_2|^2+2\,\Re\!\left(E_1E_2^*\right).
+  \label{eq:def_interferencia_t6}
+\end{equation}
+Para dos ondas monocromáticas con desfase relativo $\Delta\phi$:
+\begin{equation}
+  I=I_1+I_2+2\sqrt{I_1I_2}\cos\Delta\phi.
+  \label{eq:intensidad_2ondas_t6}
+\end{equation}
+
+\subsection{Condiciones de interferencia estable}
+
+Para observar franjas estables deben cumplirse, de forma práctica:
+\begin{itemize}
+  \item Estados de polarización no ortogonales.
+  \item Frecuencias (casi) iguales.
+  \item Desfase relativo constante en el tiempo.
+\end{itemize}
+
+Magnitudes de coherencia:
+\begin{equation}
+  \tau_c:\ \text{tiempo de coherencia},\qquad
+  l_c=c\,\tau_c,\qquad
+  \Delta\nu\,\tau_c\sim 1.
+  \label{eq:coherencia_t6}
+\end{equation}
+La visibilidad de franjas se define como:
+\begin{equation}
+  \mathcal{V}=\frac{I_{\max}-I_{\min}}{I_{\max}+I_{\min}}
+  =\frac{2\sqrt{I_1I_2}}{I_1+I_2}.
+  \label{eq:visibilidad_t6}
+\end{equation}
+
+\subsection{Interferómetro de Young}
+
+En Young, la diferencia de camino óptico entre las dos trayectorias vale
+$\Delta \approx d\sin\theta \approx d\,x/D$ (paraxial), por lo que:
+\begin{equation}
+  I(x)=I_1+I_2+2\sqrt{I_1I_2}
+  \cos\!\left(\frac{2\pi}{\lambda}\frac{d\,x}{D}\right).
+  \label{eq:young_intensidad_t6}
+\end{equation}
+Si $I_1=I_2=I_0$:
+\begin{equation}
+  I(x)=2I_0\!\left[1+\cos\!\left(\frac{2\pi d}{\lambda D}x\right)\right]
+  =4I_0\cos^2\!\left(\frac{\pi d}{\lambda D}x\right).
+  \label{eq:young_simetrico_t6}
+\end{equation}
+
+Posición de máximos y mínimos:
+\begin{equation}
+  d\sin\theta_m=m\lambda,\qquad
+  x_m=\frac{m\lambda D}{d},\qquad
+  \Delta x=\frac{\lambda D}{d}.
+  \label{eq:young_interfranja_t6}
+\end{equation}
+
+\begin{figure}[ht]
+  \centering
+  \begin{tikzpicture}[scale=0.95]
+    \draw[thick] (-3.5,-1.8) -- (-3.5,1.8);
+    \draw[thick] (3.6,-1.8) -- (3.6,1.8);
+    \filldraw[black] (-3.5,0.6) circle (1.2pt);
+    \filldraw[black] (-3.5,-0.6) circle (1.2pt);
+    \filldraw[black] (3.6,0.25) circle (1.4pt);
+    \draw[->,thick] (-3.45,0.6) -- (3.45,0.25);
+    \draw[->,thick] (-3.45,-0.6) -- (3.45,0.25);
+    \draw[<->] (-3.9,-0.6) -- (-3.9,0.6);
+    \draw[dashed] (-3.2,0) -- (3.4,0);
+    \draw[<->] (4.05,0) -- (4.05,0.25);
+    \draw[dashed] (-2.8,-1.95) -- (3.0,-1.95);
+    \node[align=left, anchor=west, opticslabel] at (4.55,1.35)
+      {$O_1,O_2$: fuentes coherentes\\
+       $P(x)$: punto en pantalla\\
+       Segmentos oblicuos: $r_1,r_2$\\
+       Separación de fuentes: $d$\\
+       Distancia a pantalla: $D$};
+  \end{tikzpicture}
+  \caption{Geometría de Young e interfranja $\Delta x=\lambda D/d$.}
+  \label{fig:young_t6}
+\end{figure}
+
+\subsubsection{Biprisma de Fresnel}
+
+El biprisma genera dos fuentes virtuales coherentes y es equivalente a Young.
+La separación efectiva puede escribirse como:
+\begin{equation}
+  d_{\mathrm{eq}}=(n-1)\,\alpha\,a,
+  \label{eq:biprisma_sep_t6}
+\end{equation}
+y la interfranja se obtiene de nuevo con
+$\Delta x=\lambda D/d_{\mathrm{eq}}$.
+
+\subsection{Doble rendija: difracción e interferencia}
+
+Si cada rendija tiene ancho $a$ y separación entre centros $d$, en campo
+lejano:
+\begin{equation}
+  I(x)\propto
+  \operatorname{sinc}^2\!\left(\frac{kax}{2z}\right)\,
+  4\cos^2\!\left(\frac{kdx}{2z}\right).
+  \label{eq:doble_rendija_t6}
+\end{equation}
+donde $a$ es el ancho de cada rendija, $d$ la separación entre centros,
+$z$ la distancia al plano de observación y $k=2\pi/\lambda$.
+El primer factor es la envolvente de difracción; el segundo, la modulación
+interferencial.
+
+\subsection{Red de difracción}
+
+Para $N$ rendijas idénticas:
+\begin{equation}
+  I(\theta)=I_1(\theta)
+  \left[\frac{\sin(N\beta)}{\sin\beta}\right]^2,
+  \qquad
+  \beta=\frac{\pi d}{\lambda}\sin\theta.
+  \label{eq:red_intensidad_t6}
+\end{equation}
+donde $N$ es el número de rendijas iluminadas, $d$ el periodo de red
+(paso entre rendijas) y $\theta$ el ángulo de observación.
+Máximos principales:
+\begin{equation}
+  d\sin\theta_m=m\lambda.
+  \label{eq:red_ecuacion_t6}
+\end{equation}
+Poder resolutivo (criterio de Rayleigh para red):
+\begin{equation}
+  R=\frac{\lambda}{\Delta\lambda}=mN.
+  \label{eq:red_resolucion_t6}
+\end{equation}
+donde $m$ es el orden de difracción y $\Delta\lambda$ la mínima separación
+espectral resoluble alrededor de $\lambda$.
+
+La red también permite cuantificar la \textbf{dispersión angular}:
+\begin{equation}
+  \frac{d\theta}{d\lambda}=\frac{m}{d\cos\theta},
+  \label{eq:red_dispersion_t6}
+\end{equation}
+de modo que órdenes altos y pasos de red pequeños separan mejor longitudes
+de onda cercanas en la pantalla.
+
+\subsection{Interferómetro de Michelson}
+
+Para diferencia de longitudes de brazo $\Delta d=d_2-d_1$:
+\begin{equation}
+  I=I_0\left[1+\cos\!\left(2k\Delta d\right)\right]
+  =I_0\left[1+\cos\!\left(\frac{4\pi}{\lambda}\Delta d\right)\right].
+  \label{eq:michelson_int_t6}
+\end{equation}
+donde $\Delta d=d_2-d_1$ es el desbalance entre brazos ópticos y
+$I_0$ es la intensidad media.
+Si se introduce una lámina de espesor $L$ e índice $n$ en un brazo, la fase
+extra equivale a $\Delta_{\!L}=2(n-1)L$, de modo que:
+\begin{equation}
+  I=I_0\left[1+\cos\!\left(\frac{4\pi}{\lambda}(\Delta d+\Delta_{\!L})\right)\right].
+  \label{eq:michelson_lamina_t6}
+\end{equation}
+donde $\Delta_{\!L}=2(n-1)L$ representa el incremento de camino óptico
+introducido por la lámina.
+Para franjas circulares:
+\begin{equation}
+  2d\cos\theta=m\lambda.
+  \label{eq:michelson_anillos_t6}
+\end{equation}
+Aquí $d$ es la longitud de brazo efectiva del interferómetro y $\theta$ el
+ángulo de observación del rayo.
+
+\subsubsection{Conteo de franjas y sensibilidad}
+
+Si un espejo se desplaza una cantidad $\Delta d$, la diferencia de camino óptico
+varía en $2\Delta d$, y el número de franjas que atraviesan un punto fijo es:
+\begin{equation}
+  m=\frac{2\Delta d}{\lambda}.
+  \label{eq:michelson_fringe_count_t6}
+\end{equation}
+Análogamente, al insertar una lámina de espesor $L$ e índice $n$ en un brazo:
+\begin{equation}
+  m=\frac{2(n-1)L}{\lambda}.
+  \label{eq:michelson_lamina_count_t6}
+\end{equation}
+Estas relaciones explican por qué la interferometría permite medidas submicrométricas
+de desplazamiento, espesor e índice.
+
+\begin{figure}[ht]
+  \centering
+  \begin{tikzpicture}[scale=0.9]
+    \draw[thick,fill=gray!10] (-0.22,-0.22) rectangle (0.22,0.22);
+
+    \draw[thick] (-3,0) -- (-0.22,0);
+
+    \draw[thick] (0.22,0) -- (3,0);
+    \draw[thick] (3,-0.8) -- (3,0.8);
+
+    \draw[thick] (0,0.22) -- (0,2.4);
+    \draw[thick] (-0.8,2.4) -- (0.8,2.4);
+
+    \draw[thick] (0,-0.22) -- (0,-2.4);
+    \draw[thick] (-1.3,-2.4) -- (1.3,-2.4);
+
+    \draw[->,thick] (-2.8,0.06) -- (-0.24,0.06);
+    \draw[->,thick] (0.24,0.06) -- (2.8,0.06);
+    \draw[->,thick] (2.8,-0.06) -- (0.24,-0.06);
+    \draw[->,thick] (0.06,0.24) -- (0.06,2.25);
+    \draw[->,thick] (-0.06,2.25) -- (-0.06,0.24);
+    \draw[->,thick] (0,-0.24) -- (0,-2.2);
+    \node[align=left, anchor=west, opticslabel] at (3.55,1.8)
+      {BS: divisor de haz\\
+       Brazo horizontal: espejo $E_1$\\
+       Brazo vertical: espejo $E_2$\\
+       Salida inferior: pantalla\\
+       Flechas: trayectorias ópticas};
+  \end{tikzpicture}
+  \caption{Esquema básico del interferómetro de Michelson.}
+  \label{fig:michelson_t6}
+\end{figure}
+
+\subsection{Interferómetro de Fabry-Perot}
+
+La intensidad transmitida (función de Airy) se expresa como:
+\begin{equation}
+  I_t=\frac{I_0}{1+F\sin^2\!\left(\frac{\phi}{2}\right)},
+  \qquad
+  F=\frac{4R}{(1-R)^2}.
+  \label{eq:fabry_airy_t6}
+\end{equation}
+donde $R$ es la reflectividad de cada espejo, $F$ el coeficiente de Airy e $I_t$ la intensidad transmitida.
+con fase:
+\begin{equation}
+  \phi=\frac{4\pi n d\cos\varepsilon'}{\lambda}.
+  \label{eq:fabry_fase_t6}
+\end{equation}
+donde $n$ es el índice del medio interno, $d$ la separación entre espejos y
+$\varepsilon'$ el ángulo interno respecto a la normal.
+Máximos de transmisión:
+\begin{equation}
+  2nd\cos\varepsilon'=m\lambda.
+  \label{eq:fabry_max_t6}
+\end{equation}
+Para una lente de focal $f'$, el radio de anillos puede escribirse como:
+\begin{equation}
+  \rho_m=f'\sqrt{1-\left(\frac{m\lambda}{2nd}\right)^2}.
+  \label{eq:fabry_radio_t6}
+\end{equation}
+
+\subsubsection{Rango espectral libre, fineza y resolución}
+
+Además de la forma de Airy, en Fabry-Perot son clave:
+\begin{equation}
+  \Delta\nu_{\mathrm{FSR}}=\frac{c}{2nd\cos\varepsilon'},
+  \label{eq:fabry_fsr_t6}
+\end{equation}
+\noindent Aquí $\Delta\nu_{\mathrm{FSR}}$ es el rango espectral libre.
+\begin{equation}
+  \mathcal{F}=\frac{\Delta\nu_{\mathrm{FSR}}}{\delta\nu}
+  \simeq \frac{\pi\sqrt{R}}{1-R},
+  \label{eq:fabry_finesse_t6}
+\end{equation}
+donde $\delta\nu$ es el ancho de línea a media altura y $\mathcal{F}$ la
+\textbf{fineza}. Para un orden interferencial $m$, el poder resolutivo puede
+escribirse como:
+\begin{equation}
+  \frac{\lambda}{\delta\lambda}\simeq m\,\mathcal{F}.
+  \label{eq:fabry_res_t6}
+\end{equation}
+En consecuencia, aumentar $R$ estrecha los picos de transmisión y mejora la
+resolución espectral del interferómetro.
+
+\subsection{Marco de coherencia (complementario)}
+
+Una formulación más general de interferencia para campos cuasi-monocromáticos usa
+el \textbf{grado complejo de coherencia} $\gamma_{12}$:
+\begin{equation}
+  I=I_1+I_2+2\sqrt{I_1I_2}\,|\gamma_{12}|\cos(\Delta\phi+\arg\gamma_{12}),
+  \qquad 0\le|\gamma_{12}|\le 1.
+  \label{eq:gamma_interferencia_t6}
+\end{equation}
+La visibilidad queda entonces:
+\begin{equation}
+  \mathcal{V}
+  =\frac{2\sqrt{I_1I_2}}{I_1+I_2}\,|\gamma_{12}|.
+  \label{eq:vis_gamma_t6}
+\end{equation}
+Para intensidades equilibradas ($I_1=I_2$), se obtiene
+$\mathcal{V}=|\gamma_{12}|$, conexión directa entre contraste observado y
+coherencia de la fuente.
+
+\section{Formulario General}
+
+\begin{mdframed}[style=resultado]
+\textbf{Tema 1: Ondas en vacío}
+\formulaname{Ecuaciones de Maxwell en vacío}
+\[
+\begin{aligned}
+\div\ve{E} &= 0, &
+\div\ve{B} &= 0, \\
+\curl\ve{E} &= -\pdv{\ve{B}}{t}, &
+\frac{1}{\mu_0}\curl\ve{B} &= \varepsilon_0\pdv{\ve{E}}{t}.
+\end{aligned}
+\]
+\formulaname{Ecuación de onda electromagnética}
+\[
+\nabla^2\ve{A}=\frac{1}{v^2}\pdv[2]{\ve{A}}{t}
+\]
+\formulaname{Relaciones de propagación en vacío}
+\[
+k=\frac{\omega}{c}=\frac{2\pi}{\lambda},
+\qquad
+\lambda\nu=c,
+\qquad
+E=cB
+\]
+\formulaname{Polarización e intensidad}
+\[
+\ve{J}=
+\begin{pmatrix}
+E_{0x}\\E_{0y}e^{i\delta}
+\end{pmatrix},
+\qquad
+I=\frac{E_0^2}{2\mu_0 c},
+\qquad
+\langle\ve{S}\rangle=\frac{1}{2\mu_0}\Re(\ve{E}_0\times\ve{B}_0^*)
+\]
+\end{mdframed}
+
+\begin{mdframed}[style=resultado]
+\textbf{Tema 2: Interacción radiación-materia}
+\formulaname{Fuerza de Lorentz en régimen no relativista}
+\[
+\ve{F}\approx q\ve{E},
+\qquad
+|\ve{v}|\ll c
+\]
+\formulaname{Dipolo inducido y fuerza recuperadora}
+\[
+\mathbb{p}=q\ve{r},
+\qquad
+\ve{F}_{\text{rec}}=-m\omega_0^2\ve{r}
+\]
+\formulaname{Oscilador armónico amortiguado y forzado}
+\[
+m\ddot{\ve{r}}+m\Gamma\dot{\ve{r}}+m\omega_0^2\ve{r}
+=q\ve{E}_0e^{i\omega t}
+\]
+\formulaname{Potencia transferida y potencia radiada}
+\[
+\langle P_{\text{trans}}\rangle=\left\langle q\ve{E}\cdot\dot{\ve{r}}\right\rangle,
+\qquad
+\langle P_{\text{esp}}\rangle\propto\omega^4|\mathbb{p}_0|^2
+\]
+\formulaname{Patrón dipolar y ley de Rayleigh}
+\[
+\frac{dP}{d\Omega}\propto\sin^2\theta,
+\qquad
+I_{\text{Rayleigh}}\propto\frac{1}{\lambda^4}
+\]
+\end{mdframed}
+
+\begin{mdframed}[style=resultado]
+\textbf{Tema 3: Propagación en medios materiales}
+\formulaname{Criterio de dilución del medio}
+\[
+\frac{N_{\text{átomos}}}{\lambda^3}\le 1\ (\text{diluido}),
+\qquad
+\frac{N_{\text{átomos}}}{\lambda^3}>1\ (\text{denso})
+\]
+\formulaname{Fuentes macroscópicas promedio}
+\[
+\langle\rho\rangle=\rho_{\text{libre}}-\div\ve{P},
+\qquad
+\langle\ve{j}\rangle=\ve{j}_{\text{libre}}+\curl\ve{M}+\pdv{\ve{P}}{t}
+\]
+\formulaname{Relaciones constitutivas lineales}
+\[
+\ve{D}=\varepsilon_0\varepsilon_r\ve{E},
+\qquad
+\ve{B}=\mu_0\mu_r\ve{H},
+\qquad
+\ve{j}_{\text{libre}}=\sigma\ve{E}
+\]
+\formulaname{Índice complejo y permitividad efectiva}
+\[
+n_c^2=\varepsilon_{\text{gen}}
+=\varepsilon_r\mu_r-i\frac{\sigma\mu_r}{\varepsilon_0\omega},
+\qquad
+n_c=\eta-i\kappa
+\]
+\formulaname{Vector de onda complejo y flujo de energía}
+\[
+\ve{k}_c=k_0n_c=\ve{k}-i\ve{a},
+\qquad
+\ve{S}=\ve{E}\times\ve{H}
+\]
+\end{mdframed}
+
+\begin{mdframed}[style=resultado]
+\textbf{Tema 4 y 4.2: Reflexión, refracción y anisotropía}
+\formulaname{Leyes de reflexión y Snell}
+\[
+\theta_i=\theta_r,
+\qquad
+n_1\sin\theta_i=n_2\sin\theta_t
+\]
+\formulaname{Coeficientes de Fresnel (amplitud)}
+\[
+\begin{aligned}
+r_\parallel&=\frac{n_2\cos\theta_i-n_1\cos\theta_t}{n_2\cos\theta_i+n_1\cos\theta_t},
+&
+r_\perp&=\frac{n_1\cos\theta_i-n_2\cos\theta_t}{n_1\cos\theta_i+n_2\cos\theta_t},
+\\
+t_\parallel&=\frac{2n_1\cos\theta_i}{n_2\cos\theta_i+n_1\cos\theta_t},
+&
+t_\perp&=\frac{2n_1\cos\theta_i}{n_1\cos\theta_i+n_2\cos\theta_t}.
+\end{aligned}
+\]
+\formulaname{Ángulos característicos}
+\[
+\tan\theta_B=\frac{n_2}{n_1},
+\qquad
+\sin\theta_c=\frac{n_2}{n_1}\ (n_1>n_2)
+\]
+\formulaname{Reflectancia y transmitancia energética}
+\[
+\mathcal{R}_j=|r_j|^2,
+\qquad
+\mathcal{T}_j=\frac{n_2\cos\theta_t}{n_1\cos\theta_i}|t_j|^2,
+\qquad
+\mathcal{R}_j+\mathcal{T}_j=1
+\]
+\formulaname{Tensor dieléctrico e índices ordinario/extraordinario}
+\[
+\boldsymbol{\varepsilon}=
+\begin{pmatrix}
+\varepsilon_x&0&0\\
+0&\varepsilon_y&0\\
+0&0&\varepsilon_z
+\end{pmatrix},
+\qquad
+n_o=\sqrt{\varepsilon_o},
+\qquad
+n_e=\sqrt{\varepsilon_e}
+\]
+\formulaname{Retardo de fase y formalismo de Jones}
+\[
+\delta=\frac{2\pi}{\lambda}(n_e-n_o)d,
+\qquad
+L_\alpha(\delta)=R^{-1}(\alpha)L(\delta)R(\alpha)
+\]
+\formulaname{Polarizador ideal y ley de Malus}
+\[
+P_\alpha=
+\begin{pmatrix}
+\cos^2\alpha & \cos\alpha\sin\alpha\\
+\cos\alpha\sin\alpha & \sin^2\alpha
+\end{pmatrix},
+\qquad
+I_s=I_0\cos^2(\theta-\alpha)
+\]
+\end{mdframed}
+
+\begin{mdframed}[style=resultado]
+\textbf{Tema 5: Difracción}
+\formulaname{Integral de Huygens-Fresnel}
+\[
+U(P)=\frac{1}{i\lambda}\iint_A U_0(x_0,y_0)\frac{e^{-ikr}}{r}\cos\theta\,dx_0dy_0
+\]
+\formulaname{Aproximaciones de Fresnel y Fraunhofer}
+\[
+U_{\text{Fresnel}}(x,y)=\frac{e^{-ikz}}{i\lambda z}\iint_A U_0\,
+e^{-i\frac{k}{2z}\left((x-x_0)^2+(y-y_0)^2\right)}dx_0dy_0
+\]
+\[
+U_{\text{Fraunhofer}}(x,y)\propto\iint t(x_0,y_0)U_0(x_0,y_0)
+e^{i\frac{k}{z}(xx_0+yy_0)}dx_0dy_0
+\]
+\formulaname{Número de Fresnel y principio de Babinet}
+\[
+N_F=\frac{a^2}{\lambda z},
+\qquad
+t_a+t_o=1
+\]
+\formulaname{Abertura rectangular (intensidad y mínimos)}
+\[
+I_{\text{rect}}(x,y)=I_0\operatorname{sinc}^2\!\left(\frac{kax}{2z}\right)
+\operatorname{sinc}^2\!\left(\frac{kby}{2z}\right)
+\]
+\[
+x_m=\frac{m\lambda z}{a},
+\qquad
+y_m=\frac{m\lambda z}{b}
+\]
+\formulaname{Rendija simple}
+\[
+I_{\text{rendija}}(x)=I_{\max}\operatorname{sinc}^2\!\left(\frac{kax}{2z}\right)
+\]
+\formulaname{Abertura circular y criterio de Rayleigh}
+\[
+I_{\text{circular}}(r)=I(0)\left[\frac{2J_1(\xi)}{\xi}\right]^2,
+\qquad
+\xi=\frac{kar}{f'}
+\]
+\[
+r_{\text{Airy}}=\frac{1.22\,\lambda f'}{D},
+\qquad
+\Delta\theta_{\min}\simeq\frac{1.22\,\lambda}{D}
+\]
+\end{mdframed}
+
+\begin{mdframed}[style=resultado]
+\textbf{Tema 6: Interferencia}
+\formulaname{Interferencia de dos haces y visibilidad}
+\[
+I=I_1+I_2+2\sqrt{I_1I_2}\cos\Delta\phi
+\]
+\[
+\mathcal{V}=\frac{I_{\max}-I_{\min}}{I_{\max}+I_{\min}}
+=\frac{2\sqrt{I_1I_2}}{I_1+I_2}
+\]
+\formulaname{Longitud y tiempo de coherencia}
+\[
+l_c=c\tau_c,
+\qquad
+\Delta\nu\,\tau_c\sim 1
+\]
+\formulaname{Doble rendija}
+\[
+d\sin\theta_m=m\lambda,
+\qquad
+x_m=\frac{m\lambda D}{d},
+\qquad
+\Delta x=\frac{\lambda D}{d}
+\]
+\[
+I_{\text{doble rendija}}\propto
+\operatorname{sinc}^2\!\left(\frac{kax}{2z}\right)\,
+4\cos^2\!\left(\frac{kdx}{2z}\right)
+\]
+\formulaname{Red de difracción}
+\[
+I_{\text{red}}(\theta)=I_1(\theta)\left[\frac{\sin(N\beta)}{\sin\beta}\right]^2,
+\qquad
+\beta=\frac{\pi d}{\lambda}\sin\theta
+\]
+\[
+\frac{\lambda}{\Delta\lambda}=mN,
+\qquad
+\frac{d\theta}{d\lambda}=\frac{m}{d\cos\theta}
+\]
+\formulaname{Interferómetro de Michelson}
+\[
+I_{\text{Michelson}}=I_0\left[1+\cos\!\left(\frac{4\pi}{\lambda}\Delta d\right)\right]
+\]
+\[
+m_{\text{franjas}}=\frac{2\Delta d}{\lambda},
+\qquad
+m_{\text{lámina}}=\frac{2(n-1)L}{\lambda}
+\]
+\formulaname{Interferómetro de Fabry-Perot}
+\[
+I_t=\frac{I_0}{1+F\sin^2(\phi/2)},
+\qquad
+F=\frac{4R}{(1-R)^2},
+\qquad
+\phi=\frac{4\pi nd\cos\varepsilon'}{\lambda}
+\]
+\[
+\Delta\nu_{\mathrm{FSR}}=\frac{c}{2nd\cos\varepsilon'},
+\qquad
+\mathcal{F}\simeq\frac{\pi\sqrt{R}}{1-R},
+\qquad
+\frac{\lambda}{\delta\lambda}\simeq m\mathcal{F}
+\]
+\formulaname{Interferencia parcial con coherencia compleja}
+\[
+I=I_1+I_2+2\sqrt{I_1I_2}\,|\gamma_{12}|
+\cos(\Delta\phi+\arg\gamma_{12})
+\]
+\end{mdframed}
+
+\end{document}
