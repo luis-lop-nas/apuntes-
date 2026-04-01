@@ -1,0 +1,277 @@
+Hipótesis del continuo
+La conservación de la masa implica una relación importante, denominada
+ecuación de continuidad, entre la densidad y la velocidad
+Consideremos un pequeño volumen de fluido dV. Cuando de desplaza, su
+masa no puede cambiar
+                       𝑑             𝑑𝜌       𝑑
+                          𝜌𝑑𝑉   𝑑𝑉        𝜌      𝑑𝑉   0
+                       𝑑𝑡            𝑑𝑡       𝑑𝑡
+
+
+
+
+                                                                         4
+                                                                         9
+Hipótesis del continuo
+              𝑑𝑉
+                     𝜵 𝒗𝑑𝑉
+              𝑑𝑡
+
+
+
+
+            𝑑
+               𝑑𝑉   𝜵 𝒗𝑑𝑉
+            𝑑𝑡
+
+
+
+                             5
+                             0
+Hipótesis del continuo
+Llegamos a la ecuación de continuidad
+
+                 𝑑𝜌
+                      𝜌𝜵 𝒗     0
+                 𝑑𝑡
+
+                 𝑑𝜌
+                      𝜵   𝜌𝒗       0    El caudal es constante
+                 𝑑𝑡
+
+
+
+
+                                                                 5
+                                                                 1
+Dinámica de fluidos
+Imaginemos un fluido que sufre una perturbación desde el equilibrio
+       𝑝   𝑝   𝑝´
+      𝜌    𝜌   𝜌´
+                                                  𝑑𝒗
+Aplicamos la ecuación del fluido no viscoso   𝜌        𝜌𝒈   𝜵𝑝
+                                                  𝑑𝑡
+
+En el equilibrio:   𝜌 𝑔   𝜵𝑝   0
+
+
+
+
+                                                                      5
+                                                                      2
+Dinámica de fluidos
+Fuera del equilibrio:
+                                 𝜕𝒗
+                        𝜌   𝜌´            𝒗 𝜵𝒗       𝜌    𝜌´ 𝒈   𝜵 𝑝   𝑝´
+                                 𝜕𝑡
+
+                                      𝜕𝒗
+                                 𝜌          𝜌´ 𝒈    𝜵𝑝´
+                                      𝜕𝑡
+                                           𝜕𝒗
+                                      𝜌            𝜵𝑝´
+                                           𝜕𝑡
+
+
+
+
+                                                                            5
+                                                                            3
+Dinámica de fluidos
+Si perturbamos la ecuación de continuidad
+                        𝜕𝜌´
+                               𝜌 𝜵 𝒗
+                        𝜕𝑡
+Tenemos otra ecuación para relacionar las variables:   𝑝   𝑀𝐶𝑜   𝑑𝑉/𝑉
+
+Como la masa no puede variar:
+                              𝜌𝑑𝑉   𝑉𝑑𝜌     0
+
+                               𝑑𝑉      𝑑𝜌
+                               𝑉       𝜌
+
+
+
+
+                                                                        5
+                                                                        4
+Dinámica de fluidos
+              𝑑𝜌
+    𝑑𝑝   𝑀𝐶𝑜
+               𝜌
+             𝜌´
+    𝑝´   𝑀𝐶𝑜
+             𝜌
+
+   𝜕𝑝´
+           𝑀𝐶𝑜𝜵 𝒗
+   𝜕𝑡
+
+
+Derivando respecto al tiempo, tenemos
+                      𝜕 𝑝´          𝜕𝒗   𝑀𝐶𝑜 𝟐
+                             𝑀𝐶𝑜𝜵           𝜵 𝑝´
+                      𝜕𝑡            𝜕𝑡    𝜌
+
+
+
+
+                                                   5
+                                                   5
+Fluidos reales
+La ecuación de Bernoulli define un entorno limitado. En los sistemas reales normalmente esta
+ecuación no se cumple.
+
+Al hablar de viscosidad vimos que el movimiento de una parte del fluido puede afectar al
+movimiento de otra.
+
+
+
+
+                                                                                               5
+                                                                                               6
+Fluidos reales
+Todo fluido real posee la propiedad de la viscosidad. La viscosidad es la causa de la
+resistencia que aparece en el flujo de un fluido en tuberías y canales y está relacionada con la
+oposición de un fluido a las deformaciones tangenciales, en las que se produce rozamiento
+entre distintas partes del fluido.
+
+El efecto de estas fuerzas de rozamiento se traduce en la disipación de energía que debe
+tenerse en cuenta en la ecuación de Bernoulli
+
+
+
+
+                                                                                                   5
+                                                                                                   7
+Fluidos reales
+Dependiendo de la importancia relativa entre las fuerzas viscosas y las inerciales, el
+movimiento puede ser de dos tipos
+
+Flujo laminar: el fluido tiene un movimiento ordenado y el fluido se mueve en líneas paralelas
+
+Flujo turbulento: El flujo presenta movimiento desordenado
+
+
+
+
+                                                                                                 5
+                                                                                                 8
+Fluidos reales
+Supongamos flujo laminar. Entonces las fuerzas de rozamiento son tangentes a la dirección
+del movimiento.
+
+Supongamos además que el fluido es newtoniano (𝜇       𝑐𝑡𝑒).
+
+La fuerza de rozamiento vendrá dada por:
+                                        𝜕𝑣             𝜕𝐹          𝜕𝑣
+                           𝑑𝐹       𝜇      𝑑𝑆   →𝜏             𝜇        Ley de Newton
+                                        𝜕𝑛              𝜕𝑆         𝜕𝑛
+
+
+El esfuerzo cortante en un fluido newtoniano viscoso en régimen laminar es proporcional a la
+pendiente de la velocidad y es máximo en la pared
+
+Justo en la pared la velocidad es cero: CONDICIÓN DE NO DESLIZAMIENTO
+
+
+                                                                                               5
+                                                                                               9
+Fluidos reales
+Cuando tenemos un fluido viscoso, hay que tener en cuenta la fuerza de rozamiento a la hora
+de escribir la ecuación del movimiento
+
+                                      𝜕 𝒖
+                                𝜌𝑑𝑉         𝑭   𝑭     𝑭
+                                      𝜕𝑡
+
+
+El tensor de tensiones en un punto del fluido puede escribirse como
+                                      𝑝 𝜏        𝜏         𝜏
+                            𝝈          𝜏        𝑝 𝜏        𝜏
+                                       𝜏         𝜏        𝑝 𝜏
+
+
+
+
+                                                                                              6
+                                                                                              0
+Fluidos reales
+Si tenemos un dV pequeño:
+                                 𝑑𝐹   𝑥      𝑝 𝑥         𝜏       𝑥 𝑑𝑦𝑑𝑧
+                       𝑑𝐹   𝑥    𝑑𝑥         𝑝 𝑥    𝑑𝑥            𝜏    𝑥   𝑑𝑥 𝑑𝑦𝑑𝑧
+                                                 𝜕𝑝                       𝜕𝜏
+                 𝑑𝐹    𝑥    𝑑𝑥        𝑝 𝑥           𝑑𝑥       𝜏       𝑥        𝑑𝑥 𝑑𝑦𝑑𝑧
+                                                 𝜕𝑥                        𝜕𝑥
+                                                                     𝜕𝑝   𝜕𝜏
+                  𝑑𝐹        𝑑𝐹   𝑥    𝑑𝐹     𝑥     𝑑𝑥                           𝑑𝑥𝑑𝑦𝑑𝑧
+                                                                     𝜕𝑥    𝜕𝑥
+
+
+
+
+                                                                                         6
+                                                                                         1
+Fluidos reales
+Si vemos las fuerzas que actúan en la dirección x sobre las caras y y z, tenemos
+                                                                   𝜕𝜏
+                       𝑑𝐹        𝑑𝐹   𝑦     𝑑𝐹    𝑦     𝑑𝑦               𝑑𝑥𝑑𝑦𝑑𝑧
+                                                                    𝜕𝑦
+                                                                  𝜕𝜏
+                        𝑑𝐹       𝑑𝐹   𝑧     𝑑𝐹    𝑧    𝑑𝑧                𝑑𝑥𝑑𝑦𝑑𝑧
+                                                                   𝜕𝑧
+                                      𝜕𝑝    𝜕𝜏        𝜕𝜏         𝜕𝜏
+                            𝑑𝐹                                       𝑑𝑥𝑑𝑦𝑑𝑧
+                                      𝜕𝑥     𝜕𝑥        𝜕𝑦         𝜕𝑧
+
+De manera general, tendremos
+                                           𝑑𝐹     ∇𝑝        ∇𝜏
+
+
+
+
+                                                                                   6
+                                                                                   2
+Fluidos reales
+Cuando tenemos un fluido viscoso, hay que tener en cuenta la fuerza de rozamiento a la hora
+de escribir la ecuación del movimiento
+
+            𝜕 𝒖
+      𝜌𝑑𝑉         𝑭       𝑭
+            𝜕𝑡                                 Ecuación de un fluido viscoso
+
+            𝑭      𝜌𝒈𝑑𝑉                               𝑑𝑣
+                                                  𝜌        𝜌𝒈   𝜵𝑝   𝜵𝜏
+                                                      𝑑𝑡
+            𝑭     ∇𝑝   ∇𝜏
+
+
+
+
+                                                                                              6
+                                                                                              3
+Fluidos reales
+Para un fluido newtoniano, los esfuerzos viscosos son proporcionales a la derivada de la
+velocidad y al coeficiente de viscosidad. Si el flujo es incompresible, podemos escribir
+
+                               𝜕𝑣                              𝜕𝑣     𝜕𝑣
+                       𝜏    2𝜇                  𝜏     𝜏      𝜇
+                               𝜕𝑥                              𝜕𝑦      𝜕𝑥
+                               𝜕𝑣                              𝜕𝑣     𝜕𝑣
+                       𝜏    2𝜇                  𝜏     𝜏      𝜇
+                               𝜕𝑦                              𝜕𝑧     𝜕𝑥
+                               𝜕𝑣                              𝜕𝑣     𝜕𝑣
+                       𝜏    2𝜇                  𝜏     𝜏      𝜇
+                               𝜕𝑧                              𝜕𝑦     𝜕𝑧
+
+
+                                𝑑𝑣
+                            𝜌        𝜌𝒈   𝜵𝑝   𝜇𝜵 𝒗       Ecuación de Navier–Stokes
+                                𝑑𝑡
+
+
+
+
+                                                                                           6
+                                                                                           4
+

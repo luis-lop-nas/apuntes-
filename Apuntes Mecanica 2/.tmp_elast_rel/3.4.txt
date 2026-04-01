@@ -1,0 +1,54 @@
+Ejemplo
+Para el sistema de la figura, calcular:
+
+a) A) Velocidad de salida del flujo de agua
+
+b) B) Presión en A
+
+
+
+
+                                              6
+                                              5
+Ejemplo
+Por una tubería circula agua a 4m/s bajo una presión de 200 kPa. La tubería se estrecha hasta
+la mitad de su diámetro original. Hallar (a) la velocidad y (b) la presión del agua en la parte
+más estrecha de la tubería.
+
+
+
+
+                                                                                                  6
+                                                                                                  6
+Ejemplo
+Analizar el flujo gravitacional de un líquido en dirección “x” a lo largo de un plano inclinado, de ancho
+infinito, que forma un ángulo ϕ con la horizontal. Se supone que el líquido se mueve como una capa de
+altura uniforme “a” y está expuesto a la atmósfera en la superficie libre.
+
+a)   A) Demostrar que las ecuaciones de Navier-Stokes se reducen a la única expresión:
+                                                        𝑑 𝑣
+                                               𝑔    𝜈         0
+                                                        𝑑𝑦
+
+a)   cuando se aplican las siguientes hipótesis: (1) Flujo laminar; (2) Velocidad sólo en dirección x; (3)
+     Fluido incompresible; (4) Flujo estacionario; (5) Superficie del líquido a presión atmosférica.
+
+b)   B) Integrar la ecuación para encontrar 𝑣 , usando las siguientes condiciones de borde: (i) Velocidad
+     nula en la pared del plano inclinado. (ii) Esfuerzo tangencial nulo en la superficie de contacto con la
+     atmósfera.
+
+
+
+
+                                                                                                               6
+                                                                                                               7
+Ejemplo
+Considere el siguiente campo de velocidades bidimensional estacionario incompresible 𝑣⃗
+ 𝑎𝑥 𝑏 𝚤⃗      𝑎𝑦 𝑐𝑥 𝚥⃗, donde a, b y c son contantes. Calcule la presión en función de x e y
+
+
+
+
+                                                                                               6
+                                                                                               8
+

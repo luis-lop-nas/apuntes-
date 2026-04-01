@@ -1,0 +1,322 @@
+N osciladores acoplados
+Calculo de N modos normales
+Proponemos soluciones sinusoidales
+𝑦       𝐴 𝑐𝑜𝑠𝜔𝑡             𝑐𝑜𝑛 𝑝    1, 2, … … . 𝑁
+
+Como la ecuación del movimiento es
+
+         2𝜔 𝑦     𝜔    𝑦     𝑦        0, con 𝜔
+
+    𝜔     2𝜔 𝐴        𝜔 𝐴        𝐴                   𝑐𝑜𝑛 𝑝   1, 2, … … . 𝑁
+
+ Además, tenemos condición de extremos fijos: 𝐴      𝐴       0
+
+
+                                                                             4
+                                                                             5
+N osciladores acoplados
+Calculo de N modos normales
+ 𝐴        𝐴          𝜔        2𝜔
+      𝐴                   𝜔
+
+¿Qué valor pueden tener los Ap ?
+
+ 𝐴       𝐶𝑐𝑜𝑠𝑝𝜃                    𝑐𝑜𝑛 𝑝   1, 2, … … . 𝑁
+𝐴         𝐴
+                  2𝑐𝑜𝑠𝜃
+     𝐴
+
+
+
+
+                                                           4
+                                                           6
+N osciladores acoplados
+Calculo de N modos normales
+ 𝐴       𝐴
+               2𝑐𝑜𝑠𝜃
+     𝐴
+ Para A0 se cumple:
+ Para AN+1 se cumple que 𝐴        𝐶𝑠𝑒𝑛 𝑁     1 𝜃   0
+
+         𝑁   1 𝜃      𝑛𝜋,    𝑐𝑜𝑛 𝑛   1, 2, 3 … .
+
+                             𝑛𝜋                             𝑛𝑝𝜋
+                        𝜃                     𝐴    𝐶 𝑠𝑒𝑛
+                            𝑁 1                            𝑁 1
+
+
+
+                                                                  4
+                                                                  7
+N osciladores acoplados
+Calculo de N modos normales
+ Las frecuencias normales serán:
+                                        𝑛𝜋
+                      𝜔     2𝜔 𝑠𝑒𝑛
+                                     2 𝑁 1
+
+
+
+
+                                             4
+                                             8
+N osciladores acoplados
+Propiedades de los N modos normales
+ - Los n definen distintas frecuencias
+                                            𝑛𝜋
+                       𝜔       2𝜔 𝑠𝑒𝑛
+                                         2 𝑁 1
+
+ - El movimiento de una partícula depende de p y de n
+
+                                       𝑛𝑝𝜋
+                           𝐴    𝐶 𝑠𝑒𝑛
+                                      𝑁 1
+
+ - Existen N modos normales
+
+
+                                                        4
+                                                        9
+N osciladores acoplados
+
+
+
+
+                          5
+                          0
+N osciladores acoplados
+
+
+
+
+                          5
+                          1
+N osciladores acoplados
+
+
+
+
+                          5
+                          2
+N osciladores acoplados
+Consideremos oscilaciones longitudinales
+
+
+
+
+            2𝜔 𝜉   𝜔   𝜉   𝜉   0
+
+
+                                           5
+                                           3
+N osciladores acoplados
+Consideremos oscilaciones longitudinales
+                          𝑛𝑝𝜋
+             𝜉 𝑡   𝐶 𝑠𝑒𝑛      𝑐𝑜𝑠𝜔 𝑡
+                         𝑁 1
+                             𝑛𝜋
+              𝜔    2𝜔 𝑠𝑒𝑛
+                          2 𝑁 1
+
+
+
+
+                                           5
+                                           4
+N osciladores acoplados
+N muy grande
+  𝐿    𝑁    1 𝑙                  𝑀    𝑁𝑚
+
+Los modos normales serán:
+                                              /
+                 𝑛𝜋                     𝜋 𝑇
+ 𝜔     2𝜔 𝑠𝑒𝑛                𝜔        𝑛
+              2 𝑁 1                     𝐿 𝜇
+
+Los desplazamientos serán:
+               𝑛𝑝𝜋                                𝑛𝜋𝑥
+ 𝑦,     𝐶 𝑠𝑒𝑛      𝑐𝑜𝑠𝜔 𝑡    𝑦 𝑥, 𝑡     𝐶 𝑠𝑒𝑛         𝑐𝑜𝑠𝜔 𝑡
+              𝑁 1                                  𝐿
+
+
+
+
+                                                               5
+                                                               5
+N osciladores acoplados
+N muy grande
+ Consideremos el modo n=N
+                      𝑁𝜋             𝜋
+  𝜔       2𝜔 𝑠𝑒𝑛            2𝜔 𝑠𝑒𝑛       2𝜔
+                    2 𝑁 1            2
+
+
+
+
+                                              5
+                                              6
+N osciladores acoplados
+Ejemplo: Se sujeta por sus extremos a dos soportes fijos una cuerda de
+longitud 3l y masa despreciable. La tensión en la cuerda es T.
+
+(a) (a) Se sujeta una partícula de masa m a una distancia l del extremo de la cuerda.
+    Escribir la ecuación para las oscilaciones transversales pequeñas de m y hallar el
+    período.
+
+(b) (b) Se une una partícula adicional de masa m a la cuerda, dividiéndola en tres
+    segmentos iguales cada uno de ellos con tensión T. Dibujar el aspecto de la
+    cuerda y la posición de las masas en los dos modos normales separados de las
+    oscilaciones transversales.
+
+(c) (c) Calcular ω para aquel modo normal que tenga mayor frecuencia.
+
+
+                                                                                         5
+                                                                                         7
+La cuerda vibrante continua
+Una cuerda, con ambos extremos fijos, tiene un número de estados de
+vibración natural bien definidos.
+Cada punto de la cuerda vibra
+transversalmente con un movimiento
+armónico simple de amplitud constante
+y la frecuencia es la misma para todas
+las partes de la cuerda.
+Dichas vibraciones representan los
+modos normales de la cuerda
+
+
+                                                                      5
+                                                                      8
+La cuerda vibrante continua
+Supongamos una cuerda de longitud L con ambos extremos fijos. La cuerda
+tiene una densidad lineal uniforme (µ) y está sometida a una tensión T.
+                                   𝐹    𝑇𝑠𝑒𝑛 𝜃   ∆𝜃   𝑇𝑠𝑒𝑛𝜃
+                                   𝐹    𝑇𝑐𝑜𝑠 𝜃   ∆𝜃   𝑇𝑐𝑜𝑠𝜃
+
+                                El desplazamiento en y es pequeño
+                                    𝐹    𝑇∆𝜃
+                                    𝐹    0
+
+
+
+
+                                                                          5
+                                                                          9
+La cuerda vibrante continua
+               𝑇∆𝜃        𝜇∆𝑥 𝑎
+                        𝜕𝑦
+                  𝑡𝑔𝜃
+                        𝜕𝑥
+                       𝜕 𝑦
+            𝑠𝑒𝑐 𝜃∆𝜃        ∆𝑥
+                       𝜕 𝑥
+             Sustituyendo en la ecuación
+                                           𝜕 𝑦   1 𝜕 𝑦
+                 𝜕 𝑦             𝜕 𝑦       𝜕 𝑥   𝑣 𝜕 𝑡
+             𝑇       ∆𝑥    𝜇∆𝑥
+                 𝜕 𝑥             𝜕 𝑡
+                                                     /
+                                                 𝑇
+                  𝜕 𝑦     𝜇 𝜕 𝑦             𝑣
+                                                 𝜇
+                  𝜕 𝑥     𝑇 𝜕 𝑡
+
+
+
+
+                                                         6
+                                                         0
+La cuerda vibrante continua
+Suponemos soluciones de la forma: 𝑦 𝑥, 𝑡          𝑓 𝑥 𝑐𝑜𝑠𝜔𝑡
+ 𝜕 𝑦
+         𝜔 𝑓 𝑥 𝑐𝑜𝑠𝜔𝑡
+ 𝜕 𝑡                         𝑑 𝑓     𝜔
+                                       𝑓
+   𝜕 𝑦   𝑑 𝑓                 𝜕 𝑥     𝑣
+             𝑐𝑜𝑠𝜔𝑡
+   𝜕 𝑥   𝜕 𝑥
+                                                  𝜔𝑥
+La función f(x) tendrá la forma:   𝑓 𝑥     𝐴𝑠𝑒𝑛
+                                                  𝑣
+
+La función f(x) tiene que cumplir las condiciones de borde: 𝜔𝐿    𝑛𝜋
+                                                              𝑣
+
+
+
+
+                                                                       6
+                                                                       1
+La cuerda vibrante continua
+Si definimos la frecuencia de las vibraciones estacionarias como ω/2π.
+                                                        /
+                                       𝑛𝑣    𝑛 𝑇
+                               𝜈
+                                       2𝐿    2𝐿 𝜇
+
+                                    2𝐿             𝜔        𝑛𝜋    2𝜋
+La longitud de onda será: 𝜆         𝑛              𝑣         𝐿    𝜆
+                                                                           2𝜋𝑥           𝑛𝜋𝑥
+                                                            𝑓 𝑥    𝐴 𝑠𝑒𝑛         𝐴 𝑠𝑒𝑛
+La forma de la cuerda en el modo n será:                                    𝜆             𝐿
+
+
+                                                            2𝜋𝑥
+El movimiento de la cuerda :       𝑦 𝑥, 𝑡     𝐴 𝑠𝑒𝑛
+                                                             𝜆
+                                                                𝑐𝑜𝑠𝜔 𝑡
+
+                                                    /
+                                            𝑛𝜋 𝑇
+                                   𝜔                        𝑛𝜔
+                                             𝐿 𝜇
+                                                                                               6
+                                                                                               2
+La cuerda vibrante continua
+¿Qué ocurre cuando un extremo está sometido a una fuerza periódica?
+                                         𝑦 0, 𝑡   𝐵𝑐𝑜𝑠𝜔𝑡
+Las condiciones de borde cambian:          𝑦 𝐿, 𝑡   0
+
+
+
+                                   𝜕 𝑦   1 𝜕 𝑦
+La ecuación del movimiento es:     𝜕 𝑥   𝑣 𝜕 𝑡
+
+
+
+                                                𝜔𝑥
+La función f(x) tendrá la forma:   𝑓 𝑥   𝐴𝑠𝑒𝑛
+                                                𝑣
+                                                     𝛼
+
+
+
+
+                                                                      6
+                                                                      3
+La cuerda vibrante continua
+Las condiciones de borde se tienen que cumplir.
+Para x=L,
+                     𝜔𝑥
+                𝑠𝑒𝑛      𝛼   0
+                     𝑣
+                  𝜔𝑥
+                        𝛼 𝑝𝜋
+                   𝑣
+
+
+Para x=0
+                𝐵   𝐴𝑠𝑒𝑛 𝛼
+                       𝐵
+            𝐴
+                             𝜔𝐿
+                 𝑠𝑒𝑛 𝑝𝜋
+                             𝑣
+
+
+
+                                                  6
+                                                  4
+

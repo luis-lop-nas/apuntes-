@@ -1,0 +1,196 @@
+   Velocidad de fase y de grupo
+Tenemos una onda en una cuerda
+                                               2𝜋
+                                𝑦 𝑥, 𝑡    𝐴𝑠𝑒𝑛    𝑥   𝑣𝑡
+                                                𝜆
+La frecuencia de los modos normales será:
+                                                     𝑛𝜋
+                                   𝜈     2𝜈 𝑠𝑒𝑛
+                                                  2 𝑁 1
+
+Si n<<N, 𝜈 ∝ 𝑛
+
+Si n aumenta, 𝜈 aumenta menos rápido
+
+
+
+
+                                                           2
+                                                           8
+   Velocidad de fase y de grupo
+En una cuerda, las ondas de alta frecuencia y onda corta se mueven más lento que las de onda
+larga. Se produce dispersión
+
+
+
+
+                                                                                               2
+                                                                                               9
+    Velocidad de fase y de grupo
+Tenemos dos ondas:
+                                     𝑦 𝑥, 𝑡       𝐴𝑠𝑒𝑛2𝜋 𝑘 𝑥       𝜈 𝑡
+                                     𝑦 𝑥, 𝑡       𝐴𝑠𝑒𝑛2𝜋 𝑘 𝑥       𝜈 𝑡
+
+                          𝑦       𝐴 𝑠𝑒𝑛2𝜋 𝑘 𝑥      𝑣 𝑡   𝑠𝑒𝑛2𝜋 𝑘 𝑥               𝑣 𝑡
+
+                                                                    𝑘            𝑘       𝜈       𝜈
+                 𝑦   2𝐴𝑐𝑜𝑠 𝜋 𝑘       𝑘 𝑥      𝜈    𝜈 𝑡   𝑠𝑒𝑛2𝜋                       𝑥               𝑡
+                                                                             2               2
+
+Si 𝑘 y 𝑘 son parecidos, y 𝜈 y 𝜈
+
+                                                               𝑘         𝑘
+                              𝑘      𝑘     Δ𝑘                                        𝑘
+                                                                    2
+                                                               𝜈         𝜈
+                              𝜈      𝜈     Δ𝑘                                        𝑘
+                                                                   2
+
+                                                                                                         3
+                                                                                                         0
+    Velocidad de fase y de grupo
+                           𝑦   2𝐴𝑐𝑜𝑠 𝜋 Δ𝑘𝑥    Δ𝜈𝑡   𝑠𝑒𝑛2𝜋 𝑘𝑥    𝜈𝑡
+
+La velocidad con la que se mueve la cresta es la velocidad de fase
+                                               𝜈
+                                         𝑣         𝜈𝜆
+                                               𝑘
+La velocidad con la que se mueve la envolvente es la velocidad de grupo
+                                             Δ𝜈 𝑑𝜈
+                                        𝑣      →
+                                             Δ𝑘 𝑑𝑘
+
+
+
+
+                                                                          3
+                                                                          1
+Velocidad de fase y de grupo
+
+
+
+
+                               3
+                               2
+    La ecuación de onda en dos y tres dimensiones.
+Suponemos una membrana, en coordenadas cartesianas
+                                      𝜕 z   𝜕 z    1   𝜕 Ψ
+                                      𝜕𝑥    𝜕𝑦     𝑣   𝜕𝑡
+
+Si las coordenadas son cilíndricas:
+                                      𝜕 z   1 ∂z   1   𝜕 Ψ
+                                      𝜕𝑥    𝑟 𝜕𝑟   𝑣   𝜕𝑡
+
+
+
+
+                                                             3
+                                                             3
+  La ecuación de onda en dos y tres dimensiones.
+Si tenemos tres dimensiones
+                         𝜕 Ψ   𝜕 Ψ   𝜕 Ψ      1   𝜕 Ψ
+                         𝜕𝑥    𝜕𝑦    𝜕𝑧       𝑣   𝜕𝑡
+         1    ∂     ∂Ψ      1    ∂       ∂Ψ         1    ∂2 Ψ   1   𝜕 Ψ
+                 𝑟2                sin 𝜃
+         𝑟2   ∂𝑟    ∂𝑟    sin 𝜃 ∂𝜃       ∂𝜃       𝑠𝑖𝑛2 𝜃 ∂𝜙 2   𝑣   𝜕𝑡
+
+
+
+
+                                                                          3
+                                                                          4
+   Interferencia y difracción
+Varias ondas pueden pasar simultáneamente por el mismo punto. Una vez que se ha
+producido la interferencia, los movimientos ondulatorios continúan su propagación
+separadamente, sin experimentar ninguna modificación ni en la energía ni en la cantidad de
+movimiento que tenían antes de la interferencia.
+
+
+
+
+                                                                                             3
+                                                                                             5
+    Interferencia y difracción
+¿Cómo podemos describir matemáticamente una interferencia?
+Las interferencias se rigen por el principio de superposición.
+
+Las ondas individuales se combinan entre sí en una región del espacio para producir una onda
+resultante.
+
+Podemos clasificar las interferencias en constructivas y destructivas
+
+
+
+
+                                                                                               3
+                                                                                               6
+    Interferencia y difracción
+Decimos que se produce una interferencia constructiva en un punto P cuando la amplitud con la
+que vibra dicho punto es máxima. Esto ocurren en aquellos puntos del medio en los que las
+ondas están en fase, que son los mismos en los que la diferencia entre las distancias a los
+focos de cada onda es un número entero de longitudes de onda.
+                                        𝑥    𝑥        𝑛𝜆
+
+Decimos que se produce una interferencia destructiva en un punto P cuando la amplitud con la
+que vibra dicho punto es mínima. Esto ocurren en aquellos puntos del medio en los que las
+ondas están en oposición de fase, que son los mismos en los que la diferencia entre las
+distancias a los focos de cada onda es un número impar de semilongitudes de onda.
+                                                           𝜆
+                                    𝑥    𝑥       2𝑛    1
+                                                           2
+
+
+
+
+                                                                                                3
+                                                                                                7
+Interferencia y difracción
+
+
+
+
+                             3
+                             8
+   Interferencia y difracción
+La difracción es el fenómeno ondulatorio que ocurre cuando una onda se reproduce al
+atravesar una abertura u orificio.
+
+
+
+
+                                                                                      3
+                                                                                      9
+    Interferencia y difracción
+La difracción tiene lugar cuando las ondas que se propagan encuentran un obstáculo, cuyas
+dimensiones son del orden de la longitud de onda de las ondas incidentes.
+
+Las ondas se propagan como si el orificio se convirtiera en un centro emisor y penetran tras
+el orificio en lo que debería de ser una "zona de sombra" si su comportamiento fuera como
+el de un chorro de partículas.
+
+
+
+
+                                                                                               4
+                                                                                               0
+    Ejemplo
+Escriba la ecuación de la onda que aparece en la figura.
+
+
+
+
+                                                           4
+                                                           1
+  Ejemplo
+La ecuación de una onda transversal que se mueve a lo largo de una cuerda viene dada
+por 𝑦 0.3sin 𝜋 0.5𝑥 50𝑡 ,en donde 𝑦 y 𝑥 están en centímetros y 𝑡 en segundos.
+(a) Hallar la amplitud, la longitud de onda, el número de onda, la frecuencia, el período y
+la velocidad de la onda.
+(b) Hallar la velocidad transversal máxima de cualquier partícula en la cuerda.
+
+
+
+
+                                                                                              4
+                                                                                              2
+

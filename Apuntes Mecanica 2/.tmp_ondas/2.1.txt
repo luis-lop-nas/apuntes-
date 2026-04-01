@@ -1,0 +1,387 @@
+Ondas
+
+        1
+Contenido
+Introducción
+
+Propagación de ondas y ondas estacionarias.
+
+La ecuación de onda en una dimensión.
+
+Paquetes de onda.
+
+Velocidad de fase y de grupo.
+
+La ecuación de onda en dos y tres dimensiones.
+
+Interferencia y difracción
+
+
+
+
+                                                 2
+Introducción
+¿Qué es una onda?
+
+
+
+
+                    3
+Introducción
+¿Qué es una onda?
+
+
+
+
+                    4
+Introducción
+¿Qué es una onda?
+Las ondas transmiten una propiedad de un lugar a otro a través de un medio, pero el medio no
+se transporta.
+
+Todos los medios materiales pueden transportar energía e información a través de ondas
+
+Una onda es una perturbación que se propaga en el espacio, transportando energía, pero no
+materia.
+
+Ondas transversales: se caracterizan porque la dirección de propagación es perpendicular a
+la dirección en la que oscilan las partículas.
+
+Ondas longitudinales: en ellas la dirección de propagación coincide con la dirección en la
+que oscilan las partículas.
+
+
+
+                                                                                               5
+Introducción
+¿Qué es una onda?
+
+
+
+
+                    6
+Propagación de ondas y ondas estacionarias.
+Cuando movemos un extremo de la cuerda, empieza a propagarse la onda en movimiento a lo
+largo de la cuerda.
+
+
+
+
+¿Qué ocurre al llegar al otro extremo?
+
+
+
+
+                                                                                          7
+Propagación de ondas y ondas estacionarias.
+
+
+
+
+La cuerda continúa vibrando en un modo normal de vibración
+
+
+                                                             8
+Propagación de ondas y ondas estacionarias.
+Cuando dos ondas que se propagan en sentidos opuestos interfieren, la onda resultante tiene
+una amplitud que varía de punto a punto, pero cada uno de los puntos oscila con MAS, y en
+fase con los demás, dando lugar a lo que se conoce como ondas estacionarias.
+
+               𝑦    𝐴𝑠𝑒𝑛 𝑘𝑥    𝜔𝑡                      𝑦    𝐴𝑠𝑒𝑛 𝑘𝑥    𝜔𝑡
+
+
+
+
+                                                                                              9
+Propagación de ondas y ondas estacionarias.
+Aplicando el principio de superposición:
+                        𝑦       2𝐴𝑠𝑒𝑛 𝑘𝑥 cos 𝜔𝑡     𝐴´ cos 𝜔𝑡
+
+Los puntos cuyo desplazamiento vertical es nulo son los nodos, y los puntos con amplitud
+máxima son antinodos.
+
+Para los nodos,
+                       𝐴𝑠𝑒𝑛 𝑘𝑥        0 → 𝑘𝑥      0, 𝜋, 2𝜋, … , 𝑛𝜋
+
+                            𝑥      𝑛𝜋 → 𝑥   𝑛         NODOS
+
+
+
+
+                                                                                           1
+                                                                                           0
+Propagación de ondas y ondas estacionarias.
+Para los antinodos,
+                                                         𝜋 3𝜋     2𝑛 1 𝜋
+                              𝑠𝑒𝑛 𝑘𝑥        1 → 𝑘𝑥        ,   ,…,
+                                                         2 2        2
+
+                          𝑥      2𝑛    1    →𝑥       𝑛             ANTINODOS
+
+Si la cuerda tiene una longitud L (y L es un nodo)
+
+
+                                             𝜆                2𝐿
+                                   𝑥       𝑛     𝐿   →    𝜆
+                                             2                𝑛
+
+
+ Para n=1, tenemos la frecuencia fundamental o primer armónico
+
+
+
+                                                                               1
+                                                                               1
+    La ecuación de onda en una dimensión.
+Una cuerda de longitud L, con los 2 extremos fijos, puede vibrar con infinitos modos normales
+de vibración:
+                                                         /
+                        2𝜋𝑥                       𝑛𝜋 𝑇
+       𝑦 𝑥, 𝑡     𝐴 𝑠𝑒𝑛     𝑐𝑜𝑠𝜔 𝑡,       𝜔
+                         𝜆                         𝐿 𝜇
+
+Lo que se puede escribir como:
+
+
+                         1       𝑛𝜋         𝑇       1       𝑛𝜋         𝑇
+                𝑦 𝑥, 𝑡     𝐴 𝑠𝑒𝑛    𝑥         𝑡       𝐴 𝑠𝑒𝑛    𝑥         𝑡
+                         2        𝐿         𝜇       2        𝐿         𝜇
+
+
+
+
+                                                                                                1
+                                                                                                2
+    La ecuación de onda en una dimensión.
+Fijémonos en la onda incidente:
+
+                                            2𝜋
+                            𝑦 𝑥, 𝑡   𝐴𝑠𝑒𝑛      𝑥   𝑣𝑡
+                                             𝜆
+
+
+                  y(x, t)
+
+
+
+
+                                                        x
+
+
+
+
+                                                            1
+                                                            3
+    La ecuación de onda en una dimensión.
+¿Para que instante se cumple que la y es igual?
+
+
+                                𝑦 𝑥, 𝑡    𝑦 𝑥       Δ𝑥, 𝑡       Δ𝑡
+
+
+                         2𝜋                    2𝜋
+                   𝑠𝑒𝑛      𝑥   𝑣𝑡       𝑠𝑒𝑛      𝑥         Δ𝑥       𝑣 𝑡   Δ𝑡
+                          𝜆                     𝜆
+
+                                          Δ𝑥    𝑣Δ𝑡         0
+
+                                               Δ𝑥
+                                                     𝑣
+                                               Δ𝑡
+
+
+
+
+                                                                                1
+                                                                                4
+    La ecuación de onda en una dimensión.
+Como nuestra cuerda tiene los extremos fijos:
+
+                      ∞       𝑥     0: 𝑦 𝑥, 𝑡  0
+                                            𝑛𝜋𝑥
+                  0       𝑥       𝐿: 𝐴 𝑠𝑒𝑛       𝑐𝑜𝑠𝜔
+                                             𝐿
+                  𝐿       𝑥       ∞: 𝑦 𝑥, 𝑡  0
+
+
+
+
+                                                        1
+                                                        5
+  La ecuación de onda en una dimensión.
+¿Qué ocurre si mi cuerda es muy larga?
+
+
+
+
+                         𝐿≫𝜆
+
+
+                                          1
+                                          6
+    La ecuación de onda en una dimensión.
+¿Qué ocurre si mi cuerda es muy larga?
+Tras varias oscilaciones, todo lo que vemos es onda incidente
+
+                                            2𝜋
+                              𝑦 𝑥, 𝑡   𝐴𝑠𝑒𝑛    𝑥     𝑣𝑡
+                                             𝜆
+                                 2𝜋                    2𝜋
+                  𝑦 𝑥, 𝑡    𝐴𝑠𝑒𝑛    𝑥     𝑣𝑡      𝐴𝑠𝑒𝑛    𝑥     𝜑
+                                  𝜆                     𝜆
+
+
+
+
+                                                                    1
+                                                                    7
+    La ecuación de onda en una dimensión.
+La ecuación diferencial que describe la propagación de la onda dependerá tanto de x como de t
+
+Para la onda incidente:
+
+    𝜕𝑦   2𝜋       2𝜋
+             𝐴𝑐𝑜𝑠    𝑥 𝑣𝑡            𝜕𝑦     1 𝜕𝑦
+    𝜕𝑥    𝜆        𝜆
+    𝜕𝑦      2𝜋𝑣      2𝜋              𝜕𝑥     𝑣 𝜕𝑡
+                𝐴𝑐𝑜𝑠    𝑥 𝑣𝑡
+    𝜕𝑡       𝜆        𝜆
+
+
+
+
+                                                                                                1
+                                                                                                8
+    La ecuación de onda en una dimensión.
+Para la onda reflejada:
+
+    𝜕𝑦   2𝜋       2𝜋
+            𝐴𝑐𝑜𝑠      𝑥 𝑣𝑡         𝜕𝑦         1 𝜕𝑦
+    𝜕𝑥    𝜆        𝜆
+    𝜕𝑦   2𝜋𝑣       2𝜋              𝜕𝑥         𝑣 𝜕𝑡
+             𝐴𝑐𝑜𝑠      𝑥 𝑣𝑡
+    𝜕𝑡    𝜆         𝜆
+
+No tenemos la misma ecuación para las 2 ondas
+
+Si hacemos las derivadas segundas, en los dos casos obtenemos
+                                        𝜕 𝑦     1 𝜕 𝑦
+                                        𝜕𝑥      𝑣 𝜕𝑡
+
+
+
+
+                                                                1
+                                                                9
+   Paquetes de onda
+Un paquete de ondas es una superposición lineal de ondas, que toman la forma de un pulso o
+grupo de ondas, que se desplaza de modo relativamente compacta en el espacio antes de
+dispersarse.
+
+
+
+
+                                                                                             2
+                                                                                             0
+   Paquetes de onda
+Supongamos 2 ondas de igual amplitud:
+                2𝜋
+  𝑦 𝑥, 𝑡   𝐴𝑠𝑒𝑛    𝑥   𝑣𝑡                                          2𝜋                   2𝜋
+                𝜆
+                              𝑦 𝑥, 𝑡    𝑦 𝑥, 𝑡   𝑦 𝑥, 𝑡     𝐴𝑠𝑒𝑛      𝑥   𝑣𝑡     𝐴𝑠𝑒𝑛      𝑥   𝑣𝑡
+                2𝜋                                                 𝜆                    𝜆
+  𝑦 𝑥, 𝑡   𝐴𝑠𝑒𝑛    𝑥   𝑣𝑡                            2𝜋                   2𝜋
+                𝜆                            𝐴 𝑠𝑒𝑛      𝑥    𝑣𝑡     𝑠𝑒𝑛      𝑥   𝑣𝑡
+                                                     𝜆                    𝜆
+
+
+
+
+                                                                                                    2
+                                                                                                    1
+    Paquetes de onda
+En t=0:                                        2𝜋𝑥            2𝜋𝑥
+                   𝑦 𝑥, 𝑡       0     𝐴 𝑠𝑒𝑛            𝑠𝑒𝑛
+                                                𝜆              𝜆
+
+                   𝑦 𝑥, 𝑡       0      𝐴 𝑠𝑒𝑛2𝜋𝑘 𝑥      𝑠𝑒𝑛2𝜋𝑘 𝑥
+
+                                                                  𝑘       𝑘
+          𝑦 𝑥, 𝑡     0      2𝐴𝑐𝑜𝑠 𝜋 𝑘          𝑘 𝑥 𝑠𝑒𝑛 2𝜋                     𝑥
+                                                                      2
+En x=0:
+                                            2𝜋𝑣𝑡           2𝜋𝑣𝑡
+          𝑦 𝑥       0, 𝑡            𝐴 𝑠𝑒𝑛            𝑠𝑒𝑛
+                                             𝜆              𝜆
+
+                𝑦 𝑥, 𝑡      0         𝐴 𝑠𝑒𝑛𝜔 𝑡       𝑠𝑒𝑛𝜔 𝑡
+
+
+
+
+                                                                                  2
+                                                                                  2
+   Paquetes de onda
+Consideremos un pulso aislado en la cuerda
+
+
+
+
+¿Cómo se relaciona esto con lo que ya sabemos?
+
+                                                 2
+                                                 3
+   Paquetes de onda
+Consideremos un pulso aislado en la cuerda
+
+
+
+
+¿Cómo se relaciona esto con lo que ya sabemos?
+
+                        ANALISIS DE FOURIER
+
+                                                 2
+                                                 4
+    Paquetes de onda
+Cualquier diagrama de desplazamiento dependiente del tiempo que se repita a sí mismo
+periódicamente (con una periodicidad de 2𝜋/𝜔 ) puede expresarse como una combinación
+lineal de la serie infinita de armónicos representada por 𝜔 y por todos sus múltiplos enteros:
+
+                                    𝑦 𝑡       𝐶
+
+                       𝐶 cos 𝑛𝜔 𝑡     𝛿     𝐴 sen 𝑛𝜔 𝑡      𝐵 cos 𝑛𝜔 𝑡
+
+
+
+
+                                                                                                 2
+                                                                                                 5
+   Paquetes de onda
+EJEMPLO: Supóngase que deseamos obtener una onda en la forma de 100 ciclos del
+armónico milésimo, que ocupará una décima del período de representación básico, seguido por
+una perturbación 0 durante el 90% restante del tiempo
+
+
+
+
+                                                                                              2
+                                                                                              6
+   Paquetes de onda
+EJEMPLO: Supóngase que deseamos obtener una onda en la forma de 100 ciclos del
+armónico milésimo, que ocupará una décima del período de representación básico, seguido por
+una perturbación 0 durante el 90% restante del tiempo
+                                                            100𝜋
+                          𝑦 𝑡    𝐴 𝑠𝑒𝑛𝑁𝜔 𝑡           0  𝑡
+                                                            𝑁𝜔
+                                                   100𝜋        𝜋
+                           𝑦 𝑡   0                        𝑡
+                                                    𝑁𝜔        𝜔
+                                         𝑁   1000
+
+
+
+
+                                                                                              2
+                                                                                              7
+

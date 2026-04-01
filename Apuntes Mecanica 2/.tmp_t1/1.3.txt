@@ -1,0 +1,203 @@
+Dos osciladores acoplados
+¿Qué ocurre si el sistema se impulsa con una
+frecuencia arbitraria?
+
+
+
+
+                                               3
+                                               1
+Dos osciladores acoplados
+¿Qué ocurre si el sistema se impulsa con una
+frecuencia arbitraria?
+   Grandes amplitudes para frecuencias próximas a la frecuencia natural
+
+   Respuesta pequeña para frecuencias alejadas de la frecuencia natural
+
+
+
+
+                                                                          3
+                                                                          2
+Dos osciladores acoplados
+Supongamos una fuerza 𝐹 𝑡      𝐹 𝑐𝑜𝑠𝜔𝑡
+
+                        A: m    𝑚𝜔 𝑥     𝑘 𝑥    𝑥        𝐹 𝑐𝑜𝑠𝜔𝑡
+
+
+                        B: m    𝑚𝜔 𝑥     𝑘 𝑥    𝑥        0
+
+
+   B         A   F(t)   A:     𝜔   𝜔 𝑥    𝜔 𝑥           𝑐𝑜𝑠𝜔𝑡
+
+
+                        B:     𝜔   𝜔 𝑥    𝜔 𝑥       0
+
+
+
+
+                                                                   3
+                                                                   3
+Dos osciladores acoplados
+Supongamos una fuerza 𝐹 𝑥        𝐹 𝑐𝑜𝑠𝜔𝑡
+                                      𝑞       𝑥       𝑥
+                                                              Coordenadas normales
+                                      𝑞       𝑥       𝑥
+
+
+                            A:        𝜔 𝑞             𝑐𝑜𝑠𝜔𝑡
+
+   B         A   F(t)
+                            B:        𝜔´ 𝑞        0
+
+
+                                 𝜔´       𝜔       2𝜔
+
+
+
+
+                                                                                     3
+                                                                                     4
+Dos osciladores acoplados
+Supongamos una fuerza 𝐹 𝑡         𝐹 𝑐𝑜𝑠𝜔𝑡
+                                                    𝐹 ⁄𝑚
+                                            𝐶
+                        𝑞   𝐶𝑐𝑜𝑠𝜔𝑡                𝜔    𝜔
+                        𝑞   𝐷𝑐𝑜𝑠𝜔𝑡                 𝐹 ⁄𝑚
+                                           𝐷
+                                                  𝜔´  𝜔
+                                                     1
+   B         A
+                                  𝑥    𝐴𝑐𝑜𝑠𝜔𝑡, A       𝐶   𝐷
+                 F(t)                                2
+                                                    1
+                              𝑥       𝐵𝑐𝑜𝑠𝜔t, B       𝐶    𝐷
+                                                    2
+
+
+
+
+                                                               3
+                                                               5
+Dos osciladores acoplados
+Supongamos una fuerza 𝐹 𝑥   𝐹 𝑐𝑜𝑠𝜔𝑡
+
+
+
+
+   B         A   F(t)
+
+
+
+
+                                      3
+                                      6
+Dos osciladores acoplados
+Ejemplo: Determina las expresiones X1(t) y X2(t)
+
+
+
+
+  𝜂 𝑡   𝜂 cos 𝜔𝑡
+
+
+
+
+                                                   3
+                                                   7
+N osciladores acoplados
+Bernoulli padre e hijo demostraron que un sistema de N masas
+tiene N modos de vibración
+En 1753, Daniel Bernoulli enuncio el principio de superposición
+para dicho sistema: El movimiento general de un sistema
+vibrante puede escribirse como una superposición de los
+modos normales
+
+
+
+
+                                                                  3
+                                                                  8
+N osciladores acoplados
+Consideremos una cuerda elástica flexible a la que se sujetan
+N partículas de masa m equiespaciadas.
+
+          l
+
+
+
+                                              N+1
+      0
+
+
+
+
+                                                                3
+                                                                9
+N osciladores acoplados
+Supongamos tensión T y que la partícula 1 se mueve y1, la
+partícula 2 se mueve y2…
+
+
+
+
+              𝑙
+     𝑙´
+            𝑐𝑜𝑠𝛼                  𝛼
+                   𝛼   𝑙´   𝑙 1
+     𝑐𝑜𝑠𝛼      1                  2
+                   2
+                                                            4
+                                                            0
+N osciladores acoplados
+¿Cuál será la fuerza sobre la partícula 2?
+
+
+
+
+                                        1
+                      𝑇𝑐𝑜𝑠𝛼    𝑇𝑐𝑜𝑠𝛼      𝑇 𝛼     𝛼
+                                        2
+            Para ángulos pequeños esta contribución la despreciamos
+
+
+                                                                      4
+                                                                      1
+N osciladores acoplados
+¿Cuál será la fuerza sobre la partícula p? Suponemos
+desplazamientos y pequeños. La componente y será
+
+
+
+
+                    𝐹    𝑇𝑠𝑒𝑛𝛼   𝑇𝑠𝑒𝑛𝛼
+
+
+
+                                                       4
+                                                       2
+N osciladores acoplados
+  𝐹     𝑇𝑠𝑒𝑛𝛼         𝑇𝑠𝑒𝑛𝛼
+
+         𝑇                 𝑇                    𝑑 𝑦
+  𝐹        𝑦     𝑦           𝑦       𝑦      𝑚
+         𝐿                 𝐿                    𝑑𝑡
+
+  La ecuación de movimiento de la masa p será
+
+        2𝜔 𝑦      𝜔    𝑦         𝑦       0, con 𝜔
+
+
+
+
+                                                      4
+                                                      3
+N osciladores acoplados
+Para N=1        Para N=2
+
+
+
+
+                           4
+                           4
+

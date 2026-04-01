@@ -1,0 +1,304 @@
+Introducción a la
+Teoría de la
+Relatividad
+                    1
+Introducción
+¿Qué es lo primero que uno piensa cuando
+escucha la palabra “relatividad”?
+
+
+
+
+                                           2
+Introducción
+¿Qué es lo primero que uno piensa cuando
+escucha la palabra “relatividad”?
+
+
+
+
+                                           3
+Introducción
+El desarrollo de la teoría especial de la relatividad por Einstein y otros en torno a los años 1900
+se considera uno de los mayores avances en nuestro modo de percibir e interpretar el mundo
+físico
+
+El concepto básico es tan antiguo como la mecánica de Galileo o Newton
+
+Coincide con la idea de que las leyes de la física parecen ser las mismas en muchos sistemas
+de referencia diferentes
+
+
+
+
+                                                                                                      4
+Introducción
+¿Qué es lo que hizo Einstein?
+El nos llevó a aplicar las nociones de relatividad a toda la física
+
+Los procesos en los que intervienen movimientos muy rápidos no han de tratarse de manera
+distinta
+
+Esto lleva a consecuencias opuestas al sentido común:
+
+ - Dilatación del tiempo
+
+ - Contracción de la longitud
+
+ - Aumento de masa
+
+ - Equivalencia masa-energía
+
+
+                                                                                           5
+Introducción
+Aunque la idea de la relatividad existía antes de Einstein y estaba implícita en la mecánica de
+Newton, hasta mucho después no empezó a apreciarse que ciertos efectos no podían
+explicarse con la mecánica newtoniana.
+
+Lo que llevó a esta revisión fue el electromagnetismo, pero pronto se dieron cuenta que la
+dinámica también se veía afectada
+
+Einstein construyó la teoría especial de la relatividad a partir de una suposición:
+
+“En toda observación sobre el paso de la luz de un punto a otro a través del espacio, el tiempo
+empleado es simplemente igual a la separación relativa entre ambos puntos dividida por una
+velocidad universal c; No depende en absoluto de la velocidad que parezca tener nuestro
+laboratorio a través del espacio”
+
+
+
+
+                                                                                                  6
+Introducción
+¿Qué hay que modificar?
+NEWTON
+La mecánica newtoniana estudia los movimientos de partículas sometidos a fuerzas, que
+quedan descritos por la posición de un punto en el espacio y en el tiempo
+
+Definimos la posición de un punto con respecto a otro utilizando posiciones y movimientos
+relativos
+
+La aceleración es una magnitud fundamental o aparentemente absoluta
+                                           𝐹⃗   𝑚𝑎⃗
+
+
+
+
+                                                                                            7
+Introducción
+¿Qué hay que modificar?
+NEWTON
+La conservación de la cantidad de momento:
+
+Si la masa es una propiedad constante, la suma de las cantidades de movimiento de dos o más
+cuerpos que interaccionan es constante
+
+
+
+
+                                                                                              8
+Introducción
+¿Qué hay que modificar?
+NEWTON
+La conservación de la energía:
+
+El trabajo realizado sobre cualquier partícula se refleja en el cambio correspondiente de su
+energía
+                                                 1
+                                        𝐹⃗ 𝑑𝑟⃗     𝑚 𝑣   𝑣
+                                                 2
+
+
+
+
+                                                                                               9
+Introducción
+¿Qué hay que modificar?
+NEWTON
+Según la mecánica newtoniana, no hay ningún límite superior de la velocidad
+
+Cuando tratamos de acelerar partículas a velocidades tan altas nos separamos de las
+predicciones. Aparece el concepto de velocidad límite
+
+
+
+
+                                                                                      1
+                                                                                      0
+Introducción
+¿Qué hay que modificar?
+VELOCIDAD LÍMITE
+
+
+
+
+                          1
+                          1
+Introducción
+¿Qué hay que modificar?
+VELOCIDAD LÍMITE
+Existe un límite de velocidad para cualquier objeto, y ese límite es la velocidad de la luz
+
+
+
+
+                                                                                              1
+                                                                                              2
+Introducción
+¿Qué hay que modificar?
+FOTONES
+¿Los fotones tienen todos la misma velocidad, c, a pesar de que sus energías pueden ser muy
+distintas?
+
+
+
+
+                                                                                              1
+                                                                                              3
+Introducción
+¿Qué hay que modificar?
+FOTONES
+
+
+
+
+                          1
+                          4
+Introducción
+¿Qué hay que modificar?
+RELACIÓN ENERGÍA-CANTIDAD DE MOVIMIENTO
+Para un fotón de energía 𝐸   ℎ𝜐, la cantidad de movimiento asociada es p, y se relacionan
+
+                                           𝐸   𝑐𝑝
+
+
+
+
+                                                                                            1
+                                                                                            5
+Introducción
+¿Qué hay que modificar?
+RELACIÓN ENERGÍA-CANTIDAD DE MOVIMIENTO
+Como toda la energía de un fotón es cinética, lo lógico hubiera sido decir que 𝐸   𝑐𝑝, pero
+esta ecuación no se cumple
+
+   - K<1keV → se cumple la relación newtoniana
+
+   - K>0,1MeV → p
+
+   - K>50MeV → p
+
+
+
+
+                                                                                              1
+                                                                                              6
+Introducción
+¿Qué hay que modificar?
+MATERIA Y RADIACIÓN: LA INERCIA DE LA ENERGÍA
+
+
+
+
+                                                1
+                                                7
+Introducción
+¿Qué hay que modificar?
+MATERIA Y RADIACIÓN: LA INERCIA DE LA ENERGÍA
+Principio general de la inercia de la energía: “La energía, en cualquiera de sus formas, posee
+una masa equivalente definida por 𝐸 𝑚𝑐 ”
+
+
+
+
+                                                                                                 1
+                                                                                                 8
+Introducción
+¿Qué hay que modificar?
+MATERIA Y RADIACIÓN: LA INERCIA DE LA ENERGÍA
+El resultado más importante de carácter general al que ha conducido la teoría especial de la
+relatividad es el que se relaciona con el concepto de masa. Antes de la llegada de la relatividad
+la física admitía dos leyes de conservación de importancia fundamental, la ley de la
+conservación de la energía y la ley de conservación de la materia; estas dos leyes
+fundamentales aparentaban ser totalmente independientes la una de la otra. Mediante la teoría
+de la relatividad ambas han sido unificadas en una sola ley.
+
+
+
+
+                                                                                                    1
+                                                                                                    9
+Introducción
+¿Qué hay que modificar?
+ENERGÍA, CANTIDAD DE MOVIMIENTO Y MASA
+
+                                         𝑚
+                              𝑚 𝑣              /
+                                    1   𝑣 /𝑐
+
+
+
+
+                                                   2
+                                                   0
+Introducción
+¿Qué hay que modificar?
+ENERGÍA, CANTIDAD DE MOVIMIENTO Y MASA
+Ahora la energía cinética es la diferencia entre la energía total E y la energía en reposo E0
+
+
+                                                                           𝑚     𝛾𝑚
+                    1                           𝛾 𝑣     1   𝑣 /𝑐   /       𝑝⃗   𝛾𝑚 𝑣⃗
+    𝐾    𝑚 𝑐                  1
+               1   𝑣 /𝑐   /                                                𝐸    𝛾𝑚 𝑐
+
+
+
+
+                                                                                                2
+                                                                                                1
+Introducción
+¿Qué hay que modificar?
+¿ES CORRECTA LA NUEVA DINÁMICA?
+
+
+
+
+ 𝑣   𝑐 1   1   𝐾/𝑚 𝑐
+
+
+
+
+                                  2
+                                  2
+Introducción
+¿Qué hay que modificar?
+¿ES CORRECTA LA NUEVA DINÁMICA?
+
+
+
+
+                                  2
+                                  3
+Introducción
+¿Qué hay que modificar?
+MOVIMIENTO BAJO UNA FUERZA CONSTANTE
+
+                   𝑚 𝑣                                     𝑐
+   𝐹𝑡   𝑚𝑣                                     𝑣 𝑡                /
+               1   𝑣 /𝑐     /                        1   𝑚 𝑐/𝐹𝑡
+
+
+                                  𝑐       𝐹
+   𝐹𝑡 ≪ 𝑚 𝑐               𝑣 𝑡
+                                𝑚 𝑐/𝐹𝑡   𝑚 𝑡
+
+
+    𝐹𝑡 ≫ 𝑚 𝑐              𝑣 𝑡   c
+
+
+
+                                                                      2
+                                                                      4
+

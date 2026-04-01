@@ -1,0 +1,378 @@
+Introducción a la teoría
+de la elasticidad y a la
+mecánica de
+fluidos.
+                           1
+Contenido
+Introducción a la teoría de la elasticidad
+Elasticidad
+Esfuerzo
+Deformación
+Deformación y tensión
+Ley de Hook
+
+
+                                             2
+Introducción a la teoría de la elasticidad
+¿Qué es la elasticidad?
+
+
+
+
+                                             3
+Introducción a la teoría de la elasticidad
+¿Qué es la elasticidad?
+
+
+
+
+                                             4
+Introducción a la teoría de la elasticidad
+La teoría de la elasticidad es una rama de la mecánica de sólidos
+deformables que estudia cómo los materiales responden a las fuerzas
+externas, deformándose y volviendo a su forma original cuando estas
+fuerzas cesan.
+Se basa en la suposición de que los materiales tienen un comportamiento
+elástico dentro de ciertos límites, es decir, cumplen la ley de Hooke, que
+establece una relación lineal entre el esfuerzo y la deformación.
+
+
+
+
+                                                                             5
+Introducción a la teoría de la elasticidad
+Aplicaciones:
+ Diseño de estructuras (puentes, edificios).
+ Análisis de materiales en ingeniería mecánica y aeroespacial.
+ Modelado de comportamiento de tejidos biológicos en biomecánica.
+
+
+
+
+                                                                     6
+Elasticidad
+La elasticidad es la propiedad de un material que le permite deformarse
+bajo la acción de una fuerza externa y recuperar su forma original cuando
+dicha fuerza desaparece.
+Supongamos un medio continuo tridimensional, y queremos conocer su
+ecuación de movimiento
+
+
+
+
+                                                                            7
+Elasticidad
+Hay tres fuerzas de superficie importantes que vamos a tener en cuenta
+
+
+
+
+                                                                         8
+Esfuerzo
+El esfuerzo es la fuerza por unidad de área
+
+ Esfuerzo : 𝜎      →         𝑃𝑎
+
+
+
+
+                       En el caso de la cizalladura:
+                       Esfuerzo por cizalladura : τ
+
+
+
+
+                                                       9
+Deformación
+La deformación es el cambio en la forma de un cuerpo sólido debido a la
+aplicación de fuerzas externas (cargas).
+La deformación puede ser elástica (reversible) o plástica (permanente),
+alterando la estructura física del objeto.
+
+
+
+
+                                                                          1
+                                                                          0
+Deformación
+Deformación elástica
+El grado en que una estructura se deforma depende del esfuerzo al que es
+sometida. Para la mayoría de los metales:
+                                  𝜎 𝐸𝜖         Ley de Hooke
+
+            E = Modelo de elasticidad o modulo de Young [GPa]
+El modulo de Young representa la rigidez o la resistencia del material a la
+deformación elástica
+La deformación elástica NO es permanente
+
+
+                                                                              1
+                                                                              1
+Deformación
+
+
+
+
+              1
+              2
+Deformación
+Deformación elástica
+Hay algunos materiales para los que la deformación elástica no es lineal.
+Para ellos se usan los módulos secantes y tangenciales
+
+
+
+
+                                                                            1
+                                                                            3
+Deformación
+Deformación elástica
+Si se aplica cizalla a torsión también se obtiene comportamiento elástico.
+El esfuerzo de cizalla y la deformación son proporcionales según:
+
+
+                                 𝜏   𝐺𝛾
+                          G = Módulo de cizalla
+
+
+
+
+                                                                             1
+                                                                             4
+Deformación
+Deformación plástica
+ Para la mayoría de los metales, la
+ deformación elástica se da hasta
+ esfuerzos de 0,005. Pasado este punto,
+ el esfuerzo no es proporcional a la
+ deformación y el proceso se vuelve
+ irreversible. Se produce una deformación
+ plástica
+
+
+
+
+                                            1
+                                            5
+Deformación
+Deformación plástica
+ El límite elástico σy es la tensión requerida para pasar de
+ la deformación elástica a la deformación plástica.
+
+
+
+
+                                                               1
+                                                               6
+Deformación y tensión
+El resultado del esfuerzo es casi siempre una deformación.
+Cuando el cambio se expresa de forma infinitesimal lo llamamos tensión
+
+
+          𝑑𝑉                           𝑑𝑙
+𝑡𝑒𝑛𝑠𝑖ó𝑛                     𝑡𝑒𝑛𝑠𝑖ó𝑛
+          𝑉                            𝑙
+
+
+
+
+                                                                         1
+                                                                         7
+Deformación y tensión
+Tenemos un área pequeña dA en una superficie
+cerrada S
+                       𝑑𝐴⃗    𝑛𝑑𝐴                      𝑛
+
+La fuerza 𝐹⃗ 𝑑𝐴⃗ es una función lineal de 𝑑𝐴⃗:
+
+      𝐹⃗ 𝜆 𝑑𝐴    𝜆 𝑑𝐴         𝜆 𝐹⃗ 𝑑𝐴        𝜆 𝐹⃗ 𝑑𝐴
+
+                   𝐹⃗ 𝜆𝑑𝐴⃗      𝜆𝐹⃗ 𝑑𝐴⃗
+
+                  𝐹⃗    𝑑𝐴⃗         𝐹⃗ 𝑑𝐴⃗
+
+                                                           1
+                                                           8
+Deformación y tensión
+    𝑑𝑨𝟏    𝑑𝑨𝟐     𝑑𝑨𝟑    0
+
+ 𝑭 𝑑𝑨𝟏    𝑭 𝑑𝑨𝟐     𝑭 𝑑𝑨𝟑      0
+
+  𝑭 𝑑𝑨𝟏    𝑑𝑨𝟐     𝑭     𝑑𝑨𝟑
+
+  𝑭 𝑑𝑨𝟑    𝑭 𝑑𝑨𝟏       𝑭 𝑑𝑨𝟐
+
+
+
+     𝐹 𝑑𝑨          𝜎 𝑑𝐴
+
+
+    𝑭 𝑑𝑨     𝜮𝑑𝑨
+
+
+                           Tensor de esfuerzos
+
+
+
+                                                 1
+                                                 9
+Deformación y tensión
+El tensor de esfuerzos es una representación matemática que describe el estado de
+esfuerzo en un punto dentro de un sólido. Este tensor contiene información sobre los
+esfuerzos normales y cortantes que actúan en diferentes direcciones dentro del
+material.
+                                       𝜎    𝜏     𝜏
+                                𝝈      𝜏    𝜎     𝜏
+                                       𝜏    𝜏     𝜎
+
+𝜎 , 𝜎 , 𝜎 son los esfuerzos cortantes que actúan perpendicularmente a las caras del
+cubo diferencial
+𝜏 , 𝜏 , 𝜏 son los esfuerzos cortantes que actúan tangencialmente a las caras del
+cubo diferencial
+Por simetría, 𝜏  𝜏 ,𝜏      𝜏 𝑦 𝜏       𝜏 debido a la conservación del momento
+angular
+
+
+                                                                                       2
+                                                                                       0
+Deformación y tensión
+Ejemplo: En un cierto punto P en un medio continuo el tensor de esfuerzos tiene el valor
+                                               1    2    0
+                                        𝜮     2      2   0
+                                              0     0    1
+
+
+Un pequeño elemento de superficie en P tiene área 𝑑𝐴 y es paralelo al plano x+y+z=0. ¿Cuál es
+la fuerza sobre este elemento de superficie y cuál es el ángulo entre esta fuerza y la normal al
+elemento de superficie? Para concretar, tomar P de modo que esté en el octante positivo (x, y, z
+todos positivos), y suponer que el exterior de la superficie es el lado que está lejos del origen
+
+
+
+
+                                                                                                    2
+                                                                                                    1
+Deformación y tensión
+Dentro de un sólido, un dV se encuentra en la posición 𝑟⃗ y pasa a la
+posición 𝑟⃗ 𝑢 𝑟 .
+Si 𝑢 𝑟 es constante, todos los puntos del sólido se mueven por igual,
+sin distorsión.
+Los esfuerzos aparecen por desplazamiento y por distorsión. Y las
+distorsiones requieren que partes distintas del sólido se desplacen
+cantidades distintas
+
+
+
+
+                                                                        2
+                                                                        2
+Deformación y tensión
+
+
+
+
+                        2
+                        3
+Deformación y tensión
+El cambio d𝑢 se puede expresar en términos de las derivadas de 𝑢
+con respecto a 𝑟⃗ .
+
+                      𝜕𝑢   𝜕𝑢   𝜕𝑢
+          𝜕𝑢                             D es la matriz de derivadas o tensor
+𝑑𝑢           𝑑𝑟       𝜕𝑟   𝜕𝑟   𝜕𝑟
+          𝜕𝑟                             de derivadas y nos dice como de
+                      𝜕𝑢   𝜕𝑢   𝜕𝑢
+                  𝑫                      rápido varía el desplazamiento 𝑢 𝑟
+                      𝜕𝑟   𝜕𝑟   𝜕𝑟       dentro del sólido
+     𝑑𝑢   𝑫𝑑𝑟⃗        𝜕𝑢   𝜕𝑢   𝜕𝑢
+                      𝜕𝑟   𝜕𝑟   𝜕𝑟
+
+
+
+
+                                                                                2
+                                                                                4
+Deformación y tensión
+¿Que forma tomaría la matriz D para una rotación rígida?
+Consideremos tensiones pequeñas 𝜃⃗ 𝜃𝑢
+         𝑣⃗    𝜔     𝑟⃗
+  𝑢 𝑟⃗        𝑣⃗𝑑𝑡   𝜔𝑑𝑡    𝑟⃗   𝜃⃗   𝑟⃗
+                                               0    𝜃     𝜃
+              𝑑𝑢     𝑫𝑑𝑟⃗                  𝑫    𝜃   0    𝜃    , para rotaciones pequeñas
+                                               𝜃     𝜃   0
+
+
+
+
+                                                                                           2
+                                                                                           5
+Deformación y tensión
+Para cualquier rotación pequeña, la matriz de rotaciones es antisimétrica ( 𝑴       𝑴)
+
+                                      1            1
+                                𝑴       𝑴 𝑴          𝑴     𝑴
+                                      2            2
+                                         𝑫 𝑨       𝑬
+
+Aquí A es la parte antisimétrica de D; representa una rotación rígida y no contribuye a la tensión.
+El segundo término E se denomina tensor de deformación; es la parte simétrica de D,
+
+                                               1
+                                           𝑬     𝑫    𝑫
+                                               2
+
+
+
+
+                                                                                                      2
+                                                                                                      6
+Deformación y tensión
+             1
+         𝑒     𝜖     𝜖       𝜖
+             3
+                𝑬   𝑒𝟏     𝑬´
+
+
+
+
+   Parte esférica        Parte desviadora
+
+
+
+
+                                            2
+                                            7
+Deformación y tensión
+Ejemplo: El tensor de deformación en cierto punto de un sólido es
+                           0,01   0,02   0,05
+                   𝑬      0,02    0,03   0,04
+                          0,05    0,04   0,04
+
+Descomponerlo en parte esférica y parte desviadora
+
+
+
+
+                                                                    2
+                                                                    8
+Deformación y tensión
+Ejemplo: El tensor de transformaciones en un punto P de un sólido
+tiene la forma
+                                0   𝛾 0
+                          𝑬     𝛾   0 0
+                                0   0 0
+Describir el desplazamiento en el entorno de P
+
+
+
+
+                                                                    2
+                                                                    9
+Deformación y tensión
+
+
+
+
+                        3
+                        0
+

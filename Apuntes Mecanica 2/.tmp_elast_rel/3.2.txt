@@ -1,0 +1,288 @@
+Ley de Hooke
+La ecuación de movimiento del sólido relaciona el tensor de esfuerzos y el
+de tensión. Es lo que se conoce como ley de Hooke
+Para pequeñas perturbaciones, esta relación es lineal
+                                   Ley de Hooke generalizada
+             𝑬   𝛼𝑒𝟏    𝛽𝑬´        α y β son constantes que dependen del material
+Muchas veces es conveniente escribir la ley de Hooke de la siguiente
+manera
+
+                        𝚺     𝛼   𝛽 𝑒𝟏   𝛽𝑬
+
+
+
+                                                                                    3
+                                                                                    1
+Ley de Hooke
+Las constantes α y β van a estar relacionadas con los
+módulos de compresión, Young y cizalladura
+
+   𝛼   3𝑀𝐶𝑜           3𝛼𝛽   9𝑀𝐶𝑜 𝑀𝐶𝑖
+                𝑀𝑌
+   𝛽   2𝑀𝐶𝑖          2𝛼 𝛽   3𝑀𝐶𝑜 𝑀𝐶𝑖
+
+
+
+
+                                                        3
+                                                        2
+Ley de Hooke
+Consideremos un volumen dV de un sólido elástico
+            𝜕 𝒖
+      𝜌𝑑𝑉         𝑭     𝑭
+            𝜕𝑡                  𝜕 𝒖
+                            𝜌         𝜌𝑔   𝜵𝜮
+      𝑭       𝜌𝑔𝑑𝑉              𝜕𝑡
+
+       𝑭          𝜮𝑑𝑨
+
+
+
+
+                                                   3
+                                                   3
+Ley de Hooke
+Usamos la ley de Hooke:               𝚺   𝛼   𝛽 𝑒𝟏   𝛽𝑬
+                                  𝜎       𝛼   𝛽 𝑒𝛿    𝛽𝜖
+
+
+                 𝜕 𝒖              1
+             𝜌         𝜌𝒈   𝑀𝐶𝑜     𝑀𝐶𝑖 𝜵 𝛁 𝒖   𝑀𝐶𝑖𝜵𝟐 𝒖    Ecuación de Navier
+                 𝜕𝑡               3
+
+
+
+
+                                                                                3
+                                                                                4
+Ley de Hooke
+                    𝜕 𝒖              1
+                𝜌         𝜌𝒈   𝑀𝐶𝑜     𝑀𝐶𝑖 𝜵 𝛁 𝒖       𝑀𝐶𝑖𝜵𝟐 𝒖
+                    𝜕𝑡               3
+
+
+
+Para ondas longitudinales: 𝜌 𝜕𝜕𝑡𝑢              𝑀𝐶𝑜
+                                                       4
+                                                       3
+                                                         𝑀𝐶𝑖
+                                                             𝜕 𝑢
+                                                             𝜕𝑥
+
+
+
+                                         𝜕 𝑢         𝜕 𝑢
+Para ondas transversales:            𝜌
+                                          𝜕𝑡
+                                               𝑀𝐶𝑖
+                                                     𝜕𝑦
+
+
+
+
+                                                                   3
+                                                                   5
+Ley de Hooke
+Ejemplo: El granito, es un material presente en la corteza terrestre. Los
+valores de sus módulos elásticos son MCo ≈ 40GPa y MCi ≈ 25GPa.
+Además, su densidad es 2,7       10 𝑘𝑔/𝑚 ¿Cuál será la velocidad de la
+onda transversal y longitudinal?
+
+
+
+
+                                                                            3
+                                                                            6
+Introducción a la
+mecánica de
+fluidos.
+
+                    3
+                    7
+Contenido
+Introducción a la mecánica de fluidos
+Descripción de un fluido.
+Hipótesis del continuo.
+Propiedades de los fluidos
+Dinámica de fluidos
+Fluidos reales
+
+
+                                        3
+                                        8
+Introducción a la mecánica de fluidos
+¿Qué es un fluido?
+
+
+
+
+                                        3
+                                        9
+Introducción a la mecánica de fluidos
+¿Qué es un fluido?
+En física, un fluido es una sustancia que puede fluir y deformarse
+continuamente bajo la acción de una fuerza externa, sin recuperar su forma
+original cuando cesa la fuerza. Los fluidos incluyen líquidos, gases y
+plasmas, y se caracterizan por su capacidad de adaptarse a la forma del
+recipiente que los contiene.
+
+
+
+
+                                                                             4
+                                                                             0
+Introducción a la mecánica de fluidos
+¿Qué es un fluido?
+La característica fundamental de los fluidos es la denominada fluidez. Un
+fluido cambia de forma de manera continua cuando está sometido a un
+esfuerzo cortante, por muy pequeño que sea éste, es decir, un fluido no es
+capaz de soportar un esfuerzo cortante sin moverse durante ningún
+intervalo de tiempo.
+
+
+
+
+                                                                             4
+                                                                             1
+Introducción a la mecánica de fluidos
+¿Qué es la mecánica de fluidos?
+
+
+
+
+                                        4
+                                        2
+Introducción a la mecánica de fluidos
+¿Qué es la mecánica de fluidos?
+La mecánica de fluidos es la rama de la física y la ingeniería que estudia el
+comportamiento de los fluidos (líquidos y gases) y las fuerzas que actúan
+sobre ellos. Se divide en dos grandes áreas:
+Hidrostática: Estudia los fluidos en reposo, analizando conceptos como la
+presión, el principio de Pascal, el principio de Arquímedes y la tensión
+superficial.
+Hidrodinámica: Se enfoca en los fluidos en movimiento, incluyendo
+principios como la ecuación de continuidad, la ecuación de Bernoulli, la
+viscosidad y la turbulencia.
+
+                                                                                4
+                                                                                3
+Introducción a la mecánica de fluidos
+¿Qué es la mecánica de fluidos?
+El estudio de la mecánica de fluidos es esencial para comprender
+fenómenos naturales como el movimiento del agua en los ríos, la circulación
+atmosférica y el flujo sanguíneo en los organismos vivos. También tiene
+aplicaciones prácticas en el diseño de aviones, la ingeniería hidráulica y el
+desarrollo de sistemas de transporte de fluidos en la industria.
+
+
+
+
+                                                                                4
+                                                                                4
+Descripción de un fluido
+Vamos a considerar un fluido como un medio continuo y no viscoso
+Vamos a dar una descripción espacial (como cambia en fluido en un punto
+determinado del espacio)
+Para estudiar la ecuación de movimiento utilizamos la segunda ley de
+Newton
+                              𝑭     𝑚𝒂
+
+
+
+
+                                                                          4
+                                                                          5
+Descripción de un fluido
+         𝜕 𝒖
+   𝜌𝑑𝑉         𝑭        𝑭
+         𝜕𝑡
+                            Ecuación de un fluido no viscoso
+     𝑭         𝜌𝒈𝑑𝑉
+                                         𝑑𝑣
+     𝑭         𝛁 𝜮𝑑𝑉                 𝜌        𝜌𝒈   𝜵𝑝
+                                         𝑑𝑡
+     𝛁 𝜮           𝛁𝑝
+
+
+
+
+                                                               4
+                                                               6
+Descripción de un fluido
+Supongamos flujo regular de un fluido no viscoso e incompresible
+                              𝑑𝒗
+                         𝜌𝒗        𝜌𝒗 𝛁 𝑔𝑧           𝒗 𝜵𝑝       0
+                              𝑑𝑡
+                          1 𝑑𝑣            𝑑 𝑔𝑧        𝑑𝑝
+                           𝜌         𝜌                      0
+                          2 𝑑𝑡             𝑑𝑡         𝑑𝑡
+
+                          𝑑 1
+                               𝜌𝑣        𝜌𝑔𝑧     𝑝     0        Ecuación de Bernoulli
+                          𝑑𝑡 2
+
+
+
+
+                                                                                        4
+                                                                                        7
+Descripción de un fluido
+La ecuación de Bernoulli es un principio fundamental de la hidrodinámica
+que describe el comportamiento de un fluido en movimiento.
+Esta ecuación establece que la suma de la presión, la energía cinética y la
+energía potencial por unidad de volumen permanece constante a lo largo de
+una línea de corriente, siempre que no haya efectos de viscosidad o
+pérdidas por fricción.
+
+
+
+
+                                                                              4
+                                                                              8
+Hipótesis del continuo
+La conservación de la masa implica una relación importante, denominada
+ecuación de continuidad, entre la densidad y la velocidad
+Consideremos un pequeño volumen de fluido dV. Cuando de desplaza, su
+masa no puede cambiar
+                       𝑑             𝑑𝜌       𝑑
+                          𝜌𝑑𝑉   𝑑𝑉        𝜌      𝑑𝑉   0
+                       𝑑𝑡            𝑑𝑡       𝑑𝑡
+
+
+
+
+                                                                         4
+                                                                         9
+Hipótesis del continuo
+              𝑑𝑉
+                     𝜵 𝒗𝑑𝑉
+              𝑑𝑡
+
+
+
+
+            𝑑
+               𝑑𝑉   𝜵 𝒗𝑑𝑉
+            𝑑𝑡
+
+
+
+                             5
+                             0
+Hipótesis del continuo
+Llegamos a la ecuación de continuidad
+
+                 𝑑𝜌
+                      𝜌𝜵 𝒗     0
+                 𝑑𝑡
+
+                 𝑑𝜌
+                      𝜵   𝜌𝒗       0
+                 𝑑𝑡
+
+
+
+
+                                        5
+                                        1
+

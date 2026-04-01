@@ -1,0 +1,125 @@
+Oscilaciones lineales
+
+                        1
+Contenido
+Introducción
+Oscilador armónico simple
+Oscilaciones amortiguadas.
+Oscilaciones amortiguadas.
+Ejemplos.
+
+
+                             2
+Introducción
+ Para una partícula existe una posición de equilibrio estable, punto que llamaremos origen.
+ Cuando la partícula sufre un desplazamiento desde el origen (en cualquier sentido de los
+ dos posibles), aparece una cierta fuerza que tiende a llevarla de nuevo a su posición
+ original y que, en general, será una función complicada del desplazamiento y quizá de la
+ velocidad, o incluso de alguna derivada de orden superior de la coordenada de posición
+ respecto del tiempo. Aquí sólo tendremos en cuenta aquellos casos en que la fuerza
+ recuperadora sea función únicamente del desplazamiento: F = F(x).
+
+
+                                   𝑑𝐹   1 2 𝑑2 𝐹
+                      𝐹 𝑥 = 𝐹0 + 𝑥     + 𝑥         + ⋯.
+                                   𝑑𝑥 0 2   𝑑𝑥 2 0
+                                    𝐹 𝑥 = −𝑘𝑥                   Ley de Hook
+
+                                                                                              3
+Oscilador armónico simple
+  −𝑘𝑥 = 𝑚𝑥ሷ
+  𝐹 = 𝑚𝑎 = −𝑘𝑥
+
+  𝑥ሷ + 𝜔02 𝑥 = 0,   𝑐𝑜𝑛 𝜔02 = 𝑘ൗ𝑚
+
+  𝑥(𝑡) = 𝐴𝑠𝑒𝑛(𝜔0 𝑡 − 𝛿)
+
+
+
+
+                                    4
+Oscilador armónico simple
+−𝑘𝑥 = 𝑚𝑥ሷ
+𝐹 = 𝑚𝑎 = −𝑘𝑥
+
+𝑥ሷ + 𝜔02 𝑥 = 0, 𝑐𝑜𝑛 𝜔02 = 𝑘ൗ𝑚
+
+𝑥(𝑡) = 𝐴𝑠𝑒𝑛(𝜔0 𝑡 − 𝛿)
+
+
+
+
+                                5
+Oscilaciones amortiguadas
+ El movimiento ejecutado por el oscilador armónico simple recibe el nombre de oscilación
+ libre y, una vez iniciado, no se para nunca. Por supuesto, se trata de una simplificación del
+ caso físico real en el que las fuerzas disipativas o de rozamiento acabarían por extinguir
+ finalmente el movimiento, desapareciendo las oscilaciones. Este caso puede estudiarse
+ introduciendo en la ecuación diferencial un término que sea responsable de la fuerza de
+ amortiguamiento.
+                                  𝑚𝑥ሷ + 𝑏𝑥ሶ + 𝑘𝑥 = 0
+                                 𝑥ሷ + 2𝛽 𝑥ሶ + 𝜔02 𝑥 = 0
+
+
+
+
+                                                                                                 6
+Oscilaciones amortiguadas
+                                 𝑥ሷ + 2𝛽 𝑥ሶ + 𝜔02 𝑥 = 0
+
+              𝑥 𝑡 = 𝑒 −𝛽𝑡 𝐴𝑒𝑥𝑝     𝛽2 − 𝜔02 𝑡 + 𝐵𝑒𝑥𝑝 − 𝛽2 − 𝜔02 𝑡
+
+ Pueden ocurrir 3 cosas
+
+ ❖ - Si 𝜔02 > 𝛽2 , es un movimiento amortiguado
+
+ ❖ - Si 𝜔02 = 𝛽2 , es un movimiento con amortiguamiento crítico
+
+ ❖ - Si 𝜔02 < 𝛽2 , es un movimiento sobreamortiguado
+
+
+
+
+                                                                    7
+Oscilaciones forzadas
+ El caso más sencillo de una oscilación forzada es aquel en que la fuerza externa varía
+ periódicamente con el tiempo.
+                            𝑚𝑥ሷ + 𝑏𝑥ሶ + 𝑘𝑥 = 𝐹0 𝑐𝑜𝑠𝜔𝑡
+                            𝑥ሷ + 2𝛽 𝑥ሶ + 𝜔02 𝑥 = 𝐴𝑐𝑜𝑠𝜔𝑡
+
+             𝑥𝑔 𝑡 = 𝑒 −𝛽𝑡 𝐴𝑒𝑥𝑝    𝛽2 − 𝜔02 𝑡 + 𝐵𝑒𝑥𝑝 − 𝛽2 − 𝜔02 𝑡
+
+                              𝑥𝑝 𝑡 = 𝐷𝑐𝑜𝑠 𝜔𝑡 − 𝛿
+
+
+
+
+                                                                                          8
+Ejemplo
+ Una masa de 1kg está unida a un resorte de constante elástica k=25N/m. El sistema se
+ mueve sobre una superficie horizontal y sufre una fuerza de rozamiento proporcional a la
+ velocidad, con coeficiente de amortiguamiento b=6kg/s. Para iniciar el movimiento la masa
+ se suelta desde el reposo a 0,10m de la posición de equilibrio
+
+ Determine la expresión del desplazamiento
+
+
+
+
+                                                                                             9
+Ejemplo
+ Una masa de 1kg está unida a un resorte de constante elástica k=25N/m. El sistema se
+ mueve sobre una superficie horizontal y sufre una fuerza de rozamiento proporcional a la
+ velocidad, con coeficiente de amortiguamiento b=4kg/s. Sobre la masa actúa una fuerza
+ externa periódica:F(t)=10cos(3t) N
+
+ Para iniciar el movimiento la masa se suelta desde el reposo a 0,10m de la posición de
+ equilibrio
+
+ Determine la expresión del desplazamiento
+
+
+
+
+                                                                                            1
+

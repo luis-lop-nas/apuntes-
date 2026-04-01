@@ -1,0 +1,283 @@
+Oscilaciones
+acopladas
+
+               1
+Contenido
+Introducción
+Oscilaciones lineales de sistemas con varios grados de
+libertad.
+Coordenadas normales.
+La cuerda vibrante discreta.
+Límite continuo: la cuerda vibrante continua.
+
+                                                         2
+Introducción
+Oscilador armónico simple   Oscilador amortiguado               Oscilador forzado
+
+
+
+
+ 𝑥 𝑡    𝐴𝑠𝑒𝑛 𝜔𝑡   𝛿         𝑥 𝑡   𝑥 𝑒   𝑠𝑒𝑛 Ω𝑡      𝛿
+                                                        𝑥 𝑡   𝑥 𝑒   𝑠𝑒𝑛 Ω𝑡   𝛿      𝑋𝑐𝑜𝑠 𝜔𝑡   𝛿∗
+
+
+                                                                                                   3
+Introducción
+Un sistema físico real es normalmente capaz de vibrar en muchos modos
+diferentes y puede resonar a muchas frecuencias
+
+
+
+
+                                                                        4
+Introducción
+Los osciladores acoplados son sistemas formados por dos o más
+osciladores que interactúan entre sí mediante algún tipo de acoplamiento,
+como fuerzas mecánicas, campos eléctricos, señales químicas o
+interacciones biológicas.
+A diferencia de los osciladores independientes, el comportamiento de
+cada oscilador acoplado no solo depende de sus propiedades
+individuales, sino también de la influencia mutua que ejercen los demás.
+
+
+
+
+                                                                            5
+Introducción
+Los osciladores acoplados son sistemas formados por dos o más
+osciladores que interactúan entre sí mediante algún tipo de acoplamiento,
+como fuerzas mecánicas, campos eléctricos, señales químicas o
+interacciones biológicas.
+A diferencia de los osciladores independientes, el comportamiento de
+cada oscilador acoplado no solo depende de sus propiedades
+individuales, sino también de la influencia mutua que ejercen los demás.
+
+
+
+
+                                                                            6
+Oscilaciones lineales de sistemas
+con varios grados de libertad
+
+
+                                    7
+Dos osciladores acoplados
+
+
+       A                                        A
+  B                    B
+
+
+
+
+            ¿Qué ocurre al dejar los dos péndulos libres?
+
+
+
+                                                            8
+Dos osciladores acoplados
+
+
+  B    A
+
+
+
+
+             A y B oscilan con igual amplitud y
+             distinta frecuencia
+
+
+
+                                                  9
+Dos osciladores acoplados
+Consideraciones de simetría
+
+
+
+   B        A
+
+
+
+
+                              A y B oscilan con igual amplitud e
+                              igual frecuencia
+
+
+                                                                   1
+                                                                   0
+Dos osciladores acoplados
+Consideraciones de simetría
+                              𝑥       𝐶𝑐𝑜𝑠 𝜔 𝑡
+
+                              𝑥       𝐶𝑐𝑜𝑠 𝜔 𝑡
+
+                                  𝜔      𝑔 ⁄𝑙
+
+
+
+
+                                                 1
+                                                 1
+Dos osciladores acoplados
+Consideraciones de simetría
+
+
+
+    B       A
+
+
+
+
+                              A y B oscilan con igual amplitud y
+                              desfasados 180º
+
+
+
+                                                                   12
+Dos osciladores acoplados
+Consideraciones de simetría
+                              𝑥       𝐶𝑐𝑜𝑠 𝜔 𝑡
+
+                              𝑥       𝐶𝑐𝑜𝑠 𝜔 𝑡
+
+                                  𝜔      𝑔 ⁄𝑙
+
+
+
+
+                                                 13
+Coordenadas normales
+
+
+
+                       14
+Dos osciladores acoplados
+
+Cualquier movimiento de los péndulos partiendo
+del reposo puede describirse como una
+combinación de los dos movimientos vistos antes
+
+
+
+
+                                                  15
+Dos osciladores acoplados
+                              A: m          𝑚𝜔 𝑥    𝑘 𝑥     𝑥       0
+
+
+                              B: m          𝑚𝜔 𝑥    𝑘 𝑥     𝑥       0
+
+
+                              A:         𝜔    𝜔 𝑥     𝜔 𝑥       0
+       B              A                                                     𝑘
+                                                                        𝜔       𝑚
+                              B:        𝜔     𝜔 𝑥     𝜔 𝑥       0
+   𝑥              𝑥
+
+
+  A: 𝑚𝜔 𝑥   𝑘 𝑥   𝑥       0
+                                   Estas dos ecuaciones no pueden
+  B: 𝑚𝜔 𝑥   𝑘 𝑥   𝑥       0        resolverse independientemente
+
+
+                                                                                    1
+                                                                                    6
+Dos osciladores acoplados
+           A+B:     𝑥   𝑥          𝜔 𝑥          𝑥       0
+
+
+           A-B:   𝑥     𝑥          𝜔       2𝜔       𝑥   𝑥   0
+
+          Haciendo un cambio de variable, tenemos:
+ B    A
+                  𝑑 𝑞
+                            𝜔 𝑞        0
+                    𝑡
+                  𝑑 𝑞
+                            𝜔´ 𝑞       0
+                   𝑡
+                   𝑞        𝑥      𝑥
+                   𝑞        𝑥      𝑥
+
+
+                                                                1
+                                                                7
+Dos osciladores acoplados
+           Como posible solución, pero no única, tenemos:
+
+                        𝑞    𝐶𝑐𝑜𝑠 𝜔 𝑡
+                        𝑞    𝐷𝑐𝑜𝑠 𝜔´𝑡
+
+
+          Tenemos dos osciladores independientes. Representan los
+ B    A   Modos normales de los osciladores de las variables 𝑞 y 𝑞
+          A estas variables de les llama coordenadas normales
+
+
+
+
+                                                                     1
+                                                                     8
+Dos osciladores acoplados
+          La solución en función de 𝑥 𝑦 𝑥 , es :
+
+            𝑥      𝑞    𝑞        𝐶𝑐𝑜𝑠 𝜔 𝑡+ 𝐷𝑐𝑜𝑠 𝜔´𝑡
+
+           𝑥       𝑞    𝑞       𝐶𝑐𝑜𝑠 𝜔 𝑡- 𝐷𝑐𝑜𝑠 𝜔´𝑡
+
+ B    A
+          Si 𝐶   0 ⟹ ambos oscilan con 𝜔´
+          Si 𝐷   0 ⟹ ambos oscilan con 𝜔
+
+
+           Estas son las frecuencias normales
+
+
+
+
+                                                      1
+                                                      9
+Dos osciladores acoplados
+          𝑥        𝑞         𝑞        𝐶𝑐𝑜𝑠 𝜔 𝑡+ 𝐷𝑐𝑜𝑠 𝜔´𝑡
+
+          𝑥        𝑞        𝑞         𝐶𝑐𝑜𝑠 𝜔 𝑡- 𝐷𝑐𝑜𝑠 𝜔´𝑡
+
+          Las condiciones iniciales son
+
+              𝑥    𝐴              𝑥     0
+ B    A
+              𝑑𝑥                 𝑑𝑥
+                       0                0
+               𝑡                  𝑡
+
+
+                             1     1
+              𝑥    𝐴           𝐶+ 𝐷
+                             2     2
+                           1     1          𝐶   𝐷   𝐴
+              𝑥    0         𝐶      𝐷
+                           2     2
+
+                                                           2
+                                                           0
+Dos osciladores acoplados
+          𝑥       𝑞       𝑞       𝐶𝑐𝑜𝑠 𝜔 𝑡+ 𝐷𝑐𝑜𝑠 𝜔´𝑡
+
+          𝑥       𝑞       𝑞       𝐶𝑐𝑜𝑠 𝜔 𝑡- 𝐷𝑐𝑜𝑠 𝜔´𝑡
+
+
+              𝑥           𝐴 𝑐𝑜𝑠 𝜔 𝑡     𝑐𝑜𝑠 𝜔´𝑡
+                      1
+ B    A       𝑥         𝐴 𝑐𝑜𝑠 𝜔 𝑡 − 𝑐𝑜𝑠 𝜔´𝑡
+                      2
+
+                                        𝜔´       𝜔           𝜔´       𝜔
+                      𝑥       𝐴   𝑐𝑜𝑠                𝑡 𝑐𝑜𝑠                𝑡
+                                             2                    2
+                                        𝜔´       𝜔           𝜔´       𝜔
+                      𝑥       𝐴   𝑠𝑒𝑛                𝑡 𝑠𝑒𝑛                𝑡
+                                             2                    2
+
+                                                                              2
+                                                                              1
+

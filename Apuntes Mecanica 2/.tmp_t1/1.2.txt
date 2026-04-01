@@ -1,0 +1,102 @@
+Dos osciladores acoplados
+Método analítico general
+ Tanto xA como xB pueden oscilar con las frecuencias normales
+
+   A:        𝜔    𝜔 𝑥      𝜔 𝑥     0                                      𝑥    𝐶𝑐𝑜𝑠 𝜔𝑡
+                                        𝜔     𝑘
+                                                  𝑚
+                                                                          𝑥    𝐶´𝑐𝑜𝑠 𝜔𝑡
+   B:       𝜔     𝜔 𝑥     𝜔 𝑥     0
+
+
+                   Si existe algún ω adecuado, existirán los modos normales.
+
+
+
+
+                                                                                          2
+                                                                                          5
+Dos osciladores acoplados
+Método analítico general
+ Sustituimos la solución en las ecuaciones
+
+                    A:   𝜔     𝜔       𝜔 𝐶   𝜔 𝐶´    0
+
+                    B:   𝜔 𝐶       𝜔     𝜔    𝜔 𝐶´       0
+
+ ¿Para que valor de ω son ambas ecuaciones no independientes?
+
+
+
+
+                                                                2
+                                                                6
+Dos osciladores acoplados
+Método analítico general
+  A:   𝜔     𝜔       𝜔 𝐶   𝜔 𝐶´       0→
+                                           ´
+
+
+  B:   𝜔 𝐶       𝜔     𝜔       𝜔 𝐶´    0→
+                                               ´
+
+
+           𝜔               𝜔     𝜔    𝜔            𝜔´    𝜔    2𝜔
+                                           →
+       𝜔    𝜔    𝜔              𝜔                  𝜔´´    𝜔
+
+
+
+
+                                                                   2
+                                                                   7
+Dos osciladores acoplados
+Método analítico general
+   𝑆𝑖 𝜔        𝜔´                              𝑥     𝐷𝑐𝑜𝑠 𝜔´𝑡
+          𝐶
+                        1                     𝑥      𝐷𝑐𝑜𝑠 𝜔´𝑡
+          𝐶´
+                                               𝑥     𝐶𝑐𝑜𝑠 𝜔 𝑡
+   𝑆𝑖 𝜔    𝜔´´
+          𝐶
+                    1                          𝑥     𝐶𝑐𝑜𝑠 𝜔 𝑡
+          𝐶´
+
+                            𝑥   𝐶𝑐𝑜𝑠 𝜔 𝑡+ 𝐷𝑐𝑜𝑠 𝜔´𝑡
+
+                            𝑥   𝐶𝑐𝑜𝑠 𝜔 𝑡- 𝐷𝑐𝑜𝑠 𝜔´𝑡
+
+
+                                                                2
+                                                                8
+Dos osciladores acoplados
+Ejemplo: Considere el sistema de osciladores acoplados, formado por tres resortes
+idénticos y dos masas iguales. Si las masas valen 2𝑚 y las constantes de los resortes son
+iguales a 𝑘:
+
+a)Escriba las ecuaciones de movimiento para cada masa.
+
+b)Encuentre las frecuencias de oscilación 𝜔.
+
+c)Si las masas se reducen de modo que ahora son iguales a 𝑚, encuentre el nuevo valor de las
+constantes de los resortes 𝑘´de modo que las frecuencias de oscilación sigan valiendo 𝜔.
+
+
+
+
+                                                                                               2
+                                                                                               9
+Dos osciladores acoplados
+Ejemplo: Una partícula de masa m se sujeta a un soporte rígido mediante un muelle de
+constante κ, que cuelga verticalmente hacia abajo en el equilibrio. A esta combinación masa-
+muelle se sujeta un oscilador igual, estando conectado el muelle de este último a la masa del
+primero. Calcular las pulsaciones características de las oscilaciones verticales
+monodimensionales, comparándolas con las pulsaciones cuando una u otra partícula se
+mantiene fija mientras la otra oscila. Describir los modos de oscilación normales del sistema.
+
+
+
+
+                                                                                                 3
+                                                                                                 0
+

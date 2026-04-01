@@ -1,0 +1,69 @@
+  Ejemplo
+Tenemos una cuerda de largo L. En el instante t=0 la cuerda tiene la forma de la figura:
+
+
+
+                     h
+
+
+
+
+Determine la ecuación de onda 𝑦 𝑥, 𝑡
+
+
+
+
+                                                                                           4
+                                                                                           3
+  Ejemplo
+Suponed una cuerda elástica flexible con sus extremos fijos a la que se sujetan seis partículas
+idénticas equiespaciadas de masa m .En el límite de desplazamientos transversales pequeños,
+hallad y representad todos los posibles modos normales del sistema.
+
+
+
+
+                                                                                                  4
+                                                                                                  4
+  Ejemplo
+Se tensa una cuerda uniforme larga de densidad de masa 0.1 kg/m con una fuerza de 50 N. Un
+extremo de la cuerda (x = 0) se hace oscilar transversalmente (sinusoidalmente) con una amplitud
+de 2 cm y un período de 0.1 s, de modo que se generan unas ondas que se mueven en el sentido
+de las x positivas.
+     a. ¿Cuál es la velocidad de las ondas y su longitud de onda?
+     b. Si en el extremo impulsor (x = 0) el desplazamiento (y) para t = 0 es 0.01m con negativa,
+     ¿cuál es la ecuación de las ondas que se mueven?
+
+
+
+
+                                                                                                    4
+                                                                                                    5
+  Ejemplo
+Las ondas de superficie en aguas profundas tienen la siguiente relación de dispersión:
+                                                       𝑇𝑘
+                                         𝜔 𝑘      𝑔𝑘
+                                                        𝜌
+donde g es la gravedad, T = 7.2ꞏ10-2 N/m la tensión superficial del agua y ρ = 997 kg/m3
+la densidad.
+a) Obtener las velocidades de fase y de grupo en función de la longitud de onda.
+b) Demostrar que la velocidad de fase tiene un mínimo para una longitud de onda
+𝜆 . Encontrar numéricamente 𝜆         y𝑣 ,
+
+
+
+
+                                                                                           4
+                                                                                           6
+  Ejemplo
+La molécula de CO₂ puede asemejarse a un sistema constituido por una masa central m₂ unidas por
+dos muelles iguales de constante k a dos masas m₁ y m₃ (siendo m₁ = m₃).
+a. Plantear y resolver las ecuaciones para los dos modos normales en los cuales las masas oscilan
+a lo largo de la recta que une sus centros.
+
+
+
+
+                                                                                                    4
+                                                                                                    7
+
