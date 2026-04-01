@@ -244,6 +244,16 @@ amortiguamiento viscoso, $\omega_0$ para frecuencia angular natural, $\beta=b/(2
 parámetro de amortiguamiento, $\Omega$ para frecuencia amortiguada, $F_0$ para amplitud de
 fuerza externa y $\delta$ para desfase.
 
+\begin{mdframed}[style=resultado]
+\textbf{Hipótesis de modelización (Tema 1).}
+\begin{itemize}
+  \item Desplazamientos pequeños respecto del equilibrio (linealización válida).
+  \item Movimiento unidimensional.
+  \item Parámetros constantes en el tiempo ($m,k,b$).
+  \item En el modelo ideal no hay no linealidades geométricas ni fricción seca.
+\end{itemize}
+\end{mdframed}
+
 \subsection{Introducción}
 
 Para una partícula existe una posición de equilibrio estable que tomamos como origen.
@@ -251,6 +261,10 @@ Cuando la partícula sufre un desplazamiento desde el origen aparece una fuerza
 recuperadora que tiende a devolverla a su posición original. En general esta fuerza es una
 función complicada del desplazamiento y quizá de la velocidad; aquí solo consideramos el
 caso en que $F = F(x)$.
+
+En formulación energética, si $F(x)=-dU/dx$, la estabilidad local del equilibrio en $x=0$
+equivale a $U'(0)=0$ y $U''(0)>0$. Este criterio justifica que, cerca del equilibrio, el
+primer término no nulo en $F(x)$ sea lineal y de signo restaurador.
 
 Expandiendo en serie de Taylor alrededor del punto de equilibrio:
 \begin{equation}
@@ -269,6 +283,11 @@ orden superior son despreciables y el primero que sobrevive es el lineal, lo que
 
 La condición $k > 0$ garantiza la estabilidad del equilibrio (la fuerza se opone al
 desplazamiento).
+\begin{observacion}
+La linealización es una aproximación asintótica local: su validez exige
+$|x| \ll L_{\text{car}}$, donde $L_{\text{car}}$ es la escala espacial en la que
+los términos no lineales de $F(x)$ dejan de ser despreciables.
+\end{observacion}
 
 \subsection{Oscilador armónico simple}
 
@@ -282,6 +301,7 @@ Se obtiene la \textbf{ecuación del oscilador armónico simple} (OAS):
   \ddot{x} + \omega_0^2\,x = 0, \qquad \omega_0^2 = \frac{k}{m}
 \end{equation}
 \end{mdframed}
+Aquí $\omega_0$ representa la pulsación natural del sistema linealizado.
 
 \begin{proposicion}[Solución del oscilador armónico simple]
 La ecuación $\ddot{x}+\omega_0^2x=0$ tiene como solución general
@@ -313,6 +333,14 @@ Las constantes $A$ (amplitud) y $\delta$ (fase inicial) se determinan con las co
 iniciales $x(0)$ y $\dot{x}(0)$. El movimiento es periódico con período
 $T = 2\pi/\omega_0$ y frecuencia $\nu_0 = \omega_0/(2\pi)$.
 
+Equivalentemente, dados $x(0)=x_0$ y $\dot{x}(0)=v_0$:
+\begin{equation}
+  A=\sqrt{x_0^2+\left(\frac{v_0}{\omega_0}\right)^2},
+  \qquad
+  \tan\delta=-\frac{x_0\omega_0}{v_0}
+\end{equation}
+con la elección de cuadrante compatible con $(x_0,v_0)$.
+
 El movimiento del OAS recibe el nombre de \emph{oscilación libre}: una vez iniciado, no
 se detiene nunca, pues la energía mecánica se conserva:
 \begin{equation}
@@ -320,6 +348,11 @@ se detiene nunca, pues la energía mecánica se conserva:
 \end{equation}
 Esto es una idealización; en la realidad, las fuerzas disipativas acaban extinguiendo el
 movimiento.
+\begin{observacion}
+En cada período hay intercambio reversible entre energía cinética
+$E_c=\tfrac12 m\dot{x}^2$ y potencial elástica $E_p=\tfrac12 kx^2$; su suma permanece
+constante en el modelo no disipativo.
+\end{observacion}
 
 \subsection{Oscilaciones amortiguadas}
 
@@ -336,6 +369,10 @@ Dividiendo por $m$ y definiendo $\beta = b/(2m)$:
 
 Proponiendo $x(t)=e^{rt}$ se obtiene la ecuación característica
 $r^2 + 2\beta r + \omega_0^2 = 0$, con raíces $r = -\beta \pm \sqrt{\beta^2 - \omega_0^2}$.
+\begin{equation}
+  \Delta = \beta^2-\omega_0^2
+\end{equation}
+El signo de $\Delta$ clasifica de forma completa el régimen dinámico.
 La solución general es:
 \begin{equation}
   x(t) = e^{-\beta t}\!\left[A\exp\!\left(\sqrt{\beta^2-\omega_0^2}\,t\right)
@@ -353,6 +390,10 @@ $\Omega=\sqrt{\omega_0^2-\beta^2}$. La solución oscila con amplitud decreciente
 La frecuencia amortiguada $\Omega < \omega_0$ y la amplitud decae como $e^{-\beta t}$.
 El \emph{factor de calidad} $Q = \omega_0/(2\beta)$ mide cuántos ciclos tarda en
 amortiguarse.
+\begin{equation}
+  \tau=\frac{1}{\beta}
+\end{equation}
+es la escala temporal de decaimiento de la envolvente.
 
 Si $x_n$ y $x_{n+1}$ son dos máximos consecutivos separados por el período amortiguado
 $T_d=2\pi/\Omega$, el decremento logarítmico se define por:
@@ -387,6 +428,12 @@ $Q=\omega_0/(2\beta)$, por tanto:
   \Lambda\simeq\frac{2\pi\beta}{\omega_0}=\frac{\pi}{Q}.
 \end{equation}
 \end{proof}
+\begin{observacion}
+En el régimen subamortiguado deben distinguirse dos frecuencias:
+$\omega_0$ (propia del sistema no disipativo) y $\Omega$ (frecuencia observada de
+oscilación en presencia de disipación). Esta distinción es esencial al comparar teoría y
+medida experimental.
+\end{observacion}
 
 \begin{figure}[H]
   \centering
@@ -422,6 +469,10 @@ Raíz doble $r = -\beta$. La solución general es:
 \end{equation}
 El sistema retorna al equilibrio lo más rápido posible sin oscilar. Es el régimen óptimo
 para suprimir vibraciones.
+\begin{observacion}
+Este régimen separa cualitativamente las trayectorias oscilantes de las no oscilantes:
+es un punto crítico en el espacio de parámetros.
+\end{observacion}
 
 \subsubsection{Sobreamortiguado \texorpdfstring{($\omega_0^2 < \beta^2$)}{}}
 
@@ -453,6 +504,8 @@ una solución particular (régimen permanente):
 \begin{equation}
   x_p(t) = D\cos(\omega t - \delta)
 \end{equation}
+El término homogéneo decae en una escala temporal $\sim 1/\beta$; para
+$t\gg 1/\beta$ domina el régimen permanente sinusoidal a la frecuencia externa $\omega$.
 Sustituyendo $x_p$ en la ecuación diferencial se obtienen la amplitud estacionaria y el
 desfase:
 \begin{mdframed}[style=resultado]
@@ -503,6 +556,32 @@ Por tanto:
 Cuando $\omega \to \omega_0$ (y $\beta$ es pequeño), la amplitud $D$ se hace grande:
 esto es la \textbf{resonancia}. En ausencia de amortiguamiento ($\beta = 0$) la amplitud
 diverge en $\omega = \omega_0$.
+\begin{proposicion}[Frecuencia de amplitud máxima]
+Para $\beta<\omega_0/\sqrt{2}$, la amplitud estacionaria alcanza su máximo en
+\[
+  \omega_r=\sqrt{\omega_0^2-2\beta^2}.
+\]
+\end{proposicion}
+
+\begin{proof}
+Como $D>0$, maximizar $D(\omega)$ equivale a minimizar
+\[
+  G(\omega)=(\omega_0^2-\omega^2)^2+4\beta^2\omega^2.
+\]
+Derivando:
+\[
+  G'(\omega)=4\omega\bigl(\omega^2-\omega_0^2+2\beta^2\bigr).
+\]
+Además de $\omega=0$, el extremo no trivial satisface
+$\omega^2=\omega_0^2-2\beta^2$, que existe si $\beta<\omega_0/\sqrt{2}$.
+\end{proof}
+
+\begin{observacion}
+El desfase cambia de forma monótona con la frecuencia: para
+$\omega\ll\omega_0$, $\delta\approx 0$ (respuesta casi en fase); en
+$\omega=\omega_0$, $\delta=\pi/2$; y para $\omega\gg\omega_0$, $\delta\to\pi$
+(respuesta casi en contrafase).
+\end{observacion}
 
 \subsection{Análisis energético y ancho de resonancia (ampliación)}
 
@@ -607,6 +686,40 @@ Desfase: $\tan\delta = 2\cdot 2\cdot 3/(25-9) = 3/4 \Rightarrow \delta \approx 0
 
 La solución completa es $x(t) = x_g(t) + 0{,}5\cos(3t-\delta)$, donde los coeficientes
 del transitorio $x_g$ se determinan aplicando las condiciones iniciales.
+\[
+  x_g(t)=e^{-2t}\!\left(C_1\cos(\sqrt{21}\,t)+C_2\sen(\sqrt{21}\,t)\right)
+\]
+Con $x(0)=0{,}10$:
+\[
+  C_1+0{,}5\cos\delta=0{,}10
+  \quad\Rightarrow\quad
+  C_1+0{,}4=0{,}10
+  \quad\Rightarrow\quad
+  C_1=-0{,}30.
+\]
+Con $\dot{x}(0)=0$:
+\[
+  \dot{x}_g(0)+\dot{x}_p(0)=0,\qquad
+  \dot{x}_g(0)=-2C_1+\sqrt{21}\,C_2,\qquad
+  \dot{x}_p(0)=1{,}5\sen\delta=0{,}9.
+\]
+Luego:
+\[
+  -2(-0{,}30)+\sqrt{21}\,C_2+0{,}9=0
+  \quad\Rightarrow\quad
+  C_2=-\frac{1{,}5}{\sqrt{21}}\approx -0{,}327.
+\]
+Por tanto,
+\begin{equation}
+  \boxed{
+  x(t)=e^{-2t}\!\left[-0{,}30\cos(\sqrt{21}\,t)-0{,}327\sen(\sqrt{21}\,t)\right]
+  +0{,}50\cos(3t-0{,}6435)
+  }
+\end{equation}
+\begin{observacion}
+La parte transitoria domina al inicio y decae como $e^{-2t}$; para tiempos largos la
+respuesta queda fijada por la excitación externa.
+\end{observacion}
 \end{ejemplo}
 
 % ══════════════════════════════════════════════════════════════════════════
@@ -617,6 +730,16 @@ En este tema usaremos $x_A(t),x_B(t)$ para desplazamientos de las dos masas, $l$
 longitud de cada péndulo, $m$ para masa, $k$ para acoplamiento elástico,
 $\omega_0^2=g/l$ para frecuencia propia no acoplada y $\omega_c^2=k/m$ para frecuencia de
 acoplamiento. También aparecerán $q_1,q_2$ como coordenadas normales.
+
+\begin{mdframed}[style=resultado]
+\textbf{Hipótesis de modelización (Tema 2).}
+\begin{itemize}
+  \item Pequeñas oscilaciones: $\sen\theta\simeq\theta$.
+  \item Resortes lineales (ley de Hooke) y masas puntuales.
+  \item Ausencia de disipación en el modelo base de modos normales.
+  \item Acoplamiento lineal, homogéneo y constante en el tiempo.
+\end{itemize}
+\end{mdframed}
 
 \subsection{Introducción}
 
@@ -659,6 +782,17 @@ Definiendo $\omega_c^2 = k/m$ (frecuencia de acoplamiento):
   \frac{d^2x_B}{dt^2} + (\omega_0^2+\omega_c^2)x_B - \omega_c^2 x_A &= 0
 \end{align}
 \end{mdframed}
+En forma matricial:
+\begin{equation}
+  \ddot{\mathbf{x}}+\mathbf{K}\mathbf{x}=0,\qquad
+  \mathbf{x}=\begin{pmatrix}x_A\\x_B\end{pmatrix},\qquad
+  \mathbf{K}=
+  \begin{pmatrix}
+    \omega_0^2+\omega_c^2 & -\omega_c^2\\
+    -\omega_c^2 & \omega_0^2+\omega_c^2
+  \end{pmatrix}.
+\end{equation}
+La matriz $\mathbf{K}$ es simétrica positiva, lo que garantiza frecuencias normales reales.
 
 \begin{figure}[H]
   \centering
@@ -781,6 +915,12 @@ Las soluciones se reescriben usando suma-a-producto:
 Si el acoplamiento es débil ($\omega_c \ll \omega_0$), la diferencia
 $\omega'-\omega_0 \ll \omega_0$ y se producen \textbf{batidos}: la energía oscila
 lentamente de A a B y viceversa con frecuencia de modulación $(\omega'-\omega_0)/2$.
+\begin{observacion}
+En este régimen hay separación clara de escalas: oscilación rápida a frecuencia media
+$\tfrac{\omega'+\omega_0}{2}$ y transferencia energética lenta controlada por
+$\tfrac{\omega'-\omega_0}{2}$. Experimentalmente se observa como alternancia de amplitudes
+entre ambos osciladores.
+\end{observacion}
 
 \subsection{Método analítico general}
 
@@ -796,6 +936,23 @@ Sustituyendo en las ecuaciones de movimiento:
   \text{B:}&\quad -\omega_c^2 C + (-\omega^2+\omega_0^2+\omega_c^2)C' = 0
   \label{eq:anaB}
 \end{align}
+\begin{proposicion}[Condición de existencia de modos no triviales]
+El sistema lineal para $(C,C')$ admite soluciones no triviales si y solo si el
+determinante de su matriz de coeficientes es nulo:
+\[
+  \det
+  \begin{pmatrix}
+    -\omega^2+\omega_0^2+\omega_c^2 & -\omega_c^2\\
+    -\omega_c^2 & -\omega^2+\omega_0^2+\omega_c^2
+  \end{pmatrix}=0.
+\]
+\end{proposicion}
+
+\begin{proof}
+Si el determinante fuera distinto de cero, la matriz sería invertible y el único estado
+posible sería $C=C'=0$, que no representa vibración. Por tanto, para obtener amplitudes
+modales no nulas debe anularse el determinante.
+\end{proof}
 
 De las ecuaciones anteriores se pueden extraer dos expresiones para $C/C'$:
 \begin{equation}
@@ -861,6 +1018,11 @@ Las amplitudes de desplazamiento resultan:
 Se producen \textbf{resonancias} en $\omega = \omega_0$ (diverge $C$) y en
 $\omega = \omega_0'$ (diverge $D$). El sistema tiene exactamente dos frecuencias de
 resonancia, correspondientes a sus dos modos normales.
+\begin{observacion}
+La divergencia es una idealización del modelo sin disipación. En presencia de
+amortiguamiento, ambas resonancias permanecen pero con picos finitos y anchura
+controlada por la disipación.
+\end{observacion}
 
 \begin{ejemplo}[Osciladores acoplados: tres resortes, dos masas]
 Considérese el sistema formado por tres resortes idénticos de constante $k$ y dos masas
@@ -960,6 +1122,13 @@ Por tanto:
 \end{equation}
 \end{mdframed}
 
+Equivalentemente, en notación matricial el problema modal discreto se escribe como
+\[
+  \mathbf{K}\mathbf{A}^{(n)}=\omega_n^2\mathbf{A}^{(n)},
+\]
+donde $\mathbf{K}$ es tridiagonal simétrica y $\mathbf{A}^{(n)}$ es el vector modal del
+modo $n$.
+
 \begin{proof}
 De la ecuación discreta modal:
 \begin{equation}
@@ -985,6 +1154,22 @@ $(N+1)\theta=n\pi$, $n=1,\dots,N$, luego:
 \end{equation}
 Quedan así determinados los $N$ modos y sus $N$ frecuencias propias.
 \end{proof}
+
+\begin{proposicion}[Ortogonalidad modal discreta]
+Para extremos fijos, los vectores modales senoidales satisfacen
+\[
+  \sum_{p=1}^{N}
+  \sen\!\left(\frac{np\pi}{N+1}\right)
+  \sen\!\left(\frac{mp\pi}{N+1}\right)
+  =\frac{N+1}{2}\,\delta_{nm},
+\]
+con $\delta_{nm}$ delta de Kronecker.
+\end{proposicion}
+
+\begin{observacion}
+La ortogonalidad modal permite proyectar condiciones iniciales sobre la base de modos
+normales y calcular de forma sistemática los coeficientes de superposición.
+\end{observacion}
 
 \subsubsection{Propiedades de los \texorpdfstring{$N$}{N} modos normales}
 
@@ -1076,6 +1261,18 @@ $n\pi/[2(N+1)] \ll 1$ y $\sen\theta \approx \theta$, por lo que:
   \xrightarrow{N\to\infty}
   n\frac{\pi}{L}\sqrt{\frac{T}{\mu}} = n\omega_1
 \end{equation}
+Además, escribiendo $y_p(t)\equiv y(x_p,t)$ con $x_p=pl$:
+\begin{equation}
+  \frac{y_{p+1}-2y_p+y_{p-1}}{l^2}
+  \xrightarrow[l\to 0]{}
+  \frac{\partial^2 y}{\partial x^2}(x_p,t).
+\end{equation}
+Como $\omega_0^2=T/(ml)$ y $\mu=m/l$, la ecuación discreta
+$\ddot y_p=\omega_0^2(y_{p+1}-2y_p+y_{p-1})$ pasa al límite:
+\begin{equation}
+  \frac{\partial^2 y}{\partial t^2}
+  =\frac{T}{\mu}\frac{\partial^2 y}{\partial x^2}.
+\end{equation}
 Los desplazamientos pasan de forma discreta a forma continua:
 \begin{mdframed}[style=resultado]
 \begin{equation}
@@ -1092,6 +1289,13 @@ grande.
 Supongamos una cuerda de longitud $L$, densidad lineal uniforme $\mu$ y tensión $T$, con
 ambos extremos fijos. Para oscilaciones transversales pequeñas $y(x,t)$, considerando un
 elemento de longitud $\Delta x$:
+\begin{equation}
+  \left|\frac{\partial y}{\partial x}\right|\ll 1,\qquad T\simeq \text{cte}
+\end{equation}
+\[
+  F_y(x+\Delta x)-F_y(x)
+  =T\sen\theta(x+\Delta x)-T\sen\theta(x)
+\]
 \begin{equation}
   F_y = T\sen(\theta+\Delta\theta) - T\sen\theta \approx T\,\Delta\theta
   \qquad (F_x \approx 0\ \text{para ángulos pequeños})
@@ -1120,8 +1324,11 @@ Suponiendo soluciones de separación de variables $y(x,t)=f(x)\cos\omega t$:
   \frac{\partial^2 y}{\partial x^2} = \frac{d^2f}{dx^2}\cos\omega t
   \implies \frac{d^2f}{dx^2} = -\frac{\omega^2}{v^2}f
 \end{equation}
-La solución es $f(x) = A\sen(\omega x/v)$. Las condiciones de contorno $y(0,t)=y(L,t)=0$
-imponen:
+La solución espacial general es
+\[
+  f(x)=A\sen\!\left(\frac{\omega x}{v}\right)+B\cos\!\left(\frac{\omega x}{v}\right).
+\]
+La condición $y(0,t)=0$ fuerza $B=0$. Después, $y(L,t)=0$ impone:
 \begin{equation}
   \frac{\omega L}{v} = n\pi \implies \omega_n = n\frac{\pi v}{L} = n\omega_1
 \end{equation}
@@ -1181,6 +1388,10 @@ condiciones de contorno:
 
 La amplitud diverge cuando $\omega L/v = p\pi$, es decir, cuando $\omega = \omega_p$:
 la cuerda entra en \textbf{resonancia} con el modo $p$.
+\begin{observacion}
+La divergencia corresponde al modelo ideal sin pérdidas. En cuerdas reales, la
+amortiguación interna y el acoplamiento con el soporte limitan la amplitud máxima.
+\end{observacion}
 
 \begin{ejemplo}[Cuerda con \texorpdfstring{$N=2$}{N=2} masas]
 Se sujeta por sus extremos a dos soportes fijos una cuerda de longitud $3l$ y masa
@@ -1257,6 +1468,11 @@ velocidad de grupo:
 
 En un medio no dispersivo $v_f=v_g$; en un medio dispersivo (como ondas de superficie o
 algunos modelos discretos de cuerda) ambas velocidades difieren.
+\begin{observacion}
+En medios débilmente dispersivos, la velocidad de grupo gobierna el transporte de energía e
+información del paquete, mientras que la velocidad de fase describe el avance de la fase de
+la portadora.
+\end{observacion}
 
 \subsection{Relación de dispersión de la cadena discreta (ampliación)}
 

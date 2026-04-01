@@ -62,7 +62,7 @@
 \renewcommand{\arraystretch}{1.18}
 
 % ── Hipervínculos ─────────────────────────────────────────────────────────
-\usepackage[hidelinks]{hyperref}
+\usepackage[hidelinks,hypertexnames=false]{hyperref}
 
 % ── Cajas para resultados destacados ──────────────────────────────────────
 \usepackage{mdframed}
@@ -143,6 +143,11 @@
 \newcommand{\mat}[1]{\mathbf{#1}}
 \newcommand{\tr}{\operatorname{tr}}
 \newcommand{\rg}{\operatorname{r}}
+\newcommand{\diag}{\operatorname{diag}}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\Cov}{\operatorname{Cov}}
+\newcommand{\argmax}{\operatorname*{arg\,max}}
+\newcommand{\argmin}{\operatorname*{arg\,min}}
 \newcounter{varsprimcount}
 \newenvironment{variablesprimera}{%
   \begin{mdframed}[style=resultado]
@@ -160,7 +165,7 @@
 \newcommand{\iniciotema}[3]{%
   \newpage
   \begin{center}
-    {\Large\bfseries\scshape Tema #1}\\[0.3cm]
+    {\Large\bfseries Tema #1}\\[0.3cm]
     {\large #2}\\[0.2cm]
     \rule{0.6\linewidth}{0.6pt}
   \end{center}
@@ -229,6 +234,28 @@
 % ══════════════════════════════════════════════════════════════════════════
 \tableofcontents
 
+\section*{Convenciones de notación}
+\addcontentsline{toc}{section}{Convenciones de notación}
+
+Para mantener una exposición homogénea en todo el documento, utilizaremos las
+siguientes convenciones:
+\begin{itemize}
+  \item Los \textbf{escalares} se denotan en minúscula ($x,\lambda,r$), los
+        \textbf{vectores} en negrita ($\mathbf{x},\boldsymbol{\mu}$) y las
+        \textbf{matrices} en negrita mayúscula ($\mat{X},\mat{S},\mat{R}$).
+  \item $\mat{X}\in\R^{n\times p}$ representa una matriz de datos con
+        $n$ observaciones (filas) y $p$ variables (columnas).
+  \item El superíndice prima ($'$) indica trasposición; $\mat{A}^{-1}$ indica
+        matriz inversa cuando existe.
+  \item $\tr(\mat{A})$, $|\mat{A}|$ y $\rg(\mat{A})$ denotan, respectivamente,
+        traza, determinante y rango de $\mat{A}$.
+  \item $E(\mathbf{X})$, $\Var(\mathbf{X})$ y $\Cov(\mathbf{X},\mathbf{Y})$
+        representan esperanza, varianza y covarianza.
+  \item En contextos muestrales, se usará barra superior para medias
+        ($\bar{\mathbf{x}}$) y letras con sombrero para estimadores
+        ($\hat{\boldsymbol{\Sigma}}$, $\hat{\pi}_g$).
+\end{itemize}
+
 % ══════════════════════════════════════════════════════════════════════════
 \section{Definición y tipos}
 % ══════════════════════════════════════════════════════════════════════════
@@ -236,14 +263,16 @@
 \subsection{¿Qué es el Análisis Multivariante?}
 
 \begin{definicion}[Análisis Multivariante]
-Conjunto de técnicas estadísticas que permiten analizar \textbf{simultáneamente}
-un conjunto de variables: varias medidas de cada elemento sometido a
-investigación.
+El análisis multivariante es el conjunto de métodos estadísticos diseñados
+para estudiar \textbf{simultáneamente} varias variables observadas sobre una
+misma unidad experimental u observacional, preservando su estructura conjunta
+de dependencia.
 \end{definicion}
 
-El elemento clave es el \textbf{valor teórico}: una combinación lineal de las
-variables con ponderaciones determinadas empíricamente según el objetivo del
-análisis.
+En gran parte de las técnicas multivariantes, el objeto algebraico central es
+una combinación lineal de variables observadas (que aquí llamaremos
+\textbf{valor teórico}), cuyas ponderaciones se estiman en función del objetivo
+del análisis (síntesis, discriminación, predicción o descripción estructural).
 
 \begin{mdframed}[style=resultado]
 \[
@@ -256,12 +285,14 @@ análisis.
   \varitem{p}{número de variables incluidas en la combinación}
 \end{variablesprimera}
 
-El resultado es un valor único que representa la combinación de todo el conjunto
-de variables que mejor se adaptan al objetivo específico del análisis.
+El resultado es una variable escalar sintética que resume, en una dirección
+determinada del espacio de variables, la información más relevante para el
+problema estadístico planteado.
 
 \subsection{Objetivos principales}
 
-El análisis multivariante persigue cuatro grandes objetivos:
+Desde el punto de vista aplicado, el análisis multivariante persigue cuatro
+objetivos principales:
 
 \begin{enumerate}
   \item \textbf{Resumir} el conjunto de variables en unas pocas variables nuevas,
@@ -284,9 +315,10 @@ El análisis multivariante persigue cuatro grandes objetivos:
 
 \subsection{Clasificación de las técnicas}
 
-Existen diversas clasificaciones de las técnicas multivariantes. Seguimos la
-propuesta de \textbf{Hair, Tathan y Black (1998)}, basada en el
-\emph{tipo de relación entre variables}.
+Existen varias taxonomías de técnicas multivariantes. Seguimos la propuesta de
+\textbf{Hair, Tathan y Black (1998)}, basada en el \emph{tipo de relación
+entre variables} y en la distinción entre estructura de dependencia e
+interdependencia.
 
 % ─── Árbol de clasificación simplificado ─────────────────────────────────
 \begin{figure}[H]
@@ -306,8 +338,9 @@ propuesta de \textbf{Hair, Tathan y Black (1998)}, basada en el
 
 \subsubsection{Relación de dependencia entre variables}
 
-Existe al menos una variable dependiente que se quiere explicar a partir de
-una o varias independientes.
+En este bloque se distingue una variable (o un conjunto de variables)
+dependiente, cuyo comportamiento se modeliza a partir de una o varias variables
+explicativas.
 
 \paragraph{Una variable dependiente.}
 
@@ -357,8 +390,9 @@ una o varias independientes.
 
 \subsubsection{Interdependencia entre variables}
 
-No existe distinción entre variables dependientes e independientes: se analiza
-la estructura interna del conjunto de datos.
+No se impone una separación previa entre variables respuesta y explicativas:
+el interés se centra en la estructura interna del conjunto de variables y en
+sus relaciones mutuas.
 
 \begin{description}
   \item[\textbf{Estudio de la relación entre variables.}]
@@ -390,7 +424,8 @@ la estructura interna del conjunto de datos.
 \section{Pasos del análisis}
 % ══════════════════════════════════════════════════════════════════════════
 
-Todo análisis multivariante sigue una secuencia de diez etapas:
+Un flujo de trabajo multivariante riguroso puede organizarse en las diez etapas
+siguientes:
 
 \begin{enumerate}
   \item \textbf{Definición del problema de investigación} y objetivos del
@@ -423,9 +458,9 @@ Un análisis exploratorio previo riguroso ahorra errores de interpretación.
 
 \subsection{Variable univariante como vector}
 
-Dado que disponemos de $n$ datos numéricos de una variable $X$, cada
-observación se convierte en la componente $i$-ésima de un \textbf{vector
-columna} en el espacio $\R^n$:
+Si disponemos de $n$ observaciones numéricas de una variable escalar $X$, cada
+dato puede identificarse con la componente $i$-ésima de un \textbf{vector
+columna} en $\R^n$:
 \[
   \mathbf{x} = \begin{pmatrix} x_1 \\ x_2 \\ \vdots \\ x_n \end{pmatrix}
   \in \R^n.
@@ -440,16 +475,17 @@ Edades de 3 personas:
 
 \subsection{Variable vectorial y matriz de datos}
 
-Cuando medimos $p$ variables en cada uno de los $n$ elementos obtenemos:
+Cuando se miden $p$ variables en cada una de las $n$ unidades observacionales
+se obtiene:
 \begin{itemize}
   \item Una \textbf{tabla} de $p$ columnas y $n$ filas:
         \begin{itemize}
           \item \emph{Columna}: valores de una variable.
           \item \emph{Fila}: valores de las $p$ variables de cada elemento.
         \end{itemize}
-  \item Cada una de esas $p$ variables es una \textbf{variable escalar o
-        univariante}; el conjunto de las $p$ variables forma una \textbf{variable
-        vectorial o multivariante}.
+  \item Cada una de esas $p$ variables es una \textbf{variable escalar}
+        (univariante), mientras que su agregación define un \textbf{vector
+        aleatorio} (variable multivariante).
 \end{itemize}
 
 \begin{definicion}[Matriz de datos]
@@ -475,9 +511,10 @@ representan en la \textbf{matriz de datos} $\mat{X}$ de dimensión $n\times p$:
   \varitem{\mat{X}_{(j)}}{columna $j$ de la matriz de datos}
 \end{variablesprimera}
 También se escribe $\mat{X} = [\mat{X}_{(1)},\dots,\mat{X}_{(p)}] =
-[\mathbf{x}_{ij}]$, donde cada $\mat{X}_{(j)}$ es la $j$-ésima columna
-(vector columna de $n$ filas y 1 columna) y cada fila es un vector fila de 1
-fila y $p$ columnas.
+[\mathbf{x}_{ij}]$, donde $\mat{X}_{(j)}$ es la columna asociada a la variable
+$j$ y la fila $i$ contiene el perfil multivariante de la observación $i$.
+Esta convención (filas = individuos, columnas = variables) se mantendrá en
+todo el documento.
 \end{definicion}
 
 % ══════════════════════════════════════════════════════════════════════════
@@ -498,9 +535,13 @@ $\mathbf{x}$ con los mismos componentes dispuestos en fila:
 El producto escalar de dos vectores $\mathbf{x}$ e $\mathbf{y}$ de igual
 dimensión es el número:
 \[
-  |\mathbf{x}\mathbf{y}| = \sum_i x_i y_i.
+  \mathbf{x}'\mathbf{y} = \sum_{i=1}^n x_i y_i.
 \]
-En particular, $|\mathbf{x}\mathbf{x}| = \mathbf{x}'\mathbf{x} = \sum_i x_i^2$.
+En particular,
+\[
+  \mathbf{x}'\mathbf{x}=\sum_{i=1}^n x_i^2\ge 0,
+\]
+con igualdad si y solo si $\mathbf{x}=\mathbf{0}$.
 \end{definicion}
 
 \begin{definicion}[Norma de un vector]
@@ -523,6 +564,32 @@ normas por el coseno del ángulo que forman:
   \mathbf{x}'\mathbf{y} = \|\mathbf{x}\|\,\|\mathbf{y}\|\,\cos\theta.
 \]
 \end{mdframed}
+
+\begin{proposicion}[Desigualdad de Cauchy--Schwarz]
+Para cualesquiera $\mathbf{x},\mathbf{y}\in\R^n$ se cumple:
+\[
+  |\mathbf{x}'\mathbf{y}| \le \|\mathbf{x}\|\,\|\mathbf{y}\|.
+\]
+La igualdad se alcanza si y solo si $\mathbf{x}$ y $\mathbf{y}$ son linealmente
+dependientes.
+\end{proposicion}
+
+\begin{proof}
+Para $t\in\R$, la cantidad
+$\|\mathbf{x}-t\mathbf{y}\|^2=(\mathbf{x}-t\mathbf{y})'(\mathbf{x}-t\mathbf{y})$
+es no negativa. Al desarrollar:
+\[
+  \|\mathbf{x}\|^2-2t\,\mathbf{x}'\mathbf{y}+t^2\|\mathbf{y}\|^2\ge 0.
+\]
+Este polinomio cuadrático en $t$ debe tener discriminante no positivo, luego
+\[
+  4(\mathbf{x}'\mathbf{y})^2-4\|\mathbf{x}\|^2\|\mathbf{y}\|^2\le 0
+  \quad\Longrightarrow\quad
+  |\mathbf{x}'\mathbf{y}| \le \|\mathbf{x}\|\,\|\mathbf{y}\|.
+\]
+La igualdad equivale a discriminante nulo, que ocurre exactamente cuando existe
+$t$ tal que $\mathbf{x}=t\mathbf{y}$.
+\end{proof}
 
 \begin{ejemplo}
 Para $\mathbf{x} = \begin{pmatrix}a\\0\end{pmatrix}$ e
@@ -569,14 +636,15 @@ tienen norma 1 (normalizados).
 
 \begin{definicion}[Tipos básicos de matrices]
 \begin{itemize}
-  \item \textbf{Matriz cuadrada de orden $n\times p$:} cumple $n = p$; en
-        caso contrario se denomina \emph{rectangular}.
+  \item \textbf{Matriz cuadrada de orden $p$:} una matriz de tamaño
+        $p\times p$.
+        En caso $n\neq p$, la matriz es \emph{rectangular}.
 
-  \item \textbf{Matriz traspuesta} de $\mat{A}$ de orden $n\times p$: resulta
-        de intercambiar filas por columnas, obteniendo una matriz de orden
-        $p\times n$ que se denota $\mat{A}'$.
+  \item \textbf{Matriz traspuesta} de $\mat{A}\in\R^{n\times p}$: se obtiene
+        intercambiando filas por columnas, y se denota
+        $\mat{A}'\in\R^{p\times n}$.
 
-  \item \textbf{Traza} de una matriz cuadrada: suma de los elementos de la
+  \item \textbf{Traza} de una matriz cuadrada: suma de los elementos de su
         diagonal principal,
         \[
           \tr(\mat{A}) = \sum_i a_{ii}, \qquad \tr(\mat{A}) = \tr(\mat{A}').
@@ -607,7 +675,8 @@ tienen norma 1 (normalizados).
 
 \begin{definicion}[Rango]
 El \textbf{rango} de una matriz $\mat{A}$, denotado $\rg(\mat{A})$, es el
-número de vectores linealmente independientes de $\mat{A}$.
+máximo número de columnas (equivalentemente, filas) linealmente independientes
+de $\mat{A}$.
 \end{definicion}
 
 Se cumplen las siguientes propiedades:
@@ -622,6 +691,26 @@ Se cumplen las siguientes propiedades:
   &\rg(\mat{A}'\mat{A}) = \rg(\mat{A}\mat{A}') = \rg(\mat{A}) = \rg(\mat{A}').
 \end{align}
 \end{mdframed}
+
+\begin{proposicion}[Carácter de invertibilidad en matrices cuadradas]
+Sea $\mat{A}\in\R^{p\times p}$. Son equivalentes:
+\begin{enumerate}
+  \item $\mat{A}$ es invertible;
+  \item $|\mat{A}|\neq 0$;
+  \item $\rg(\mat{A})=p$;
+  \item el sistema homogéneo $\mat{A}\mathbf{x}=\mathbf{0}$ solo tiene la
+        solución trivial.
+\end{enumerate}
+\end{proposicion}
+
+\begin{proof}
+La equivalencia $(1)\Leftrightarrow(2)$ es el criterio clásico del
+determinante. La equivalencia $(2)\Leftrightarrow(3)$ se sigue de que, para
+matrices cuadradas, tener determinante no nulo equivale a tener rango máximo.
+Finalmente, $(3)\Leftrightarrow(4)$ expresa que la nulidad es cero
+(\emph{teorema rango--nulidad}), por lo que el núcleo contiene solo
+$\mathbf{0}$.
+\end{proof}
 
 \begin{observacion}
 El rango indica la \emph{dimensión real} necesaria para representar el
@@ -814,7 +903,10 @@ La ecuación $\mat{A}\mathbf{x} = \lambda\mathbf{x}$ equivale al sistema
 homogéneo $(\mat{A}-\lambda\mat{I})\mathbf{x}=\mathbf{0}$, que tiene
 soluciones no triviales precisamente cuando $\lambda$ es autovalor.
 
-Hay tantos autovectores independientes de $\mat{A}$ como autovalores.
+En general, el número de autovectores linealmente independientes puede ser
+menor que el número total de autovalores (contando multiplicidades). En
+particular, si $\mat{A}$ es simétrica, existe una base ortonormal completa de
+autovectores.
 
 \begin{ejemplo}
 Para $\mat{A} = \begin{pmatrix}1&4\\9&1\end{pmatrix}$ con
@@ -900,7 +992,7 @@ Por tanto, la \textbf{matriz de autovectores normalizados} queda:
 Si transformamos un vector $\mathbf{x}$ mediante una transformación lineal
 $\mathbf{y} = \mat{B}\mathbf{x}$, la norma al cuadrado del nuevo vector es:
 \[
-  \mathbf{y}\mathbf{y}' = \mathbf{x}\mat{B}'\mat{B}\mathbf{x}' = \mathbf{x}'\mat{A}\mathbf{x},
+  \mathbf{y}'\mathbf{y} = \mathbf{x}'\mat{B}'\mat{B}\mathbf{x} = \mathbf{x}'\mat{A}\mathbf{x},
 \]
 donde $\mat{A} = \mat{B}'\mat{B}$ es cuadrada y simétrica.
 
@@ -990,24 +1082,23 @@ $p$ características en un elemento de la población. Puede ser:
 
 \begin{definicion}[Función de distribución conjunta]
 La distribución de probabilidad que describe simultáneamente el comportamiento
-de $(x_1, x_2, \dots, x_p)$ es la \textbf{distribución de probabilidad
-conjunta}. Dado un punto $\mathbf{x}^0 = (x_1^0, \dots, x_p^0)$, su función
-de distribución conjunta $F(\mathbf{X})$ evaluada en $\mathbf{x}^0$ se define
-como:
+del vector aleatorio $\mathbf{X}=(X_1,\dots,X_p)'$ es la \textbf{distribución
+conjunta}. Dado $\mathbf{x}^0=(x_1^0,\dots,x_p^0)'$, su función de
+distribución conjunta se define como:
 \begin{mdframed}[style=resultado]
 \[
-  F(\mathbf{x}^0) = P(\mathbf{x} \le \mathbf{x}^0)
-  = P(x_1 \le x_1^0, \dots, x_p \le x_p^0).
+  F_{\mathbf{X}}(\mathbf{x}^0) = P(\mathbf{X} \le \mathbf{x}^0)
+  = P(X_1 \le x_1^0, \dots, X_p \le x_p^0).
 \]
 \end{mdframed}
-$P(\mathbf{x}\le\mathbf{x}^0)$ es la probabilidad de que la variable tome
+$P(\mathbf{X}\le\mathbf{x}^0)$ es la probabilidad de que la variable tome
 valores menores o iguales al valor particular $\mathbf{x}^0$. La función de
 distribución acumula las probabilidades de todos los valores menores o iguales
 al punto considerado, y será no decreciente.
 \begin{variablesprimera}
-  \varitem{\mathbf{x}}{vector aleatorio de dimensión $p$}
+  \varitem{\mathbf{X}}{vector aleatorio de dimensión $p$}
   \varitem{\mathbf{x}^0}{valor concreto del vector en el que se evalúa la distribución}
-  \varitem{F(\mathbf{x}^0)}{función de distribución conjunta acumulada}
+  \varitem{F_{\mathbf{X}}(\mathbf{x}^0)}{función de distribución conjunta acumulada}
   \varitem{P(\cdot)}{probabilidad del evento indicado}
 \end{variablesprimera}
 \end{definicion}
@@ -1015,12 +1106,13 @@ al punto considerado, y será no decreciente.
 Habitualmente se trabaja con:
 \begin{itemize}
   \item \textbf{Variable discreta:} función de probabilidad
-        $p(\mathbf{x}^0) = P(\mathbf{x}=\mathbf{x}^0)
-        = P(x_1=x_1^0, \dots, x_p=x_p^0)$.
-  \item \textbf{Variable continua:} el vector $\mathbf{x}$ es absolutamente
-        continuo si existe una función de densidad $f(\mathbf{x})$ tal que
+        $p_{\mathbf{X}}(\mathbf{x}^0) = P(\mathbf{X}=\mathbf{x}^0)
+        = P(X_1=x_1^0, \dots, X_p=x_p^0)$.
+  \item \textbf{Variable continua:} el vector $\mathbf{X}$ es absolutamente
+        continuo si existe una función de densidad $f_{\mathbf{X}}(\mathbf{x})$ tal que
         \[
-          F(\mathbf{x}^0) = \int_{-\infty}^{\mathbf{x}^0} f(\mathbf{x})\,d\mathbf{x},
+          F_{\mathbf{X}}(\mathbf{x}^0)
+          = \int_{(-\infty,\mathbf{x}^0]} f_{\mathbf{X}}(\mathbf{x})\,d\mathbf{x},
           \qquad d\mathbf{x} = dx_1\cdots dx_p.
         \]
 \end{itemize}
@@ -1028,31 +1120,33 @@ Habitualmente se trabaja con:
 \subsection{Distribuciones marginales}
 
 \begin{definicion}[Distribución marginal]
-Dada una variable aleatoria vectorial $p$-dimensional $(x_1,\dots,x_p)$,
+Dada una variable aleatoria vectorial $p$-dimensional
+$\mathbf{X}=(X_1,\dots,X_p)'$,
 llamamos \textbf{distribución marginal} de cada componente a la distribución
 univariante de dicho componente, sin tener en cuenta los otros. Para $p=2$:
 \[
-  f(x_1) = \int_{-\infty}^{+\infty} f(x_1,x_2)\,dx_2, \qquad
-  f(x_2) = \int_{-\infty}^{+\infty} f(x_1,x_2)\,dx_1.
+  f_{X_1}(x_1) = \int_{-\infty}^{+\infty} f_{X_1,X_2}(x_1,x_2)\,dx_2, \qquad
+  f_{X_2}(x_2) = \int_{-\infty}^{+\infty} f_{X_1,X_2}(x_1,x_2)\,dx_1.
 \]
 \end{definicion}
 
 \subsection{Distribuciones condicionadas}
 
 \begin{definicion}[Distribución condicionada]
-Si $\mathbf{x}_1$ y $\mathbf{x}_2$ son variables vectoriales, la
-\textbf{distribución condicionada} de $\mathbf{x}_1$ dado un valor concreto
-$\mathbf{x}_2 = \mathbf{x}_2^0$ se define como:
+Si $\mathbf{X}_1$ y $\mathbf{X}_2$ son subvectores de $\mathbf{X}$, la
+\textbf{distribución condicionada} de $\mathbf{X}_1$ dado
+$\mathbf{X}_2=\mathbf{x}_2^0$ se define como:
 \[
-  f(\mathbf{x}_1 | \mathbf{x}_2^0)
-  = \frac{f(\mathbf{x}_1, \mathbf{x}_2^0)}{f(\mathbf{x}_2^0)},
-  \qquad \text{supuesto } f(\mathbf{x}_2)\neq 0.
+  f_{\mathbf{X}_1 \mid \mathbf{X}_2}(\mathbf{x}_1 \mid \mathbf{x}_2^0)
+  = \frac{f_{\mathbf{X}_1,\mathbf{X}_2}(\mathbf{x}_1, \mathbf{x}_2^0)}
+         {f_{\mathbf{X}_2}(\mathbf{x}_2^0)},
+  \qquad \text{si } f_{\mathbf{X}_2}(\mathbf{x}_2^0)\neq 0.
 \]
 \begin{variablesprimera}
-  \varitem{\mathbf{x}_1}{subvector de variables de interés}
-  \varitem{\mathbf{x}_2}{subvector sobre el que se condiciona}
+  \varitem{\mathbf{X}_1}{subvector aleatorio de interés}
+  \varitem{\mathbf{X}_2}{subvector aleatorio sobre el que se condiciona}
   \varitem{\mathbf{x}_2^0}{valor fijado del subvector $\mathbf{x}_2$}
-  \varitem{f(\mathbf{x}_1 \mid \mathbf{x}_2^0)}{densidad condicionada de $\mathbf{x}_1$ dado $\mathbf{x}_2=\mathbf{x}_2^0$}
+  \varitem{f_{\mathbf{X}_1 \mid \mathbf{X}_2}(\mathbf{x}_1 \mid \mathbf{x}_2^0)}{densidad condicionada}
 \end{variablesprimera}
 \end{definicion}
 
@@ -1061,21 +1155,25 @@ $\mathbf{x}_2 = \mathbf{x}_2^0$ se define como:
 % ══════════════════════════════════════════════════════════════════════════
 
 \begin{definicion}[Independencia]
-Dos vectores aleatorios $\mathbf{x}_1$, $\mathbf{x}_2$ son
+Dos vectores aleatorios $\mathbf{X}_1$, $\mathbf{X}_2$ son
 \textbf{independientes} si el conocimiento de uno no aporta información
 respecto a los valores del otro:
 \[
-  f(\mathbf{x}_2|\mathbf{x}_1)
-  = \frac{f(\mathbf{x}_1,\mathbf{x}_2)}{f(\mathbf{x}_1)} = f(\mathbf{x}_2),
+  f_{\mathbf{X}_2\mid\mathbf{X}_1}(\mathbf{x}_2\mid\mathbf{x}_1)
+  = \frac{f_{\mathbf{X}_1,\mathbf{X}_2}(\mathbf{x}_1,\mathbf{x}_2)}
+         {f_{\mathbf{X}_1}(\mathbf{x}_1)}
+  = f_{\mathbf{X}_2}(\mathbf{x}_2),
 \]
-es decir, si $f(\mathbf{x}_1,\mathbf{x}_2) = f(\mathbf{x}_1)f(\mathbf{x}_2)$.
+es decir, si
+$f_{\mathbf{X}_1,\mathbf{X}_2}(\mathbf{x}_1,\mathbf{x}_2)
+=f_{\mathbf{X}_1}(\mathbf{x}_1)f_{\mathbf{X}_2}(\mathbf{x}_2)$.
 \end{definicion}
 
-En general, las variables $\mathbf{x}_1, \dots, \mathbf{x}_p$ son
+En general, las variables $\mathbf{X}_1, \dots, \mathbf{X}_p$ son
 independientes si:
 \[
-  f(\mathbf{x}_1, \dots, \mathbf{x}_p)
-  = f(\mathbf{x}_1)f(\mathbf{x}_2)\cdots f(\mathbf{x}_p).
+  f_{\mathbf{X}_1,\dots,\mathbf{X}_p}(\mathbf{x}_1, \dots, \mathbf{x}_p)
+  = \prod_{j=1}^p f_{\mathbf{X}_j}(\mathbf{x}_j).
 \]
 La independencia conjunta es una condición muy fuerte: cualquier subconjunto
 de variables mantiene la independencia. Además, al aplicar funciones adecuadas
@@ -1099,10 +1197,11 @@ esperanzas de las componentes:
 \begin{mdframed}[style=resultado]
 \[
   \boldsymbol{\mu} = E(\mathbf{X}), \qquad
-  E(\mathbf{X}) = \frac{1}{n}\sum_i \mathbf{x}_i, \qquad
-  \boldsymbol{\mu} = \int \mathbf{X}\,f(\mathbf{X})\,d\mathbf{x}.
+  \bar{\mathbf{x}} = \frac{1}{n}\sum_{i=1}^n \mathbf{x}_i, \qquad
+  \boldsymbol{\mu} = \int_{\R^p} \mathbf{x}\,f_{\mathbf{X}}(\mathbf{x})\,d\mathbf{x}.
 \]
-El vector de medias muestral es $\bar{\mathbf{x}} = \dfrac{1}{n}\mathbf{1}'\mathbf{x}$.
+En notación matricial (con $\mat{X}\in\R^{n\times p}$), el vector de medias
+muestral es $\bar{\mathbf{x}} = \dfrac{1}{n}\mat{X}'\mathbf{1}$.
 \end{mdframed}
 \begin{variablesprimera}
   \varitem{\boldsymbol{\mu}}{vector de medias poblacionales}
@@ -1117,9 +1216,9 @@ Propiedades del vector de medias:
 \begin{itemize}
   \item Es la medida más utilizada: se encuentra en el centro de los datos,
         haciendo nula la suma de desviaciones:
-        $\displaystyle\sum_{i=1}^n \mathbf{x}_i - \bar{\mathbf{x}} = \mathbf{0}$.
+        $\displaystyle\sum_{i=1}^n (\mathbf{x}_i - \bar{\mathbf{x}})=\mathbf{0}$.
   \item Es un \textbf{operador lineal}:
-        $E[\mat{A}\mathbf{x}+\mathbf{b}] = \mat{A}E[\mathbf{x}]+\mathbf{b}$.
+        $E[\mat{A}\mathbf{X}+\mathbf{b}] = \mat{A}E[\mathbf{X}]+\mathbf{b}$.
 \end{itemize}
 
 \subsection{Variabilidad: matriz de varianzas y covarianzas}
@@ -1141,16 +1240,17 @@ covarianzas}:
 \end{variablesprimera}
 Explícitamente:
 \[
-  \mat{S}_x = \frac{1}{n}
+  s_{jk} = \frac{1}{n}\sum_{i=1}^n (x_{ij}-\bar{x}_j)(x_{ik}-\bar{x}_k),
+  \qquad j,k=1,\dots,p,
+\]
+\[
+  \mat{S}_x =
   \begin{pmatrix}
-    (x_{i1}-\bar{x}_1)^2 & \cdots & (x_{i1}-\bar{x}_1)(x_{ip}-\bar{x}_p) \\
+    s_{11} & \cdots & s_{1p} \\
     \vdots & \ddots & \vdots \\
-    (x_{ip}-\bar{x}_p)(x_{i1}-\bar{x}_1) & \cdots & (x_{ip}-\bar{x}_p)^2
+    s_{p1} & \cdots & s_{pp}
   \end{pmatrix},
-  \quad
-  \mat{S} = \begin{pmatrix}
-    S_1^2 & \cdots & S_{1p} \\ \vdots & \ddots & \vdots \\ S_{p1} & \cdots & S_p^2
-  \end{pmatrix}.
+  \qquad s_{jj}=s_j^2.
 \]
 \end{definicion}
 
@@ -1159,8 +1259,9 @@ Explícitamente:
 Se define la \textbf{matriz de datos centrados} (o puntuaciones diferenciales)
 $\tilde{\mathbf{X}}$ como la matriz resultado de restar a cada dato su media:
 \[
-  \tilde{\mathbf{X}} = \mathbf{X} - \mathbf{1}\cdot\bar{\mathbf{x}}
-  = \mathbf{X} - \frac{1}{n}\mathbf{1}\cdot\mathbf{1}'\mathbf{x} = \mat{P}\mathbf{X},
+  \tilde{\mathbf{X}} = \mat{X} - \mathbf{1}\bar{\mathbf{x}}'
+  = \mat{X} - \frac{1}{n}\mathbf{1}\mathbf{1}'\mat{X}
+  = \mat{P}\mat{X},
 \]
 y la \textbf{matriz de proyección} es:
 \[
@@ -1175,7 +1276,8 @@ que es simétrica ($\mat{P}=\mat{P}'$) e \textbf{idempotente} ($\mat{P}^2=\mat{P
 
 Por tanto:
 \[
-  \mat{S} = \frac{1}{n}\tilde{\mathbf{X}}'\mathbf{X} = \frac{1}{n}\mathbf{X}'\mat{P}\mathbf{X}.
+  \mat{S} = \frac{1}{n}\tilde{\mathbf{X}}'\tilde{\mathbf{X}}
+  = \frac{1}{n}\mat{X}'\mat{P}\mat{X}.
 \]
 
 La \textbf{matriz de varianzas corregida} (estimación insesgada) es:
@@ -1193,9 +1295,10 @@ para todo vector $\mathbf{y}$.
 \begin{proof}
 Sea $\mathbf{w}$ un vector cualquiera de dimensión $p$ y definamos la variable
 escalar $v_i = \mathbf{w}'(\mathbf{x}_i-\bar{\mathbf{x}})$. Su media es
-$\bar{v} = \frac{1}{n}\mathbf{w}'\sum(x_i-\bar{x}) = 0$ y su varianza:
+$\bar{v} = \frac{1}{n}\mathbf{w}'\sum_{i=1}^n(\mathbf{x}_i-\bar{\mathbf{x}}) = 0$
+y su varianza:
 \[
-  \operatorname{var}(v) = \frac{1}{n}\sum_{i=1}^n v_i^2
+  \Var(v) = \frac{1}{n}\sum_{i=1}^n v_i^2
   = \frac{1}{n}\sum_{i=1}^n [\mathbf{w}'(\mathbf{x}_i-\bar{\mathbf{x}})]
     [(\mathbf{x}_i-\bar{\mathbf{x}})'\mathbf{w}] = \mathbf{w}'\mat{S}\mathbf{w} \ge 0.
 \]
@@ -1223,7 +1326,7 @@ Consecuencias:
 Una forma de resumir la variabilidad de un conjunto de variables es mediante la
 traza de su matriz de varianzas y covarianzas:
 \[
-  T = \tr(\mat{S}) = \sum_{i=1}^n s_i^2.
+  T = \tr(\mat{S}) = \sum_{j=1}^p s_j^2.
 \]
 \end{definicion}
 
@@ -1260,13 +1363,13 @@ reduciéndose el área tanto mayor cuanto mayor sea $r^2$.
 \subsubsection{Distancias}
 
 \begin{definicion}[Distancia o métrica]
-Dados dos puntos $x_i, x_j\in\R^p$, una \textbf{distancia} es una función
-$d(x_i,x_j)$ que satisface:
+Dados dos puntos $\mathbf{x}_i, \mathbf{x}_j\in\R^p$, una \textbf{distancia} es
+una función $d(\mathbf{x}_i,\mathbf{x}_j)$ que satisface:
 \begin{enumerate}
-  \item $d(x_i,x_j)\ge0$ (no negativa).
-  \item $d(x_i,x_i)=0$ (distancia de un elemento a sí mismo es 0).
-  \item $d(x_i,x_j)=d(x_j,x_i)$ (simétrica).
-  \item $d(x_i,x_j)\le d(x_i,x_p)+d(x_p,x_j)$ (desigualdad triangular).
+  \item $d(\mathbf{x}_i,\mathbf{x}_j)\ge0$ (no negatividad).
+  \item $d(\mathbf{x}_i,\mathbf{x}_i)=0$ (identidad).
+  \item $d(\mathbf{x}_i,\mathbf{x}_j)=d(\mathbf{x}_j,\mathbf{x}_i)$ (simetría).
+  \item $d(\mathbf{x}_i,\mathbf{x}_j)\le d(\mathbf{x}_i,\mathbf{x}_\ell)+d(\mathbf{x}_\ell,\mathbf{x}_j)$ (desigualdad triangular).
 \end{enumerate}
 \end{definicion}
 
@@ -1293,9 +1396,12 @@ Para $p=2$, siendo $s_{1,2}=rs_1s_2$:
 \]
 \[
   d_M^2 = \frac{1}{1-r^2}\left[
-    \frac{(x_1-x_2)^2}{s_1^2} + \frac{(y_1-y_2)^2}{s_2^2}
-    - 2r\frac{(x_1-x_2)(y_1-y_2)}{s_1s_2}
+    \frac{\Delta x^2}{s_1^2} + \frac{\Delta y^2}{s_2^2}
+    - 2r\frac{\Delta x\,\Delta y}{s_1s_2}
   \right].
+\]
+\[
+  \text{donde } \Delta x=x_{i1}-\bar{x}_1,\quad \Delta y=x_{i2}-\bar{x}_2.
 \]
 
 \begin{itemize}
@@ -1313,14 +1419,14 @@ Para $p=2$, siendo $s_{1,2}=rs_1s_2$:
 Podemos medir la variabilidad promediando las distancias entre los puntos y la
 media. Con distancias euclídeas:
 \[
-  V_m = \frac{1}{n}\sum_{i=1}^n (x_i-\bar{x})'(x_i-\bar{x})
-  = \sum_{i=1}^n \tr\!\left[\frac{1}{n}(x_i-\bar{x})(x_i-\bar{x})'\right]
+  V_m = \frac{1}{n}\sum_{i=1}^n (\mathbf{x}_i-\bar{\mathbf{x}})'(\mathbf{x}_i-\bar{\mathbf{x}})
+  = \sum_{i=1}^n \tr\!\left[\frac{1}{n}(\mathbf{x}_i-\bar{\mathbf{x}})(\mathbf{x}_i-\bar{\mathbf{x}})'\right]
   = \tr(\mat{S}).
 \]
 El promedio de distancias es la variabilidad total. Si se promedia también por
 la dimensión del vector:
 \[
-  V_{m,p} = \frac{1}{np}\sum_{i=1}^n (x_i-\bar{x})'(x_i-\bar{x}) = \bar{s}^2.
+  V_{m,p} = \frac{1}{np}\sum_{i=1}^n (\mathbf{x}_i-\bar{\mathbf{x}})'(\mathbf{x}_i-\bar{\mathbf{x}}) = \bar{s}^2.
 \]
 
 % ══════════════════════════════════════════════════════════════════════════
@@ -1352,8 +1458,8 @@ La \textbf{matriz de correlaciones} del vector aleatorio $\mathbf{x}$ con
 matriz de covarianzas $\mat{S}_x$ es:
 \begin{mdframed}[style=resultado]
 \[
-  \mat{R}_x = \mat{D}^{-\frac{1}{2}}\cdot\mat{S}_x\cdot\mat{D}^{\frac{1}{2}},
-  \qquad \mat{D} = \operatorname{diag}(\sigma_1^2,\dots,\sigma_p^2).
+  \mat{R}_x = \mat{D}^{-\frac{1}{2}}\mat{S}_x\mat{D}^{-\frac{1}{2}},
+  \qquad \mat{D} = \diag(\sigma_1^2,\dots,\sigma_p^2).
 \]
 \end{mdframed}
 \[
@@ -1362,6 +1468,27 @@ matriz de covarianzas $\mat{S}_x$ es:
 Es una matriz cuadrada y simétrica con unos en la diagonal y coeficientes de
 correlación fuera. Es semidefinida positiva.
 \end{definicion}
+
+\begin{observacion}
+La fórmula anterior se obtiene al estandarizar cada variable por su desviación
+típica: si $\mathbf{Z}=(\mathbf{X}-\boldsymbol{\mu})\mat{D}^{-1/2}$, entonces
+$\Cov(\mathbf{Z})=\mat{R}_x$.
+\end{observacion}
+
+\begin{proposicion}
+La matriz de correlaciones $\mat{R}_x$ es simétrica y semidefinida positiva.
+\end{proposicion}
+
+\begin{proof}
+La simetría se hereda de $\mat{S}_x$. Además, para cualquier
+$\mathbf{u}\in\R^p$:
+\[
+  \mathbf{u}'\mat{R}_x\mathbf{u}
+  = (\mat{D}^{-1/2}\mathbf{u})'\mat{S}_x(\mat{D}^{-1/2}\mathbf{u})\ge 0,
+\]
+porque $\mat{S}_x$ es semidefinida positiva. Por tanto, $\mat{R}_x$ también
+es semidefinida positiva.
+\end{proof}
 
 \subsection{Dependencia entre una variable y el resto: regresión múltiple}
 
@@ -1396,10 +1523,17 @@ Puede demostrarse que estandarizando los elementos de $\mat{S}^{-1}$, llamando
 $s^{ij}$ a sus elementos:
 \begin{mdframed}[style=resultado]
 \[
-  r_{jk.12\dots p} = -\frac{s^{ij}}{\sqrt{s^{ii}s^{jj}}}.
+  r_{jk.\,\text{resto}} = -\frac{s^{jk}}{\sqrt{s^{jj}s^{kk}}}.
 \]
 \end{mdframed}
 \end{definicion}
+
+\begin{observacion}
+La expresión anterior muestra que la correlación parcial es nula exactamente
+cuando el término fuera de la diagonal correspondiente en la matriz de
+precisión $\mat{S}^{-1}$ es cero; este hecho conecta la dependencia condicional
+lineal con la estructura de la inversa de la covarianza.
+\end{observacion}
 
 La \textbf{matriz de correlaciones parciales} $\mat{P}$ contiene los
 coeficientes de correlación parcial entre pares de variables eliminando el
@@ -1465,7 +1599,7 @@ Sus elementos tienen la siguiente interpretación:
 \begin{ejemplo}
 \[
   \mat{S}^{-1} = \begin{pmatrix}
-    52{,}0942 & -47{,}9058 & 52{,}9796 \\
+    52{,}0942 & -47{,}9058 & 52{,}8796 \\
     -47{,}9058 & 52{,}0942 & -47{,}1204 \\
     52{,}8796 & -47{,}1204 & 60{,}2094
   \end{pmatrix}.
@@ -1486,7 +1620,8 @@ de $x_1$ sobre las otras dos es $1/52{,}0942 = 0{,}0192$.
 La función de densidad describe la densidad de probabilidad en cualquier
 intervalo:
 \[
-  f(x) = \frac{P(x_0 < X \le x_0+\Delta x)}{\Delta x}.
+  f(x_0)=\lim_{\Delta x\to 0^+}
+  \frac{P(x_0 < X \le x_0+\Delta x)}{\Delta x}.
 \]
 Al hacer las clases del histograma cada vez más pequeñas, éste tenderá a una
 curva $f(x)$ que describe el comportamiento de la variable.
@@ -1510,7 +1645,8 @@ vector aleatorio $\mathbf{y}\in\R^p$ definido por la transformación:
   y_i = g_i(x_1,\dots,x_p), \quad i=1,\dots,p.
 \]
 Suponiendo que existen las funciones inversas $x_i = h_i(y_1,\dots,y_p)$ y
-que todas son diferenciables, la función de densidad de $\mathbf{y}$ es:
+que todas son diferenciables, la transformación es biyectiva en el soporte y
+el jacobiano no se anula, la función de densidad de $\mathbf{y}$ es:
 \begin{mdframed}[style=resultado]
 \[
   f_y(\mathbf{y}) = f_x(\mathbf{x})\,\left|\frac{d\mathbf{x}}{d\mathbf{y}}\right|,
@@ -1541,7 +1677,7 @@ en $f_x$ por $\mat{A}^{-1}$ y se divide por $|\mat{A}|$.
 
 \subsection{Esperanzas de transformaciones lineales}
 
-Sea $\mathbf{x}$ un vector aleatorio de dimensión $p$ y $\mathbf{y}=\mat{A}\mathbf{x}$
+Sea $\mathbf{X}$ un vector aleatorio de dimensión $p$ y $\mathbf{Y}=\mat{A}\mathbf{X}$
 un nuevo vector de dimensión $m\le p$ ($\mat{A}$ rectangular de dimensiones
 $m\times p$). Llamando $\boldsymbol{\mu}_x, \boldsymbol{\mu}_y$ a los vectores
 de medias y $\mat{S}_x, \mat{S}_y$ a las matrices de covarianzas:
@@ -1554,16 +1690,31 @@ de medias y $\mat{S}_x, \mat{S}_y$ a las matrices de covarianzas:
 \end{mdframed}
 
 \begin{proof}
-$\mat{S}_y = E[(\mathbf{y}-\boldsymbol{\mu}_y)(\mathbf{y}-\boldsymbol{\mu}_y)']
-= E[\mat{A}(\mathbf{x}-\boldsymbol{\mu}_x)(\mathbf{x}-\boldsymbol{\mu}_x)'\mat{A}']
-= \mat{A}\mat{S}_x\mat{A}'$.
+Por linealidad de la esperanza:
+\[
+  \boldsymbol{\mu}_y=E(\mathbf{Y})=E(\mat{A}\mathbf{X})=\mat{A}E(\mathbf{X})
+  =\mat{A}\boldsymbol{\mu}_x.
+\]
+Además,
+\[
+  \mat{S}_y
+  = \Cov(\mathbf{Y})
+  = E\!\left[(\mathbf{Y}-\boldsymbol{\mu}_y)(\mathbf{Y}-\boldsymbol{\mu}_y)'\right]
+  = E\!\left[\mat{A}(\mathbf{X}-\boldsymbol{\mu}_x)(\mathbf{X}-\boldsymbol{\mu}_x)'\mat{A}'\right].
+\]
+Como $\mat{A}$ es constante respecto a la esperanza:
+\[
+  \mat{S}_y
+  = \mat{A}\,E\!\left[(\mathbf{X}-\boldsymbol{\mu}_x)(\mathbf{X}-\boldsymbol{\mu}_x)'\right]\mat{A}'
+  = \mat{A}\mat{S}_x\mat{A}'.
+\]
 \end{proof}
 
 \paragraph{Esperanzas condicionadas.}
 \[
-  E(\mathbf{x}_1|\mathbf{x}_2) = \int \mathbf{x}_1\,f(\mathbf{x}_1|\mathbf{x}_2)\,d\mathbf{x}_1.
+  E(\mathbf{X}_1\mid\mathbf{X}_2) = \int \mathbf{x}_1\,f(\mathbf{x}_1\mid\mathbf{x}_2)\,d\mathbf{x}_1.
 \]
-En general será función del valor de $\mathbf{x}_2$. Si $\mathbf{x}_2$ es
+En general será función del valor de $\mathbf{X}_2$. Si $\mathbf{X}_2$ es
 fija, la esperanza condicionada es una constante; si es variable aleatoria,
 será una variable aleatoria.
 
@@ -1665,8 +1816,8 @@ si su función de densidad es:
         normal univariante: $X_i\sim\mathcal{N}(\mu_i,\sigma_i^2)$.
 
   \item \textbf{Combinaciones lineales:} si $\mathbf{X}\sim\mathcal{N}_p(\boldsymbol{\mu},\boldsymbol{\Sigma})$
-        y $\mathbf{y}=\mat{A}\mathbf{x}+\mathbf{b}$, entonces
-        $\mathbf{y}\sim\mathcal{N}_m(\mat{A}\boldsymbol{\mu}+\mathbf{b},\mat{A}\boldsymbol{\Sigma}\mat{A}')$.
+        y $\mathbf{Y}=\mat{A}\mathbf{X}+\mathbf{b}$, entonces
+        $\mathbf{Y}\sim\mathcal{N}_m(\mat{A}\boldsymbol{\mu}+\mathbf{b},\mat{A}\boldsymbol{\Sigma}\mat{A}')$.
 
   \item \textbf{Independencia $\Leftrightarrow$ incorrelación:} en la normal
         multivariante, dos variables son independientes si y solo si su
@@ -1789,8 +1940,9 @@ $\mathbf{y}_1,\mathbf{y}_2,\dots,\mathbf{y}_p$ que:
         \operatorname{var}(\mathbf{y}_2)\ge\cdots\ge\operatorname{var}(\mathbf{y}_p)$.
   \item $\operatorname{corr}(\mathbf{y}_i,\mathbf{y}_j)=0\ \forall i\neq j$,
         por lo que no existen restricciones de linealidad entre componentes y
-        las matrices $\mat{S}$ y $\mat{R}$ son definidas positivas con
-        $r(\mat{S})=r(\mat{R})=p$.
+        la matriz de covarianzas de los componentes es diagonal. En la práctica,
+        $\mat{S}$ y $\mat{R}$ son semidefinidas positivas, y serán definidas
+        positivas cuando no exista colinealidad exacta.
   \item $\displaystyle\sum_{i=1}^p\operatorname{var}(\mathbf{y}_i)=
         \sum_{i=1}^p\operatorname{var}(\mathbf{x}_i)$.
 \end{enumerate}
@@ -1876,6 +2028,32 @@ y $\mathbf{a}_1$ su vector asociado define los coeficientes de cada variable
 en el primer componente principal.
 \end{mdframed}
 
+\begin{proposicion}[Caracterización variacional del primer componente]
+El primer componente principal maximiza el cociente de Rayleigh:
+\[
+  \argmax_{\mathbf{a}\neq \mathbf{0}}
+  \frac{\mathbf{a}'\mat{S}\mathbf{a}}{\mathbf{a}'\mathbf{a}}
+  = \mathbf{a}_1,
+\]
+y el máximo alcanzado es el mayor autovalor de $\mat{S}$.
+\end{proposicion}
+
+\begin{proof}
+Como $\mat{S}$ es simétrica, admite descomposición espectral
+$\mat{S}=\mat{U}\boldsymbol{\Lambda}\mat{U}'$, con
+$\lambda_1\ge\cdots\ge\lambda_p\ge 0$. Si
+$\mathbf{a}=\mat{U}\mathbf{c}$ y $\|\mathbf{a}\|^2=\|\mathbf{c}\|^2=1$:
+\[
+  \mathbf{a}'\mat{S}\mathbf{a}
+  = \mathbf{c}'\boldsymbol{\Lambda}\mathbf{c}
+  = \sum_{j=1}^p \lambda_j c_j^2
+  \le \lambda_1\sum_{j=1}^p c_j^2
+  = \lambda_1.
+\]
+La cota se alcanza tomando $\mathbf{c}=(1,0,\dots,0)'$, es decir,
+$\mathbf{a}=\mathbf{a}_1$ (autovector asociado a $\lambda_1$).
+\end{proof}
+
 \subsection{Cálculo del segundo componente}
 
 El segundo componente:
@@ -1905,15 +2083,15 @@ con lo que $\mathbf{z}_1$ y $\mathbf{z}_2$ están \textbf{incorreladas}.
 \subsection{Generalización}
 
 \begin{proposicion}
-En general, la matriz $\mathbf{X}$ (y por tanto $\mat{S}$) tiene rango $p$.
-Existen tantas componentes principales como variables, que se obtienen
-calculando los autovalores $\lambda_1\ge\lambda_2\ge\cdots\ge\lambda_p$ de
-la ecuación característica:
+Sea $h=\rg(\mat{S})\le \min(n,p)$. Existen $p$ componentes principales
+algebraicamente definidos, pero solo $h$ tienen varianza estrictamente positiva.
+Se obtienen calculando los autovalores
+$\lambda_1\ge\lambda_2\ge\cdots\ge\lambda_p\ge0$ de la ecuación característica:
 \[
   |\mat{S}-\lambda\mat{I}|=0, \qquad (\mat{S}-\lambda_i\mat{I})\mathbf{a}_i=0.
 \]
-Los $\lambda_i$ son reales y positivos (al ser $\mat{S}$ simétrica y definida
-positiva).
+Los $\lambda_i$ son reales y no negativos, al ser $\mat{S}$ simétrica
+semidefinida positiva.
 \end{proposicion}
 
 Llamando $\mat{Z}$ a la matriz cuyas columnas son los valores de las $p$
@@ -1930,6 +2108,29 @@ ortogonal} a las variables $\mathbf{X}$ (ejes originales) para obtener nuevas
 variables $\mat{Z}$ incorreladas entre sí: se eligen nuevos ejes coordenados
 que coincidan con los \emph{ejes naturales} de los datos.
 
+\begin{proposicion}[Covarianza de las puntuaciones principales]
+Si $\mat{Z}=\mat{X}_c\mat{A}$, con $\mat{A}'\mat{A}=\mat{I}$ y columnas de
+$\mat{A}$ formadas por autovectores de $\mat{S}$, entonces:
+\[
+  \Cov(\mat{Z})=\mat{A}'\mat{S}\mat{A}=\boldsymbol{\Lambda},
+\]
+es decir, las componentes principales son incorreladas y sus varianzas son los
+autovalores de $\mat{S}$.
+\end{proposicion}
+
+\begin{proof}
+Como $\mat{X}_c$ está centrada, $\Cov(\mat{Z})=\frac{1}{n}\mat{Z}'\mat{Z}$.
+Sustituyendo $\mat{Z}=\mat{X}_c\mat{A}$:
+\[
+  \Cov(\mat{Z})
+  = \frac{1}{n}\mat{A}'\mat{X}_c'\mat{X}_c\mat{A}
+  = \mat{A}'\mat{S}\mat{A}.
+\]
+Si $\mat{S}\mat{A}=\mat{A}\boldsymbol{\Lambda}$, entonces
+$\mat{A}'\mat{S}\mat{A}=\mat{A}'\mat{A}\boldsymbol{\Lambda}
+=\boldsymbol{\Lambda}$.
+\end{proof}
+
 % ══════════════════════════════════════════════════════════════════════════
 \section{Propiedades de los componentes}
 % ══════════════════════════════════════════════════════════════════════════
@@ -1940,15 +2141,15 @@ que coincidan con los \emph{ejes naturales} de los datos.
         de las variables originales, y la varianza generalizada de los
         componentes es igual a la original:
         \[
-          \tr(\mat{S}) = \sum_{i=1}^p\operatorname{var}(x_i)
+          \tr(\mat{S}) = \sum_{j=1}^p\Var(X_j)
           = \lambda_1+\cdots+\lambda_p
-          = \sum_{i=1}^p\operatorname{var}(z_i).
+          = \sum_{j=1}^p\Var(Z_j).
         \]
-        Si llamamos $\mat{S}_x$ a la matriz de covarianzas de los componentes
+        Si llamamos $\mat{S}_z$ a la matriz de covarianzas de los componentes
         (diagonal con términos $\lambda_i$):
         \[
-          |\mat{S}_x| = \lambda_1\cdots\lambda_p
-          = \prod_{i=1}^p\operatorname{var}(z_i) = |\mat{S}_z|.
+          |\mat{S}_z| = \lambda_1\cdots\lambda_p
+          = \prod_{j=1}^p\Var(Z_j).
         \]
 
   \item \textbf{Proporción de variabilidad explicada.}
@@ -1965,7 +2166,7 @@ que coincidan con los \emph{ejes naturales} de los datos.
         La matriz $p\times p$ de covarianzas entre componentes y variables
         originales es:
         \[
-          \operatorname{cov}(\mathbf{z},\mathbf{x}) = \frac{1}{n}\mat{Z}'\mathbf{X}
+          \Cov(\mathbf{Z},\mathbf{X}) = \frac{1}{n}\mat{Z}'\mathbf{X}
           = \mat{A}'\mat{S} = \boldsymbol{\Lambda}\mat{A}',
         \]
         donde $\mat{A}$ contiene en columnas los vectores propios de $\mat{S}$
@@ -2029,8 +2230,8 @@ los autovalores de esa matriz (suponemos no singular):
 
 \paragraph{Propiedades de los componentes extraídos de $\mat{R}$.}
 \begin{itemize}
-  \item La proporción de varianza explicada por $\lambda_p^R$ es:
-        $\dfrac{\lambda_p^R}{p}$.
+  \item La proporción de varianza explicada por la componente $j$ es:
+        $\dfrac{\lambda_j^R}{p}$.
   \item Las correlaciones entre cada componente $z_j$ y las variables $X$
         originales vienen dadas por: $\mathbf{a}_j'\sqrt{\lambda_j}$,
         siendo $\mathbf{z}_j=\mathbf{X}\mathbf{a}_j$.
@@ -2063,7 +2264,8 @@ analizada y $\boldsymbol{\Lambda}$ la matriz diagonal de autovalores.
   \item Expresada en puntuaciones típicas, las saturaciones son las
         correlaciones entre cada $X_i$ e $Y_i$:
         $\mat{D}^{-1/2}\mat{A}\boldsymbol{\Lambda}^{1/2} = \mat{R}_{xy}$,
-        siendo $\mat{D}$ la matriz diagonal cuyos elementos son $1/s_i$.
+        siendo $\mat{D}=\diag(s_1^2,\dots,s_p^2)$ la matriz diagonal de
+        varianzas de las variables originales.
 \end{itemize}
 
 % ══════════════════════════════════════════════════════════════════════════
@@ -2074,7 +2276,8 @@ analizada y $\boldsymbol{\Lambda}$ la matriz diagonal de autovalores.
 
 \begin{enumerate}[label=\Roman*)]
   \item Cálculo de la matriz de covarianzas:
-        $\mat{S} = \dfrac{\mathbf{x}'\mathbf{x}}{n-1}$.
+        $\mat{S} = \dfrac{\mat{X}_c'\mat{X}_c}{n-1}$, donde
+        $\mat{X}_c$ es la matriz de datos centrados.
   \item Cálculo de la matriz $\boldsymbol{\Lambda}$ de autovalores de $\mat{S}$:
         $|\mat{S}-\lambda\mat{I}|=0$.
   \item Cálculo de la matriz $\mat{A}$ de autovectores:
@@ -2084,7 +2287,7 @@ analizada y $\boldsymbol{\Lambda}$ la matriz diagonal de autovalores.
   \item Cálculo de la matriz $\mat{F}$ de saturaciones:
         $\mat{F}=\mat{A}\boldsymbol{\Lambda}^{1/2}$.
   \item Cálculo de la matriz de puntuaciones de los sujetos en los
-        componentes: $\mat{Y}=\mathbf{X}\mat{A}$.
+        componentes: $\mat{Y}=\mat{X}_c\mat{A}$.
   \item Cálculo de la varianza de cada componente:
         $\operatorname{var}(Y_i)=\mathbf{a}_i'\mat{S}\mathbf{a}_i=\lambda_i$.
   \item Cálculo de la proporción de varianza explicada:
@@ -2095,7 +2298,8 @@ analizada y $\boldsymbol{\Lambda}$ la matriz diagonal de autovalores.
 
 \begin{enumerate}[label=\Roman*)]
   \item Cálculo de la matriz de correlaciones:
-        $\mat{R} = \dfrac{\mathbf{z}'\mathbf{z}}{n-1}$.
+        $\mat{R} = \dfrac{\mat{Z}_x'\mat{Z}_x}{n-1}$, con $\mat{Z}_x$ datos
+        tipificados.
   \item Cálculo de la matriz $\boldsymbol{\Lambda}$ de autovalores de $\mat{R}$:
         $|\mat{R}-\lambda\mat{I}|=0$.
   \item Cálculo de la matriz $\mat{A}$ de autovectores:
@@ -2103,7 +2307,7 @@ analizada y $\boldsymbol{\Lambda}$ la matriz diagonal de autovalores.
   \item Cálculo de la matriz $\mat{F}$ de saturaciones:
         $\mat{F}=\mat{R}_{\mathbf{z}_x,\mathbf{z}_y}=\mat{A}\boldsymbol{\Lambda}^{1/2}$.
   \item Cálculo de la matriz de puntuaciones típicas:
-        $\mat{Z}_y=\mat{Z}_x\mat{A}=\mat{A}\boldsymbol{\Lambda}^{1/2}$.
+        $\mat{Z}_y=\mat{Z}_x\mat{A}$.
   \item Cálculo de la varianza de cada componente:
         $\operatorname{var}(\mathbf{z}_{y_i})=\mat{A}'\mat{R}\mat{A}=\boldsymbol{\Lambda}
         =\mathbf{a}_i'\mat{R}\mathbf{a}_i=\lambda_i$;
@@ -2129,8 +2333,8 @@ través del origen}:
 La rotación es ortogonal porque $\mat{A}$ es una matriz ortogonal que, para
 dos componentes, puede expresarse como:
 \[
-  \mat{A} = \begin{pmatrix}\cos\theta & -\operatorname{sen}\theta\\
-             \operatorname{sen}\theta & \cos\theta\end{pmatrix}.
+  \mat{A} = \begin{pmatrix}\cos\theta & -\sin\theta\\
+             \sin\theta & \cos\theta\end{pmatrix}.
 \]
 La matriz $\mat{A}$ rota los ejes $X_1, X_2, \dots, X_p$ un ángulo $\theta$
 de manera que el primer componente reúna el máximo de la varianza contenida
@@ -2139,7 +2343,7 @@ en los datos (y el segundo la restante).
 \begin{ejemplo}
 \[
   \mat{A}=\begin{pmatrix}0{,}722&-0{,}692\\0{,}692&0{,}722\end{pmatrix},
-  \quad\cos\theta=0{,}722,\quad\operatorname{sen}\theta=0{,}692
+  \quad\cos\theta=0{,}722,\quad\sin\theta=0{,}692
   \quad\Rightarrow\quad\theta=43{,}78^\circ.
 \]
 Los ejes se han girado $43{,}78^\circ$ de manera que el componente $y_1$ tiene
@@ -2264,6 +2468,16 @@ según sus variables explicativas.
         contextos aunque con pérdida de información intermedia.
 \end{itemize}
 
+\begin{mdframed}[style=resultado]
+\textbf{Hipótesis canónicas del LDA clásico:}
+\begin{enumerate}
+  \item Normalidad multivariante dentro de cada clase.
+  \item Matriz de covarianzas común entre clases.
+  \item Independencia entre observaciones.
+  \item Colinealidad no exacta entre predictores.
+\end{enumerate}
+\end{mdframed}
+
 \begin{definicion}[Función discriminante lineal]
 Para una observación $k$, una función discriminante lineal puede escribirse
 como:
@@ -2374,6 +2588,27 @@ La regla de decisión es lineal en $\mathbf{x}$ usando las funciones:
   \qquad i=1,2.
 \]
 \end{mdframed}
+\begin{proof}
+Partimos de la regla bayesiana
+$\argmax_i\{\pi_i f_i(\mathbf{x})\}$. Tomando logaritmos y sustituyendo la
+densidad normal multivariante con covarianza común:
+\[
+  \log\pi_i-\frac{1}{2}(\mathbf{x}-\boldsymbol{\mu}_i)'
+  \boldsymbol{\Sigma}^{-1}(\mathbf{x}-\boldsymbol{\mu}_i)
+  -\frac{1}{2}\log|\boldsymbol{\Sigma}|-\frac{p}{2}\log(2\pi).
+\]
+Los dos últimos términos no dependen de $i$, por lo que no afectan a la
+decisión. Al expandir el término cuadrático:
+\[
+  -\frac12\mathbf{x}'\boldsymbol{\Sigma}^{-1}\mathbf{x}
+  +\mathbf{x}'\boldsymbol{\Sigma}^{-1}\boldsymbol{\mu}_i
+  -\frac12\boldsymbol{\mu}_i'\boldsymbol{\Sigma}^{-1}\boldsymbol{\mu}_i
+  +\log\pi_i.
+\]
+El término $-\frac12\mathbf{x}'\boldsymbol{\Sigma}^{-1}\mathbf{x}$ también es
+común a todas las clases. Eliminándolo se obtiene exactamente
+$\delta_i(\mathbf{x})$.
+\end{proof}
 \begin{variablesprimera}
   \varitem{\delta_i(\mathbf{x})}{función discriminante lineal de la clase $i$}
   \varitem{\boldsymbol{\mu}_i}{vector de medias de la clase $i$}
@@ -2404,6 +2639,8 @@ puede escribirse como:
   \;\Longrightarrow\;
   \text{clasificar en } \mathcal{P}_2.
 \]
+Esta expresión evidencia que el umbral de decisión se desplaza según costes y
+priori.
 \end{mdframed}
 
 \subsubsection{Probabilidad a posteriori en función de distancias}
@@ -2554,6 +2791,15 @@ $\delta_i(\mathbf{x})=\delta_j(\mathbf{x})$, es decir, un \textbf{hiperplano}:
   +\log\!\frac{\pi_i}{\pi_j}=0.
 \]
 
+\begin{proof}
+La igualdad $\delta_i(\mathbf{x})=\delta_j(\mathbf{x})$ elimina los términos
+comunes de segundo grado en $\mathbf{x}$ (procedentes de
+$-\tfrac12\mathbf{x}'\boldsymbol{\Sigma}^{-1}\mathbf{x}$), ya que la
+covarianza es compartida por todas las clases. Por ello, el contorno de
+indiferencia queda descrito por una ecuación afín en $\mathbf{x}$, es decir,
+un hiperplano.
+\end{proof}
+
 % ══════════════════════════════════════════════════════════════════════════
 \section{Función lineal de Fisher}
 % ══════════════════════════════════════════════════════════════════════════
@@ -2581,6 +2827,24 @@ intra-grupos agrupada $\mat{S}_w$, el criterio es:
   \varitem{J(\boldsymbol{\alpha})}{cociente entre separación intergrupos y dispersión intragrupo}
   \varitem{\mat{S}_w}{matriz de dispersión intra-grupos agrupada}
 \end{variablesprimera}
+
+\begin{proof}
+Definamos $\mathbf{d}=\bar{\mathbf{x}}_2-\bar{\mathbf{x}}_1$. Maximizar
+$J(\boldsymbol{\alpha})$ equivale a maximizar
+$\left(\boldsymbol{\alpha}'\mathbf{d}\right)^2$ bajo la restricción
+$\boldsymbol{\alpha}'\mat{S}_w\boldsymbol{\alpha}=1$.
+Con multiplicadores de Lagrange:
+\[
+  \mathcal{L}=
+  \left(\boldsymbol{\alpha}'\mathbf{d}\right)^2
+  -\lambda\!\left(\boldsymbol{\alpha}'\mat{S}_w\boldsymbol{\alpha}-1\right).
+\]
+La condición de primer orden conduce a
+$\mathbf{d}\mathbf{d}'\boldsymbol{\alpha}=\lambda\mat{S}_w\boldsymbol{\alpha}$,
+cuyo vector propio no nulo es proporcional a $\mat{S}_w^{-1}\mathbf{d}$.
+Por tanto,
+$\boldsymbol{\alpha}\propto \mat{S}_w^{-1}(\bar{\mathbf{x}}_2-\bar{\mathbf{x}}_1)$.
+\end{proof}
 
 Así, la dirección discriminante coincide con la dirección que maximiza la
 distancia de Mahalanobis entre los centroides proyectados.
@@ -2870,7 +3134,7 @@ Resumen operativo del Tema 4:
 \]
 \textbf{Correlación parcial:}
 \[
-  r_{jk.\,\text{resto}}=-\frac{s^{ij}}{\sqrt{s^{ii}s^{jj}}}.
+  r_{jk.\,\text{resto}}=-\frac{s^{jk}}{\sqrt{s^{jj}s^{kk}}}.
 \]
 \textbf{Cambio de variable (jacobiano):}
 \[
