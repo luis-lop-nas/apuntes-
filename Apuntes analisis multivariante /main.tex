@@ -238,7 +238,7 @@
 \addcontentsline{toc}{section}{Convenciones de notación}
 
 Para mantener una exposición homogénea en todo el documento, utilizaremos las
-siguientes convenciones:
+siguientes convenciones formales, que se respetarán en todos los temas:
 \begin{itemize}
   \item Los \textbf{escalares} se denotan en minúscula ($x,\lambda,r$), los
         \textbf{vectores} en negrita ($\mathbf{x},\boldsymbol{\mu}$) y las
@@ -270,9 +270,10 @@ de dependencia.
 \end{definicion}
 
 En gran parte de las técnicas multivariantes, el objeto algebraico central es
-una combinación lineal de variables observadas (que aquí llamaremos
-\textbf{valor teórico}), cuyas ponderaciones se estiman en función del objetivo
-del análisis (síntesis, discriminación, predicción o descripción estructural).
+una combinación lineal de variables observadas, cuyas ponderaciones se ajustan
+según el objetivo inferencial (síntesis, discriminación, predicción o
+descripción estructural). En este documento la denominaremos
+\textbf{valor teórico}.
 
 \begin{mdframed}[style=resultado]
 \[
@@ -291,34 +292,35 @@ problema estadístico planteado.
 
 \subsection{Objetivos principales}
 
-Desde el punto de vista aplicado, el análisis multivariante persigue cuatro
-objetivos principales:
+Desde una perspectiva aplicada, el análisis multivariante persigue cuatro metas
+complementarias:
 
 \begin{enumerate}
-  \item \textbf{Resumir} el conjunto de variables en unas pocas variables nuevas,
-        construidas como transformaciones de las originales con la mínima pérdida
-        de información.
+  \item \textbf{Resumir} el conjunto original en pocas variables derivadas,
+        minimizando la pérdida de información relevante.
         (\textit{ej.: componentes principales, análisis factorial}).
 
-  \item \textbf{Encontrar grupos} en los datos, si existen.
+  \item \textbf{Detectar grupos} naturales en los datos, cuando existan.
         (\textit{ej.: tipología de procesos productivos, de clientes, de
         partículas}).
 
-  \item \textbf{Clasificar} nuevas observaciones en grupos definidos.
+  \item \textbf{Clasificar} nuevas observaciones en grupos previamente
+        definidos.
         (\textit{ej.: clientes de un banco como fiables o no, personas como
         enfermas o no, partículas subatómicas como fermión o bosón}).
 
-  \item \textbf{Relacionar} dos conjuntos de variables.
+  \item \textbf{Relacionar} dos bloques de variables para estudiar estructura
+        común y dependencia cruzada.
         (\textit{ej.: un conjunto de variables de capacidad intelectual y otro de
         resultados profesionales}).
 \end{enumerate}
 
 \subsection{Clasificación de las técnicas}
 
-Existen varias taxonomías de técnicas multivariantes. Seguimos la propuesta de
-\textbf{Hair, Tathan y Black (1998)}, basada en el \emph{tipo de relación
-entre variables} y en la distinción entre estructura de dependencia e
-interdependencia.
+Existen diversas taxonomías. Seguimos la propuesta de \textbf{Hair, Tathan y
+Black (1998)}, que organiza las técnicas según el \emph{tipo de relación entre
+variables} y distingue entre modelos de dependencia, interdependencia y
+estructura no lineal.
 
 % ─── Árbol de clasificación simplificado ─────────────────────────────────
 \begin{figure}[H]
@@ -338,9 +340,10 @@ interdependencia.
 
 \subsubsection{Relación de dependencia entre variables}
 
-En este bloque se distingue una variable (o un conjunto de variables)
-dependiente, cuyo comportamiento se modeliza a partir de una o varias variables
-explicativas.
+En este bloque se distingue explícitamente una variable respuesta (o un bloque
+de respuestas) y un conjunto de variables explicativas. El objetivo es modelar
+la distribución o el valor esperado de la respuesta condicionado a los
+predictores.
 
 \paragraph{Una variable dependiente.}
 
@@ -390,9 +393,9 @@ explicativas.
 
 \subsubsection{Interdependencia entre variables}
 
-No se impone una separación previa entre variables respuesta y explicativas:
-el interés se centra en la estructura interna del conjunto de variables y en
-sus relaciones mutuas.
+En interdependencia no se fija a priori la dicotomía respuesta--explicativa; el
+interés se desplaza a la geometría y estructura interna del conjunto de
+variables.
 
 \begin{description}
   \item[\textbf{Estudio de la relación entre variables.}]
@@ -475,18 +478,10 @@ Edades de 3 personas:
 
 \subsection{Variable vectorial y matriz de datos}
 
-Cuando se miden $p$ variables en cada una de las $n$ unidades observacionales
-se obtiene:
-\begin{itemize}
-  \item Una \textbf{tabla} de $p$ columnas y $n$ filas:
-        \begin{itemize}
-          \item \emph{Columna}: valores de una variable.
-          \item \emph{Fila}: valores de las $p$ variables de cada elemento.
-        \end{itemize}
-  \item Cada una de esas $p$ variables es una \textbf{variable escalar}
-        (univariante), mientras que su agregación define un \textbf{vector
-        aleatorio} (variable multivariante).
-\end{itemize}
+Cuando se miden $p$ variables sobre cada una de las $n$ unidades
+observacionales, los datos se organizan naturalmente en una tabla de $n$ filas
+y $p$ columnas. Cada columna recoge una variable y cada fila el perfil
+multivariante completo de una unidad.
 
 \begin{definicion}[Matriz de datos]
 Los valores de las $p$ variables escalares en cada uno de los $n$ elementos se
@@ -513,8 +508,9 @@ representan en la \textbf{matriz de datos} $\mat{X}$ de dimensión $n\times p$:
 También se escribe $\mat{X} = [\mat{X}_{(1)},\dots,\mat{X}_{(p)}] =
 [\mathbf{x}_{ij}]$, donde $\mat{X}_{(j)}$ es la columna asociada a la variable
 $j$ y la fila $i$ contiene el perfil multivariante de la observación $i$.
-Esta convención (filas = individuos, columnas = variables) se mantendrá en
-todo el documento.
+Esta convención (filas = individuos, columnas = variables) se mantendrá en todo
+el documento porque permite expresar con claridad medias, centrado, covarianzas
+y proyecciones lineales.
 \end{definicion}
 
 % ══════════════════════════════════════════════════════════════════════════
@@ -543,6 +539,12 @@ En particular,
 \]
 con igualdad si y solo si $\mathbf{x}=\mathbf{0}$.
 \end{definicion}
+
+\begin{observacion}
+En análisis multivariante, el producto escalar fija la noción geométrica de
+longitud, ángulo y proyección, y por tanto está en la base de distancias,
+ortogonalidad y cambios de base.
+\end{observacion}
 
 \begin{definicion}[Norma de un vector]
 La \textbf{norma} o longitud de un vector $\mathbf{x}$ es la raíz cuadrada de
@@ -635,39 +637,19 @@ tienen norma 1 (normalizados).
 \subsection{Matrices}
 
 \begin{definicion}[Tipos básicos de matrices]
+En esta materia aparecen de forma recurrente varios tipos de matrices:
 \begin{itemize}
-  \item \textbf{Matriz cuadrada de orden $p$:} una matriz de tamaño
-        $p\times p$.
-        En caso $n\neq p$, la matriz es \emph{rectangular}.
-
-  \item \textbf{Matriz traspuesta} de $\mat{A}\in\R^{n\times p}$: se obtiene
-        intercambiando filas por columnas, y se denota
-        $\mat{A}'\in\R^{p\times n}$.
-
-  \item \textbf{Traza} de una matriz cuadrada: suma de los elementos de su
-        diagonal principal,
-        \[
-          \tr(\mat{A}) = \sum_i a_{ii}, \qquad \tr(\mat{A}) = \tr(\mat{A}').
-        \]
-
-  \item \textbf{Matriz simétrica:} $\mat{A} = \mat{A}'$.
-
-  \item \textbf{Matriz nula o $\mat{0}$:} todos sus elementos son 0.
-
-  \item \textbf{Matriz diagonal:} todos los elementos salvo los de la diagonal
-        principal son nulos.
-
-  \item \textbf{Matriz escalar $\mat{K}$:} matriz diagonal cuyos elementos no
-        nulos son todos iguales:
-        \[
-          \mat{K} = \begin{pmatrix} k & 0 & 0 \\ 0 & k & 0 \\ 0 & 0 & k \end{pmatrix}.
-        \]
-
-  \item \textbf{Matriz identidad $\mat{I}$:} matriz diagonal cuyos elementos de
-        la diagonal principal son 1:
-        \[
-          \mat{I} = \begin{pmatrix} 1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1 \end{pmatrix}.
-        \]
+  \item \textbf{Cuadrada de orden $p$}: dimensión $p\times p$ (si $n\neq p$,
+        la matriz es rectangular).
+  \item \textbf{Traspuesta}: para $\mat{A}\in\R^{n\times p}$,
+        $\mat{A}'\in\R^{p\times n}$ se obtiene intercambiando filas y columnas.
+  \item \textbf{Traza}: $\tr(\mat{A})=\sum_i a_{ii}$, con
+        $\tr(\mat{A})=\tr(\mat{A}')$.
+  \item \textbf{Simétrica}: $\mat{A}=\mat{A}'$.
+  \item \textbf{Nula}: todos sus elementos son cero.
+  \item \textbf{Diagonal}: elementos no diagonales nulos.
+  \item \textbf{Escalar}: diagonal con todos los valores diagonales iguales.
+  \item \textbf{Identidad}: diagonal con unos en la diagonal principal.
 \end{itemize}
 \end{definicion}
 
@@ -679,7 +661,7 @@ máximo número de columnas (equivalentemente, filas) linealmente independientes
 de $\mat{A}$.
 \end{definicion}
 
-Se cumplen las siguientes propiedades:
+Las propiedades de rango más usadas en estos apuntes son:
 
 \begin{mdframed}[style=resultado]
 \begin{align}
@@ -691,6 +673,12 @@ Se cumplen las siguientes propiedades:
   &\rg(\mat{A}'\mat{A}) = \rg(\mat{A}\mat{A}') = \rg(\mat{A}) = \rg(\mat{A}').
 \end{align}
 \end{mdframed}
+
+\begin{observacion}
+El rango cuantifica la dimensión efectiva del subespacio generado por las
+variables. En términos estadísticos, detectar rango deficiente equivale a
+detectar redundancia lineal.
+\end{observacion}
 
 \begin{proposicion}[Carácter de invertibilidad en matrices cuadradas]
 Sea $\mat{A}\in\R^{p\times p}$. Son equivalentes:
@@ -784,6 +772,12 @@ matriz $\mat{A}$, es decir, un valor escalar calculado a partir de una matriz
 cuadrada.
 \end{definicion}
 
+\begin{observacion}
+En multivariante, el determinante de una matriz de covarianzas mide volumen
+generalizado y aparece de forma natural en densidades gaussianas y en criterios
+de dependencia global.
+\end{observacion}
+
 \begin{ejemplo}
 \[
   \mat{A} = \begin{pmatrix}3&2\\1&4\end{pmatrix} \Rightarrow
@@ -826,6 +820,12 @@ $A_{ij} = (-1)^{i+j}|\mat{A}_{ij}|$, siendo $\mat{A}_{ij}$ la submatriz de
 orden $n-1$ obtenida eliminando la fila $i$ y la columna $j$ de $\mat{A}'$.
 \end{mdframed}
 
+\begin{observacion}
+La inversa de la covarianza (matriz de precisión) codifica dependencias
+condicionales lineales y tiene papel central en inferencia gaussiana y
+discriminación lineal.
+\end{observacion}
+
 \begin{ejemplo}
 Para $\mat{A} = \begin{pmatrix}3&2\\1&4\end{pmatrix}$, $|\mat{A}|=10$:
 \[
@@ -854,14 +854,14 @@ Sea $\mat{A}$ una matriz cuadrada de orden $p$. Un escalar $\lambda$ es un
 \[
   |\mat{A} - \lambda\mat{I}| = 0.
 \]
-Esta es la \textbf{ecuación característica} de $\mat{A}$: un polinomio de
-grado $p$ en $\lambda$ con $p$ raíces $(\lambda_1, \lambda_2, \dots, \lambda_p)$.
+Esta es la \textbf{ecuación característica}: un polinomio de grado $p$ cuyas
+raíces (con multiplicidad algebraica) son los autovalores de $\mat{A}$.
 \end{definicion}
 
 \begin{observacion}
-Una matriz de orden $n$ siempre tiene $n$ valores propios (contando
-repeticiones). En general tiene $h \le n$ valores propios distintos; si un
-valor propio aparece repetido $r$ veces se dice que tiene \emph{multiplicidad $r$}.
+La lectura conceptual es: la matriz define una transformación lineal y los
+autovalores cuantifican los factores de escala en direcciones invariantes
+autovectoriales.
 \end{observacion}
 
 \begin{ejemplo}
@@ -887,6 +887,10 @@ Calcular los autovalores de $\mat{A} = \begin{pmatrix}1&4\\9&1\end{pmatrix}$:
 \end{itemize}
 \end{mdframed}
 
+Estas identidades conectan directamente álgebra lineal y estadística
+multivariante: por ejemplo, en ACP los autovalores de $\mat{S}$ miden varianza
+explicada.
+
 \subsubsection{Autovectores (vectores propios)}
 
 \begin{definicion}[Autovector]
@@ -900,13 +904,13 @@ de $\mat{A}$ asociado a $\lambda$.
 \end{definicion}
 
 La ecuación $\mat{A}\mathbf{x} = \lambda\mathbf{x}$ equivale al sistema
-homogéneo $(\mat{A}-\lambda\mat{I})\mathbf{x}=\mathbf{0}$, que tiene
-soluciones no triviales precisamente cuando $\lambda$ es autovalor.
+homogéneo $(\mat{A}-\lambda\mat{I})\mathbf{x}=\mathbf{0}$. Por tanto, para un
+$\lambda$ dado existe autovector no nulo si y solo si
+$|\mat{A}-\lambda\mat{I}|=0$.
 
-En general, el número de autovectores linealmente independientes puede ser
-menor que el número total de autovalores (contando multiplicidades). En
-particular, si $\mat{A}$ es simétrica, existe una base ortonormal completa de
-autovectores.
+En general, la multiplicidad geométrica puede ser menor que la algebraica. En
+el caso simétrico real, el teorema espectral garantiza una base ortonormal
+completa de autovectores.
 
 \begin{ejemplo}
 Para $\mat{A} = \begin{pmatrix}1&4\\9&1\end{pmatrix}$ con
@@ -989,6 +993,10 @@ Por tanto, la \textbf{matriz de autovectores normalizados} queda:
 \subsection{Formas cuadráticas}
 
 \begin{definicion}[Forma cuadrática]
+Las formas cuadráticas aparecen de forma sistemática en multivariante:
+distancia de Mahalanobis, densidades gaussianas, criterios de optimización de
+ACP y análisis discriminante.
+
 Si transformamos un vector $\mathbf{x}$ mediante una transformación lineal
 $\mathbf{y} = \mat{B}\mathbf{x}$, la norma al cuadrado del nuevo vector es:
 \[
@@ -997,7 +1005,8 @@ $\mathbf{y} = \mat{B}\mathbf{x}$, la norma al cuadrado del nuevo vector es:
 donde $\mat{A} = \mat{B}'\mat{B}$ es cuadrada y simétrica.
 
 La expresión $Q = \mathbf{x}'\mat{A}\mathbf{x}$ se denomina \textbf{forma
-cuadrática} asociada a $\mat{A}$.
+cuadrática} asociada a $\mat{A}$. Si $\mat{A}$ es simétrica, su signo queda
+completamente determinado por el signo de sus autovalores.
 \end{definicion}
 
 \subsubsection{Desarrollo explícito}
@@ -1032,6 +1041,11 @@ En general, para $\mat{A}_{p\times p}$:
 \end{itemize}
 \end{mdframed}
 
+\begin{observacion}
+La clasificación positiva/semidefinida no es solo algebraica: determina si una
+distancia o una varianza generalizada están bien definidas y no negativas.
+\end{observacion}
+
 \begin{ejemplo}
 $\mat{A}=\begin{pmatrix}1&0\\0&1\end{pmatrix}$,
 $Q=\mathbf{x}'\mat{A}\mathbf{x}=x_1^2+x_2^2>0$,
@@ -1060,6 +1074,10 @@ propiedades encontradas en una muestra pueden generalizarse a la población de
 la que provienen. Para ello es necesario disponer de un \emph{modelo del
 sistema generador de los datos}: suponer una distribución de probabilidad para
 la variable aleatoria en la población.
+
+En consecuencia, el primer paso del tema es definir con precisión distribución
+conjunta, marginal y condicionada, y después estudiar cómo se traducen esas
+estructuras en medidas de dependencia y en modelos paramétricos.
 
 \begin{definicion}[Variable aleatoria multidimensional o vectorial]
 Una variable aleatoria multidimensional es el resultado de observar
@@ -1129,6 +1147,9 @@ univariante de dicho componente, sin tener en cuenta los otros. Para $p=2$:
   f_{X_2}(x_2) = \int_{-\infty}^{+\infty} f_{X_1,X_2}(x_1,x_2)\,dx_1.
 \]
 \end{definicion}
+
+Las marginales describen el comportamiento de cada componente por separado; la
+conjunta añade, además, la estructura de dependencia entre componentes.
 
 \subsection{Distribuciones condicionadas}
 
@@ -1214,7 +1235,7 @@ muestral es $\bar{\mathbf{x}} = \dfrac{1}{n}\mat{X}'\mathbf{1}$.
 
 Propiedades del vector de medias:
 \begin{itemize}
-  \item Es la medida más utilizada: se encuentra en el centro de los datos,
+  \item Es el centro de gravedad euclídeo de la nube de puntos:
         haciendo nula la suma de desviaciones:
         $\displaystyle\sum_{i=1}^n (\mathbf{x}_i - \bar{\mathbf{x}})=\mathbf{0}$.
   \item Es un \textbf{operador lineal}:
@@ -1254,6 +1275,11 @@ Explícitamente:
 \]
 \end{definicion}
 
+\begin{observacion}
+La diagonal de $\mat{S}_x$ mide dispersión individual y los términos
+extradiagonales cuantifican dependencia lineal entre variables.
+\end{observacion}
+
 \subsubsection{Matriz de datos centrados}
 
 Se define la \textbf{matriz de datos centrados} (o puntuaciones diferenciales)
@@ -1288,22 +1314,21 @@ La \textbf{matriz de varianzas corregida} (estimación insesgada) es:
 \subsubsection{S es semidefinida positiva}
 
 \begin{proposicion}
-La matriz $\mat{S}$ es semidefinida positiva: $\mathbf{y}'\mat{S}\mathbf{y}\ge0$
-para todo vector $\mathbf{y}$.
+La matriz $\mat{S}$ es semidefinida positiva, es decir,
+$\mathbf{y}'\mat{S}\mathbf{y}\ge0$ para todo $\mathbf{y}\in\R^p$.
 \end{proposicion}
 
 \begin{proof}
-Sea $\mathbf{w}$ un vector cualquiera de dimensión $p$ y definamos la variable
-escalar $v_i = \mathbf{w}'(\mathbf{x}_i-\bar{\mathbf{x}})$. Su media es
-$\bar{v} = \frac{1}{n}\mathbf{w}'\sum_{i=1}^n(\mathbf{x}_i-\bar{\mathbf{x}}) = 0$
-y su varianza:
+Sea $\mathbf{w}\in\R^p$ y definamos la combinación lineal centrada
+$v_i=\mathbf{w}'(\mathbf{x}_i-\bar{\mathbf{x}})$. Su media es nula y su
+varianza muestral:
 \[
   \Var(v) = \frac{1}{n}\sum_{i=1}^n v_i^2
   = \frac{1}{n}\sum_{i=1}^n [\mathbf{w}'(\mathbf{x}_i-\bar{\mathbf{x}})]
     [(\mathbf{x}_i-\bar{\mathbf{x}})'\mathbf{w}] = \mathbf{w}'\mat{S}\mathbf{w} \ge 0.
 \]
-Al ser válido para cualquier vector $\mathbf{w}$, $\mat{S}$ es semidefinida
-positiva.
+Como toda varianza es no negativa y $\mathbf{w}$ es arbitrario,
+$\mat{S}$ es semidefinida positiva.
 \end{proof}
 
 Consecuencias:
@@ -1373,9 +1398,9 @@ una función $d(\mathbf{x}_i,\mathbf{x}_j)$ que satisface:
 \end{enumerate}
 \end{definicion}
 
-La distancia más utilizada es la \textbf{euclídea}, que depende de las
-unidades de medida. También se definen la euclídea ponderada, la de Minkowski,
-la de Mahalanobis y la distancia promedio.
+La distancia euclídea es la referencia geométrica básica, pero depende de
+escala y no incorpora correlaciones. Por ello, en multivariante se emplean
+también distancias ponderadas y, en particular, la de Mahalanobis.
 
 \begin{definicion}[Distancia de Mahalanobis]
 La distancia de Mahalanobis entre un punto $\mathbf{x}_i$ y el vector de
@@ -1385,8 +1410,8 @@ medias $\bar{\mathbf{x}}$ se define como:
   d_M = \sqrt{(\mathbf{x}_i-\bar{\mathbf{x}})'\mat{S}^{-1}(\mathbf{x}_i-\bar{\mathbf{x}})}.
 \]
 \end{mdframed}
-Tiene en cuenta la variabilidad y las correlaciones entre las variables,
-siendo invariante ante transformaciones lineales.
+Tiene en cuenta variabilidad y correlación, y es invariante frente a cambios
+lineales de coordenadas no singulares.
 \end{definicion}
 
 Para $p=2$, siendo $s_{1,2}=rs_1s_2$:
@@ -1863,6 +1888,10 @@ Correspondencias— cuyo objetivo es analizar la estructura de las correlaciones
 entre un gran número de variables mediante la definición de una serie de
 \emph{dimensiones subyacentes o factores}.
 
+Formalmente, ACP construye una base ortogonal adaptada a la nube de datos:
+ordena direcciones por varianza explicada y permite representar el problema en
+dimensión reducida con pérdida controlada.
+
 \begin{itemize}
   \item Es una \textbf{técnica de interdependencia}: se consideran todas las
         variables simultáneamente, cada una relacionada con todas las demás.
@@ -1876,6 +1905,10 @@ entre un gran número de variables mediante la definición de una serie de
   \item Los componentes suelen interpretarse como \textbf{factores
         responsables de la variabilidad observada}.
 \end{itemize}
+
+La idea geométrica central es proyectar los datos sobre subespacios de menor
+dimensión maximizando la varianza retenida (equivalentemente, minimizando error
+cuadrático de reconstrucción).
 
 \begin{nota}
 El origen de la técnica se debe a \textbf{Karl Pearson (1901)}, que la
@@ -1947,8 +1980,8 @@ $\mathbf{y}_1,\mathbf{y}_2,\dots,\mathbf{y}_p$ que:
         \sum_{i=1}^p\operatorname{var}(\mathbf{x}_i)$.
 \end{enumerate}
 
-Suponemos que hemos centrado las variables (media 0) $\Rightarrow$ la matriz
-$\mathbf{X}$ tiene media 0 y matriz de covarianzas $\frac{1}{n}\mathbf{X}'\mathbf{X}$.
+Suponemos variables centradas (media 0), de modo que
+$\mathbf{X}$ tiene covarianza $\frac{1}{n}\mathbf{X}'\mathbf{X}$.
 Se trata de encontrar un \textbf{subespacio de dimensión menor que $p$} tal
 que, al proyectar sobre él los puntos, conserven su estructura con la menor
 distorsión posible (distancias entre puntos originales y proyecciones lo más
@@ -1992,9 +2025,8 @@ maximizar su varianza}.
 
 \subsection{Cálculo del primer componente}
 
-Buscamos una combinación lineal $\mathbf{z}_1=\mathbf{X}\mathbf{a}_1$ de las
-variables originales que tenga \textbf{varianza máxima}. Como $\mathbf{z}_1$
-tiene media 0:
+Buscamos una combinación lineal $\mathbf{z}_1=\mathbf{X}\mathbf{a}_1$ con
+\textbf{varianza máxima}. Como $\mathbf{z}_1$ tiene media 0:
 \[
   \operatorname{var}(\mathbf{z}_1)
   = \frac{1}{n}\mathbf{z}_1'\mathbf{z}_1
@@ -2027,6 +2059,10 @@ Para maximizarla, $\lambda$ debe ser el \textbf{mayor valor propio de $\mat{S}$}
 y $\mathbf{a}_1$ su vector asociado define los coeficientes de cada variable
 en el primer componente principal.
 \end{mdframed}
+
+Este paso conecta de forma directa optimización y espectro de $\mat{S}$:
+maximizar varianza bajo restricción de norma equivale a seleccionar el
+autovector principal.
 
 \begin{proposicion}[Caracterización variacional del primer componente]
 El primer componente principal maximiza el cociente de Rayleigh:
@@ -2210,6 +2246,14 @@ componentes}, con lo que la expresión se reduce a:
 siendo $r_{ij}$ el coeficiente de correlación $\Rightarrow$ la solución
 depende de las \emph{correlaciones}, no de las varianzas.
 
+En términos prácticos:
+\begin{itemize}
+  \item ACP sobre $\mat{S}$ responde a la pregunta ``qué direcciones maximizan
+        variabilidad absoluta''.
+  \item ACP sobre $\mat{R}$ responde a ``qué direcciones maximizan estructura
+        correlacional, eliminando efecto de escala''.
+\end{itemize}
+
 \begin{mdframed}[style=resultado]
 \begin{itemize}
   \item Si las variables originales están en \textbf{distintas unidades},
@@ -2252,6 +2296,10 @@ las variables originales y los componentes principales. Se calcula como:
 donde $\mat{A}$ es la matriz de autovectores normalizados de la matriz
 analizada y $\boldsymbol{\Lambda}$ la matriz diagonal de autovalores.
 \end{definicion}
+
+Interpretativamente, cada carga factorial es una correlación variable--
+componente: magnitud alta implica fuerte asociación de la variable con el eje
+latente correspondiente.
 
 \begin{itemize}
   \item Cada \textbf{fila} representa una variable original.
@@ -2530,9 +2578,10 @@ $\pi_1,\pi_2$ ($\pi_1+\pi_2=1$). Para un nuevo elemento $\mathbf{x}_0$:
   \varitem{P(\mathcal{P}_i\mid\mathbf{x}_0)}{probabilidad a posteriori de pertenecer a la clase $i$}
 \end{variablesprimera}
 
-Regla bayesiana básica: asignar $\mathbf{x}_0$ al grupo con mayor
-probabilidad a posteriori; equivalentemente, al grupo que maximiza
-$\pi_i f_i(\mathbf{x}_0)$.
+Regla bayesiana básica: asignar $\mathbf{x}_0$ al grupo con mayor probabilidad
+a posteriori; equivalentemente, al grupo que maximiza
+$\pi_i f_i(\mathbf{x}_0)$. Esta equivalencia permite pasar de una regla
+probabilística a una regla operativa de decisión.
 
 \subsubsection{Regla con costes de clasificación}
 
@@ -2578,7 +2627,8 @@ con \textbf{misma} matriz $\boldsymbol{\Sigma}$:
   \boldsymbol{\Sigma}^{-1}(\mathbf{x}-\boldsymbol{\mu}_i)\right\}.
 \]
 
-La regla de decisión es lineal en $\mathbf{x}$ usando las funciones:
+Bajo normalidad multivariante y covarianza común, la frontera de decisión se
+vuelve lineal en $\mathbf{x}$ usando las funciones:
 \begin{mdframed}[style=resultado]
 \[
   \delta_i(\mathbf{x})=
@@ -2711,7 +2761,9 @@ Para $\mathbf{x}_0=(2.1,\,0.75)'$:
   D_A^2(\mathbf{x}_0)\approx0.520,\qquad
   D_B^2(\mathbf{x}_0)\approx0.813.
 \]
-Como $D_A^2<D_B^2$, se clasifica en el grupo $A$.
+Como $D_A^2<D_B^2$, se clasifica en el grupo $A$. El ejemplo ilustra que la
+regla no se basa en distancia euclídea, sino en distancia reescalada por la
+estructura de covarianza común.
 
 Si $\pi_A=\pi_B$:
 \[
@@ -2806,9 +2858,10 @@ un hiperplano.
 
 \subsection{Caso de dos grupos}
 
-Fisher plantea hallar una proyección escalar $z=\boldsymbol{\alpha}'\mathbf{x}$
-que maximice la separación entre medias de grupo relativa a su dispersión
-interna.
+El criterio de Fisher puede leerse como una reformulación geométrica del
+objetivo bayesiano gaussiano: hallar una proyección escalar
+$z=\boldsymbol{\alpha}'\mathbf{x}$ que maximice separación intergrupos
+relativa a dispersión intragrupo.
 
 Con medias muestrales $\bar{\mathbf{x}}_1,\bar{\mathbf{x}}_2$ y matriz
 intra-grupos agrupada $\mat{S}_w$, el criterio es:
@@ -2920,6 +2973,9 @@ Para una observación $\mathbf{x}$:
         al centroide más próximo (normalmente distancia euclídea en ese espacio).
 \end{itemize}
 
+Geométricamente, la transformación canónica busca un espacio de dimensión baja
+donde los centroides queden lo más separados posible con métrica intragrupo.
+
 \begin{observacion}
 Las variables canónicas quedan ordenadas por potencia discriminante
 (autovalores decrecientes) y son incorreladas respecto a la métrica
@@ -3013,6 +3069,10 @@ Supuestos clásicos del ADL:
         ($\boldsymbol{\Sigma}_1=\cdots=\boldsymbol{\Sigma}_G$).
   \item Independencia muestral y ausencia de colinealidad extrema.
 \end{itemize}
+
+Estas hipótesis no deben leerse como formalidad: delimitan el régimen donde la
+regla lineal es teóricamente óptima. Su comprobación condiciona la validez del
+modelo y la interpretación de resultados.
 
 Si la homogeneidad de covarianzas falla claramente, suele considerarse QDA.
 Si la normalidad es débil, pueden funcionar bien transformaciones y/o métodos

@@ -259,48 +259,36 @@
 
 \subsection{Introducción}
 
-La óptica es la rama de la física que estudia la naturaleza y el comportamiento
-de la luz: cómo se genera, cómo se propaga en el espacio y en la materia, y cómo
-interacciona con los cuerpos materiales para producir fenómenos observables. A
-pesar de la aparente sencillez de esta descripción, la física de la luz abarca
-fenómenos de gran riqueza y profundidad, y su estudio ha sido históricamente
-uno de los motores del desarrollo de la física teórica moderna.
+La óptica estudia la generación, propagación e interacción de la luz con la
+materia. Aunque esta formulación es breve, engloba problemas de enorme
+contenido físico y matemático, y ha sido una vía central de unificación en la
+física moderna.
 
-En función de la escala espacial y del fenómeno considerado, se emplean tres
-modelos de la luz jerárquicamente relacionados:
+Según la escala espacial y el fenómeno de interés, se emplean tres niveles de
+descripción jerárquicamente relacionados:
 
 \begin{description}
-  \item[\textbf{Óptica geométrica.}] Trata la luz como \emph{rayos rectos} que
-        se propagan según el principio de Fermat del camino óptico mínimo. Es
-        una aproximación válida cuando la longitud de onda $\lambda$ es mucho
-        menor que las dimensiones características del sistema óptico
-        ($\lambda \ll a$), de modo que los efectos ondulatorios pueden ignorarse.
-        Es la base del diseño de instrumentos ópticos como lentes, telescopios
-        y microscopios.
+  \item[\textbf{Óptica geométrica.}] Modela la luz como \emph{rayos} y usa el
+        principio de Fermat. Es adecuada cuando $\lambda \ll a$ (longitud de
+        onda mucho menor que la escala geométrica del sistema), de modo que la
+        difracción y la interferencia pueden despreciarse en primera
+        aproximación.
 
-  \item[\textbf{Óptica electromagnética (u ondulatoria).}] Trata la luz como
-        una \emph{onda electromagnética} descrita por las ecuaciones de Maxwell.
-        Permite explicar fenómenos de carácter estrictamente ondulatorio como la
-        difracción, la interferencia y la polarización, que escapan
-        completamente a la descripción geométrica. Cuando $\lambda \sim a$, los
-        efectos ondulatorios son ineludibles. Es la perspectiva adoptada en
-        estos apuntes. Aplicaciones: láseres, espectroscopia, fibra óptica,
-        óptica integrada.
+  \item[\textbf{Óptica electromagnética (u ondulatoria).}] Describe la luz como
+        una \emph{onda electromagnética} que satisface las ecuaciones de
+        Maxwell. Es imprescindible cuando $\lambda \sim a$, y explica de forma
+        natural fenómenos como difracción, interferencia y polarización.
 
-  \item[\textbf{Óptica cuántica.}] Estudia la interacción luz-materia a nivel
-        cuántico: los fotones son los cuantos del campo electromagnético, y la
-        dualidad onda-partícula es inherente a la descripción. Esta capa
-        teórica se vuelve imprescindible para explicar el efecto fotoeléctrico,
-        la emisión espontánea y estimulada, y los estados no clásicos de la luz.
-        Aplicaciones: computación cuántica, criptografía cuántica, metrología
-        de precisión.
+  \item[\textbf{Óptica cuántica.}] Introduce el carácter cuántico del campo y
+        de la materia (fotones, cuantización, estadística cuántica) cuando la
+        descripción clásica deja de ser suficiente, por ejemplo en emisión
+        espontánea, efecto fotoeléctrico o estados no clásicos de la luz.
 \end{description}
 
-Estos tres modelos no son excluyentes: la óptica geométrica emerge como límite
-de longitud de onda corta de la óptica electromagnética (límite $\lambda \to 0$),
-y la óptica electromagnética emerge como límite clásico de la óptica cuántica.
-En este tema nos centramos en la \textbf{óptica electromagnética}: la luz como
-onda que satisface las ecuaciones de Maxwell en el vacío.
+Estos marcos no compiten: la óptica geométrica es el límite de alta frecuencia
+de la óptica ondulatoria, y esta aparece como límite clásico de la óptica
+cuántica. En este tema adoptaremos la descripción electromagnética y fijaremos
+el punto de partida formal en las ecuaciones de Maxwell.
 
 % ══════════════════════════════════════════════════════════════════════════
 \subsection{Ecuaciones de Maxwell}
@@ -327,16 +315,17 @@ y la \emph{permitividad eléctrica} $\varepsilon_0 = 1/(\mu_0 c^2) \approx
 Los campos $\ve{E}(\ve{r},t)$ y $\ve{B}(\ve{r},t)$ son funciones vectoriales
 del punto del espacio $\ve{r}$ y del tiempo $t$.
 
-Cada ecuación tiene un significado físico preciso:
+Cada ecuación cumple un papel físico específico y complementario:
 \begin{itemize}
-  \item \eqref{eq:maxwell1}: ley de Gauss — las cargas son fuente del campo
-        eléctrico.
-  \item \eqref{eq:maxwell2}: inexistencia de monopolos magnéticos — las líneas
-        de $\ve{B}$ son siempre cerradas.
-  \item \eqref{eq:maxwell3}: ley de Faraday — un campo magnético variable
-        induce un campo eléctrico rotacional.
-  \item \eqref{eq:maxwell4}: ley de Ampère-Maxwell — las corrientes y el campo
-        eléctrico variable son fuentes del campo magnético.
+  \item \eqref{eq:maxwell1} (\textbf{Gauss eléctrica}): la divergencia de
+        $\ve{E}$ queda fijada por la densidad de carga.
+  \item \eqref{eq:maxwell2} (\textbf{Gauss magnética}): el campo magnético no
+        tiene fuentes escalares aisladas (no hay monopolos magnéticos
+        observados), de modo que $\div\ve{B}=0$.
+  \item \eqref{eq:maxwell3} (\textbf{Faraday}): una variación temporal de
+        $\ve{B}$ genera circulación de $\ve{E}$.
+  \item \eqref{eq:maxwell4} (\textbf{Ampère-Maxwell}): corrientes de conducción
+        y variaciones temporales de $\ve{E}$ generan circulación de $\ve{B}$.
 \end{itemize}
 \end{definicion}
 
@@ -350,12 +339,11 @@ velocidad $\ve{v}$ es:
 \end{definicion}
 
 \begin{observacion}
-Las cargas y corrientes variables en el tiempo generan campos $\ve{E}$ y $\ve{B}$;
-a su vez, campos variables crean cargas efectivas y corrientes de desplazamiento.
-Esta dependencia mutua es la responsable de la posibilidad de propagación de
-perturbaciones electromagnéticas en ausencia de fuentes: la variación de
-$\ve{B}$ genera $\ve{E}$ [ec.~\eqref{eq:maxwell3}], y la variación de $\ve{E}$
-genera $\ve{B}$ [ec.~\eqref{eq:maxwell4}], cerrando el ciclo.
+La estructura acoplada de \eqref{eq:maxwell3} y \eqref{eq:maxwell4} es la clave
+de la propagación electromagnética: una variación temporal de $\ve{B}$ induce
+rotacional de $\ve{E}$ y, recíprocamente, una variación temporal de $\ve{E}$
+induce rotacional de $\ve{B}$. En ausencia de fuentes locales, este acoplamiento
+permite la propagación autosostenida de perturbaciones de campo.
 \end{observacion}
 
 \begin{nota}
@@ -371,11 +359,10 @@ Einstein el desarrollo de la relatividad especial.
 \subsubsection{Ecuaciones de Maxwell en el vacío}
 
 En el vacío no hay cargas libres ni corrientes: $\rho=0$, $\ve{j}=\ve{0}$.
-Dado que aquí nos interesa estudiar la \emph{propagación} de los campos
-en el espacio libre —y no el problema de la generación— esta simplificación
-es la adecuada. Las fuentes (antenas, átomos excitados, etc.) se sitúan
-en una región acotada del espacio; lejos de ellas, los campos satisfacen
-las ecuaciones homogéneas siguientes.
+Este paso no es una simplificación arbitraria: separa con claridad el
+\emph{problema de generación} (región con fuentes) del \emph{problema de
+propagación} (región libre de fuentes). Lejos de antenas, dipolos o cargas en
+movimiento, los campos satisfacen las ecuaciones homogéneas siguientes.
 
 \begin{proposicion}[Ecuaciones de Maxwell en el vacío]
 Con $\rho=0$ y $\ve{j}=\ve{0}$, las
@@ -422,71 +409,62 @@ onda~\eqref{eq:onda} con velocidad $c = 1/\sqrt{\mu_0\varepsilon_0}
 \end{teorema}
 
 \begin{proof}
-Aplicamos el operador $\curl$ a ambos miembros de la ecuación~\eqref{eq:vac3}:
+\textbf{Paso 1 (ecuación para $\ve{E}$).} Aplicamos $\curl$ a
+\eqref{eq:vac3}:
 \[
-  \curl(\curl\ve{E}) + \curl\!\left(\pdv{\ve{B}}{t}\right) = \ve{0}.
+  \curl(\curl\ve{E})+\curl\!\left(\pdv{\ve{B}}{t}\right)=\ve{0}.
 \]
-Dado que los operadores $\curl$ y $\partial/\partial t$ actúan sobre variables
-independientes (espacio y tiempo, respectivamente), conmutan bajo las condiciones
-de regularidad del campo:
+Bajo hipótesis de regularidad, $\curl$ conmuta con $\partial/\partial t$:
 \[
-  \curl(\curl\ve{E}) + \pdv{}{t}(\curl\ve{B}) = \ve{0}.
+  \curl(\curl\ve{E})+\pdv{}{t}(\curl\ve{B})=\ve{0}.
 \]
-Aplicamos ahora la identidad vectorial del doble rotacional,
-$\curl(\curl\ve{F}) = \grad(\div\ve{F}) - \nabla^2\ve{F}$, válida para cualquier
-campo vectorial suficientemente regular:
+Usamos la identidad del doble rotacional
+$\curl(\curl\ve{F})=\grad(\div\ve{F})-\nabla^2\ve{F}$:
 \[
-  \grad(\div\ve{E}) - \nabla^2\ve{E}
-  + \pdv{}{t}(\curl\ve{B}) = \ve{0}.
+  \grad(\div\ve{E})-\nabla^2\ve{E}+\pdv{}{t}(\curl\ve{B})=\ve{0}.
 \]
-En el vacío, la ecuación~\eqref{eq:vac1} establece $\div\ve{E}=0$, por lo que
-el primer término desaparece. Sustituyendo $\curl\ve{B}$ mediante la
-ecuación~\eqref{eq:vac4}:
+Como en vacío $\div\ve{E}=0$ por \eqref{eq:vac1}, desaparece el término de
+gradiente. Sustituyendo $\curl\ve{B}=\mu_0\varepsilon_0\,\partial_t\ve{E}$ por
+\eqref{eq:vac4}:
 \[
-  -\nabla^2\ve{E} + \mu_0\varepsilon_0\pdv[2]{\ve{E}}{t} = \ve{0}.
+  -\nabla^2\ve{E}+\mu_0\varepsilon_0\,\pdv[2]{\ve{E}}{t}= \ve{0}
+  \quad\Longrightarrow\quad
+  \nabla^2\ve{E}-\frac{1}{c^2}\pdv[2]{\ve{E}}{t}= \ve{0},
 \]
-Identificando la constante $c^2 = 1/(\mu_0\varepsilon_0)$, que tiene dimensiones
-de velocidad al cuadrado, se obtiene:
-\[
-  \nabla^2\ve{E} - \frac{1}{c^2}\pdv[2]{\ve{E}}{t}= \ve{0}.
-\]
+donde $c^{-2}=\mu_0\varepsilon_0$.
 
-Para $\ve{B}$ se procede de forma análoga pero partiendo de~\eqref{eq:vac4}:
+\textbf{Paso 2 (ecuación para $\ve{B}$).} Partimos de \eqref{eq:vac4}:
 \[
-  \curl\ve{B} - \mu_0\varepsilon_0\pdv{\ve{E}}{t}= \ve{0}.
+  \curl\ve{B}-\mu_0\varepsilon_0\pdv{\ve{E}}{t}=\ve{0}.
 \]
-Aplicando $\curl$ y usando la conmutatividad con $\partial/\partial t$:
+Aplicamos $\curl$:
 \[
-  \curl(\curl\ve{B}) - \mu_0\varepsilon_0\pdv{}{t}(\curl\ve{E})=\ve{0}.
+  \curl(\curl\ve{B})-\mu_0\varepsilon_0\pdv{}{t}(\curl\ve{E})=\ve{0}.
 \]
-Aplicamos de nuevo la identidad del doble rotacional y sustituimos
-$\curl\ve{E} = -\partial\ve{B}/\partial t$ [ec.~\eqref{eq:vac3}]:
+De nuevo, identidad del doble rotacional:
 \[
   \grad(\div\ve{B})-\nabla^2\ve{B}
-  +\mu_0\varepsilon_0\pdv[2]{\ve{B}}{t}=\ve{0}.
+  -\mu_0\varepsilon_0\pdv{}{t}\!\left(\pdv{\ve{B}}{t}\right)=\ve{0},
 \]
-En el vacío, $\div\ve{B}=0$ por~\eqref{eq:vac2}, por lo que:
+donde usamos \eqref{eq:vac3}, $\curl\ve{E}=-\partial_t\ve{B}$. Como
+$\div\ve{B}=0$ por \eqref{eq:vac2}, resulta
 \[
-  \nabla^2\ve{B} - \frac{1}{c^2}\pdv[2]{\ve{B}}{t}= \ve{0}.
+  \nabla^2\ve{B}-\frac{1}{c^2}\pdv[2]{\ve{B}}{t}= \ve{0}.
 \]
 \end{proof}
 
 \begin{observacion}
-De este teorema se desprenden tres conclusiones fundamentales de alcance
-histórico y físico:
+Este teorema fija tres conclusiones estructurales para el resto del curso:
 \begin{enumerate}
-  \item La luz es una onda que se propaga a partir de las fuentes que la generan.
-  \item La luz puede propagarse en el vacío absoluto; no requiere ningún medio
-        material de soporte (\emph{éter}), lo que resultó incompatible con la
-        mecánica newtoniana clásica y motivó la relatividad especial.
-  \item La luz es una onda \textbf{vectorial}: ambos campos $\ve{E}$ y $\ve{B}$
-        son vectores, y su estado de vibración (polarización) es esencial para
-        describir completamente la onda.
+  \item La radiación electromagnética se propaga como onda.
+  \item La propagación en vacío es posible sin medio material soporte.
+  \item La onda es vectorial: la polarización forma parte de su descripción
+        física esencial.
 \end{enumerate}
-La velocidad de propagación en el vacío, $c = 1/\sqrt{\mu_0\varepsilon_0}
-\approx 2{,}998\times10^8\ \mathrm{m/s}$, se obtiene únicamente a partir de
-las constantes eléctricas y magnéticas del vacío, lo que subraya la unificación
-conceptual que implican las ecuaciones de Maxwell.
+Además, la velocidad
+$c=1/\sqrt{\mu_0\varepsilon_0}\approx2{,}998\times10^8\ \mathrm{m/s}$ queda
+determinada por constantes electromagnéticas, cerrando la identificación entre
+luz y campo electromagnético.
 \end{observacion}
 
 % ══════════════════════════════════════════════════════════════════════════
@@ -507,10 +485,10 @@ posición, por ejemplo en una onda esférica), $\delta_j(\ve{r})$ es la
 \emph{frecuencia angular} (rad/s), $\nu = 1/T$ la \emph{frecuencia} (Hz) y
 $T$ el \emph{periodo temporal}.
 
-La onda se extiende en principio por todo el espacio y todo el tiempo; una
-fuente monocromática perfecta sería por tanto idealizada. En la práctica,
-todo láser o fuente de luz tiene un ancho espectral finito, pero la
-aproximación monocromática es excelente en muchos contextos de óptica.
+La monocromaticidad estricta es una idealización (fuente infinita en tiempo y
+con ancho espectral nulo). En la práctica toda fuente posee banda finita, pero
+la aproximación armónica es extremadamente útil cuando dicho ancho es pequeño
+frente a las escalas espectrales del problema.
 \end{definicion}
 
 \begin{proposicion}[Condición de armonicidad]
@@ -518,10 +496,10 @@ Una onda es armónica de frecuencia $\omega$ si y solo si satisface:
 \begin{equation}
   \pdv[2]{E}{t} = -\omega^2 E. \label{eq:armonicacond}
 \end{equation}
-Esta condición algebraica es la base del método de resolución de ecuaciones
-diferenciales para campos armónicos: sustituyendo $\partial/\partial t \to i\omega$
-(o $-i\omega$ según la convención de signo) las ecuaciones diferenciales parciales
-se reducen a ecuaciones algebraicas en el dominio frecuencial.
+Esta condición es la base del tratamiento frecuencial: en ecuaciones lineales
+con dependencia temporal armónica, $\partial_t$ puede sustituirse por
+$i\omega$ (o $-i\omega$, según convención), reduciendo el problema diferencial
+a uno algebraico en amplitudes complejas.
 \end{proposicion}
 
 \begin{proof}
@@ -554,13 +532,10 @@ forma~\eqref{eq:armonicacomp}.
 \end{proof}
 
 \begin{observacion}
-Las ondas armónicas tienen una importancia que va más allá de su sencillez
-analítica: por el \textbf{teorema de Fourier}, cualquier función de cuadrado
-integrable puede descomponerse como superposición (integral) de funciones
-armónicas de distintas frecuencias. Por tanto, las ondas armónicas forman una
-\emph{base completa}: el estudio de la propagación de ondas monocromáticas
-es suficiente para entender, mediante superposición, la propagación de
-cualquier señal óptica arbitraria.
+La relevancia de las ondas armónicas no es solo técnica: por el formalismo de
+Fourier, señales físicamente admisibles pueden descomponerse en superposición
+de componentes monocromáticas. Por linealidad, resolver el problema armónico
+permite reconstruir la evolución de señales generales.
 \end{observacion}
 
 \subsubsection{Espectro electromagnético}
@@ -607,41 +582,36 @@ tabla siguiente.
 % ══════════════════════════════════════════════════════════════════════════
 
 \begin{definicion}[Representación compleja]
-Por la fórmula de Euler, $e^{i\alpha} = \cos\alpha + i\sin\alpha$, cualquier
-onda armónica real puede escribirse como la parte real de una exponencial
-compleja. Para el campo eléctrico:
+Por la identidad de Euler, toda onda armónica real puede representarse como
+parte real de una cantidad compleja. Para el campo eléctrico:
 \begin{equation}
   E_j(\ve{r},t)
   = \operatorname{Re}\!\left[A_j(\ve{r})\,e^{-i\delta_j(\ve{r})}\,e^{i\omega t}\right]
   = \operatorname{Re}\!\left[\widetilde{E}_j(\ve{r})\,e^{i\omega t}\right],
   \label{eq:compleja}
 \end{equation}
-donde $\widetilde{E}_j(\ve{r}) = A_j(\ve{r})\,e^{-i\delta_j(\ve{r})}$ es la
-\emph{amplitud compleja} o \emph{fasorial}, que codifica simultáneamente la
-amplitud real y la fase del campo en cada punto. En los cálculos se trabaja
-con la amplitud compleja completa; la parte real se extrae solo al final para
-obtener la magnitud física.
+donde:
+\begin{itemize}
+  \item $E_j(\ve{r},t)$ es el \textbf{campo real} medible;
+  \item $\widetilde{E}_j(\ve{r})=A_j(\ve{r})e^{-i\delta_j(\ve{r})}$ es la
+        \textbf{amplitud compleja} (fasor espacial);
+  \item $\widetilde{E}_j(\ve{r})\,e^{i\omega t}$ es la representación compleja
+        temporal completa.
+\end{itemize}
+Durante el cálculo se opera con la representación compleja y al final se toma
+$\Re\{\cdot\}$ para recuperar la magnitud física.
 \end{definicion}
 
 \begin{proposicion}[Validez y limitaciones de la representación compleja]
 \begin{itemize}
-  \item[\checkmark] La derivada e integral de una exponencial compleja sigue
-        siendo una exponencial compleja (solo cambia la potencia de $i\omega$):
-        $\partial/\partial t \mapsto i\omega$.
-  \item[\checkmark] Es válida para cualquier operación \emph{lineal} (sumas,
-        derivadas, integrales), gracias a la linealidad del operador parte real:
-        \[
-          \operatorname{Re}(A+B)=\operatorname{Re}(A)+\operatorname{Re}(B).
-        \]
-  \item[$\boldsymbol{\times}$] \textbf{No es válida} para operaciones no lineales
-        como el producto —esencial en cantidades cuadráticas en el campo, como
-        la intensidad o el vector de Poynting—:
-        \[
-          \operatorname{Re}(A\cdot B)\neq\operatorname{Re}(A)\cdot\operatorname{Re}(B).
-        \]
-        Para cantidades cuadráticas se debe volver a los campos reales, o bien
-        utilizar la fórmula de promedio temporal para campos armónicos (véase la
-        sección de intensidad).
+  \item[\checkmark] Es exacta para operadores lineales (suma, derivación,
+        integración, ecuaciones lineales con coeficientes reales).
+  \item[\checkmark] En régimen armónico, $\partial_t \mapsto i\omega$ simplifica
+        de forma sistemática la resolución.
+  \item[$\boldsymbol{\times}$] No puede aplicarse de forma ingenua en magnitudes
+        no lineales (productos y módulos cuadrados): intensidad, energía media
+        y vector de Poynting requieren fórmulas de promedio adecuadas o volver
+        al campo real.
 \end{itemize}
 \end{proposicion}
 
@@ -908,6 +878,12 @@ un triedro ortonormal (salvo factor de escala): $\ve{E}$, $\ve{B}$,
 $\uvec{k} = \ve{k}/k$.
 \end{proof}
 
+\begin{observacion}
+La transversalidad implica que la dinámica del campo eléctrico ocurre en el
+plano perpendicular a $\ve{k}$; por eso la polarización se describe en ese
+plano y no en la dirección de propagación.
+\end{observacion}
+
 \begin{proposicion}[Relación de dispersión]
 El módulo del vector de onda de una OAP en el vacío satisface:
 \begin{equation}
@@ -953,6 +929,11 @@ Usando:
 \]
 \end{proof}
 
+\begin{observacion}
+La ecuación \eqref{eq:dispersion} fija la cinemática de fase en el vacío:
+frecuencia y número de onda no son independientes para una OAP física.
+\end{observacion}
+
 \begin{proposicion}[Relación entre amplitudes]
 Las amplitudes de los campos eléctrico y magnético en una OAP satisfacen:
 \begin{equation}
@@ -971,7 +952,7 @@ De la ley de Faraday en forma algebraica para la OAP:
   \omega\ve{B}=\ve{k}\times\ve{E}.
 \]
 Como $\ve{k}\perp\ve{E}$, el módulo del producto vectorial es
-$|\ve{k}\times\ve{E}| = k\,E\sin(90°) = kE$, luego:
+$|\ve{k}\times\ve{E}| = k\,E\sin(90^\circ) = kE$, luego:
 \[
   \omega B = kE.
 \]
@@ -981,6 +962,12 @@ Usando la relación de dispersión $k = \omega/c$:
 \]
 lo que equivale a~\eqref{eq:amplitudes}.
 \end{proof}
+
+\begin{observacion}
+El cociente $E/B=c$ expresa que ambos campos contienen la misma información
+ondulatoria; en óptica experimental suele bastar con medir $\ve{E}$ y deducir
+$\ve{B}$ a partir de \eqref{eq:amplitudes}.
+\end{observacion}
 
 \begin{figure}[H]
   \centering
@@ -1005,19 +992,16 @@ lo que equivale a~\eqref{eq:amplitudes}.
 % ══════════════════════════════════════════════════════════════════════════
 
 \begin{definicion}[Polarización]
-La \emph{polarización} describe el estado de vibración del vector campo eléctrico
-en una OAP: concretamente, la figura geométrica que traza el extremo de $\ve{E}$
-en un plano transversal fijo a medida que transcurre el tiempo. Para propagación
-en la dirección $z$, la transversalidad~\eqref{eq:transversal} impone $E_z=0$,
-de modo que $\ve{E}$ está confinado al plano $XY$. Eligiendo convenientemente la
-referencia de fase de modo que $\delta_x=0$ y definiendo $\delta=\delta_y-\delta_x$:
+La \emph{polarización} de una OAP es la trayectoria que describe el extremo de
+$\ve{E}$ en un plano transversal fijo. Para propagación según $z$,
+\eqref{eq:transversal} impone $E_z=0$, de modo que la trayectoria se estudia en
+el plano $XY$. Tomando $\delta_x=0$ y $\delta=\delta_y-\delta_x$:
 \begin{equation}
   E_x = E_{0x}\cos(\omega t - kz), \qquad
   E_y = E_{0y}\cos(\omega t - kz + \delta). \label{eq:polcomps}
 \end{equation}
-El estado de polarización queda completamente determinado por dos parámetros:
-el cociente de amplitudes $E_{0y}/E_{0x}$ y la diferencia de fase $\delta \in
-(-\pi, \pi]$.
+El estado de polarización queda determinado por el cociente
+$E_{0y}/E_{0x}$ y la fase relativa $\delta\in(-\pi,\pi]$.
 \end{definicion}
 
 \subsubsection{Elipse de polarización}
@@ -1033,53 +1017,38 @@ Eliminando el argumento temporal de~\eqref{eq:polcomps}:
 \end{proposicion}
 
 \begin{proof}
-De~\eqref{eq:polcomps}:
+Definimos $\phi=\omega t-kz$. De \eqref{eq:polcomps}:
 \[
-  \cos(\omega t-kz)=\frac{E_x}{E_{0x}}.
+  \frac{E_x}{E_{0x}}=\cos\phi,
+  \qquad
+  \frac{E_y}{E_{0y}}=\cos(\phi+\delta)
+  =\cos\phi\cos\delta-\sin\phi\sin\delta.
 \]
-Expandiendo $E_y$:
+\textbf{Sustitución y despeje:}
 \[
-  \frac{E_y}{E_{0y}} = \frac{E_x}{E_{0x}}\cos\delta
-  - \sin(\omega t-kz)\sin\delta.
+  \frac{E_y}{E_{0y}}-\frac{E_x}{E_{0x}}\cos\delta
+  =-\sin\phi\sin\delta.
 \]
-Despejando el seno y elevando al cuadrado:
 \[
-  \sin^2(\omega t-kz)
-  = \frac{1}{\sin^2\!\delta}
-    \!\left(\frac{E_y}{E_{0y}}-\frac{E_x}{E_{0x}}\cos\delta\right)^{\!2}.
+  \sin^2\phi
+  =\frac{1}{\sin^2\delta}
+   \left(
+     \frac{E_y}{E_{0y}}-\frac{E_x}{E_{0x}}\cos\delta
+   \right)^2.
 \]
-Usando la identidad:
+\textbf{Identidad trigonométrica:}
 \[
-  \sin^2\phi+\cos^2\phi=1,
-\]
-sustituimos:
-\[
-  \cos\phi=\frac{E_x}{E_{0x}},
-\]
-y obtenemos:
-\[
+  \sin^2\phi+\cos^2\phi=1
+  \quad\Longrightarrow\quad
   1-\left(\frac{E_x}{E_{0x}}\right)^2
-  = \frac{1}{\sin^2\!\delta}
-    \left(\frac{E_y}{E_{0y}}-\frac{E_x}{E_{0x}}\cos\delta\right)^2.
+  =\frac{1}{\sin^2\delta}
+   \left(
+     \frac{E_y}{E_{0y}}-\frac{E_x}{E_{0x}}\cos\delta
+   \right)^2.
 \]
-Multiplicando por $\sin^2\delta$:
-\[
-  \sin^2\delta-\sin^2\delta\left(\frac{E_x}{E_{0x}}\right)^2
-  = \left(\frac{E_y}{E_{0y}}\right)^2
-  +\left(\frac{E_x}{E_{0x}}\right)^2\cos^2\delta
-  -2\frac{E_xE_y}{E_{0x}E_{0y}}\cos\delta.
-\]
-Reordenando términos y usando:
-\[
-  \sin^2\delta+\cos^2\delta=1,
-\]
-\[
-  \left(\frac{E_x}{E_{0x}}\right)^2
-  +\left(\frac{E_y}{E_{0y}}\right)^2
-  -2\frac{E_xE_y}{E_{0x}E_{0y}}\cos\delta
-  = \sin^2\delta.
-\]
-que es~\eqref{eq:elipse}.
+Multiplicando por $\sin^2\delta$, expandiendo y usando
+$\sin^2\delta+\cos^2\delta=1$, se obtiene exactamente
+\eqref{eq:elipse}.
 \end{proof}
 
 \subsubsection{Vector de Jones}
@@ -1136,6 +1105,8 @@ La pendiente de esa recta es:
   \tan\alpha=\pm\frac{E_{0y}}{E_{0x}}.
 \]
 \end{proof}
+Geométricamente, el extremo de $\ve{E}$ recorre una recta fija en el plano
+transversal.
 
 \paragraph{Polarización circular}
 
@@ -1164,6 +1135,8 @@ Entonces, la ecuación~\eqref{eq:elipse} queda:
 \]
 Esta es una circunferencia de radio $E_0$.
 \end{proof}
+Geométricamente, el extremo de $\ve{E}$ recorre una circunferencia y el
+sentido de giro viene dado por el signo de $\delta$.
 
 \paragraph{Polarización elíptica}
 
@@ -1178,6 +1151,8 @@ $\delta=(2m+1)\pi/2$:
   \label{eq:jones_elip}
 \end{equation}
 \end{proposicion}
+Geométricamente, el extremo de $\ve{E}$ recorre una elipse cuyos semiejes y
+helicidad dependen del cociente de amplitudes y de la fase relativa.
 
 \paragraph{Luz despolarizada}
 
@@ -1284,7 +1259,8 @@ cuadrado de la amplitud del campo eléctrico.
 \end{proposicion}
 
 \begin{proof}
-Partimos de:
+Partimos del campo real instantáneo, pues
+\eqref{eq:poynting} es una magnitud cuadrática:
 \[
   \ve{B}=\frac{1}{\omega}\,\ve{k}\times\ve{E}.
 \]
@@ -1300,14 +1276,14 @@ Usando esta relación en el vector de Poynting:
 Para una OAP real:
 \[
   E(t)=E_0\cos(\omega t-\ve{k}\cdot\ve{r})
-  \quad\Rightarrow\quad
+  \;\Rightarrow\;
   E^2(t)=E_0^2\cos^2(\omega t-\ve{k}\cdot\ve{r}).
 \]
-Entonces:
+Luego el módulo instantáneo del flujo es:
 \[
   S(t)=\frac{k}{\mu_0\omega}E_0^2\cos^2(\omega t-\ve{k}\cdot\ve{r}).
 \]
-Promediando en un periodo:
+Al promediar en un período, $\langle\cos^2\rangle=1/2$:
 \[
   \langle S\rangle = \frac{k}{\mu_0\omega}E_0^2\langle\cos^2\rangle
   = \frac{k}{\mu_0\omega}E_0^2\cdot\frac{1}{2}
@@ -1465,13 +1441,11 @@ análoga a la de un oscilador armónico con frecuencia natural $\omega_0$.
 \subsection{Modelo Atómico de Lorentz}
 % ══════════════════════════════════════════════════════════════════════════
 
-El modelo de Lorentz es un modelo \textbf{clásico} de la interacción
-radiación-materia propuesto por Hendrik Antoon Lorentz a finales del siglo XIX.
-A pesar de su carácter clásico —los átomos son cuánticos—, captura correctamente
-la física de la dispersión, la absorción y el índice de refracción en muchos
-regímenes de interés práctico, y sus predicciones coinciden cualitativamente
-con los resultados de la mecánica cuántica. Describe el átomo como un
-\textbf{oscilador armónico amortiguado y forzado}.
+El modelo de Lorentz formula la respuesta microscópica de un átomo como la de
+un \textbf{oscilador armónico amortiguado y forzado}. Aunque su base es
+clásica, reproduce con gran precisión fenomenológica la dispersión y la
+absorción fuera de resonancias cuánticas finas, por lo que sigue siendo la
+puerta de entrada estándar al comportamiento óptico de la materia.
 
 \subsubsection{Hipótesis del modelo}
 
@@ -1617,6 +1591,11 @@ El módulo de la amplitud de oscilación es:
   \qquad \mathbb{p}_0 = q\,r_0.
   \label{eq:modulo_lorentz}
 \end{equation}
+
+La ecuación \eqref{eq:desfase} cuantifica el retraso entre excitación y
+respuesta del dipolo: por debajo de resonancia domina la parte elástica (fase
+pequeña), en resonancia domina la disipación (cuadratura) y por encima domina
+la inercia (fase cercana a $\pi$).
 
 \medskip
 \begin{center}
@@ -2119,11 +2098,9 @@ Consideramos un sólido con densidad $10^{22}\ \text{átomos/cm}^3$.
 
 \subsubsection{Del nivel microscópico al macroscópico}
 
-Las ecuaciones de Maxwell son exactas a nivel microscópico, pero contienen las
-contribuciones de cada carga individual, lo que las hace inmanejables para
-describir un sólido con $\sim 10^{22}$ electrones/cm$^3$.
-Para describir la materia ópticamente es necesario \textbf{promediar
-espacialmente} sobre un volumen $\Delta V$ que satisfaga la doble condición:
+Las ecuaciones microscópicas son exactas, pero su uso directo en un sólido
+requiere seguir un número astronómico de cargas. El paso macroscópico consiste
+en \textbf{promediar espacialmente} sobre un volumen $\Delta V$ tal que:
 \[
   a^3 \ll \Delta V \ll \lambda^3,
 \]
@@ -2131,8 +2108,8 @@ donde $a \sim 10^{-10}\ \mathrm{m}$ es el tamaño atómico. Este volumen
 contiene muchos átomos (promedio estadístico bien definido) pero es mucho
 menor que el cubo de la longitud de onda (resolución óptica preservada).
 
-Un resultado fundamental es que las derivadas espaciales y el promedio
-conmutan bajo estas condiciones:
+Un resultado clave es que, bajo estas hipótesis de escala, promedio y
+derivación espacial conmutan:
 \begin{equation}
   \left\langle \pdv{\ve{E}}{x}\right\rangle
   = \pdv{\langle\ve{E}\rangle}{x}. \label{eq:conmuta}
@@ -2215,10 +2192,10 @@ se obtienen las \textbf{ecuaciones de Maxwell macroscópicas}:
 \subsection{Relaciones de Constitución y Permitividad Generalizada}
 % ══════════════════════════════════════════════════════════════════════════
 
-Las ecuaciones de Maxwell macroscópicas~\eqref{eq:maxmat1}--\eqref{eq:maxmat4}
-contienen cuatro vectores ($\ve{D}$, $\ve{E}$, $\ve{B}$, $\ve{H}$) y la
-densidad de corriente libre. Las \emph{relaciones de constitución} conectan
-estos vectores mediante propiedades del medio.
+Las ecuaciones macroscópicas introducen campos auxiliares ($\ve{D},\ve{H}$),
+pero no cierran el problema sin ecuaciones de material. Las
+\emph{relaciones de constitución} cumplen precisamente esa función: vinculan
+campo aplicado y respuesta interna del medio.
 
 \subsubsection{Primera relación: permitividad eléctrica}
 
@@ -2251,8 +2228,8 @@ Para cargas libres, la ley de Ohm establece:
   \ve{j}_\text{libre}(\ve{r},t) = \sigma\ve{E}(\ve{r},t). \label{eq:ohm}
 \end{equation}
 donde $\sigma$ es la conductividad eléctrica del medio.
-Aplicando el teorema de conservación de carga y trabajando con ondas
-armónicas ($\partial/\partial t \to i\omega$):
+Aplicando conservación de carga y pasando a régimen armónico
+($\partial/\partial t\to i\omega$):
 \[
   \pdv{\rho_\text{libre}}{t} + \div\ve{j}_\text{libre} = 0
   \implies \rho_\text{libre} = \div\!\left(\frac{i\sigma}{\omega}\ve{E}\right).
@@ -2268,8 +2245,9 @@ de corriente libre y el de desplazamiento se pueden combinar:
   = \sigma\ve{E} + i\omega\varepsilon\ve{E}
   = i\omega\!\left(\varepsilon - \frac{i\sigma}{\omega}\right)\ve{E}.
 \]
-Las ecuaciones de Maxwell en la materia para ondas armónicas se escriben
-de forma idéntica a las del vacío pero con la \emph{permitividad
+Así, en frecuencia, corriente de conducción y corriente de desplazamiento se
+reagrupan en una única permitividad compleja efectiva. Las ecuaciones formales
+mantienen la estructura de Maxwell en vacío, pero con \emph{permitividad
 dieléctrica generalizada}:
 
 \begin{mdframed}[style=resultado]
@@ -2307,7 +2285,7 @@ dirección de propagación, velocidad, energía y polarización de la onda.
   \toprule
   Clasificación & \textbf{Homogéneo} & \textbf{Inhomogéneo} \\
   \midrule
-  Definición & $\varepsilon_\text{gen}\neq\varepsilon_\text{gen}(\ve{r})$ &
+  Definición & $\varepsilon_\text{gen}$ no depende de $\ve{r}$ &
                $\varepsilon_\text{gen}=\varepsilon_\text{gen}(\ve{r})$ \\
   Ejemplo & Cristal, vidrio & Capas de aire a distinta $T$ \\
   \bottomrule
@@ -2321,7 +2299,7 @@ dirección de propagación, velocidad, energía y polarización de la onda.
   Clasificación & \textbf{Dispersivo} & \textbf{No dispersivo} \\
   \midrule
   Definición & $\varepsilon_\text{gen}=\varepsilon_\text{gen}(\omega)$ &
-               $\varepsilon_\text{gen}\neq\varepsilon_\text{gen}(\omega)$ \\
+               $\varepsilon_\text{gen}$ no depende de $\omega$ \\
   Nota & Todos los medios reales son dispersivos & Aproximación en
          $\omega\gg\omega_0$ o $\omega\ll\omega_0$ \\
   \bottomrule
@@ -2811,15 +2789,16 @@ siendo el término $-B\lambda^2$ dominante. El índice decrece con $\omega$
 
 \subsubsection{Medios dieléctricos densos: ecuación de Clausius-Mossotti}
 
-En un medio denso, el campo que actúa sobre cada átomo no es el campo
-macroscópico $\ve{E}$ sino el \emph{campo local} $\ve{E}_\text{loc}$, que
-incluye la contribución de los dipolos vecinos. Para un cristal cúbico
-(resultado experimental de Lorentz):
+En medios diluidos era suficiente identificar campo microscópico y
+macroscópico. En medios densos, esa identificación deja de ser válida:
+cada dipolo siente un \emph{campo local} $\ve{E}_{\text{loc}}$ que incluye la
+contribución de sus vecinos. Para simetría cúbica, la corrección local de
+Lorentz conduce a:
 \[
   \ve{E}_\text{loc} = \ve{E} + \frac{\ve{P}}{3\varepsilon_0}.
 \]
-Con $\ve{P} = N\chi_a\ve{E}_\text{loc}$, resolviendo para $\ve{P}$ y
-comparando con $\ve{P}=\varepsilon_0\chi_e\ve{E}$:
+Combinando esta expresión con $\ve{P}=N\chi_a\ve{E}_{\text{loc}}$ y comparando
+con la ley macroscópica $\ve{P}=\varepsilon_0\chi_e\ve{E}$ se obtiene:
 
 \begin{mdframed}[style=resultado]
 \begin{equation}
@@ -2978,7 +2957,7 @@ teórico de la óptica instrumental (lentes, espejos, prismas, recubrimientos
 antirreflectantes, fibra óptica) y de la espectroscopia de superficies
 (elipsometría, reflectometría).
 
-Los objetivos del tema son tres:
+El problema se formula con tres preguntas bien diferenciadas:
 \begin{enumerate}
   \item Determinar la \emph{dirección de propagación} de las ondas reflejada
         y transmitida (leyes de reflexión y de Snell).
@@ -2999,6 +2978,10 @@ Los objetivos del tema son tres:
   \item Cambio de índice $n_1 \to n_2$; si $n_1 = n_2$ no existe superficie
         óptica.
 \end{enumerate}
+
+Estas hipótesis delimitan el alcance del tema: interfaz plana, medios lineales
+isótropos y ondas armónicas planas. Los casos anisótropos o con absorción se
+tratan posteriormente.
 
 \subsubsection*{Notación geométrica}
 
@@ -3078,7 +3061,9 @@ $n_1, n_2 > 0$. Los vectores de onda son reales.
 \subsubsection{Leyes de reflexión y de Snell}
 
 La condición de contorno en $z = 0$ (plano $XY$, posición $\ve{r} = (x,y,0)$)
-exige que las fases coincidan para todo $(x,y)$:
+puede leerse como \emph{igualación de fase tangencial}: para que la igualdad
+de campos sea válida en todo punto de la interfaz, las fases deben coincidir
+para todo $(x,y)$:
 \[
   \ve{k}_i \cdot \ve{r}\big|_{z=0}
   = \ve{k}_r \cdot \ve{r}\big|_{z=0}
@@ -3136,6 +3121,11 @@ Cancelando $\omega/c$:
   \label{eq:snell}
 \end{equation}
 \end{mdframed}
+
+\begin{observacion}
+La ley de Snell no es una regla geométrica ad hoc: es la consecuencia directa
+de la conservación del vector de onda tangencial en la interfaz.
+\end{observacion}
 
 \begin{figure}[H]
   \centering
@@ -3288,8 +3278,8 @@ Luego:
 \]
 \end{proof}
 
-\begin{mdframed}[style=resultado]
-\textbf{Fórmulas de Fresnel:}
+\begin{mdframed}[style=resultado,nobreak=true]
+\textbf{Fórmulas de Fresnel (polarización $p$):}
 \begin{align}
   r_\parallel &= \frac{n_2\cos\theta_i - n_1\cos\theta_t}
                      {n_2\cos\theta_i + n_1\cos\theta_t}
@@ -3298,8 +3288,14 @@ Luego:
   t_\parallel &= \frac{2n_1\cos\theta_i}
                      {n_2\cos\theta_i + n_1\cos\theta_t}
                = \frac{2\cos\theta_i\sin\theta_t}
-                      {\sin(\theta_i+\theta_t)\cos(\theta_i-\theta_t)},
-  \label{eq:tp} \\
+                      {\sin(\theta_i+\theta_t)\cos(\theta_i-\theta_t)}.
+  \label{eq:tp}
+\end{align}
+\end{mdframed}
+
+\begin{mdframed}[style=resultado,nobreak=true]
+\textbf{Fórmulas de Fresnel (polarización $s$):}
+\begin{align}
   r_\perp &= \frac{n_1\cos\theta_i - n_2\cos\theta_t}
                   {n_1\cos\theta_i + n_2\cos\theta_t}
            = -\frac{\sin(\theta_i-\theta_t)}{\sin(\theta_i+\theta_t)},
@@ -3310,6 +3306,12 @@ Luego:
   \label{eq:ts}
 \end{align}
 \end{mdframed}
+
+\begin{observacion}
+Estas expresiones cuantifican, para cada polarización, cómo reparte la
+interfaz la amplitud entre onda reflejada y transmitida. Las diferencias entre
+$s$ y $p$ explican la polarización parcial en reflexión oblicua.
+\end{observacion}
 
 \begin{nota}
 Las formas trigonométricas (columna derecha) son consecuencia directa de
@@ -3322,7 +3324,7 @@ Para $\theta_i = \theta_r = \theta_t = 0^{\circ}$ las fórmulas de Fresnel se
 simplifican considerablemente. Tomando el límite $\theta_i \to 0$ en
 (\ref{eq:rp})--(\ref{eq:ts}):
 
-\begin{mdframed}[style=resultado]
+\begin{mdframed}[style=resultado,nobreak=true]
 \textbf{Incidencia normal:}
 \begin{align}
   r_\parallel &= \frac{n_2 - n_1}{n_1 + n_2} = -r_\perp,
@@ -3409,6 +3411,10 @@ En $\theta_i = \theta_B$: $r_\parallel = 0$, el haz reflejado está
 completamente polarizado en $s$ (polarización perpendicular).
 \end{mdframed}
 
+Geométricamente, en Brewster los rayos reflejado y transmitido son
+ortogonales; energéticamente, toda la componente $p$ pasa al medio transmitido
+sin reflexión especular.
+
 \begin{ejemplo}[Aire--Vidrio]
 Para $n_1 = 1$, $n_2 = 1{,}5$:
 \[
@@ -3464,6 +3470,10 @@ hipótesis para el campo transmitido:
   \item \textbf{H3}: $\ve{k}_t \in \C$. Solución correcta.
 \end{enumerate}
 
+La tercera opción es la única compatible con contorno y causalidad: la
+transmisión no desaparece, sino que cambia de naturaleza (campo no propagante
+normal a la interfaz).
+
 \paragraph{Onda evanescente}
 
 Se escribe $\ve{k}_{tc} = \ve{k}_t - i\,\ve{a}$, con $\ve{k}_t \perp \ve{a}$
@@ -3489,6 +3499,10 @@ La onda se \emph{propaga} a lo largo de $x$ (paralelo a la interfaz) y se
 \emph{atenúa exponencialmente} en $z$ (dentro del medio 2). La profundidad de
 penetración es $\delta = 1/a_z$.
 \end{mdframed}
+
+Interpretación física: no hay flujo neto de energía hacia el interior del medio
+2 en dirección normal, pero sí existe campo superficial capaz de acoplar energía
+si aparece un segundo medio cercano (túnel óptico).
 
 La ley de reflexión $\theta_i = \theta_r$ sigue siendo válida. Los
 coeficientes de Fresnel resultan ser números complejos de módulo unitario:
@@ -3791,6 +3805,10 @@ lo que conduce a frecuencias de resonancia $\omega_{0,x}$, $\omega_{0,y}$,
 $\omega_{0,z}$ distintas para cada dirección. En consecuencia, la
 susceptibilidad —y la permitividad— son tensoriales incluso a la frecuencia
 óptica.
+
+En términos físicos, esto implica que ``índice de refracción'' deja de ser un
+único escalar y pasa a depender de la dirección de propagación y de la
+polarización excitada.
 
 \begin{mdframed}[style=resultado]
 \textbf{Clasificación por simetría del tensor $\boldsymbol{\varepsilon}$:}
@@ -4151,6 +4169,10 @@ de la naturaleza ondulatoria de la luz. Se distinguen dos regímenes principales
         la práctica, en el plano focal de una lente).
 \end{itemize}
 
+La frontera entre ambos regímenes no es nominal: determina qué términos de fase
+se conservan en el núcleo integral y, por tanto, qué aproximación es
+matemáticamente consistente.
+
 \subsection{Principio de Huygens-Fresnel}
 
 El principio de Huygens (1678) establece que cada punto de un frente de onda puede
@@ -4451,6 +4473,9 @@ Para dos ondas de la misma intensidad $I_1=I_2=I_0$, estos extremos son
 $I_\text{máx} = 4I_0$ e $I_\text{mín} = 0$: la energía se redistribuye
 espacialmente, sin violar la conservación energética.
 
+Esta distinción entre superposición lineal de campos y carácter cuadrático de
+la intensidad será el hilo conductor de los interferómetros del tema.
+
 \subsection{Condiciones de interferencia estable}
 
 Para observar un patrón de franjas estable en el tiempo —requisito necesario
@@ -4666,6 +4691,9 @@ interfieren. El diseño es especialmente versátil porque el desfase entre
 brazos se puede variar de forma continua y controlada desplazando uno de
 los espejos.
 
+La lectura operacional es directa: el dispositivo convierte diferencias de
+camino óptico en modulación de intensidad medible con alta sensibilidad.
+
 \begin{nota}
 El experimento de Michelson y Morley (1887) intentó medir el movimiento
 de la Tierra respecto al éter luminífero comparando la velocidad de la
@@ -4759,6 +4787,10 @@ La luz que entra en la cavidad da lugar a múltiples reflexiones y transmisiones
 parciales que interfieren en el plano de salida. Cuanto mayor sea $R$, mayor
 es el número de reflexiones que contribuyen y más agudos son los picos de
 transmisión, lo que permite resolver detalles espectrales muy finos.
+
+Desde el punto de vista físico, Fabry-Perot actúa como un filtro resonante en
+frecuencia: solo se transmiten con alta eficiencia las longitudes de onda que
+satisfacen coherencia de fase tras múltiples recorridos.
 
 La intensidad transmitida es la suma de todas las contribuciones parciales
 (serie geométrica), que conduce a la \emph{función de Airy}:
