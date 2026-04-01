@@ -107,6 +107,12 @@
 \newtheorem*{nota}{Nota}
 \newtheorem*{observacion}{Observación}
 
+% ── Ecuaciones numeradas para referencias ────────────────────────────────
+% Convierte todas las expresiones en display \[...\] en ecuaciones numeradas.
+\let\olddisplaymath\displaymath
+\let\oldenddisplaymath\enddisplaymath
+\renewenvironment{displaymath}{\begin{equation}}{\end{equation}}
+
 % ── Formato de secciones ──────────────────────────────────────────────────
 \usepackage{titlesec}
 \usepackage{etoolbox}
@@ -123,17 +129,44 @@
   {\normalsize\bfseries\color{brandblue}}
   {\thesubsubsection.}{0.5em}{}
 
+\titleformat{\paragraph}
+  {\normalsize\bfseries\color{brandblue}}
+  {}{0em}{}
+
 \titlespacing*{\section}{0pt}{0pt}{0.75\baselineskip}
 \titlespacing*{\subsection}{0pt}{0.95\baselineskip}{0.45\baselineskip}
 \titlespacing*{\subsubsection}{0pt}{0.75\baselineskip}{0.35\baselineskip}
-
-\pretocmd{\section}{\clearpage}{}{}
+\titlespacing*{\paragraph}{0pt}{0.65\baselineskip}{0.25\baselineskip}
 
 % ── Macros de conveniencia ────────────────────────────────────────────────
 \newcommand{\R}{\mathbb{R}}
 \newcommand{\mat}[1]{\mathbf{#1}}
 \newcommand{\tr}{\operatorname{tr}}
 \newcommand{\rg}{\operatorname{r}}
+\newcounter{varsprimcount}
+\newenvironment{variablesprimera}{%
+  \begin{mdframed}[style=resultado]
+  \setcounter{varsprimcount}{0}%
+  \textbf{Definición de variables (primera aparición).} En esta expresión,
+}{%
+  .
+  \end{mdframed}
+}
+\newcommand{\varitem}[2]{%
+  \ifnum\value{varsprimcount}>0\relax; \fi
+  $#1$ es #2%
+  \stepcounter{varsprimcount}%
+}
+\newcommand{\iniciotema}[3]{%
+  \newpage
+  \begin{center}
+    {\Large\bfseries\scshape Tema #1}\\[0.3cm]
+    {\large #2}\\[0.2cm]
+    \rule{0.6\linewidth}{0.6pt}
+  \end{center}
+  \setcounter{section}{0}
+  \addtocontents{toc}{\protect\bigskip\protect\noindent\textbf{Tema #1: #3}\protect\medskip}
+}
 
 % ── Separación vertical y ritmo de lectura ────────────────────────────────
 \raggedbottom
@@ -167,51 +200,27 @@
 \begin{titlepage}
   \thispagestyle{plain}
   \centering
-  \vspace*{1.6cm}
+  \vspace*{3.0cm}
 
-  \begin{tikzpicture}[remember picture,overlay]
-    \draw[line width=0.8pt]
-      ($(current page.north west)+(1.6cm,-1.6cm)$)
-      rectangle
-      ($(current page.south east)+(-1.6cm,1.6cm)$);
-  \end{tikzpicture}
-
-  {\Large\scshape Análisis Multivariante\par}
-  \vspace{0.25cm}
+  {\Large Apuntes de Estadística\par}
+  \vspace{0.4cm}
+  {\huge\bfseries Análisis Multivariante\par}
+  \vspace{0.3cm}
   {\large Curso 2025--2026\par}
 
-  \vspace{0.9cm}
-  {\Huge\bfseries Tema 1\par}
-  \vspace{0.4cm}
-  {\large Introducción al Análisis Multivariante\par}
+  \vspace{1.1cm}
+  \rule{0.45\linewidth}{0.6pt}
+  \vspace{1.1cm}
 
-  \vspace{0.8cm}
-  \rule{0.78\linewidth}{0.8pt}
-  \vspace{0.6cm}
   {\normalsize
-  Definición y tipos $\cdot$ Pasos del análisis $\cdot$ Formalización de los datos\\
-  Elementos de álgebra lineal: vectores, matrices, autovalores, formas cuadráticas\par}
-  \vspace{0.6cm}
-  \rule{0.78\linewidth}{0.8pt}
-
-  \vspace{1.4cm}
-  % Diagrama decorativo: matriz esquemática
-  \begin{tikzpicture}[>=Stealth, scale=1.0]
-    \foreach \i in {0,1,2,3} {
-      \foreach \j in {0,1,2} {
-        \draw[line width=0.5pt] (\j*1.1, -\i*0.7) rectangle (\j*1.1+0.9, -\i*0.7+0.55);
-      }
-    }
-    \node at (1.45, 0.75) {\small $\mat{X}_{n\times p}$};
-    \node[anchor=west] at (3.7, -0.6) {\small $x_{ij}$: observación $i$, variable $j$};
-    \draw[->] (3.3,-0.6) -- (3.6,-0.6);
-  \end{tikzpicture}
+  Temas 1--4: introducción, distribuciones multivariantes, análisis de componentes principales
+  y análisis discriminante.\par}
 
   \vfill
   \begin{tabular}{@{}rl@{}}
-    \textbf{Autor:}      & Luis López \\
+    \textbf{Autor:} & Luis López \\
     \textbf{Titulación:} & Grado en Estadística / Ciencia de Datos \\
-    \textbf{Fecha:}      & Abril 2026
+    \textbf{Fecha:} & Abril 2026
   \end{tabular}
 \end{titlepage}
 
@@ -238,11 +247,14 @@ análisis.
 
 \begin{mdframed}[style=resultado]
 \[
-  \text{Valor teórico} = w_1 X_1 + w_2 X_2 + \cdots + w_n X_n
+  \text{Valor teórico} = w_1 X_1 + w_2 X_2 + \cdots + w_p X_p
 \]
-donde $X_i$ es la variable observada y $w_i$ la ponderación determinada por la
-técnica multivariante elegida.
 \end{mdframed}
+\begin{variablesprimera}
+  \varitem{X_i}{valor observado de la variable $i$}
+  \varitem{w_i}{peso asignado a la variable $i$ por la técnica multivariante}
+  \varitem{p}{número de variables incluidas en la combinación}
+\end{variablesprimera}
 
 El resultado es un valor único que representa la combinación de todo el conjunto
 de variables que mejor se adaptan al objetivo específico del análisis.
@@ -457,6 +469,11 @@ representan en la \textbf{matriz de datos} $\mat{X}$ de dimensión $n\times p$:
   \end{array}
 \]
 \end{mdframed}
+\begin{variablesprimera}
+  \varitem{n}{número de individuos u observaciones}
+  \varitem{x_{ij}}{valor de la variable $j$ en el individuo $i$}
+  \varitem{\mat{X}_{(j)}}{columna $j$ de la matriz de datos}
+\end{variablesprimera}
 También se escribe $\mat{X} = [\mat{X}_{(1)},\dots,\mat{X}_{(p)}] =
 [\mathbf{x}_{ij}]$, donde cada $\mat{X}_{(j)}$ es la $j$-ésima columna
 (vector columna de $n$ filas y 1 columna) y cada fila es un vector fila de 1
@@ -596,14 +613,14 @@ número de vectores linealmente independientes de $\mat{A}$.
 Se cumplen las siguientes propiedades:
 
 \begin{mdframed}[style=resultado]
-\begin{align*}
+\begin{align}
   &0 \le \rg(\mat{A}) \le \min(n,p). \\
   &\text{Si }\mat{A}\text{ es cuadrada: }\rg(\mat{A}) \le p. \\
   &\text{Si }\mat{A}\text{ es regular de orden }p:\rg(\mat{A}) = p. \\
   &\text{Si }\mat{A}\text{ es singular de orden }p:\rg(\mat{A}) < p. \\
   &\rg(\mat{A}) = \rg(\mat{A}').\\
   &\rg(\mat{A}'\mat{A}) = \rg(\mat{A}\mat{A}') = \rg(\mat{A}) = \rg(\mat{A}').
-\end{align*}
+\end{align}
 \end{mdframed}
 
 \begin{observacion}
@@ -760,13 +777,13 @@ valor propio aparece repetido $r$ veces se dice que tiene \emph{multiplicidad $r
 
 \begin{ejemplo}
 Calcular los autovalores de $\mat{A} = \begin{pmatrix}1&4\\9&1\end{pmatrix}$:
-\begin{align*}
+\begin{align}
   |\mat{A}-\lambda\mat{I}| = 0 \quad&\Longrightarrow\quad
   \begin{vmatrix}1-\lambda & 4\\9 & 1-\lambda\end{vmatrix} = 0 \\
   (1-\lambda)^2 - 36 = 0 \quad&\Longrightarrow\quad \lambda^2 - 2\lambda - 35 = 0 \\
   \lambda &= \frac{2\pm\sqrt{4+140}}{2} \quad\Longrightarrow\quad
   \lambda_1 = 7,\quad \lambda_2 = -5.
-\end{align*}
+\end{align}
 \end{ejemplo}
 
 \paragraph{Propiedades de los autovalores.}
@@ -831,21 +848,26 @@ $\lambda_1=7$, $\lambda_2=-5$:
 \end{definicion}
 
 \begin{ejemplo}
-$\mathbf{x}_1 = \begin{pmatrix}2\\3\end{pmatrix}$,
-$\|\mathbf{x}_1\| = \sqrt{4+9}=\sqrt{13}$:
+Tomando los autovectores del ejemplo anterior
+$\mathbf{x}_1=\begin{pmatrix}2\\3\end{pmatrix}$ y
+$\mathbf{x}_2=\begin{pmatrix}2\\-3\end{pmatrix}$, se tiene:
 \[
-  \mathbf{u}_1 = \begin{pmatrix}2/\sqrt{13}\\3/\sqrt{13}\end{pmatrix}
-  \approx \begin{pmatrix}0{,}55\\0{,}83\end{pmatrix}.
+  \|\mathbf{x}_1\|=\sqrt{2^2+3^2}=\sqrt{13},\qquad
+  \|\mathbf{x}_2\|=\sqrt{2^2+(-3)^2}=\sqrt{13}.
 \]
-$\mathbf{x}_2 = \begin{pmatrix}2\\-3\end{pmatrix}$,
-$\|\mathbf{x}_2\|=\sqrt{13}$:
+\begin{align}
+  \mathbf{u}_1
+  &= \frac{\mathbf{x}_1}{\|\mathbf{x}_1\|}
+   = \begin{pmatrix}2/\sqrt{13}\\3/\sqrt{13}\end{pmatrix}
+   \approx \begin{pmatrix}0{,}55\\0{,}83\end{pmatrix}, \\
+  \mathbf{u}_2
+  &= \frac{\mathbf{x}_2}{\|\mathbf{x}_2\|}
+   = \begin{pmatrix}2/\sqrt{13}\\-3/\sqrt{13}\end{pmatrix}
+   \approx \begin{pmatrix}0{,}55\\-0{,}83\end{pmatrix}.
+\end{align}
+Por tanto, la \textbf{matriz de autovectores normalizados} queda:
 \[
-  \mathbf{u}_2 = \begin{pmatrix}2/\sqrt{13}\\-3/\sqrt{13}\end{pmatrix}
-  \approx \begin{pmatrix}0{,}55\\-0{,}83\end{pmatrix}.
-\]
-La \textbf{matriz de autovectores normalizados} es:
-\[
-  \mat{U} = \begin{pmatrix}0{,}55&0{,}55\\0{,}83&-0{,}83\end{pmatrix}.
+  \mat{U}=\begin{pmatrix}0{,}55&0{,}55\\0{,}83&-0{,}83\end{pmatrix}.
 \]
 \end{ejemplo}
 
@@ -935,15 +957,7 @@ $\lambda_1=0$, $\lambda_2=2$ $\Rightarrow$ \textbf{semidefinida positiva}.
 % ══════════════════════════════════════════════════════════════════════════
 %  TEMA 2
 % ══════════════════════════════════════════════════════════════════════════
-\newpage
-\begin{center}
-  \vspace*{0.4cm}
-  {\Large\bfseries\scshape Tema 2}\\[0.3cm]
-  {\large Distribuciones Multivariantes}\\[0.2cm]
-  \rule{0.6\linewidth}{0.6pt}
-\end{center}
-\setcounter{section}{0}
-\addtocontents{toc}{\protect\bigskip\protect\noindent\textbf{Tema 2: Distribuciones Multivariantes}\protect\medskip}
+\iniciotema{2}{Distribuciones Multivariantes}{Distribuciones Multivariantes}
 
 % ══════════════════════════════════════════════════════════════════════════
 \section{Introducción}
@@ -990,6 +1004,12 @@ $P(\mathbf{x}\le\mathbf{x}^0)$ es la probabilidad de que la variable tome
 valores menores o iguales al valor particular $\mathbf{x}^0$. La función de
 distribución acumula las probabilidades de todos los valores menores o iguales
 al punto considerado, y será no decreciente.
+\begin{variablesprimera}
+  \varitem{\mathbf{x}}{vector aleatorio de dimensión $p$}
+  \varitem{\mathbf{x}^0}{valor concreto del vector en el que se evalúa la distribución}
+  \varitem{F(\mathbf{x}^0)}{función de distribución conjunta acumulada}
+  \varitem{P(\cdot)}{probabilidad del evento indicado}
+\end{variablesprimera}
 \end{definicion}
 
 Habitualmente se trabaja con:
@@ -1028,6 +1048,12 @@ $\mathbf{x}_2 = \mathbf{x}_2^0$ se define como:
   = \frac{f(\mathbf{x}_1, \mathbf{x}_2^0)}{f(\mathbf{x}_2^0)},
   \qquad \text{supuesto } f(\mathbf{x}_2)\neq 0.
 \]
+\begin{variablesprimera}
+  \varitem{\mathbf{x}_1}{subvector de variables de interés}
+  \varitem{\mathbf{x}_2}{subvector sobre el que se condiciona}
+  \varitem{\mathbf{x}_2^0}{valor fijado del subvector $\mathbf{x}_2$}
+  \varitem{f(\mathbf{x}_1 \mid \mathbf{x}_2^0)}{densidad condicionada de $\mathbf{x}_1$ dado $\mathbf{x}_2=\mathbf{x}_2^0$}
+\end{variablesprimera}
 \end{definicion}
 
 % ══════════════════════════════════════════════════════════════════════════
@@ -1052,8 +1078,8 @@ independientes si:
   = f(\mathbf{x}_1)f(\mathbf{x}_2)\cdots f(\mathbf{x}_p).
 \]
 La independencia conjunta es una condición muy fuerte: cualquier subconjunto
-$(x_1,\dots,x_h)$ con $h\le p$ también lo será, al igual que cualquier
-conjunto de funciones $g_1(x_1)\cdots g_1(x_p)$.
+de variables mantiene la independencia. Además, al aplicar funciones adecuadas
+componente a componente, las variables transformadas siguen siendo independientes.
 
 \begin{observacion}
 Cuando las variables son independientes, no ganamos nada con su estudio
@@ -1078,6 +1104,13 @@ esperanzas de las componentes:
 \]
 El vector de medias muestral es $\bar{\mathbf{x}} = \dfrac{1}{n}\mathbf{1}'\mathbf{x}$.
 \end{mdframed}
+\begin{variablesprimera}
+  \varitem{\boldsymbol{\mu}}{vector de medias poblacionales}
+  \varitem{\mathbf{X}}{vector aleatorio multivariante}
+  \varitem{\mathbf{x}_i}{observación $i$ de la muestra}
+  \varitem{\bar{\mathbf{x}}}{vector de medias muestrales}
+  \varitem{\mathbf{1}}{vector columna de unos de dimensión compatible}
+\end{variablesprimera}
 \end{definicion}
 
 Propiedades del vector de medias:
@@ -1101,6 +1134,11 @@ covarianzas}:
   = \frac{1}{n}\sum_{i=1}^n (\mathbf{x}_i-\bar{\mathbf{x}})(\mathbf{x}_i-\bar{\mathbf{x}})'.
 \]
 \end{mdframed}
+\begin{variablesprimera}
+  \varitem{\mat{S}_x}{matriz de varianzas y covarianzas}
+  \varitem{S_i^2}{varianza de la variable $i$}
+  \varitem{S_{ij}}{covarianza entre las variables $i$ y $j$}
+\end{variablesprimera}
 Explícitamente:
 \[
   \mat{S}_x = \frac{1}{n}
@@ -1124,11 +1162,16 @@ $\tilde{\mathbf{X}}$ como la matriz resultado de restar a cada dato su media:
   \tilde{\mathbf{X}} = \mathbf{X} - \mathbf{1}\cdot\bar{\mathbf{x}}
   = \mathbf{X} - \frac{1}{n}\mathbf{1}\cdot\mathbf{1}'\mathbf{x} = \mat{P}\mathbf{X},
 \]
-donde la \textbf{matriz de proyección} $\mat{P}$ es:
+y la \textbf{matriz de proyección} es:
 \[
   \mat{P} = \mat{I} - \frac{1}{n}\mathbf{1}\cdot\mathbf{1}',
 \]
 que es simétrica ($\mat{P}=\mat{P}'$) e \textbf{idempotente} ($\mat{P}^2=\mat{P}$).
+\begin{variablesprimera}
+  \varitem{\tilde{\mathbf{X}}}{matriz de datos centrados}
+  \varitem{\mat{P}}{matriz de proyección de centrado}
+  \varitem{\mat{I}}{matriz identidad de orden $n$}
+\end{variablesprimera}
 
 Por tanto:
 \[
@@ -1608,8 +1651,11 @@ si su función de densidad es:
   \quad \mathbf{x}\in\R^p,
 \]
 \end{mdframed}
-donde $\boldsymbol{\mu}\in\R^p$ es el vector de medias y $\boldsymbol{\Sigma}$
-es la matriz de covarianzas (simétrica y definida positiva).
+\begin{variablesprimera}
+  \varitem{\boldsymbol{\Sigma}}{matriz de covarianzas común, simétrica y definida positiva}
+  \varitem{|\boldsymbol{\Sigma}|}{determinante de la matriz de covarianzas}
+  \varitem{\boldsymbol{\Sigma}^{-1}}{matriz inversa de $\boldsymbol{\Sigma}$}
+\end{variablesprimera}
 \end{definicion}
 
 \paragraph{Propiedades fundamentales.}
@@ -1654,15 +1700,7 @@ es la matriz de covarianzas (simétrica y definida positiva).
 % ══════════════════════════════════════════════════════════════════════════
 %  TEMA 3
 % ══════════════════════════════════════════════════════════════════════════
-\newpage
-\begin{center}
-  \vspace*{0.4cm}
-  {\Large\bfseries\scshape Tema 3}\\[0.3cm]
-  {\large Análisis de Componentes Principales}\\[0.2cm]
-  \rule{0.6\linewidth}{0.6pt}
-\end{center}
-\setcounter{section}{0}
-\addtocontents{toc}{\protect\bigskip\protect\noindent\textbf{Tema 3: Análisis de Componentes Principales}\protect\medskip}
+\iniciotema{3}{Análisis de Componentes Principales}{Análisis de Componentes Principales}
 
 % ══════════════════════════════════════════════════════════════════════════
 \section{Introducción}
@@ -1735,6 +1773,9 @@ Partimos de variables $\mathbf{x}_1,\mathbf{x}_2,\dots,\mathbf{x}_p$ medidas
 sobre $n$ unidades observacionales $\Rightarrow$ matriz $\mathbf{X}$ de orden
 $n\times p$. Queremos unas nuevas variables latentes o \textbf{componentes}
 $\mathbf{y}_1,\mathbf{y}_2,\dots,\mathbf{y}_p$ que:
+\begin{variablesprimera}
+  \varitem{\mathbf{y}_j}{componente principal $j$}
+\end{variablesprimera}
 
 \begin{enumerate}[label=\alph*)]
   \item No establezcan ningún requisito sobre la distribución de
@@ -1770,9 +1811,14 @@ $x_i$ sobre esta dirección es:
   z_i = a_{11}x_{i1}+\cdots+a_{1p}x_{ip} = \mathbf{a}_1'\mathbf{x}_i,
 \]
 y el vector que representa esta proyección es $z_i\mathbf{a}_1$.
+\begin{variablesprimera}
+  \varitem{\mathbf{a}_1}{dirección del primer componente (vector de pesos)}
+  \varitem{z_i}{proyección escalar de la observación $\mathbf{x}_i$ sobre $\mathbf{a}_1$}
+  \varitem{r_i}{distancia entre la observación y su proyección en la dirección elegida}
+\end{variablesprimera}
 
 Por el teorema de Pitágoras: $\mathbf{x}_i'\mathbf{x}_i = z_i^2+r_i^2$,
-donde $r_i$ es la distancia entre el punto y su proyección. Sumando para
+y sumando para
 todos los puntos:
 \[
   \sum_{i=1}^n\mathbf{x}_i'\mathbf{x}_i = \sum_{i=1}^n z_i^2 + \sum_{i=1}^n r_i^2
@@ -1808,6 +1854,11 @@ multiplicador de Lagrange:
 \[
   \mathcal{L} = \mathbf{a}_1'\mat{S}\mathbf{a}_1 - \lambda(\mathbf{a}_1'\mathbf{a}_1-1).
 \]
+\begin{variablesprimera}
+  \varitem{\mat{S}}{matriz de covarianzas de las variables originales}
+  \varitem{\mathcal{L}}{función de Lagrange del problema de optimización}
+  \varitem{\lambda}{multiplicador de Lagrange que resulta ser un autovalor de $\mat{S}$}
+\end{variablesprimera}
 Derivando e igualando a cero:
 \[
   \frac{\partial\mathcal{L}}{\partial\mathbf{a}_1} = 2\mat{S}\mathbf{a}_1-2\lambda\mathbf{a}_1=0
@@ -2183,6 +2234,819 @@ Las rotaciones no alteran la varianza total explicada, solo redistribuyen
 la varianza entre los componentes.
 \end{observacion}
 
+% ══════════════════════════════════════════════════════════════════════════
+%  TEMA 4
+% ══════════════════════════════════════════════════════════════════════════
+\iniciotema{4}{Análisis Discriminante}{Análisis Discriminante}
+
+% ══════════════════════════════════════════════════════════════════════════
+\section{Introducción}
+% ══════════════════════════════════════════════════════════════════════════
+
+El \textbf{Análisis Discriminante Lineal} (ADL o \emph{LDA}) es una técnica
+de \textbf{clasificación supervisada}: los grupos están definidos a priori y
+se construye una regla para asignar nuevas observaciones al grupo más probable
+según sus variables explicativas.
+
+\begin{itemize}
+  \item Es un método clásico de \textbf{reconocimiento de patrones}.
+  \item Los grupos deben ser \textbf{mutuamente excluyentes} y, en el esquema
+        estándar, \textbf{exhaustivos}.
+  \item Es apropiado cuando la variable respuesta es \textbf{cualitativa}
+        (grupos) y las variables predictoras son \textbf{cuantitativas}.
+  \item Se apoya en una combinación lineal de predictores, análoga al valor
+        teórico ya estudiado en temas previos.
+  \item Se necesita una \textbf{muestra de entrenamiento} (grupo conocido) y,
+        para evaluar el rendimiento, una \textbf{muestra de validación}
+        (\emph{test sample}) o validación cruzada.
+  \item En variables de respuesta ordinales puede usarse un \emph{enfoque de
+        extremos polares} (comparar solo grupos extremos), útil en algunos
+        contextos aunque con pérdida de información intermedia.
+\end{itemize}
+
+\begin{definicion}[Función discriminante lineal]
+Para una observación $k$, una función discriminante lineal puede escribirse
+como:
+\begin{mdframed}[style=resultado]
+\[
+  z_k = a + w_1x_{1k} + w_2x_{2k} + \cdots + w_px_{pk}.
+\]
+\end{mdframed}
+\begin{variablesprimera}
+  \varitem{z_k}{puntuación discriminante de la observación $k$}
+  \varitem{a}{término independiente de la función discriminante}
+  \varitem{x_{jk}}{valor de la variable $j$ en la observación $k$}
+\end{variablesprimera}
+Los pesos $w_i$ se eligen para \textbf{maximizar la separación entre grupos}
+frente a la variabilidad dentro de los grupos.
+\end{definicion}
+
+Cada grupo tiene un \textbf{centroide} (media de puntuaciones discriminantes).
+Cuanto más separados estén los centroides, mayor capacidad discriminante.
+
+\begin{nota}
+El enfoque clásico se debe a \textbf{Fisher (1936)} y es óptimo bajo
+normalidad multivariante con matriz de covarianzas común en los grupos.
+Cuando estos supuestos fallan, se suelen considerar alternativas como
+QDA, regresión logística multinomial, árboles, k-NN o SVM.
+\end{nota}
+
+% ══════════════════════════════════════════════════════════════════════════
+\section{Caso de dos poblaciones}
+% ══════════════════════════════════════════════════════════════════════════
+
+\subsection{Enfoque bayesiano general}
+
+Sean dos poblaciones $\mathcal{P}_1,\mathcal{P}_2$ con densidades
+$f_1(\mathbf{x})$, $f_2(\mathbf{x})$ y probabilidades a priori
+$\pi_1,\pi_2$ ($\pi_1+\pi_2=1$). Para un nuevo elemento $\mathbf{x}_0$:
+
+\begin{mdframed}[style=resultado]
+\[
+  P(\mathcal{P}_i\mid \mathbf{x}_0)=
+  \frac{\pi_i f_i(\mathbf{x}_0)}{\pi_1f_1(\mathbf{x}_0)+\pi_2f_2(\mathbf{x}_0)},
+  \qquad i=1,2.
+\]
+\end{mdframed}
+\begin{variablesprimera}
+  \varitem{\mathcal{P}_i}{población o clase $i$}
+  \varitem{\pi_i}{probabilidad a priori de la clase $i$}
+  \varitem{f_i(\mathbf{x})}{densidad de $\mathbf{x}$ en la clase $i$}
+  \varitem{\mathbf{x}_0}{nueva observación a clasificar}
+  \varitem{P(\mathcal{P}_i\mid\mathbf{x}_0)}{probabilidad a posteriori de pertenecer a la clase $i$}
+\end{variablesprimera}
+
+Regla bayesiana básica: asignar $\mathbf{x}_0$ al grupo con mayor
+probabilidad a posteriori; equivalentemente, al grupo que maximiza
+$\pi_i f_i(\mathbf{x}_0)$.
+
+\subsubsection{Regla con costes de clasificación}
+
+Si el coste de clasificar en 2 algo de 1 es $c(2|1)$ y el coste inverso es
+$c(1|2)$:
+\begin{definicion}[Regla de decisión]
+Una regla de decisión particiona el espacio muestral
+$\mathcal{E}_{\mathbf{x}}$ en dos regiones $\mathcal{A}_1,\mathcal{A}_2$:
+\[
+  \mathcal{A}_2=\mathcal{E}_{\mathbf{x}}\setminus\mathcal{A}_1,\qquad
+  \mathbf{x}_0\in\mathcal{A}_i \Rightarrow \text{asignar a } \mathcal{P}_i.
+\]
+Si se conocen costes de clasificación, se asigna a la clase con
+\textbf{menor riesgo condicional esperado}.
+\end{definicion}
+
+\[
+  R(d_1\mid \mathbf{x}_0)=c(1|2)\,P(\mathcal{P}_2\mid\mathbf{x}_0),\qquad
+  R(d_2\mid \mathbf{x}_0)=c(2|1)\,P(\mathcal{P}_1\mid\mathbf{x}_0).
+\]
+Se asigna a $\mathcal{P}_2$ si $R(d_2\mid\mathbf{x}_0)<R(d_1\mid\mathbf{x}_0)$,
+es decir:
+\begin{mdframed}[style=resultado]
+\[
+  c(1|2)\,\pi_2f_2(\mathbf{x}_0) > c(2|1)\,\pi_1f_1(\mathbf{x}_0).
+\]
+\end{mdframed}
+
+\begin{itemize}
+  \item Si $c(1|2)=c(2|1)$, la decisión depende de $\pi_i f_i(\mathbf{x}_0)$.
+  \item Si además $\pi_1=\pi_2$, la regla se reduce a comparar densidades:
+        clasificar en la población con mayor verosimilitud en $\mathbf{x}_0$.
+\end{itemize}
+
+\subsection{Enfoque bayesiano en poblaciones normales}
+
+Si $\mathbf{X}\mid \mathcal{P}_i\sim\mathcal{N}_p(\boldsymbol{\mu}_i,\boldsymbol{\Sigma})$
+con \textbf{misma} matriz $\boldsymbol{\Sigma}$:
+\[
+  f_i(\mathbf{x})=
+  \frac{1}{(2\pi)^{p/2}|\boldsymbol{\Sigma}|^{1/2}}
+  \exp\!\left\{-\frac12(\mathbf{x}-\boldsymbol{\mu}_i)'
+  \boldsymbol{\Sigma}^{-1}(\mathbf{x}-\boldsymbol{\mu}_i)\right\}.
+\]
+
+La regla de decisión es lineal en $\mathbf{x}$ usando las funciones:
+\begin{mdframed}[style=resultado]
+\[
+  \delta_i(\mathbf{x})=
+  \mathbf{x}'\boldsymbol{\Sigma}^{-1}\boldsymbol{\mu}_i
+  -\frac12\boldsymbol{\mu}_i'\boldsymbol{\Sigma}^{-1}\boldsymbol{\mu}_i
+  +\log\pi_i,
+  \qquad i=1,2.
+\]
+\end{mdframed}
+\begin{variablesprimera}
+  \varitem{\delta_i(\mathbf{x})}{función discriminante lineal de la clase $i$}
+  \varitem{\boldsymbol{\mu}_i}{vector de medias de la clase $i$}
+  \varitem{\log\pi_i}{ajuste por probabilidad a priori}
+\end{variablesprimera}
+Se asigna al grupo con mayor $\delta_i(\mathbf{x})$.
+
+Si $\pi_1=\pi_2$ y costes iguales, equivale a clasificar por \textbf{distancia
+de Mahalanobis mínima} al centro:
+\[
+  D_i^2(\mathbf{x})=(\mathbf{x}-\boldsymbol{\mu}_i)'
+  \boldsymbol{\Sigma}^{-1}
+  (\mathbf{x}-\boldsymbol{\mu}_i),\qquad
+  \text{elegir } \arg\min_i D_i^2(\mathbf{x}).
+\]
+\begin{variablesprimera}
+  \varitem{D_i^2(\mathbf{x})}{distancia de Mahalanobis de $\mathbf{x}$ a la clase $i$}
+\end{variablesprimera}
+Si $\boldsymbol{\Sigma}=\sigma^2\mat{I}$, la regla se reduce a distancia
+euclídea.
+
+\begin{mdframed}[style=resultado]
+Con normalidad multivariante y matriz común, la regla con costes y priori
+puede escribirse como:
+\[
+  D_1^2(\mathbf{x})-D_2^2(\mathbf{x})
+  > 2\log\!\left(\frac{c(2|1)\pi_1}{c(1|2)\pi_2}\right)
+  \;\Longrightarrow\;
+  \text{clasificar en } \mathcal{P}_2.
+\]
+\end{mdframed}
+
+\subsubsection{Probabilidad a posteriori en función de distancias}
+
+Para dos grupos:
+\begin{mdframed}[style=resultado]
+\[
+  P(\mathcal{P}_1\mid\mathbf{x})=
+  \frac{1}{
+    1+\dfrac{\pi_2}{\pi_1}\exp\!\left[-\frac12\left(D_2^2(\mathbf{x})-D_1^2(\mathbf{x})\right)\right]
+  }.
+\]
+\end{mdframed}
+Cuanto menor sea $D_1^2$ frente a $D_2^2$, mayor será la probabilidad
+a posteriori de pertenecer a $\mathcal{P}_1$.
+
+\subsubsection{Estimación de parámetros en la práctica}
+
+En aplicaciones reales, $\pi_g$, $\boldsymbol{\mu}_g$ y
+$\boldsymbol{\Sigma}$ no son conocidos y se estiman en la muestra de
+entrenamiento:
+\[
+  \hat{\pi}_g = \frac{n_g}{n},\qquad
+  \hat{\boldsymbol{\mu}}_g = \frac{1}{n_g}\sum_{i:y_i=g}\mathbf{x}_i,
+\]
+\[
+  \hat{\boldsymbol{\Sigma}}
+  = \frac{1}{n-G}
+    \sum_{g=1}^{G}\sum_{i:y_i=g}
+    (\mathbf{x}_i-\hat{\boldsymbol{\mu}}_g)
+    (\mathbf{x}_i-\hat{\boldsymbol{\mu}}_g)'.
+\]
+
+La regla empírica queda:
+\[
+  \hat{\delta}_g(\mathbf{x})=
+  \mathbf{x}'\hat{\boldsymbol{\Sigma}}^{-1}\hat{\boldsymbol{\mu}}_g
+  -\frac12\hat{\boldsymbol{\mu}}_g'\hat{\boldsymbol{\Sigma}}^{-1}\hat{\boldsymbol{\mu}}_g
+  +\log\hat{\pi}_g,
+\]
+asignando al grupo con mayor $\hat{\delta}_g(\mathbf{x})$.
+
+\subsubsection{Ejemplo numérico (dos pintores)}
+
+Se observan dos variables: profundidad de trazo y proporción del lienzo.
+Con medias:
+\[
+  \boldsymbol{\mu}_A=(2,\,0.8)',\qquad
+  \boldsymbol{\mu}_B=(2.3,\,0.7)',
+\]
+y matriz común
+\[
+  \boldsymbol{\Sigma}=
+  \begin{pmatrix}
+    0.25 & 0.025\\
+    0.025 & 0.01
+  \end{pmatrix},
+  \quad
+  \boldsymbol{\Sigma}^{-1}\approx
+  \begin{pmatrix}
+    5.33 & -13.33\\
+    -13.33 & 133.33
+  \end{pmatrix}.
+\]
+
+Para $\mathbf{x}_0=(2.1,\,0.75)'$:
+\[
+  D_A^2(\mathbf{x}_0)\approx0.520,\qquad
+  D_B^2(\mathbf{x}_0)\approx0.813.
+\]
+Como $D_A^2<D_B^2$, se clasifica en el grupo $A$.
+
+Si $\pi_A=\pi_B$:
+\[
+  P(A\mid\mathbf{x}_0)\approx
+  \frac{1}{1+\exp\!\left[-\frac12(0.813-0.520)\right]}
+  \approx 0.537.
+\]
+La asignación es razonable, pero con incertidumbre apreciable.
+
+\subsubsection{Probabilidad teórica de error (caso simétrico)}
+
+En dos grupos normales con covarianza común, y con costes/priori iguales, si
+\[
+  \Delta^2=
+  (\boldsymbol{\mu}_1-\boldsymbol{\mu}_2)'
+  \boldsymbol{\Sigma}^{-1}
+  (\boldsymbol{\mu}_1-\boldsymbol{\mu}_2),
+\]
+la probabilidad de clasificación errónea en cada sentido es:
+\begin{mdframed}[style=resultado]
+\[
+  P(2|1)=P(1|2)=1-\Phi\!\left(\frac{\Delta}{2}\right).
+\]
+\end{mdframed}
+
+En el ejemplo, $\Delta\approx1.6166$, por lo que
+$1-\Phi(\Delta/2)\approx 0.2095$ (error teórico alrededor del 21\%).
+
+% ══════════════════════════════════════════════════════════════════════════
+\section{Generalización para varias poblaciones normales}
+% ══════════════════════════════════════════════════════════════════════════
+
+Para $G$ poblaciones, la región de decisión de la clase $g$ es:
+\[
+  \mathcal{A}_g=
+  \left\{
+    \mathbf{x}\in\R^p:\;
+    \pi_g f_g(\mathbf{x})>\pi_i f_i(\mathbf{x}),\ \forall i\neq g
+  \right\}.
+\]
+\begin{variablesprimera}
+  \varitem{G}{número total de clases}
+  \varitem{g}{índice de clase}
+  \varitem{\mathcal{A}_g}{región de decisión asignada a la clase $g$}
+\end{variablesprimera}
+
+\begin{itemize}
+  \item Esta formulación compara simultáneamente todas las clases.
+  \item También puede implementarse por comparaciones dos a dos entre
+        poblaciones, pero la regla global anterior es la forma canónica.
+\end{itemize}
+
+Si $f_g$ son normales con \textbf{covarianza común} $\boldsymbol{\Sigma}$:
+\[
+  \mathbf{X}\mid g\sim\mathcal{N}_p(\boldsymbol{\mu}_g,\boldsymbol{\Sigma}),
+\]
+la regla es asignar al grupo con mayor:
+\[
+  \delta_g(\mathbf{x})=
+  \mathbf{x}'\boldsymbol{\Sigma}^{-1}\boldsymbol{\mu}_g
+  -\frac12\boldsymbol{\mu}_g'\boldsymbol{\Sigma}^{-1}\boldsymbol{\mu}_g
+  +\log\pi_g.
+\]
+Con priori iguales, equivale a minimizar $D_g^2(\mathbf{x})$.
+
+\subsection{Fronteras de decisión}
+
+La frontera entre grupos $i,j$ se obtiene de
+$\delta_i(\mathbf{x})=\delta_j(\mathbf{x})$, es decir, un \textbf{hiperplano}:
+\[
+  (\boldsymbol{\mu}_i-\boldsymbol{\mu}_j)'\boldsymbol{\Sigma}^{-1}\mathbf{x}
+  -\frac12
+  \left(
+    \boldsymbol{\mu}_i'\boldsymbol{\Sigma}^{-1}\boldsymbol{\mu}_i
+    -\boldsymbol{\mu}_j'\boldsymbol{\Sigma}^{-1}\boldsymbol{\mu}_j
+  \right)
+  +\log\!\frac{\pi_i}{\pi_j}=0.
+\]
+
+% ══════════════════════════════════════════════════════════════════════════
+\section{Función lineal de Fisher}
+% ══════════════════════════════════════════════════════════════════════════
+
+\subsection{Caso de dos grupos}
+
+Fisher plantea hallar una proyección escalar $z=\boldsymbol{\alpha}'\mathbf{x}$
+que maximice la separación entre medias de grupo relativa a su dispersión
+interna.
+
+Con medias muestrales $\bar{\mathbf{x}}_1,\bar{\mathbf{x}}_2$ y matriz
+intra-grupos agrupada $\mat{S}_w$, el criterio es:
+\begin{mdframed}[style=resultado]
+\[
+  J(\boldsymbol{\alpha})=
+  \frac{\left[\boldsymbol{\alpha}'(\bar{\mathbf{x}}_2-\bar{\mathbf{x}}_1)\right]^2}
+       {\boldsymbol{\alpha}'\mat{S}_w\boldsymbol{\alpha}},
+  \qquad
+  \boldsymbol{\alpha}\propto
+  \mat{S}_w^{-1}(\bar{\mathbf{x}}_2-\bar{\mathbf{x}}_1).
+\]
+\end{mdframed}
+\begin{variablesprimera}
+  \varitem{\boldsymbol{\alpha}}{dirección de proyección discriminante de Fisher}
+  \varitem{J(\boldsymbol{\alpha})}{cociente entre separación intergrupos y dispersión intragrupo}
+  \varitem{\mat{S}_w}{matriz de dispersión intra-grupos agrupada}
+\end{variablesprimera}
+
+Así, la dirección discriminante coincide con la dirección que maximiza la
+distancia de Mahalanobis entre los centroides proyectados.
+
+\begin{itemize}
+  \item Si $\mat{S}_w=\mat{I}$, la dirección es paralela al vector que une
+        medias (distancia euclídea).
+  \item Con costes y priori iguales, en el eje proyectado se usa como umbral
+        el punto medio entre medias proyectadas.
+\end{itemize}
+
+\subsection{Caso de varios grupos}
+
+Para $G$ grupos se buscan
+$r=\min(p,G-1)$ variables canónicas:
+\[
+  z_j=\mathbf{u}_j'\mathbf{x},\qquad j=1,\dots,r,
+\]
+que maximizan separación entre grupos y minimizan dispersión intragrupos.
+
+Definimos:
+\[
+  \mat{W}=\sum_{g=1}^{G}\sum_{i=1}^{n_g}
+  (\mathbf{x}_{ig}-\bar{\mathbf{x}}_g)(\mathbf{x}_{ig}-\bar{\mathbf{x}}_g)',
+\]
+\[
+  \mat{B}=\sum_{g=1}^{G}
+  n_g(\bar{\mathbf{x}}_g-\bar{\mathbf{x}})
+  (\bar{\mathbf{x}}_g-\bar{\mathbf{x}})'.
+\]
+\begin{variablesprimera}
+  \varitem{\mat{W}}{matriz de dispersión intra-grupos}
+  \varitem{\mat{B}}{matriz de dispersión entre grupos}
+  \varitem{n_g}{tamaño muestral del grupo $g$}
+  \varitem{\mathbf{u}}{dirección canónica candidata}
+\end{variablesprimera}
+
+Cada dirección se obtiene maximizando:
+\[
+  \phi(\mathbf{u})=
+  \frac{\mathbf{u}'\mat{B}\mathbf{u}}{\mathbf{u}'\mat{W}\mathbf{u}},
+\]
+lo que conduce al problema de autovalores:
+\begin{mdframed}[style=resultado]
+\[
+  \mat{B}\mathbf{u}=\lambda\mat{W}\mathbf{u}
+  \quad\Longleftrightarrow\quad
+  \mat{W}^{-1}\mat{B}\mathbf{u}=\lambda\mathbf{u}.
+\]
+\end{mdframed}
+\begin{variablesprimera}
+  \varitem{\lambda}{autovalor asociado a una dirección canónica}
+\end{variablesprimera}
+
+Los autovectores asociados a los mayores autovalores proporcionan
+las variables canónicas más discriminantes.
+
+% ══════════════════════════════════════════════════════════════════════════
+\section{Variables canónicas discriminantes}
+% ══════════════════════════════════════════════════════════════════════════
+
+Sea $\mat{U}_r=[\mathbf{u}_1,\dots,\mathbf{u}_r]$.
+Para una observación $\mathbf{x}$:
+\[
+  \mathbf{z}=\mat{U}_r'\mathbf{x}\in\R^r.
+\]
+
+\begin{itemize}
+  \item $\mathbf{z}$ son las coordenadas en el espacio discriminante.
+  \item Cada grupo tiene centroide canónico
+        $\bar{\mathbf{z}}_g=\mat{U}_r'\bar{\mathbf{x}}_g$.
+  \item Una regla práctica de clasificación es asignar $\mathbf{z}_0$
+        al centroide más próximo (normalmente distancia euclídea en ese espacio).
+\end{itemize}
+
+\begin{observacion}
+Las variables canónicas quedan ordenadas por potencia discriminante
+(autovalores decrecientes) y son incorreladas respecto a la métrica
+intra-grupos.
+\end{observacion}
+
+% ══════════════════════════════════════════════════════════════════════════
+\section{Evaluación del modelo: matriz de confusión}
+% ══════════════════════════════════════════════════════════════════════════
+
+\begin{definicion}[Matriz de confusión]
+En clasificación binaria, una matriz de confusión recoge:
+\begin{itemize}
+  \item VP (verdaderos positivos), VN (verdaderos negativos),
+        FP (falsos positivos), FN (falsos negativos).
+  \item Según la convención habitual en aprendizaje automático:
+        filas = clase real, columnas = clase predicha
+        (algunos programas usan la convención traspuesta).
+\end{itemize}
+\end{definicion}
+
+Métricas más usadas:
+\begin{mdframed}[style=resultado]
+\[
+  \text{Exactitud}=\frac{VP+VN}{VP+VN+FP+FN},
+\]
+\[
+  \text{Precisión (PPV)}=\frac{VP}{VP+FP},
+  \qquad
+  \text{Sensibilidad (Recall)}=\frac{VP}{VP+FN},
+\]
+\[
+  \text{Especificidad}=\frac{VN}{VN+FP},
+  \qquad
+  \text{VPN}=\frac{VN}{VN+FN},
+\]
+\[
+  F_1=\frac{2\,\text{Precisión}\cdot\text{Sensibilidad}}
+            {\text{Precisión}+\text{Sensibilidad}}
+      =\frac{2VP}{2VP+FP+FN}.
+\]
+\end{mdframed}
+
+\begin{itemize}
+  \item Tasa de falsos positivos: $\dfrac{FP}{FP+VN}=1-\text{Especificidad}$.
+  \item Tasa de falsos negativos: $\dfrac{FN}{FN+VP}=1-\text{Sensibilidad}$.
+\end{itemize}
+
+\begin{nota}
+Cuando las clases están desbalanceadas, conviene no evaluar solo con
+exactitud; deben reportarse también sensibilidad, especificidad, precisión
+y $F_1$, idealmente junto con validación cruzada estratificada.
+\end{nota}
+
+% ══════════════════════════════════════════════════════════════════════════
+\section{Estudio de las dimensiones necesarias}
+% ══════════════════════════════════════════════════════════════════════════
+
+No siempre se necesitan las $r=\min(p,G-1)$ dimensiones canónicas.
+Para decidir cuántas conservar:
+
+\begin{enumerate}
+  \item Ordenar autovalores
+        $\lambda_1\ge\lambda_2\ge\cdots\ge\lambda_r$ de $\mat{W}^{-1}\mat{B}$.
+  \item Evaluar proporción acumulada de discriminación:
+        \[
+          \eta_q=\frac{\sum_{j=1}^{q}\lambda_j}{\sum_{j=1}^{r}\lambda_j}.
+        \]
+  \item Contrastar significación global o secuencial (p.\,ej. mediante
+        estadísticos tipo Lambda de Wilks).
+\end{enumerate}
+
+Si normalizamos los autovectores para que
+$\mathbf{v}_j'\mat{W}\mathbf{v}_j=1$, entonces:
+\[
+  \mathbf{v}_j'\mat{B}\mathbf{v}_j=\lambda_j,
+\]
+de forma que cada $\lambda_j$ cuantifica la separación adicional aportada
+por la dimensión canónica $j$.
+
+% ══════════════════════════════════════════════════════════════════════════
+\section{Algunas consideraciones prácticas}
+% ══════════════════════════════════════════════════════════════════════════
+
+\subsection{Hipótesis de partida}
+
+Supuestos clásicos del ADL:
+\begin{itemize}
+  \item Normalidad multivariante dentro de cada grupo.
+  \item Matriz de covarianzas común entre grupos
+        ($\boldsymbol{\Sigma}_1=\cdots=\boldsymbol{\Sigma}_G$).
+  \item Independencia muestral y ausencia de colinealidad extrema.
+\end{itemize}
+
+Si la homogeneidad de covarianzas falla claramente, suele considerarse QDA.
+Si la normalidad es débil, pueden funcionar bien transformaciones y/o métodos
+no paramétricos.
+
+\begin{itemize}
+  \item Para evaluar homogeneidad de covarianzas se utiliza con frecuencia el
+        test de \textbf{Box's M} (con cautela en muestras pequeñas).
+  \item Si $p$ es grande respecto a $n$, conviene regularizar la matriz de
+        covarianzas (\emph{shrinkage LDA}) para mejorar estabilidad y
+        generalización.
+\end{itemize}
+
+\subsection{Tamaño muestral}
+
+\begin{itemize}
+  \item Regla práctica habitual: al menos 5 observaciones por predictor.
+  \item Es recomendable que el grupo más pequeño tenga tamaño superior al
+        número de predictores.
+  \item Como guía operativa, se buscan al menos 20 observaciones por grupo
+        para mayor estabilidad.
+  \item Desbalances fuertes entre tamaños de grupo pueden sesgar la regla de
+        clasificación hacia los grupos más frecuentes si no se corrigen las
+        probabilidades a priori o los pesos de coste.
+\end{itemize}
+
+\begin{mdframed}[style=resultado]
+Resumen operativo del Tema 4:
+\begin{enumerate}
+  \item Modelar $P(g\mid\mathbf{x})$ mediante Bayes y densidades de grupo.
+  \item En LDA, usar funciones discriminantes lineales (o equivalentes por
+        Mahalanobis).
+  \item Para varios grupos, construir variables canónicas con
+        $\mat{W}^{-1}\mat{B}$.
+  \item Evaluar siempre la clasificación con matriz de confusión y métricas
+        más allá de la exactitud.
+\end{enumerate}
+\end{mdframed}
+
+\newpage
+% ══════════════════════════════════════════════════════════════════════════
+\section*{Formulario Final}
+% ══════════════════════════════════════════════════════════════════════════
+\addcontentsline{toc}{section}{Formulario Final}
+
+\subsection*{Tema 1: Introducción y Álgebra Lineal}
+\begin{mdframed}[style=resultado]
+\textbf{Valor teórico (combinación lineal):}
+\[
+  z = w_1X_1 + w_2X_2 + \cdots + w_pX_p.
+\]
+\textbf{Matriz de datos:}
+\[
+  \mat{X}=[x_{ij}]_{n\times p}.
+\]
+\textbf{Producto escalar:}
+\[
+  \mathbf{x}'\mathbf{y}=\sum_i x_i y_i.
+\]
+\textbf{Norma euclídea:}
+\[
+  \|\mathbf{x}\|=\sqrt{\mathbf{x}'\mathbf{x}}.
+\]
+\textbf{Relación producto escalar--ángulo:}
+\[
+  \mathbf{x}'\mathbf{y}=\|\mathbf{x}\|\,\|\mathbf{y}\|\cos\theta.
+\]
+\textbf{Ecuación característica (autovalores):}
+\[
+  |\mat{A}-\lambda\mat{I}|=0.
+\]
+\textbf{Forma cuadrática:}
+\[
+  Q(\mathbf{x})=\mathbf{x}'\mat{A}\mathbf{x}
+  =\sum_i a_{ii}x_i^2+\sum_{i<j}(a_{ij}+a_{ji})x_ix_j.
+\]
+\textbf{Inversa de matriz regular:}
+\[
+  \mat{A}^{-1}=\frac{1}{|\mat{A}|}\,\mat{A}^{\Lambda}.
+\]
+\end{mdframed}
+
+\subsection*{Tema 2: Distribuciones Multivariantes}
+\begin{mdframed}[style=resultado]
+\textbf{Distribución conjunta (función de distribución):}
+\[
+  F(\mathbf{x}^0)=P(\mathbf{x}\le \mathbf{x}^0).
+\]
+\textbf{Paso de densidad a distribución:}
+\[
+  F(\mathbf{x}^0)=\int_{-\infty}^{\mathbf{x}^0} f(\mathbf{x})\,d\mathbf{x}.
+\]
+\textbf{Distribución condicionada:}
+\[
+  f(\mathbf{x}_1\mid \mathbf{x}_2^0)=
+  \frac{f(\mathbf{x}_1,\mathbf{x}_2^0)}{f(\mathbf{x}_2^0)}.
+\]
+\textbf{Independencia:}
+\[
+  f(\mathbf{x}_1,\dots,\mathbf{x}_p)=\prod_{j=1}^p f(\mathbf{x}_j).
+\]
+\textbf{Vector de medias:}
+\[
+  \boldsymbol{\mu}=E(\mathbf{X}),\qquad
+  \bar{\mathbf{x}}=\frac{1}{n}\sum_{i=1}^n\mathbf{x}_i.
+\]
+\textbf{Matriz de varianzas--covarianzas:}
+\[
+  \mat{S}= \frac{1}{n}\sum_{i=1}^n (\mathbf{x}_i-\bar{\mathbf{x}})(\mathbf{x}_i-\bar{\mathbf{x}})'.
+\]
+\textbf{Matriz de centrado y proyección:}
+\[
+  \tilde{\mathbf{X}}=\mat{P}\mathbf{X},\qquad
+  \mat{P}=\mat{I}-\frac{1}{n}\mathbf{1}\mathbf{1}'.
+\]
+\textbf{Correlación lineal simple:}
+\[
+  r_{jk}=\frac{s_{jk}}{s_js_k}.
+\]
+\textbf{Correlación parcial:}
+\[
+  r_{jk.\,\text{resto}}=-\frac{s^{ij}}{\sqrt{s^{ii}s^{jj}}}.
+\]
+\textbf{Cambio de variable (jacobiano):}
+\[
+  f_y(\mathbf{y})=f_x(\mathbf{x})\left|\frac{d\mathbf{x}}{d\mathbf{y}}\right|.
+\]
+\textbf{Transformación lineal:}
+\[
+  \boldsymbol{\mu}_y=\mat{A}\boldsymbol{\mu}_x,\qquad
+  \mat{S}_y=\mat{A}\mat{S}_x\mat{A}'.
+\]
+\textbf{Multinomial:}
+\[
+  P(\mathbf{n})=\frac{n!}{n_1!\cdots n_G!}\,p_1^{n_1}\cdots p_G^{n_G}.
+\]
+\textbf{Dirichlet:}
+\[
+  f(x_1,\dots,x_{G-1})=
+  \frac{\Gamma(\alpha_0)}{\prod_{i=1}^G\Gamma(\alpha_i)}
+  \prod_{i=1}^G x_i^{\alpha_i-1}.
+\]
+\textbf{Normal multivariante:}
+\[
+  f(\mathbf{x})=\frac{1}{(2\pi)^{p/2}|\boldsymbol{\Sigma}|^{1/2}}
+  \exp\!\left\{-\frac12(\mathbf{x}-\boldsymbol{\mu})'\boldsymbol{\Sigma}^{-1}(\mathbf{x}-\boldsymbol{\mu})\right\}.
+\]
+\textbf{Normal condicionada (bloques):}
+\[
+  \mathbf{X}_1\mid \mathbf{X}_2=\mathbf{x}_2 \sim
+  \mathcal{N}\!\left(
+  \boldsymbol{\mu}_1+\boldsymbol{\Sigma}_{12}\boldsymbol{\Sigma}_{22}^{-1}(\mathbf{x}_2-\boldsymbol{\mu}_2),\;
+  \boldsymbol{\Sigma}_{11}-\boldsymbol{\Sigma}_{12}\boldsymbol{\Sigma}_{22}^{-1}\boldsymbol{\Sigma}_{21}
+  \right).
+\]
+\textbf{Distancia de Mahalanobis y ley $\chi^2$:}
+\[
+  D^2=(\mathbf{X}-\boldsymbol{\mu})'\boldsymbol{\Sigma}^{-1}(\mathbf{X}-\boldsymbol{\mu})\sim\chi^2(p).
+\]
+\end{mdframed}
+
+\subsection*{Tema 3: Componentes Principales (ACP)}
+\begin{mdframed}[style=resultado]
+\textbf{Criterio geométrico básico:}
+\[
+  \min\sum_{i=1}^n r_i^2 \Longleftrightarrow \max\sum_{i=1}^n z_i^2.
+\]
+\textbf{Definición de componentes:}
+\[
+  \mat{Z}=\mathbf{X}\mat{A},\qquad \mat{A}'\mat{A}=\mat{I}.
+\]
+\textbf{Varianza del componente $j$:}
+\[
+  \operatorname{var}(\mathbf{z}_j)=\mathbf{a}_j'\mat{S}\mathbf{a}_j.
+\]
+\textbf{Problema de autovalores ACP:}
+\[
+  \mat{S}\mathbf{a}_j=\lambda_j\mathbf{a}_j,\qquad
+  |\mat{S}-\lambda\mat{I}|=0.
+\]
+\textbf{Incorrelación entre componentes:}
+\[
+  \operatorname{cov}(\mathbf{z}_i,\mathbf{z}_j)=0\quad (i\neq j).
+\]
+\textbf{Conservación de varianza total:}
+\[
+  \tr(\mat{S})=\sum_{j=1}^p\lambda_j=\sum_{j=1}^p\operatorname{var}(z_j).
+\]
+\textbf{Proporción explicada por componente:}
+\[
+  c_h=\frac{\lambda_h}{\sum_{j=1}^p\lambda_j}.
+\]
+\textbf{Correlación componente--variable:}
+\[
+  r(z_i,x_j)=a_{ij}\frac{\sqrt{\lambda_i}}{s_j}.
+\]
+\textbf{Matriz de saturaciones (cargas factoriales):}
+\[
+  \mat{F}=\mat{A}\boldsymbol{\Lambda}^{1/2}.
+\]
+\textbf{ACP sobre correlaciones (análisis normado):}
+\[
+  \sum_{j=1}^p \lambda_j^{R}=\tr(\mat{R})=p,\qquad
+  c_j=\frac{\lambda_j^{R}}{p}.
+\]
+\end{mdframed}
+
+\subsection*{Tema 4: Análisis Discriminante (LDA/Fisher)}
+\begin{mdframed}[style=resultado]
+\textbf{Función discriminante lineal (dos clases):}
+\[
+  z_k=a+w_1x_{1k}+\cdots+w_px_{pk}.
+\]
+\textbf{Posterior bayesiana (dos clases):}
+\[
+  P(\mathcal{P}_i\mid\mathbf{x}_0)=
+  \frac{\pi_i f_i(\mathbf{x}_0)}
+       {\pi_1 f_1(\mathbf{x}_0)+\pi_2 f_2(\mathbf{x}_0)}.
+\]
+\textbf{Regla con costes de clasificación:}
+\[
+  c(1|2)\,\pi_2 f_2(\mathbf{x}_0) > c(2|1)\,\pi_1 f_1(\mathbf{x}_0)
+  \Longrightarrow \text{clasificar en }\mathcal{P}_2.
+\]
+\textbf{Discriminantes lineales gaussianos (covarianza común):}
+\[
+  \delta_i(\mathbf{x})=
+  \mathbf{x}'\boldsymbol{\Sigma}^{-1}\boldsymbol{\mu}_i
+  -\frac12\boldsymbol{\mu}_i'\boldsymbol{\Sigma}^{-1}\boldsymbol{\mu}_i
+  +\log\pi_i.
+\]
+\textbf{Distancia de Mahalanobis por grupo:}
+\[
+  D_i^2(\mathbf{x})=(\mathbf{x}-\boldsymbol{\mu}_i)'\boldsymbol{\Sigma}^{-1}(\mathbf{x}-\boldsymbol{\mu}_i).
+\]
+\textbf{Posterior en función de distancias (dos grupos):}
+\[
+  P(\mathcal{P}_1\mid\mathbf{x})=
+  \frac{1}{1+\dfrac{\pi_2}{\pi_1}
+  \exp\!\left[-\frac12\left(D_2^2(\mathbf{x})-D_1^2(\mathbf{x})\right)\right]}.
+\]
+\textbf{Estimadores muestrales en LDA:}
+\[
+  \hat{\pi}_g=\frac{n_g}{n},\qquad
+  \hat{\boldsymbol{\mu}}_g=\frac{1}{n_g}\sum_{i:y_i=g}\mathbf{x}_i,\qquad
+  \hat{\boldsymbol{\Sigma}}=\frac{1}{n-G}\sum_{g=1}^{G}\sum_{i:y_i=g}
+  (\mathbf{x}_i-\hat{\boldsymbol{\mu}}_g)(\mathbf{x}_i-\hat{\boldsymbol{\mu}}_g)'.
+\]
+\textbf{Error teórico simétrico (dos gaussianas):}
+\[
+  \Delta^2=(\boldsymbol{\mu}_1-\boldsymbol{\mu}_2)'\boldsymbol{\Sigma}^{-1}(\boldsymbol{\mu}_1-\boldsymbol{\mu}_2),
+  \qquad
+  P(2|1)=P(1|2)=1-\Phi\!\left(\frac{\Delta}{2}\right).
+\]
+\textbf{Región de decisión multiclase:}
+\[
+  \mathcal{A}_g=\{\mathbf{x}\in\R^p:\pi_g f_g(\mathbf{x})>\pi_i f_i(\mathbf{x}),\ \forall i\neq g\}.
+\]
+\textbf{Frontera lineal entre clases $i,j$:}
+\[
+  (\boldsymbol{\mu}_i-\boldsymbol{\mu}_j)'\boldsymbol{\Sigma}^{-1}\mathbf{x}
+  -\frac12\!\left(\boldsymbol{\mu}_i'\boldsymbol{\Sigma}^{-1}\boldsymbol{\mu}_i-\boldsymbol{\mu}_j'\boldsymbol{\Sigma}^{-1}\boldsymbol{\mu}_j\right)
+  +\log\frac{\pi_i}{\pi_j}=0.
+\]
+\textbf{Criterio de Fisher (dos grupos):}
+\[
+  J(\boldsymbol{\alpha})=
+  \frac{\left[\boldsymbol{\alpha}'(\bar{\mathbf{x}}_2-\bar{\mathbf{x}}_1)\right]^2}
+       {\boldsymbol{\alpha}'\mat{S}_w\boldsymbol{\alpha}},
+  \qquad
+  \boldsymbol{\alpha}\propto\mat{S}_w^{-1}(\bar{\mathbf{x}}_2-\bar{\mathbf{x}}_1).
+\]
+\textbf{Dispersión intra/intergrupo y problema generalizado:}
+\[
+  \mat{W}=\sum_{g=1}^{G}\sum_{i=1}^{n_g}(\mathbf{x}_{ig}-\bar{\mathbf{x}}_g)(\mathbf{x}_{ig}-\bar{\mathbf{x}}_g)',\quad
+  \mat{B}=\sum_{g=1}^{G} n_g(\bar{\mathbf{x}}_g-\bar{\mathbf{x}})(\bar{\mathbf{x}}_g-\bar{\mathbf{x}})',
+\]
+\[
+  \mat{B}\mathbf{u}=\lambda\mat{W}\mathbf{u}
+  \Longleftrightarrow
+  \mat{W}^{-1}\mat{B}\mathbf{u}=\lambda\mathbf{u}.
+\]
+\textbf{Variables canónicas y número máximo:}
+\[
+  \mathbf{z}=\mat{U}_r'\mathbf{x},\qquad r=\min(p,G-1).
+\]
+\textbf{Proporción acumulada de discriminación:}
+\[
+  \eta_q=\frac{\sum_{j=1}^{q}\lambda_j}{\sum_{j=1}^{r}\lambda_j}.
+\]
+\textbf{Métricas de clasificación (matriz de confusión):}
+\begin{align}
+  \text{Exactitud} &= \frac{VP+VN}{VP+VN+FP+FN}, \\
+  \text{Precisión} &= \frac{VP}{VP+FP}, \\
+  \text{Sensibilidad} &= \frac{VP}{VP+FN}, \\
+  \text{Especificidad} &= \frac{VN}{VN+FP}, \\
+  F_1 &= \frac{2VP}{2VP+FP+FN}.
+\end{align}
+\end{mdframed}
+
 \end{document}
-
-
