@@ -1,0 +1,1725 @@
+\documentclass[a4paper,12pt]{article}
+
+% --------------------------------------------------
+% PAQUETES
+% --------------------------------------------------
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-nodecimaldot]{babel}
+\usepackage{lmodern}
+
+\usepackage[a4paper,margin=2.6cm]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools,physics}
+\usepackage{array,booktabs,multirow}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+\usepackage{mdframed}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{setspace}
+
+\pgfplotsset{compat=1.18}
+\usetikzlibrary{arrows.meta, decorations.pathreplacing, calc}
+
+% --------------------------------------------------
+% HIPERVÍNCULOS
+% --------------------------------------------------
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue!50!black,
+    urlcolor=blue!50!black,
+    citecolor=blue!50!black,
+    pdftitle={Métodos Numéricos - Apuntes Unificados},
+    pdfauthor={Luis López},
+    pdfsubject={Métodos Numéricos},
+    pdfkeywords={Métodos numéricos, ecuaciones no lineales,
+                 interpolación, mínimos cuadrados}
+}
+
+% --------------------------------------------------
+% ESPACIADO
+% --------------------------------------------------
+\setlength{\parskip}{0.6em}
+\setlength{\parindent}{0pt}
+\onehalfspacing
+
+% --------------------------------------------------
+% MACROS
+% --------------------------------------------------
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\eps}{\varepsilon}
+\renewcommand{\vec}[1]{\mathbf{#1}}
+\newcommand{\ve}[1]{\mathbf{#1}}
+\newcommand{\uvec}[1]{\hat{\mathbf{#1}}}
+
+\newcommand{\EN}{E_N}
+\newcommand{\EA}{E_a}
+\newcommand{\ER}{E_r}
+\newcommand{\Tol}{T_s}
+\newcommand{\fl}{\mathrm{fl}}
+
+% --------------------------------------------------
+% ESTILO DE SECCIONES
+% --------------------------------------------------
+\titleformat{\section}
+{\normalfont\Large\bfseries}
+{\thesection.}{0.6em}{}
+[\vspace{0.25em}\titlerule]
+
+\titleformat{\subsection}
+{\normalfont\large\bfseries}
+{\thesubsection.}{0.5em}{}
+
+\titleformat{\subsubsection}
+{\normalfont\normalsize\bfseries}
+{\thesubsubsection.}{0.5em}{}
+
+% --------------------------------------------------
+% CABECERA Y PIE
+% --------------------------------------------------
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\nouppercase{\leftmark}}
+\fancyhead[R]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% --------------------------------------------------
+% ENTORNOS
+% --------------------------------------------------
+\theoremstyle{definition}
+\newtheorem{definicion}{Definición}[section]
+\newtheorem{ejemplo}{Ejemplo}[section]
+\newtheorem{observacion}{Observación}[section]
+\newtheorem{nota}{Nota}[section]
+
+\theoremstyle{plain}
+\newtheorem{teorema}{Teorema}[section]
+\newtheorem{proposicion}{Proposición}[section]
+\newtheorem{lema}{Lema}[section]
+\newtheorem{corolario}{Corolario}[section]
+
+% --------------------------------------------------
+% CAJAS
+% --------------------------------------------------
+\mdfdefinestyle{resultado}{
+    linecolor=black,
+    linewidth=0.8pt,
+    roundcorner=4pt,
+    backgroundcolor=gray!8,
+    innertopmargin=0.8em,
+    innerbottommargin=0.8em,
+    innerleftmargin=0.8em,
+    innerrightmargin=0.8em
+}
+
+\newmdenv[style=resultado]{cajaresultado}
+
+% --------------------------------------------------
+% DOCUMENTO
+% --------------------------------------------------
+\begin{document}
+
+% --------------------------------------------------
+% PORTADA
+% --------------------------------------------------
+\begin{titlepage}
+    \centering
+    \vspace*{1.5cm}
+
+    {\Huge \textbf{Métodos Numéricos}\par}
+    \vspace{0.3cm}
+    {\Large Curso 2025--2026\par}
+    \vspace{0.3cm}
+    {\Large Apuntes Unificados\par}
+    \vspace{0.3cm}
+    {\large Teoría, demostraciones, desarrollos y formulario\par}
+    \vspace{0.7cm}
+    {\large Temas 1--3: error numérico, ecuaciones no lineales,
+             interpolación y aproximación\par}
+
+    \vspace{1.2cm}
+
+    \begin{tikzpicture}[scale=1.05]
+        % Ejes
+        \draw[->,thick] (-5.2,0) -- (5.3,0) node[right] {$x$};
+        \draw[->,thick] (0,-3.2) -- (0,4.1) node[above] {$y$};
+
+        % Curva exacta
+        \draw[blue!70!black, very thick, domain=-4.2:4.1, samples=200]
+            plot (\x,{0.12*(\x)^3 - 0.75*(\x) + 0.6});
+
+        % Aproximaciones de Taylor (visual)
+        \draw[red!70!black, thick] (-4.3,-2.2) -- (4.4,2.7);
+
+        % Puntos de interpolación
+        \filldraw[black] (-2.5,1.1) circle (2pt);
+        \filldraw[black] (-1.4,0.6) circle (2pt);
+        \filldraw[black] (0.8,-0.1) circle (2pt);
+        \filldraw[black] (2.0,-0.35) circle (2pt);
+        \filldraw[black] (3.0,1.4) circle (2pt);
+
+        % Etiquetas
+        \node[blue!70!black] at (3.7,3.0) {$f(x)$};
+        \node[red!70!black] at (3.9,2.1) {aprox.};
+        \node at (-3.7,-2.6)
+              {\small error, raíces, ajuste, interpolación};
+    \end{tikzpicture}
+
+    \vfill
+
+    {\large Autor: Luis López\par}
+    {\large Titulación: Grado en Física\par}
+    {\large Fecha: Marzo 2026\par}
+
+    \vspace{0.6cm}
+\end{titlepage}
+
+\tableofcontents
+\newpage
+
+% ==================================================
+% TEMA 1
+% ==================================================
+\section{Tema 1: Error por truncamiento y por redondeo}
+
+\subsection{Introducción}
+
+En cálculo numérico no basta con producir una aproximación; también es esencial
+entender \emph{qué error se comete}, \emph{de dónde procede} y
+\emph{cómo se controla}. El error numérico aparece de forma natural porque los
+algoritmos trabajan con representaciones finitas y porque, en muchas ocasiones,
+se sustituyen expresiones exactas por aproximaciones más manejables.
+
+En este tema se estudian dos mecanismos fundamentales de error:
+
+\begin{itemize}[leftmargin=1.5em]
+    \item el \textbf{error por truncamiento}, que surge al sustituir una expresión
+          exacta por otra incompleta, por ejemplo al cortar una serie de Taylor o
+          Maclaurin;
+    \item el \textbf{error por redondeo}, que aparece al representar números reales
+          con un número finito de cifras.
+\end{itemize}
+
+Estos dos tipos de error son la base conceptual del análisis de la estabilidad y
+precisión de cualquier método numérico. El análisis riguroso de ambos es
+imprescindible: un algoritmo puede ser matemáticamente correcto y, sin embargo,
+dar resultados completamente erróneos si no se controlan los errores numéricos.
+
+\subsection{Conceptos básicos de error}
+
+\begin{definicion}[Error absoluto]
+Sea $x$ el valor exacto y $\tilde{x}$ una aproximación. El \textbf{error absoluto}
+se define por
+\[
+    E_a = |x - \tilde{x}|.
+\]
+\end{definicion}
+
+\begin{definicion}[Error relativo]
+El \textbf{error relativo} asociado a $\tilde{x}$ es
+\[
+    E_r = \frac{|x - \tilde{x}|}{|x|},
+    \qquad x \neq 0.
+\]
+Frecuentemente se expresa en porcentaje:
+\[
+    E_r(\%) = \frac{|x - \tilde{x}|}{|x|} \cdot 100.
+\]
+\end{definicion}
+
+\begin{observacion}
+El error absoluto mide la desviación en las mismas unidades de la magnitud,
+mientras que el error relativo mide la importancia del error con respecto al
+tamaño del valor exacto. Para comparar aproximaciones de magnitudes distintas,
+el error relativo es la medida adecuada.
+\end{observacion}
+
+\begin{definicion}[Cifras correctas y decimales correctos]
+Se dice que una aproximación $\tilde{x}$ posee $k$ \textbf{decimales correctos}
+si el error relativo satisface, de forma aproximada,
+\[
+    E_r < \frac{1}{2}\,10^{-k}.
+\]
+Una fórmula muy utilizada para estimar el número de decimales correctos es
+\[
+    k \approx \left\lfloor -\log_{10}(2E_r)\right\rfloor.
+\]
+\end{definicion}
+
+\begin{cajaresultado}
+\textbf{Fórmulas fundamentales de error:}
+\[
+    E_a = |x - \tilde{x}|,
+    \qquad
+    E_r = \frac{|x - \tilde{x}|}{|x|},
+    \qquad
+    k \approx \left\lfloor -\log_{10}(2E_r) \right\rfloor.
+\]
+\end{cajaresultado}
+
+\subsection{Error por truncamiento}
+
+\subsubsection{Idea general}
+
+\begin{definicion}[Error por truncamiento]
+El \textbf{error por truncamiento} es el error cometido al reemplazar un proceso
+infinito por uno finito. Por ejemplo, si una función se desarrolla en serie de
+Taylor y se conservan sólo los primeros $n+1$ términos, la diferencia entre la
+función exacta y el polinomio truncado es el error de truncamiento.
+\end{definicion}
+
+La herramienta central para este estudio es la serie de Taylor.
+
+\subsubsection{Serie de Taylor y resto de Lagrange}
+
+\begin{teorema}[Serie de Taylor con resto de Lagrange]
+Sea $f$ una función con derivadas hasta orden $n+1$ en un entorno de $a$.
+Entonces
+\[
+    f(x) = \sum_{k=0}^{n} \frac{f^{(k)}(a)}{k!}(x-a)^k + R_n(x),
+\]
+donde el \textbf{resto de Lagrange} es
+\[
+    R_n(x) = \frac{f^{(n+1)}(\xi)}{(n+1)!}(x-a)^{n+1},
+\]
+para algún $\xi$ situado estrictamente entre $a$ y $x$.
+\end{teorema}
+
+\begin{demostracion}
+Se aplica el teorema del valor medio generalizado de forma recursiva.
+Definimos el resto exacto $R_n(x) = f(x) - T_n(x)$, donde
+$T_n(x) = \sum_{k=0}^{n} \frac{f^{(k)}(a)}{k!}(x-a)^k$.
+Consideremos la función auxiliar
+\[
+    G(t) = f(x) - \sum_{k=0}^{n}\frac{f^{(k)}(t)}{k!}(x-t)^k
+           - \frac{R_n(x)}{(x-a)^{n+1}}(x-t)^{n+1}.
+\]
+Se verifica $G(x) = 0$ y $G(a) = 0$. Por el teorema de Rolle existe
+$\xi \in (a,x)$ con $G'(\xi) = 0$. Calculando $G'(t)$ y simplificando
+(los términos del sumatorio se cancelan telescópicamente), se obtiene
+\[
+    G'(\xi) = -\frac{f^{(n+1)}(\xi)}{n!}(x-\xi)^n
+              + \frac{(n+1)R_n(x)}{(x-a)^{n+1}}(x-\xi)^n = 0,
+\]
+de donde
+\[
+    R_n(x) = \frac{f^{(n+1)}(\xi)}{(n+1)!}(x-a)^{n+1}. \qedhere
+\]
+\end{demostracion}
+
+\begin{cajaresultado}
+\textbf{Error de truncamiento de orden $n$:}
+\[
+    f(x) = T_n(x) + R_n(x),
+    \qquad
+    E_{\mathrm{trunc}} = |R_n(x)| = \left|\frac{f^{(n+1)}(\xi)}{(n+1)!}
+    (x-a)^{n+1}\right|.
+\]
+El error de truncamiento \emph{disminuye} al aumentar $n$ (siempre que la serie
+converja) y \emph{aumenta} cuando el punto de evaluación $x$ se aleja del centro
+$a$.
+\end{cajaresultado}
+
+\begin{observacion}
+El punto $\xi$ que aparece en el resto de Lagrange es \emph{desconocido}; sólo
+sabemos que pertenece al intervalo $(a,x)$. En la práctica, el resto se usa para
+acotar el error, tomando el máximo de $|f^{(n+1)}|$ en ese intervalo.
+\end{observacion}
+
+\subsubsection{Serie de Maclaurin}
+
+Cuando el desarrollo se centra en $a = 0$, se obtiene la \textbf{serie de
+Maclaurin}:
+\[
+    f(x) = f(0) + f'(0)x + \frac{f''(0)}{2!}x^2 + \cdots
+           + \frac{f^{(n)}(0)}{n!}x^n + R_n(x).
+\]
+
+\begin{proposicion}[Serie de Maclaurin de $e^x$]
+La serie de Maclaurin de la función exponencial es
+\[
+    e^x = \sum_{k=0}^{\infty} \frac{x^k}{k!}
+        = 1 + x + \frac{x^2}{2!} + \frac{x^3}{3!} + \cdots
+\]
+Esta serie converge para todo $x \in \R$.
+\end{proposicion}
+
+\begin{demostracion}
+Toda derivada de $e^x$ coincide con la propia función. En particular,
+$f^{(k)}(0) = e^0 = 1$ para todo $k \in \N$. Sustituyendo en la fórmula
+general de Maclaurin:
+\[
+    e^x = \sum_{k=0}^{n} \frac{x^k}{k!} + R_n(x),
+    \qquad
+    R_n(x) = \frac{e^\xi}{(n+1)!} x^{n+1},
+    \quad \xi \in (0, x).
+\]
+Para cualquier $x$ fijo, $|R_n(x)| \leq \frac{e^{|x|}}{(n+1)!}|x|^{n+1}
+\to 0$ cuando $n \to \infty$, ya que el factorial crece más rápido que
+cualquier potencia. Por tanto la serie converge para todo $x \in \R$.
+\end{demostracion}
+
+\subsubsection{Aproximaciones sucesivas de Taylor}
+
+Sea
+\[
+    T_0(x) = f(0), \quad
+    T_1(x) = f(0) + f'(0)x, \quad
+    T_2(x) = f(0) + f'(0)x + \frac{f''(0)}{2!}x^2,
+\]
+y en general
+\[
+    T_n(x) = \sum_{k=0}^{n} \frac{f^{(k)}(0)}{k!} x^k.
+\]
+
+Cuanto mayor es el orden $n$, menor suele ser el error por truncamiento,
+siempre que la serie converja adecuadamente en el punto de evaluación.
+La figura siguiente ilustra cómo los polinomios de Taylor de orden creciente
+aproximan mejor a $e^x$ en un entorno del origen.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+    width=11cm, height=7cm,
+    xmin=-2.5, xmax=2.5,
+    ymin=-1, ymax=8,
+    xlabel={$x$}, ylabel={$y$},
+    grid=major,
+    grid style={gray!25},
+    legend pos=north west,
+    legend style={font=\small},
+    tick label style={font=\small}
+]
+% Función exacta
+\addplot[blue!70!black, very thick, domain=-2.5:2.5, samples=200]
+    {exp(x)};
+\addlegendentry{$e^x$ (exacta)}
+% T0
+\addplot[red, thick, dashed, domain=-2.5:2.5]
+    {1};
+\addlegendentry{$T_0 = 1$}
+% T1
+\addplot[orange!80!black, thick, domain=-2.5:2.5]
+    {1 + x};
+\addlegendentry{$T_1 = 1 + x$}
+% T2
+\addplot[green!60!black, thick, domain=-2.5:2.5]
+    {1 + x + x^2/2};
+\addlegendentry{$T_2$}
+% T3
+\addplot[purple!80!black, thick, domain=-2.5:2.5]
+    {1 + x + x^2/2 + x^3/6};
+\addlegendentry{$T_3$}
+% T4
+\addplot[cyan!70!black, thick, domain=-2.5:2.5]
+    {1 + x + x^2/2 + x^3/6 + x^4/24};
+\addlegendentry{$T_4$}
+\end{axis}
+\end{tikzpicture}
+\caption{Aproximaciones sucesivas de Taylor de $e^x$ en torno a $a=0$.
+A mayor orden, mejor aproximación en el intervalo mostrado.}
+\end{figure}
+
+\subsubsection{Ejemplo guiado: error de truncamiento con datos tabulados}
+
+\begin{ejemplo}
+Supóngase que se conocen los datos
+\[
+    f(0) = 1.2, \quad f'(0) = -0.25, \quad f''(0) = -1.0, \quad
+    f^{(3)}(0) = -0.9, \quad f^{(4)}(0) = -2.4,
+\]
+y se desea aproximar $f(1)$, sabiendo que el valor exacto es $f(1) = 0.2$.
+
+El desarrollo de Taylor en torno a $a = 0$ es
+\[
+    f(x) \approx 1.2 - 0.25x - \frac{1.0}{2}x^2
+                - \frac{0.9}{6}x^3 - \frac{2.4}{24}x^4
+        = 1.2 - 0.25x - 0.5x^2 - 0.15x^3 - 0.1x^4.
+\]
+
+Evaluando en $x = 1$ con órdenes crecientes:
+
+\medskip
+\begin{center}
+\begin{tabular}{clcc}
+\toprule
+Orden & Polinomio $T_n(1)$ & $E_a = |0.2 - T_n(1)|$ & $E_r$ \\
+\midrule
+0 & $T_0(1) = 1.2$ & $1.0000$ & $500.00\%$ \\
+1 & $T_1(1) = 1.2 - 0.25 = 0.95$ & $0.7500$ & $375.00\%$ \\
+2 & $T_2(1) = 0.95 - 0.50 = 0.45$ & $0.2500$ & $125.00\%$ \\
+3 & $T_3(1) = 0.45 - 0.15 = 0.30$ & $0.1000$ & $50.00\%$ \\
+4 & $T_4(1) = 0.30 - 0.10 = 0.20$ & $0$ & $0\%$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+En este caso el polinomio de orden 4 reproduce \emph{exactamente} el valor en
+$x = 1$. El término residual de Lagrange es
+\[
+    R_4(1) = \frac{f^{(5)}(\xi)}{5!} \cdot 1^5.
+\]
+Si la función es un polinomio de grado 4, entonces $f^{(5)} \equiv 0$ y
+$R_4 = 0$, lo que explica el error nulo.
+\end{ejemplo}
+
+\begin{observacion}
+El hecho de que en un ejemplo concreto el error de truncamiento sea nulo no
+implica que esto ocurra en general. Sólo indica que, para esos datos, el
+polinomio truncado de orden 4 coincide con la función en el punto considerado.
+Si $f$ tuviese derivadas de orden superior no nulas, la aproximación de orden 4
+en otros puntos tendría error no nulo.
+\end{observacion}
+
+\subsubsection{Ejemplo detallado: aproximación de $e^{0.5}$ con tolerancia}
+
+\begin{ejemplo}
+\label{ej:exp05}
+Aproximar $e^{0.5}$ mediante su serie de Maclaurin hasta lograr una tolerancia
+del orden de $10^{-4}$. Se toma como valor exacto $e^{0.5} = 1.648721271$.
+
+Partimos de la serie:
+\[
+    e^x = \sum_{k=0}^{\infty} \frac{x^k}{k!},
+    \qquad
+    e^{0.5} = \sum_{k=0}^{\infty} \frac{(0.5)^k}{k!}.
+\]
+
+Para cada orden $n$ calculamos la aproximación $T_n$, el error absoluto
+$E_a = |1.648721271 - T_n|$ y el error relativo $E_r = E_a / 1.648721271$.
+También estimamos el número de decimales correctos mediante
+$k = \lfloor -\log_{10}(2E_r)\rfloor$.
+
+\medskip
+\textbf{Cálculo paso a paso:}
+
+\begin{align*}
+T_0 &= 1, \\
+T_1 &= 1 + 0.5 = 1.5, \\
+T_2 &= 1.5 + \frac{(0.5)^2}{2!} = 1.5 + 0.125 = 1.625, \\
+T_3 &= 1.625 + \frac{(0.5)^3}{3!} = 1.625 + 0.020\overline{8}
+     = 1.645833\overline{3}, \\
+T_4 &= 1.645833\overline{3} + \frac{(0.5)^4}{4!}
+     = 1.645833\overline{3} + 0.002604167 = 1.6484375, \\
+T_5 &= 1.6484375 + \frac{(0.5)^5}{5!}
+     = 1.6484375 + 0.000260417 = 1.648697917, \\
+T_6 &= 1.648697917 + \frac{(0.5)^6}{6!}
+     = 1.648697917 + 0.0000217\overline{6} = 1.648719618.
+\end{align*}
+
+\medskip
+\begin{center}
+\begin{tabular}{ccccc}
+\toprule
+Orden $n$ & $T_n$ & $E_a$ & $E_r$ & Decimales correctos $k$ \\
+\midrule
+0 & 1.000000 & $6.49 \times 10^{-1}$ & $3.94 \times 10^{-1}$ & 0 \\
+1 & 1.500000 & $1.49 \times 10^{-1}$ & $9.02 \times 10^{-2}$ & 0 \\
+2 & 1.625000 & $2.37 \times 10^{-2}$ & $1.44 \times 10^{-2}$ & 1 \\
+3 & 1.645833 & $2.89 \times 10^{-3}$ & $1.75 \times 10^{-3}$ & 2 \\
+4 & 1.648438 & $2.84 \times 10^{-4}$ & $1.72 \times 10^{-4}$ & 3 \\
+\textbf{5} & \textbf{1.648698} & $\mathbf{2.34 \times 10^{-5}}$
+           & $\mathbf{1.42 \times 10^{-5}}$ & \textbf{4} \\
+6 & 1.648720 & $1.65 \times 10^{-6}$ & $1.00 \times 10^{-6}$ & 5 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\medskip
+\textbf{Verificación de la tolerancia con la fórmula de cifras correctas:}
+
+Para $n = 5$: $E_r = 1.42 \times 10^{-5}$, luego
+\[
+    k = \left\lfloor -\log_{10}(2 \times 1.42 \times 10^{-5}) \right\rfloor
+      = \left\lfloor -\log_{10}(2.84 \times 10^{-5}) \right\rfloor
+      = \left\lfloor 4.547 \right\rfloor = 4.
+\]
+Esto confirma que con $n = 5$ se obtienen 4 decimales correctos, suficiente
+para satisfacer la tolerancia $10^{-4}$.
+\end{ejemplo}
+
+\begin{cajaresultado}
+Para aproximar $e^{0.5}$ con tolerancia del orden de $10^{-4}$ basta tomar
+el polinomio de Maclaurin de \textbf{orden 5}:
+\[
+    e^{0.5} \approx 1.6487.
+\]
+A partir de $n = 5$, $E_a < 10^{-4}$ y se tienen al menos 4 decimales
+correctos.
+\end{cajaresultado}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+    width=11cm, height=6.5cm,
+    xlabel={Orden $n$},
+    ylabel={$\log_{10}(E_a)$},
+    xtick={0,1,2,3,4,5,6},
+    grid=major,
+    grid style={gray!25},
+    ymin=-7, ymax=0,
+    legend pos=north east,
+    tick label style={font=\small}
+]
+\addplot[blue!70!black, very thick, mark=*, mark size=2.5pt]
+    coordinates {
+        (0,-0.188)
+        (1,-0.827)
+        (2,-1.625)
+        (3,-2.539)
+        (4,-3.547)
+        (5,-4.631)
+        (6,-5.783)
+    };
+\addlegendentry{$\log_{10}(E_a)$}
+% Línea de tolerancia 1e-4
+\addplot[red!70!black, dashed, thick, domain=0:6] {-4};
+\addlegendentry{Tolerancia $10^{-4}$}
+\end{axis}
+\end{tikzpicture}
+\caption{Convergencia del error absoluto al aproximar $e^{0.5}$ con la serie
+de Maclaurin. A partir del orden $n=5$ se cruza la tolerancia $10^{-4}$.}
+\end{figure}
+
+\subsubsection{Ejercicio resuelto: serie de Maclaurin de $\dfrac{1}{1+x^2}$}
+
+\begin{ejemplo}
+Desarrollar $f(x) = \dfrac{1}{1+x^2}$ en serie de Maclaurin y determinar el
+radio de convergencia.
+
+\medskip
+\textbf{Método 1 — Series geométricas (más elegante):}
+
+Recordamos la serie geométrica:
+\[
+    \frac{1}{1-u} = \sum_{k=0}^{\infty} u^k = 1 + u + u^2 + u^3 + \cdots,
+    \qquad |u| < 1.
+\]
+Identificamos $u = -x^2$:
+\[
+    \frac{1}{1+x^2} = \frac{1}{1-(-x^2)}
+    = \sum_{k=0}^{\infty} (-x^2)^k
+    = \sum_{k=0}^{\infty} (-1)^k x^{2k},
+    \qquad |{-x^2}| < 1 \Rightarrow |x| < 1.
+\]
+
+Explícitamente:
+\[
+    \frac{1}{1+x^2} = 1 - x^2 + x^4 - x^6 + x^8 - \cdots
+\]
+
+\medskip
+\textbf{Radio de convergencia:} La serie converge para $|x| < 1$.
+
+\medskip
+\textbf{Método 2 — Derivadas sucesivas (verificación directa):}
+
+Calculamos las derivadas en $x = 0$:
+\begin{align*}
+f(x) &= (1+x^2)^{-1}
+        &\Rightarrow\quad f(0) &= 1, \\
+f'(x) &= -\frac{2x}{(1+x^2)^2}
+         &\Rightarrow\quad f'(0) &= 0, \\
+f''(x) &= \frac{-2(1+x^2)^2 + 8x^2(1+x^2)}{(1+x^2)^4}
+          = \frac{6x^2 - 2}{(1+x^2)^3}
+          &\Rightarrow\quad f''(0) &= -2, \\
+f'''(x) &= \frac{24x - 24x^3}{(1+x^2)^4}
+           &\Rightarrow\quad f'''(0) &= 0, \\
+f^{(4)}(x)\big|_{x=0} &= 24.
+\end{align*}
+
+Aplicando la fórmula de Maclaurin $\sum_{k=0}^{n}
+\frac{f^{(k)}(0)}{k!}x^k$:
+\[
+    \frac{1}{1+x^2} = 1 + 0 \cdot x + \frac{-2}{2!}x^2
+                    + 0 \cdot x^3 + \frac{24}{4!}x^4 + \cdots
+    = 1 - x^2 + x^4 - x^6 + \cdots \checkmark
+\]
+
+Ambos métodos son consistentes. Los coeficientes impares son nulos porque
+$f(x) = f(-x)$ (función par).
+
+\begin{cajaresultado}
+\[
+    \frac{1}{1+x^2} = \sum_{k=0}^{\infty} (-1)^k x^{2k}
+    = 1 - x^2 + x^4 - x^6 + x^8 - \cdots,
+    \qquad |x| < 1.
+\]
+Integrando término a término se obtiene la serie de $\arctan x$:
+\[
+    \arctan x = \sum_{k=0}^{\infty} \frac{(-1)^k x^{2k+1}}{2k+1}
+    = x - \frac{x^3}{3} + \frac{x^5}{5} - \cdots,
+    \qquad |x| \leq 1.
+\]
+\end{cajaresultado}
+\end{ejemplo}
+
+\subsection{Error por redondeo}
+
+\subsubsection{Definición y origen}
+
+\begin{definicion}[Error por redondeo]
+El \textbf{error por redondeo} es el que aparece cuando un número real se
+representa mediante un número finito de cifras. Si $x$ es el número exacto y
+$\fl(x)$ su representación en máquina (punto flotante), entonces
+\[
+    E_{\mathrm{red}} = |x - \fl(x)|.
+\]
+\end{definicion}
+
+En la práctica, el redondeo es inevitable porque los sistemas de cómputo sólo
+pueden almacenar un número finito de dígitos. La norma IEEE 754 de doble
+precisión usa 64 bits: 1 de signo, 11 de exponente y 52 de mantisa, lo que
+proporciona aproximadamente 15--16 dígitos decimales significativos y un épsilon
+de máquina $\epsilon_{\mathrm{máq}} \approx 2.22 \times 10^{-16}$.
+
+\begin{definicion}[Épsilon de máquina]
+El \textbf{épsilon de máquina} $\epsilon_{\mathrm{máq}}$ es el número positivo
+más pequeño tal que
+\[
+    \fl(1 + \epsilon_{\mathrm{máq}}) > 1.
+\]
+Representa la precisión relativa de la aritmética de punto flotante: cualquier
+número real $x$ se representa con error relativo acotado por
+$\epsilon_{\mathrm{máq}}/2$.
+\end{definicion}
+
+\subsubsection{Truncar versus redondear}
+
+Hay dos operaciones distintas para reducir el número de cifras de un número:
+
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Truncar (corte):} se eliminan los dígitos sobrantes sin
+          modificar el último conservado. Por ejemplo, $\pi = 3.14159\ldots$
+          truncado a 4 decimales es $3.1415$.
+    \item \textbf{Redondear:} se modifica el último dígito conservado según los
+          descartados, aplicando la regla de redondeo.
+\end{itemize}
+
+\begin{definicion}[Regla de redondeo simétrico]
+Sea un número decimal y supóngase que se desea conservar cierto número de
+cifras:
+\begin{itemize}[leftmargin=1.5em]
+    \item Si el primer dígito descartado es \emph{mayor} que 5, se incrementa
+          en una unidad el último dígito conservado.
+    \item Si el primer dígito descartado es \emph{menor} que 5, el último
+          dígito conservado permanece igual.
+    \item Si el primer dígito descartado es exactamente 5 (seguido de ceros),
+          se aplica el \textbf{redondeo al par} (\emph{banker's rounding}): el
+          último dígito conservado se incrementa sólo si es impar.
+\end{itemize}
+\end{definicion}
+
+\begin{observacion}
+El redondeo al par es la convención estándar en la norma IEEE 754 y reduce el
+sesgo estadístico acumulado cuando se realizan muchas operaciones con números
+que terminan exactamente en 5.
+\end{observacion}
+
+\subsubsection{Ejemplos de redondeo y truncamiento}
+
+\begin{ejemplo}
+Redondear a dos decimales:
+\[
+    5.6723 \mapsto 5.67
+    \quad \text{(tercer decimal = 2 < 5, se deja igual)},
+\]
+\[
+    10.406 \mapsto 10.41
+    \quad \text{(tercer decimal = 6 > 5, se incrementa)}.
+\]
+\end{ejemplo}
+
+\begin{ejemplo}
+Redondear a un decimal (casos con dígito = 5):
+\[
+    7.3500 \mapsto 7.4
+    \quad \text{(último conservado = 3, impar $\Rightarrow$ se incrementa)},
+\]
+\[
+    1.2500 \mapsto 1.2
+    \quad \text{(último conservado = 2, par $\Rightarrow$ se deja igual)}.
+\]
+\end{ejemplo}
+
+\begin{ejemplo}
+Redondear a tres decimales:
+\[
+    88.21650 \mapsto 88.216
+    \quad \text{(cuarto decimal = 5, último conservado = 6, par
+                $\Rightarrow$ se deja igual)}.
+\]
+Truncar a tres decimales:
+\[
+    88.21650 \mapsto 88.216 \quad \text{(coincide en este caso)},
+    \qquad
+    \pi = 3.14159\ldots \mapsto 3.141 \quad \text{(truncado)}.
+\]
+\end{ejemplo}
+
+\begin{ejemplo}
+Representación de $\pi$ en máquina (5 cifras significativas):
+\[
+    \pi = 3.14159265\ldots,
+    \quad
+    \fl(\pi) = 3.1416,
+    \quad
+    E_a = |3.14159265 - 3.1416| = 4.07 \times 10^{-5},
+    \quad
+    E_r \approx 1.30 \times 10^{-5}.
+\]
+\end{ejemplo}
+
+\subsubsection{Importancia del error por redondeo}
+
+\begin{observacion}
+Los errores de redondeo pueden resultar especialmente críticos:
+\begin{itemize}[leftmargin=1.5em]
+    \item cuando intervienen cantidades muy grandes o muy pequeñas
+          simultáneamente;
+    \item cuando se restan números muy próximos (\emph{cancelación
+          catastrófica});
+    \item cuando un algoritmo repite muchas operaciones, acumulando pequeñas
+          pérdidas de precisión (\emph{propagación de errores}).
+\end{itemize}
+\end{observacion}
+
+\subsubsection{Cancelación catastrófica}
+
+\begin{definicion}[Cancelación catastrófica]
+La \textbf{cancelación catastrófica} se produce al restar dos números muy
+próximos entre sí. Aunque ambos números estén bien representados en máquina,
+el resultado puede perder muchas cifras significativas, amplificando el error
+relativo de forma drástica.
+\end{definicion}
+
+\begin{ejemplo}
+Considérese la resta exacta:
+\[
+    1\,436\,326\,440 - 1\,436\,326\,431 = 9.
+\]
+Ahora se incrementa el primer operando en un $0.001\%$:
+\[
+    1\,436\,326\,440 \times 1.00001 = 1\,436\,326\,440 + 14\,363
+    \approx 1\,436\,340\,803.
+\]
+La nueva resta es:
+\[
+    1\,436\,340\,803 - 1\,436\,326\,431 = 14\,372.
+\]
+
+Una perturbación \emph{relativa} de $10^{-5}$ en el primer operando ha
+producido una variación \emph{absoluta} de $14\,363$ en el resultado, que
+pasó de 9 a $14\,372$. El error relativo en el resultado es enorme.
+
+\medskip
+\textbf{Análisis:} El número de cifras significativas perdidas es
+$\lfloor \log_{10}(14372/9) \rfloor = \lfloor 3.2 \rfloor = 3$.
+\end{ejemplo}
+
+\begin{ejemplo}[Cancelación en fórmulas algebraicas]
+Las raíces de $x^2 - bx + c = 0$ son
+$x_{1,2} = \frac{b \pm \sqrt{b^2 - 4c}}{2}$.
+Cuando $b \gg \sqrt{b^2 - 4c}$ (raíces muy distintas en magnitud), la raíz
+pequeña sufre cancelación catastrófica. La solución estable consiste en
+calcular la raíz grande con la fórmula estándar y obtener la pequeña mediante
+la identidad $x_1 x_2 = c$:
+\[
+    x_1 = \frac{b + \sqrt{b^2 - 4c}}{2},
+    \qquad
+    x_2 = \frac{c}{x_1}.
+\]
+\end{ejemplo}
+
+\subsubsection{Propagación de errores en operaciones básicas}
+
+\begin{proposicion}[Propagación lineal del error]
+Si $\tilde{x} = x + \delta x$ y $\tilde{y} = y + \delta y$ son aproximaciones
+con errores $\delta x$ y $\delta y$, entonces:
+\begin{align*}
+    |\delta(x \pm y)| &\leq |\delta x| + |\delta y|
+        \quad \text{(suma y resta)}, \\
+    \frac{|\delta(xy)|}{|xy|} &\approx \frac{|\delta x|}{|x|}
+        + \frac{|\delta y|}{|y|}
+        \quad \text{(producto)}, \\
+    \frac{|\delta(x/y)|}{|x/y|} &\approx \frac{|\delta x|}{|x|}
+        + \frac{|\delta y|}{|y|}
+        \quad \text{(cociente)}.
+\end{align*}
+En la resta, los errores absolutos se suman pero el resultado puede ser
+pequeño, disparando el error relativo.
+\end{proposicion}
+
+\begin{demostracion}
+Para el producto: $\tilde{x}\tilde{y} = (x+\delta x)(y+\delta y) = xy
++ x\,\delta y + y\,\delta x + \delta x\,\delta y$. Despreciando el término
+cuadrático $\delta x\,\delta y$ (pequeño de segundo orden):
+\[
+    \delta(xy) \approx x\,\delta y + y\,\delta x
+    \;\Rightarrow\;
+    \frac{|\delta(xy)|}{|xy|} \lesssim \frac{|\delta x|}{|x|}
+    + \frac{|\delta y|}{|y|}.
+\]
+El cociente se obtiene de forma análoga diferenciando $x/y$.
+\end{demostracion}
+
+\subsection{Relación entre error de truncamiento y error de redondeo}
+
+\begin{observacion}
+En la práctica, ambos tipos de error coexisten y sus efectos se contraponen:
+
+\begin{itemize}[leftmargin=1.5em]
+    \item Al \emph{aumentar} el orden de truncamiento (más términos de Taylor),
+          el error de truncamiento disminuye, pero se realizan más operaciones
+          aritméticas, acumulando más error de redondeo.
+    \item Al \emph{disminuir} el paso $h$ en métodos de diferencias finitas,
+          el error de truncamiento mejora como $O(h^p)$, pero el redondeo
+          puede empeorar como $O(\epsilon_{\mathrm{máq}}/h)$.
+\end{itemize}
+
+Existe un \textbf{paso óptimo} $h^*$ que minimiza el error total. Para un
+método de orden $p$ con constante $C$:
+\[
+    h^* \approx \left(\frac{p\,\epsilon_{\mathrm{máq}}}{C}\right)^{1/(p+1)}.
+\]
+\end{observacion}
+
+\begin{cajaresultado}
+\textbf{Conclusión del Tema 1.}
+Todo método numérico debe analizarse desde dos perspectivas:
+\[
+    \text{precisión (error de truncamiento)}
+    \quad \text{y} \quad
+    \text{estabilidad (error de redondeo)}.
+\]
+El error de truncamiento mide la calidad de la aproximación teórica; el error
+de redondeo mide la limitación de la aritmética finita. Ninguno de los dos
+puede ignorarse en un análisis numérico riguroso.
+\end{cajaresultado}
+
+\subsection{Formulario del Tema 1}
+
+\begin{center}
+\begin{tabular}{ll}
+\toprule
+\textbf{Concepto} & \textbf{Fórmula} \\
+\midrule
+Error absoluto & $E_a = |x - \tilde{x}|$ \\[4pt]
+Error relativo & $E_r = |x - \tilde{x}| / |x|$ \\[4pt]
+Decimales correctos & $k = \lfloor -\log_{10}(2E_r) \rfloor$ \\[4pt]
+Serie de Taylor & $f(x) = \sum_{k=0}^{n}
+                  \frac{f^{(k)}(a)}{k!}(x-a)^k + R_n(x)$ \\[4pt]
+Resto de Lagrange & $R_n(x) = \frac{f^{(n+1)}(\xi)}{(n+1)!}(x-a)^{n+1}$ \\[4pt]
+Serie de Maclaurin & $f(x) = \sum_{k=0}^{n}
+                     \frac{f^{(k)}(0)}{k!}x^k + R_n(x)$ \\[4pt]
+$e^x$ (Maclaurin) & $e^x = \sum_{k=0}^{\infty} x^k / k!$ \\[4pt]
+$\frac{1}{1+x^2}$ (Maclaurin) & $\sum_{k=0}^{\infty}(-1)^k x^{2k},\;|x|<1$ \\[4pt]
+Error de redondeo & $E_{\mathrm{red}} = |x - \fl(x)|$ \\[4pt]
+Épsilon de máquina (IEEE 754) & $\epsilon_{\mathrm{máq}} \approx 2.22\times
+                                 10^{-16}$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\newpage
+
+% ==================================================
+% TEMA 2
+% ==================================================
+\section{Tema 2: Ecuaciones no lineales}
+
+\subsection{Introducción}
+
+Muchas ecuaciones de interés científico y técnico no pueden resolverse de forma
+explícita. En tales casos se busca una aproximación numérica de una raíz de la
+ecuación
+\[
+f(x)=0.
+\]
+
+A lo largo de este tema se desarrollan distintos enfoques: detección gráfica de
+raíces, métodos cerrados basados en intervalos, métodos abiertos de iteración,
+y procedimientos especiales para polinomios con coeficientes enteros.
+
+\subsection{Planteamiento general}
+
+\begin{definicion}[Raíz de una ecuación no lineal]
+Un número $r\in\R$ es una raíz de $f(x)=0$ si
+\[
+f(r)=0.
+\]
+\end{definicion}
+
+\begin{definicion}[Problema numérico]
+Dada una función $f:\R\to\R$, se desea construir una sucesión
+\[
+\{x_n\}_{n\ge 0}
+\]
+tal que
+\[
+x_n \to r, \qquad f(r)=0.
+\]
+\end{definicion}
+
+\subsection{Tipos de ecuaciones no lineales}
+
+Las ecuaciones no lineales pueden involucrar polinomios, funciones
+trascendentes, funciones racionales, funciones exponenciales, trigonométricas
+o combinaciones de ellas. Ejemplos típicos son:
+\[
+x^3-x-1=0,\qquad \cos x - x =0,\qquad e^{-x}-x=0,\qquad
+\tan x - x -0.5=0.
+\]
+
+\subsection{Métodos iterativos}
+
+\begin{definicion}[Método iterativo]
+Un método iterativo genera una sucesión
+\[
+x_{n+1}=\Phi(x_n)
+\]
+a partir de un valor inicial $x_0$. La esperanza es que esta sucesión converja
+a una raíz.
+\end{definicion}
+
+\begin{observacion}
+Los métodos iterativos se clasifican en:
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{métodos cerrados}, si mantienen un intervalo que contiene la
+          raíz;
+    \item \textbf{métodos abiertos}, si utilizan uno o varios puntos iniciales
+          sin garantía automática de encierro.
+\end{itemize}
+\end{observacion}
+
+\subsection{Métodos gráficos}
+
+\subsubsection{Idea geométrica}
+
+El método gráfico consiste en representar la función $y=f(x)$ y localizar
+visualmente los puntos donde corta al eje $x$.
+
+\begin{definicion}[Aislamiento gráfico de raíces]
+Se dice que una raíz está aislada en un intervalo $[a,b]$ si la representación
+de $f$ sugiere que existe un único corte con el eje $x$ dentro de ese
+intervalo.
+\end{definicion}
+
+\begin{observacion}
+El método gráfico no proporciona una raíz precisa, pero sí permite:
+\begin{itemize}[leftmargin=1.5em]
+    \item detectar la existencia de raíces;
+    \item estimar intervalos iniciales;
+    \item elegir valores adecuados para métodos posteriores.
+\end{itemize}
+\end{observacion}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.95]
+    \draw[->] (-3.2,0) -- (3.4,0) node[right] {$x$};
+    \draw[->] (0,-2.2) -- (0,2.8) node[above] {$y$};
+    \draw[blue!70!black, thick, domain=-2.8:2.8, samples=200]
+        plot (\x,{0.25*(\x)^3 - \x + 0.2});
+    \draw[dashed] (0.2,-2) -- (0.2,2.4);
+    \filldraw (0.2,0) circle (2pt) node[below right] {$r$};
+    \node at (2.35,2.1) {$y=f(x)$};
+\end{tikzpicture}
+\caption{Visualización gráfica de una raíz aproximada.}
+\end{figure}
+
+\subsection{Método de bisección}
+
+\subsubsection{Fundamento teórico}
+
+\begin{teorema}[Bolzano]
+Sea $f$ continua en $[a,b]$. Si
+\[
+f(a)f(b)<0,
+\]
+entonces existe al menos un $r\in(a,b)$ tal que
+\[
+f(r)=0.
+\]
+\end{teorema}
+
+\begin{demostracion}
+Es una consecuencia directa del teorema del valor intermedio. Como $f(a)$ y
+$f(b)$ tienen signos opuestos y $f$ es continua, la función debe anularse en
+algún punto intermedio.
+\end{demostracion}
+
+\subsubsection{Algoritmo}
+
+Dado un intervalo inicial $[a_0,b_0]$ con $f(a_0)f(b_0)<0$, se define el
+punto medio
+\[
+x_n=\frac{a_n+b_n}{2}.
+\]
+Luego:
+\[
+\text{si } f(a_n)f(x_n)<0,\quad [a_{n+1},b_{n+1}]=[a_n,x_n],
+\]
+\[
+\text{si } f(x_n)f(b_n)<0,\quad [a_{n+1},b_{n+1}]=[x_n,b_n].
+\]
+
+\begin{cajaresultado}
+\textbf{Fórmula de bisección:}
+\[
+x_n=\frac{a_n+b_n}{2}.
+\]
+\end{cajaresultado}
+
+\subsubsection{Cota del error}
+
+\begin{proposicion}
+Después de $n$ iteraciones, la longitud del intervalo es
+\[
+b_n-a_n=\frac{b_0-a_0}{2^n}.
+\]
+Por tanto,
+\[
+|r-x_n|\le \frac{b_0-a_0}{2^{n+1}}.
+\]
+\end{proposicion}
+
+\begin{demostracion}
+Cada iteración reduce el intervalo a la mitad. Tras $n$ pasos:
+\[
+b_n-a_n=\frac{b_0-a_0}{2^n}.
+\]
+Como $x_n$ es el punto medio del intervalo que contiene la raíz, la distancia
+máxima entre $x_n$ y $r$ es la mitad de la longitud del intervalo.
+\end{demostracion}
+
+\subsubsection{Criterios de parada}
+
+Se suele detener el método cuando se cumple alguna de estas condiciones:
+\[
+|f(x_n)|<\eps, \qquad |x_n-x_{n-1}|<\eps, \qquad \frac{b_n-a_n}{2}<\eps.
+\]
+
+\subsubsection{Ejemplo}
+
+\begin{ejemplo}
+Aproximar una raíz de $f(x)=x^3-x-2$ en el intervalo $[1,2]$.
+
+Como $f(1)=-2$ y $f(2)=4$, hay una raíz en $(1,2)$.
+
+Primera iteración:
+$x_1=1.5$, $f(1.5)=-0.125$. La raíz sigue en $[1.5,2]$.
+
+Segunda iteración:
+$x_2=1.75$, $f(1.75)=1.609375$. Raíz en $[1.5,1.75]$.
+
+Tercera iteración:
+$x_3=1.625$, $f(1.625)=0.666015625$. Raíz en $[1.5,1.625]$.
+
+Repitiendo el proceso se obtiene una aproximación convergente a la raíz real.
+\end{ejemplo}
+
+\subsection{Método de regla falsa}
+
+\subsubsection{Idea geométrica}
+
+La regla falsa o \emph{regula falsi} mejora la bisección sustituyendo el punto
+medio por la intersección con el eje $x$ de la secante que une los extremos del
+intervalo.
+
+\begin{proposicion}
+El corte con el eje $x$ viene dado por
+\[
+x_n = \frac{a_n f(b_n)-b_n f(a_n)}{f(b_n)-f(a_n)}.
+\]
+\end{proposicion}
+
+\begin{demostracion}
+La ecuación de la recta secante puede escribirse como
+\[
+y-f(a_n)=\frac{f(b_n)-f(a_n)}{b_n-a_n}(x-a_n).
+\]
+Imponiendo $y=0$ y despejando $x$ se obtiene la expresión indicada.
+\end{demostracion}
+
+\begin{cajaresultado}
+\textbf{Fórmula de la regla falsa:}
+\[
+x_n = \frac{a_n f(b_n)-b_n f(a_n)}{f(b_n)-f(a_n)}.
+\]
+\end{cajaresultado}
+
+\subsubsection{Actualización del intervalo}
+
+Se conserva el extremo que mantenga el cambio de signo:
+\[
+\text{si } f(a_n)f(x_n)<0,\quad [a_{n+1},b_{n+1}]=[a_n,x_n],
+\]
+\[
+\text{si } f(x_n)f(b_n)<0,\quad [a_{n+1},b_{n+1}]=[x_n,b_n].
+\]
+
+\subsubsection{Observación}
+
+La regla falsa suele converger más deprisa que la bisección cuando la función
+es aproximadamente lineal en el intervalo. Sin embargo, en algunos problemas uno
+de los extremos permanece fijo durante muchas iteraciones, ralentizando el
+proceso.
+
+\subsection{Método de punto fijo}
+
+\subsubsection{Planteamiento}
+
+Considérese la ecuación $f(x)=0$. Si puede reescribirse en la forma $x=g(x)$,
+entonces una raíz de la ecuación es un punto fijo de $g$.
+
+\begin{definicion}[Punto fijo]
+Un número $p$ es punto fijo de $g$ si $g(p)=p$.
+\end{definicion}
+
+El método genera la sucesión $x_{n+1}=g(x_n)$.
+
+\subsubsection{Interpretación geométrica}
+
+El método busca el punto de intersección entre las curvas $y=x$ e $y=g(x)$.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=1.0]
+    \draw[->] (-0.5,0) -- (4.5,0) node[right] {$x$};
+    \draw[->] (0,-0.5) -- (0,4.3) node[above] {$y$};
+    \draw[thick] (0,0) -- (4,4) node[right] {$y=x$};
+    \draw[blue!70!black, thick, domain=0.2:4, samples=100]
+        plot (\x,{3.2/(\x+0.5)+0.35});
+    \filldraw (1.4,1.4) circle (2pt) node[below right] {$p$};
+\end{tikzpicture}
+\caption{Interpretación geométrica del método de punto fijo.}
+\end{figure}
+
+\subsubsection{Teorema de convergencia}
+
+\begin{teorema}[Convergencia local del método de punto fijo]
+Sea $g\in C^1([a,b])$ tal que $g([a,b])\subseteq [a,b]$ y exista una constante
+$k<1$ con $|g'(x)|\le k$ para todo $x\in[a,b]$. Entonces:
+\begin{enumerate}[label=\roman*)]
+    \item existe un único punto fijo $p\in[a,b]$;
+    \item para cualquier $x_0\in[a,b]$, la sucesión $x_{n+1}=g(x_n)$
+          converge a $p$.
+\end{enumerate}
+\end{teorema}
+
+\begin{observacion}
+La condición $|g'(x)|<1$ garantiza una contracción. Si en cambio $|g'(p)|>1$,
+el punto fijo tiende a ser repulsivo y el método suele divergir.
+\end{observacion}
+
+\subsubsection{Ejemplo clásico}
+
+\begin{ejemplo}
+Resolver aproximadamente $\cos x - x = 0$.
+La ecuación puede escribirse como $x=\cos x$, con $g(x)=\cos x$.
+Como $|g'(x)|=|\!-\!\sin x|\le \sin 1 < 1$ en $[0,1]$, el método converge.
+
+Con $x_0=0.5$:
+\[
+x_1\approx 0.87758256,\quad x_2\approx 0.63901249,\quad
+x_3\approx 0.80268510,\quad x_4\approx 0.69477803.
+\]
+La sucesión converge a $p\approx 0.73908513$.
+\end{ejemplo}
+
+\subsection{Método de Newton-Raphson}
+
+\subsubsection{Idea geométrica}
+
+El método de Newton aproxima la función por su recta tangente en un punto $x_n$
+y toma como nuevo valor el corte de esa tangente con el eje $x$.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.95]
+    \draw[->] (-0.5,0) -- (4.7,0) node[right] {$x$};
+    \draw[->] (0,-0.5) -- (0,4.2) node[above] {$y$};
+    \draw[blue!70!black, thick, domain=0.4:4.2, samples=150]
+        plot (\x,{0.18*(\x-1.2)^3 + 0.85*(\x-1.2)+0.45});
+    \draw[dashed] (3.0,0) -- (3.0,2.12);
+    \filldraw (3.0,2.12) circle (2pt) node[above right] {$(x_n,f(x_n))$};
+    \draw[red!70!black, thick] (1.7,-0.1) -- (4.0,3.5);
+    \filldraw (1.85,0) circle (2pt) node[below] {$x_{n+1}$};
+\end{tikzpicture}
+\caption{Interpretación geométrica del método de Newton-Raphson.}
+\end{figure}
+
+\subsubsection{Deducción}
+
+La recta tangente a $y=f(x)$ en $x_n$ es
+$y-f(x_n)=f'(x_n)(x-x_n)$.
+Imponiendo $y=0$:
+
+\begin{cajaresultado}
+\textbf{Fórmula de Newton-Raphson:}
+\[
+x_{n+1}=x_n-\frac{f(x_n)}{f'(x_n)}.
+\]
+\end{cajaresultado}
+
+\subsubsection{Convergencia local}
+
+\begin{teorema}[Convergencia cuadrática]
+Sea $r$ una raíz simple de $f$, con $f\in C^2$ en un entorno de $r$, y
+supóngase $f(r)=0$, $f'(r)\neq 0$. Si $x_0$ está suficientemente cerca de $r$,
+entonces la sucesión de Newton converge a $r$ y el error satisface
+\[
+|e_{n+1}| \approx C |e_n|^2, \qquad e_n=x_n-r.
+\]
+\end{teorema}
+
+\begin{observacion}
+La convergencia cuadrática significa que, una vez cerca de la raíz, el número
+de cifras correctas aproximadamente se duplica en cada iteración.
+\end{observacion}
+
+\subsubsection{Ejemplo: raíz de $\cos x-x=0$}
+
+\begin{ejemplo}
+Para $f(x)=\cos x - x$, $f'(x)=-\sin x -1$:
+\[
+x_{n+1}=x_n+\frac{\cos x_n - x_n}{\sin x_n +1}.
+\]
+Con $x_0=1$: $x_1\approx 0.75036387$, $x_2\approx 0.73911289$,
+$x_3\approx 0.73908513$.
+\end{ejemplo}
+
+\subsubsection{Ejemplo: aproximación de $\sqrt{2}$}
+
+\begin{ejemplo}
+Para $f(x)=x^2-2$, $f'(x)=2x$:
+\[
+x_{n+1}=\frac{x_n^2+2}{2x_n}.
+\]
+Con $x_0=1$: $x_1=1.5$, $x_2=1.41\overline{6}$, $x_3=1.41421569$,
+$x_4=1.41421356$.
+\end{ejemplo}
+
+\subsection{Método de Newton-Raphson mejorado}
+
+\subsubsection{Motivación}
+
+Cuando la raíz tiene multiplicidad mayor que uno, el método de Newton clásico
+pierde su convergencia cuadrática y pasa a converger linealmente.
+
+\begin{definicion}[Raíz múltiple]
+Se dice que $r$ es raíz de multiplicidad $m$ de $f$ si
+\[
+f(r)=f'(r)=\cdots=f^{(m-1)}(r)=0, \qquad f^{(m)}(r)\neq 0.
+\]
+\end{definicion}
+
+\begin{cajaresultado}
+\textbf{Newton mejorado para raíces múltiples:}
+\[
+x_{n+1}=x_n-\frac{f(x_n)f'(x_n)}{[f'(x_n)]^2-f(x_n)f''(x_n)}.
+\]
+\end{cajaresultado}
+
+\subsection{Método de la secante}
+
+\begin{cajaresultado}
+\textbf{Fórmula de la secante:}
+\[
+x_{n+1} = x_n - \frac{f(x_n)(x_n-x_{n-1})}{f(x_n)-f(x_{n-1})}.
+\]
+\end{cajaresultado}
+
+\begin{observacion}
+El método de la secante requiere dos valores iniciales $x_0$ y $x_1$. Su
+convergencia suele ser más rápida que la de punto fijo y comparable a Newton,
+aunque algo más lenta que la cuadrática.
+\end{observacion}
+
+\subsection{Raíces de polinomios con coeficientes enteros}
+
+\subsubsection{Teorema de la raíz racional}
+
+\begin{teorema}[Raíz racional]
+Sea $P(x)=a_nx^n+a_{n-1}x^{n-1}+\cdots+a_0$ con coeficientes enteros. Si
+$p/q$ (irreducible) es raíz racional de $P$, entonces $p\mid a_0$ y
+$q\mid a_n$.
+\end{teorema}
+
+\begin{ejemplo}
+Para $P(x)=2x^3+4x^2-22x-24$, las raíces racionales candidatas son
+$\pm 1,\pm 2,\pm 3,\pm 4,\pm 6,\pm 8,\pm 12,\pm 24,\pm\tfrac12,\pm\tfrac32$.
+Probando: $P(-4)=P(-1)=P(3)=0$.
+\end{ejemplo}
+
+\subsubsection{Regla de los signos de Descartes}
+
+\begin{teorema}[Regla de Descartes]
+El número de raíces positivas de un polinomio real es igual al número de
+cambios de signo de $P(x)$ o menor que él en un número par. El número de
+raíces negativas se obtiene aplicando la misma regla a $P(-x)$.
+\end{teorema}
+
+\subsection{División sintética}
+
+La división sintética permite dividir rápidamente $P(x)$ entre un factor
+lineal $x-c$. Si $P(c)=0$, entonces $x-c$ es factor y la división permite
+rebajar el grado del polinomio.
+
+\begin{ejemplo}
+Sea $P(x)=x^3+5x^2+x-10$. Como $P(-2)=0$:
+\[
+P(x)=(x+2)(x^2+3x-5),
+\qquad
+x=\frac{-3\pm\sqrt{29}}{2}.
+\]
+\end{ejemplo}
+
+\begin{cajaresultado}
+\textbf{Resumen del Tema 2.}
+\begin{center}
+\begin{tabular}{p{3.2cm}p{3.2cm}p{5.3cm}}
+\toprule
+Método & Tipo & Idea básica \\
+\midrule
+Gráfico & preliminar & detectar intervalos con raíces \\
+Bisección & cerrado & dividir el intervalo por mitades \\
+Regla falsa & cerrado & usar la secante entre extremos \\
+Punto fijo & abierto & iterar $x_{n+1}=g(x_n)$ \\
+Newton-Raphson & abierto & usar la tangente \\
+Newton mejorado & abierto & corregir multiplicidad \\
+Secante & abierto & aproximar la derivada \\
+Raíz racional & algebraico & listar candidatas racionales \\
+División sintética & algebraico & factorizar y reducir grado \\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{cajaresultado}
+
+\newpage
+
+% ==================================================
+% TEMA 3
+% ==================================================
+\section{Tema 3: Interpolación y aproximación de funciones}
+
+\subsection{Introducción}
+
+En muchos problemas no se conoce la función exacta, sino sólo un conjunto de
+datos experimentales o tabulados. En tal situación surgen dos tareas
+diferentes:
+
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Interpolar}: construir una función que pase exactamente por
+          los datos.
+    \item \textbf{Aproximar}: construir una función que describa la tendencia
+          global de los datos, aunque no pase exactamente por todos ellos.
+\end{itemize}
+
+Este tema desarrolla ambos enfoques: ajuste por mínimos cuadrados y métodos
+de interpolación polinómica.
+
+\subsection{Método de mínimos cuadrados}
+
+\subsubsection{Planteamiento general}
+
+Sea un conjunto de datos $\{(x_1,y_1),\dots,(x_n,y_n)\}$.
+Se desea ajustar un modelo $y=f(x;\beta_0,\beta_1,\dots,\beta_m)$.
+
+\begin{definicion}[Error cuadrático total]
+\[
+E(\beta_0,\dots,\beta_m)=\sum_{i=1}^n \left(y_i-f(x_i;\beta_0,\dots,\beta_m)
+\right)^2.
+\]
+\end{definicion}
+
+\begin{cajaresultado}
+\textbf{Principio de mínimos cuadrados:} los mejores parámetros minimizan
+$E = \sum_{i=1}^n e_i^2$.
+\end{cajaresultado}
+
+\subsection{Regresión lineal}
+
+El modelo lineal es $y=\beta_0+\beta_1 x$.
+
+\begin{proposicion}
+Las ecuaciones normales de la regresión lineal son
+\[
+n\beta_0+\beta_1\sum x_i = \sum y_i,
+\qquad
+\beta_0\sum x_i + \beta_1\sum x_i^2 = \sum x_i y_i.
+\]
+\end{proposicion}
+
+\begin{proposicion}
+Si $\Delta = n\sum x_i^2-\left(\sum x_i\right)^2 \neq 0$, entonces
+\[
+\beta_1=\frac{n\sum x_i y_i-\left(\sum x_i\right)\left(\sum y_i\right)}
+             {\Delta},
+\qquad
+\beta_0=\frac{\left(\sum x_i^2\right)\left(\sum y_i\right)
+             -\left(\sum x_i y_i\right)\left(\sum x_i\right)}{\Delta}.
+\]
+\end{proposicion}
+
+\subsubsection{Ejemplo detallado}
+
+\begin{ejemplo}
+Ajustar por regresión lineal los puntos
+$(1,0.5),(2,2.5),(3,2),(4,4),(5,3.5),(6,6),(7,5.5)$.
+
+\begin{center}
+\begin{tabular}{ccccc}
+\toprule
+$i$ & $x_i$ & $y_i$ & $x_i y_i$ & $x_i^2$ \\
+\midrule
+1 & 1 & 0.5 & 0.5 & 1 \\
+2 & 2 & 2.5 & 5.0 & 4 \\
+3 & 3 & 2.0 & 6.0 & 9 \\
+4 & 4 & 4.0 & 16.0 & 16 \\
+5 & 5 & 3.5 & 17.5 & 25 \\
+6 & 6 & 6.0 & 36.0 & 36 \\
+7 & 7 & 5.5 & 38.5 & 49 \\
+\midrule
+$\sum$ & 28 & 24 & 119.5 & 140 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+$\beta_1 = \frac{7(119.5)-28(24)}{7(140)-28^2} = \frac{164.5}{196}
+\approx 0.8393$,\quad
+$\beta_0 = \frac{140(24)-119.5(28)}{196} = \frac{14}{196} \approx 0.0714$.
+
+Recta ajustada: $\hat{y} = 0.0714 + 0.8393\,x$.
+\end{ejemplo}
+
+\subsection{Regresión polinomial}
+
+Para un polinomio de grado 2: $y=\beta_0+\beta_1 x+\beta_2 x^2$.
+
+\begin{proposicion}
+Las ecuaciones normales del ajuste cuadrático son
+\[
+n\beta_0+\left(\sum x_i\right)\beta_1+\left(\sum x_i^2\right)\beta_2
+= \sum y_i,
+\]
+\[
+\left(\sum x_i\right)\beta_0+\left(\sum x_i^2\right)\beta_1
++\left(\sum x_i^3\right)\beta_2 = \sum x_i y_i,
+\]
+\[
+\left(\sum x_i^2\right)\beta_0+\left(\sum x_i^3\right)\beta_1
++\left(\sum x_i^4\right)\beta_2 = \sum x_i^2 y_i.
+\]
+\end{proposicion}
+
+\subsection{Mínimos cuadrados para un modelo exponencial}
+
+\begin{proposicion}
+El modelo $y=Ae^{Bx}$ se linealiza como $Y = \alpha + Bx$ con
+$Y=\ln y$, $\alpha=\ln A$. Una vez estimados $\alpha$ y $B$: $A=e^\alpha$.
+\end{proposicion}
+
+\subsection{Linealización}
+
+\begin{center}
+\begin{tabular}{ccc}
+\toprule
+Modelo original & Transformación & Modelo lineal \\
+\midrule
+$y=Ae^{Bx}$ & $Y=\ln y$ & $Y=\ln A + Bx$ \\
+$y=Ax^B$ & $Y=\ln y,\ X=\ln x$ & $Y=\ln A + BX$ \\
+$y=\frac{1}{A+Bx}$ & $Y=\frac{1}{y}$ & $Y=A+Bx$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Interpolación de Newton}
+
+\begin{definicion}[Diferencia dividida]
+\[
+f[x_i,x_{i+1}] = \frac{f(x_{i+1})-f(x_i)}{x_{i+1}-x_i},
+\qquad
+f[x_i,\dots,x_{i+k}]
+= \frac{f[x_{i+1},\dots,x_{i+k}]-f[x_i,\dots,x_{i+k-1}]}{x_{i+k}-x_i}.
+\]
+\end{definicion}
+
+\begin{teorema}[Polinomio de Newton]
+\[
+P_n(x)=f[x_0]+f[x_0,x_1](x-x_0)+f[x_0,x_1,x_2](x-x_0)(x-x_1)+\cdots
+\]
+\[
+\hspace{2.2cm}
++f[x_0,\dots,x_n](x-x_0)(x-x_1)\cdots(x-x_{n-1}).
+\]
+\end{teorema}
+
+\begin{ejemplo}
+Interpolar $(1,1),(2,4),(3,9)$.
+Diferencias: $f[1,2]=3$, $f[2,3]=5$, $f[1,2,3]=1$.
+\[
+P_2(x)=1+3(x-1)+1(x-1)(x-2)=x^2.
+\]
+\end{ejemplo}
+
+\subsection{Interpolación de Lagrange}
+
+\begin{definicion}[Polinomio básico de Lagrange]
+\[
+L_i(x)=\prod_{\substack{j=0\\ j\neq i}}^n \frac{x-x_j}{x_i-x_j},
+\qquad L_i(x_j)=\delta_{ij}.
+\]
+\end{definicion}
+
+\begin{teorema}[Polinomio de Lagrange]
+\[
+P_n(x)=\sum_{i=0}^n y_i\,L_i(x).
+\]
+\end{teorema}
+
+\begin{ejemplo}
+Interpolar $(0,1),(1,3),(2,2)$:
+\[
+P_2(x) = -\frac{3}{2}x^2+\frac{7}{2}x+1.
+\]
+\end{ejemplo}
+
+\subsection{Error de interpolación}
+
+\begin{teorema}[Resto de interpolación]
+Sea $f\in C^{n+1}[a,b]$ y $P_n$ su polinomio interpolador. Entonces existe
+$\xi$ entre los nodos y $x$ tal que
+\[
+f(x)-P_n(x)=\frac{f^{(n+1)}(\xi)}{(n+1)!}\prod_{i=0}^n (x-x_i).
+\]
+\end{teorema}
+
+\subsection{Comparación entre interpolación y aproximación}
+
+\begin{center}
+\begin{tabular}{p{4cm}p{5cm}p{5cm}}
+\toprule
+Aspecto & Interpolación & Aproximación por mínimos cuadrados \\
+\midrule
+Relación con los datos & pasa exactamente por todos & no necesariamente \\
+Objetivo & reproducir los valores dados & captar la tendencia global \\
+Uso típico & tablas, nodos exactos & datos experimentales con ruido \\
+Error & nulo en los nodos & minimiza suma de cuadrados \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{cajaresultado}
+$\text{Interpolar} \neq \text{Ajustar}$.
+La interpolación reproduce exactamente los datos; el ajuste por mínimos
+cuadrados busca el modelo que mejor explica el conjunto de observaciones en
+sentido cuadrático promedio.
+\end{cajaresultado}
+
+\newpage
+
+% ==================================================
+% FORMULARIO GENERAL
+% ==================================================
+\section{Formulario general}
+
+\subsection{Errores (Tema 1)}
+
+\[
+E_a = |x-\tilde{x}|,
+\qquad
+E_r = \frac{|x-\tilde{x}|}{|x|},
+\qquad
+k \approx \left\lfloor -\log_{10}(2E_r)\right\rfloor.
+\]
+
+\subsection{Taylor y Maclaurin}
+
+\[
+f(x)=\sum_{k=0}^{n}\frac{f^{(k)}(a)}{k!}(x-a)^k+R_n(x),
+\qquad
+R_n(x)=\frac{f^{(n+1)}(\xi)}{(n+1)!}(x-a)^{n+1}.
+\]
+
+\[
+e^x=\sum_{k=0}^\infty \frac{x^k}{k!},
+\qquad
+\frac{1}{1+x^2}=\sum_{k=0}^\infty (-1)^k x^{2k},\quad |x|<1.
+\]
+
+\subsection{Ecuaciones no lineales}
+
+\[
+\text{Bisección:}\quad x_n=\frac{a_n+b_n}{2},
+\qquad
+|r-x_n|\le \frac{b_0-a_0}{2^{n+1}}.
+\]
+
+\[
+\text{Regla falsa:}\quad
+x_n=\frac{a_n f(b_n)-b_n f(a_n)}{f(b_n)-f(a_n)}.
+\]
+
+\[
+\text{Punto fijo:}\quad x_{n+1}=g(x_n).
+\qquad
+\text{Newton-Raphson:}\quad
+x_{n+1}=x_n-\frac{f(x_n)}{f'(x_n)}.
+\]
+
+\[
+\text{Newton mejorado:}\quad
+x_{n+1}=x_n-\frac{f(x_n)f'(x_n)}{[f'(x_n)]^2-f(x_n)f''(x_n)}.
+\]
+
+\[
+\text{Secante:}\quad
+x_{n+1}=x_n-\frac{f(x_n)(x_n-x_{n-1})}{f(x_n)-f(x_{n-1})}.
+\]
+
+\subsection{Mínimos cuadrados}
+
+\[
+E=\sum_{i=1}^n \left(y_i-f(x_i;\beta)\right)^2,
+\qquad
+\beta_1=\frac{n\sum x_i y_i-\left(\sum x_i\right)\left(\sum y_i\right)}
+             {n\sum x_i^2-\left(\sum x_i\right)^2}.
+\]
+
+\[
+\beta_0=\frac{\left(\sum x_i^2\right)\left(\sum y_i\right)
+             -\left(\sum x_i y_i\right)\left(\sum x_i\right)}
+             {n\sum x_i^2-\left(\sum x_i\right)^2}.
+\]
+
+\subsection{Interpolación}
+
+\[
+P_n(x)=f[x_0]+f[x_0,x_1](x-x_0)+\cdots
+       +f[x_0,\dots,x_n]\prod_{j=0}^{n-1}(x-x_j).
+\]
+
+\[
+L_i(x)=\prod_{\substack{j=0\\j\neq i}}^n \frac{x-x_j}{x_i-x_j},
+\qquad
+P_n(x)=\sum_{i=0}^n y_i L_i(x).
+\]
+
+\[
+f(x)-P_n(x)=\frac{f^{(n+1)}(\xi)}{(n+1)!}\prod_{i=0}^n (x-x_i).
+\]
+
+\end{document}
