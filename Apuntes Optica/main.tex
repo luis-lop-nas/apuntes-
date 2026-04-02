@@ -260,35 +260,40 @@
 \subsection{Introducción}
 
 La óptica estudia la generación, propagación e interacción de la luz con la
-materia. Aunque esta formulación es breve, engloba problemas de enorme
-contenido físico y matemático, y ha sido una vía central de unificación en la
-física moderna.
+materia. Aunque esta formulación es breve, engloba problemas de gran contenido
+físico y matemático, y constituye un punto de encuentro privilegiado entre
+modelización teórica, estructura geométrica y contraste experimental.
 
 Según la escala espacial y el fenómeno de interés, se emplean tres niveles de
 descripción jerárquicamente relacionados:
 
 \begin{description}
-  \item[\textbf{Óptica geométrica.}] Modela la luz como \emph{rayos} y usa el
-        principio de Fermat. Es adecuada cuando $\lambda \ll a$ (longitud de
-        onda mucho menor que la escala geométrica del sistema), de modo que la
-        difracción y la interferencia pueden despreciarse en primera
-        aproximación.
+  \item[\textbf{Óptica geométrica.}] Describe la luz como \emph{rayos} y usa el
+        principio de Fermat; es adecuada cuando $\lambda \ll a$, de modo que
+        difracción e interferencia quedan subdominantes.
 
   \item[\textbf{Óptica electromagnética (u ondulatoria).}] Describe la luz como
-        una \emph{onda electromagnética} que satisface las ecuaciones de
-        Maxwell. Es imprescindible cuando $\lambda \sim a$, y explica de forma
-        natural fenómenos como difracción, interferencia y polarización.
+        \emph{campo electromagnético} que satisface Maxwell; es imprescindible
+        cuando $\lambda \sim a$, y explica de forma natural difracción,
+        interferencia y polarización.
 
-  \item[\textbf{Óptica cuántica.}] Introduce el carácter cuántico del campo y
-        de la materia (fotones, cuantización, estadística cuántica) cuando la
-        descripción clásica deja de ser suficiente, por ejemplo en emisión
-        espontánea, efecto fotoeléctrico o estados no clásicos de la luz.
+  \item[\textbf{Óptica cuántica.}] Describe la luz y la materia mediante
+        \emph{variables cuánticas} cuando el marco clásico no basta (fotones,
+        emisión espontánea, estadística cuántica, estados no clásicos).
 \end{description}
+
+\begin{observacion}
+Estas hipótesis no constituyen una deducción microscópica exacta, sino un
+cierre fenomenológico lineal (restauración + disipación + forzamiento) que
+captura con gran precisión la respuesta óptica fuera de estructuras cuánticas
+finas.
+\end{observacion}
 
 Estos marcos no compiten: la óptica geométrica es el límite de alta frecuencia
 de la óptica ondulatoria, y esta aparece como límite clásico de la óptica
-cuántica. En este tema adoptaremos la descripción electromagnética y fijaremos
-el punto de partida formal en las ecuaciones de Maxwell.
+cuántica. En este tema adoptaremos la descripción electromagnética; por tanto,
+el punto de partida formal serán las ecuaciones de Maxwell y sus consecuencias
+ondulatorias.
 
 % ══════════════════════════════════════════════════════════════════════════
 \subsection{Ecuaciones de Maxwell}
@@ -318,9 +323,9 @@ del punto del espacio $\ve{r}$ y del tiempo $t$.
 Cada ecuación cumple un papel físico específico y complementario:
 \begin{itemize}
   \item \eqref{eq:maxwell1} (\textbf{Gauss eléctrica}): la divergencia de
-        $\ve{E}$ queda fijada por la densidad de carga.
+        $\ve{E}$ queda determinada por la densidad de carga local.
   \item \eqref{eq:maxwell2} (\textbf{Gauss magnética}): el campo magnético no
-        tiene fuentes escalares aisladas (no hay monopolos magnéticos
+        presenta fuentes escalares aisladas (no hay monopolos magnéticos
         observados), de modo que $\div\ve{B}=0$.
   \item \eqref{eq:maxwell3} (\textbf{Faraday}): una variación temporal de
         $\ve{B}$ genera circulación de $\ve{E}$.
@@ -363,11 +368,14 @@ Este paso no es una simplificación arbitraria: separa con claridad el
 \emph{problema de generación} (región con fuentes) del \emph{problema de
 propagación} (región libre de fuentes). Lejos de antenas, dipolos o cargas en
 movimiento, los campos satisfacen las ecuaciones homogéneas siguientes.
+Además, el vacío es el primer laboratorio teórico natural: elimina relaciones
+constitutivas materiales y permite aislar la estructura dinámica pura del
+campo electromagnético.
 
 \begin{proposicion}[Ecuaciones de Maxwell en el vacío]
 Con $\rho=0$ y $\ve{j}=\ve{0}$, las
 ecuaciones~\eqref{eq:maxwell1}--\eqref{eq:maxwell4} se simplifican a:
-\begin{mdframed}[style=resultado]
+\begin{mdframed}[style=resultado,nobreak=true]
 \begin{align}
   \div \ve{E} &= 0, \label{eq:vac1}\\[4pt]
   \div \ve{B} &= 0, \label{eq:vac2}\\[4pt]
@@ -451,6 +459,8 @@ $\div\ve{B}=0$ por \eqref{eq:vac2}, resulta
 \[
   \nabla^2\ve{B}-\frac{1}{c^2}\pdv[2]{\ve{B}}{t}= \ve{0}.
 \]
+El argumento para $\ve{B}$ no es una mera repetición formal: refleja la
+simetría estructural del acoplamiento dinámico entre ambos campos en Maxwell.
 \end{proof}
 
 \begin{observacion}
@@ -464,7 +474,9 @@ Este teorema fija tres conclusiones estructurales para el resto del curso:
 Además, la velocidad
 $c=1/\sqrt{\mu_0\varepsilon_0}\approx2{,}998\times10^8\ \mathrm{m/s}$ queda
 determinada por constantes electromagnéticas, cerrando la identificación entre
-luz y campo electromagnético.
+luz y campo electromagnético. En términos de estructura teórica, este resultado
+puede leerse como un corolario fundamental de Maxwell: la luz no se \emph{añade}
+a la teoría, emerge de ella.
 \end{observacion}
 
 % ══════════════════════════════════════════════════════════════════════════
@@ -486,9 +498,10 @@ posición, por ejemplo en una onda esférica), $\delta_j(\ve{r})$ es la
 $T$ el \emph{periodo temporal}.
 
 La monocromaticidad estricta es una idealización (fuente infinita en tiempo y
-con ancho espectral nulo). En la práctica toda fuente posee banda finita, pero
-la aproximación armónica es extremadamente útil cuando dicho ancho es pequeño
-frente a las escalas espectrales del problema.
+ancho espectral nulo). En la práctica toda fuente posee banda finita y tiempo
+de coherencia finito; aun así, la aproximación armónica es extremadamente útil
+cuando dicho ancho espectral es pequeño frente a las escalas características del
+problema.
 \end{definicion}
 
 \begin{proposicion}[Condición de armonicidad]
@@ -533,8 +546,9 @@ forma~\eqref{eq:armonicacomp}.
 
 \begin{observacion}
 La relevancia de las ondas armónicas no es solo técnica: por el formalismo de
-Fourier, señales físicamente admisibles pueden descomponerse en superposición
-de componentes monocromáticas. Por linealidad, resolver el problema armónico
+Fourier, señales de energía finita (o cuasi-monocromáticas en ventanas
+temporales) pueden descomponerse en superposición de componentes
+monocromáticas. Por linealidad, resolver el problema armónico
 permite reconstruir la evolución de señales generales.
 \end{observacion}
 
@@ -602,10 +616,17 @@ Durante el cálculo se opera con la representación compleja y al final se toma
 $\Re\{\cdot\}$ para recuperar la magnitud física.
 \end{definicion}
 
+\begin{observacion}
+El fasor $\widetilde{E}_j(\ve{r})$ no es una magnitud directamente observable:
+es una variable auxiliar que codifica amplitud y fase de forma compacta. Las
+magnitudes medidas experimentalmente se obtienen siempre a partir del campo real
+o de promedios temporales del mismo.
+\end{observacion}
+
 \begin{proposicion}[Validez y limitaciones de la representación compleja]
 \begin{itemize}
-  \item[\checkmark] Es exacta para operadores lineales (suma, derivación,
-        integración, ecuaciones lineales con coeficientes reales).
+  \item[\checkmark] Es exacta para operadores lineales: suma, derivación,
+        integración y ecuaciones lineales con coeficientes reales.
   \item[\checkmark] En régimen armónico, $\partial_t \mapsto i\omega$ simplifica
         de forma sistemática la resolución.
   \item[$\boldsymbol{\times}$] No puede aplicarse de forma ingenua en magnitudes
@@ -613,6 +634,9 @@ $\Re\{\cdot\}$ para recuperar la magnitud física.
         y vector de Poynting requieren fórmulas de promedio adecuadas o volver
         al campo real.
 \end{itemize}
+\noindent El motivo algebraico es que la operación ``tomar parte real'' no
+conmuta con productos cuadráticos: en general,
+$\Re(z_1z_2^*)\neq \Re(z_1)\Re(z_2)$.
 \end{proposicion}
 
 \subsubsection{Repaso de números complejos}
@@ -754,6 +778,11 @@ En la práctica, las ondas planas son una idealización (implicarían energía
 infinita extendida por todo el espacio), pero constituyen la solución
 matemáticamente más sencilla de la ecuación de onda y forman una base completa
 para construir haces más realistas mediante la integral de Fourier.
+\begin{observacion}
+El paso conceptual ``frente plano $\Rightarrow$ onda plana'' es inmediato:
+si las superficies de fase son planos paralelos y la amplitud es uniforme en
+cada plano, la dependencia espacial solo puede entrar como $\ve{k}\cdot\ve{r}$.
+\end{observacion}
 \end{definicion}
 
 \begin{definicion}[Velocidad de fase]
@@ -771,7 +800,9 @@ de modo que:
 \end{equation}
 En medios materiales, $v_f = c/n$, donde $n$ es el índice de refracción del
 medio (véase el Tema~3). La velocidad de fase puede en principio superar $c$
-sin contradecir la relatividad especial, pues no transporta información.
+sin contradecir la relatividad especial, porque la velocidad de señal está
+ligada a la envolvente (velocidad de grupo y velocidad de frente), no a la
+fase local.
 \end{definicion}
 
 \subsubsection{Ondas homogéneas e inhomogéneas}
@@ -1003,6 +1034,13 @@ el plano $XY$. Tomando $\delta_x=0$ y $\delta=\delta_y-\delta_x$:
 El estado de polarización queda determinado por el cociente
 $E_{0y}/E_{0x}$ y la fase relativa $\delta\in(-\pi,\pi]$.
 \end{definicion}
+
+\begin{observacion}
+Convención de giro adoptada: mirando en la dirección de propagación, llamamos
+dextrógiro al giro horario del extremo de $\ve{E}$ y levógiro al antihorario.
+En la literatura pueden coexistir convenciones opuestas, por lo que es clave
+fijarla explícitamente al comparar resultados.
+\end{observacion}
 
 \subsubsection{Elipse de polarización}
 
@@ -1290,6 +1328,8 @@ Al promediar en un período, $\langle\cos^2\rangle=1/2$:
   = \frac{E_0^2\,k}{2\mu_0\omega}
   = \frac{E_0^2}{2\mu_0 c}.
 \]
+\noindent El promedio elimina los términos oscilantes de frecuencia $2\omega$,
+de modo que la intensidad resultante representa el transporte energético neto.
 \end{proof}
 
 \subsubsection{Intensidad de una onda armónica no plana}
@@ -1329,11 +1369,12 @@ propiedades fundamentales —deducidas directamente de esas ecuaciones— son:
         $\ve{J}=\bigl(E_{0x},\,E_{0y}\,e^{i\delta}\bigr)^T$.
 \end{itemize}
 
-Hasta aquí, el estudio ha sido puramente formal: hemos analizado la propagación
-de la luz en el vacío sin preguntarnos cómo interacciona con la materia. Ahora
+Hasta aquí, el estudio ha sido puramente propagativo: hemos analizado la
+dinámica del campo en vacío sin modelizar su acoplamiento con la materia. Ahora
 pasamos a estudiar la \textbf{interacción de la radiación electromagnética con
 la materia} desde el punto de vista clásico microscópico (modelo de Lorentz,
-1878). El mecanismo fundamental es:
+1878), separando explícitamente hipótesis físicas y consecuencias observables.
+El mecanismo fundamental es:
 
 \begin{enumerate}
   \item La onda incidente ejerce la fuerza de Lorentz sobre las cargas eléctricas
@@ -1387,6 +1428,12 @@ magnético es despreciable y la fuerza de Lorentz se reduce a:
 \end{equation}
 \end{proposicion}
 
+\begin{observacion}
+Esta aproximación fija el régimen de validez de la modelización microscópica
+clásica: campo eléctrico dominante, velocidades no relativistas y correcciones
+magnéticas de orden $v/c$ despreciables.
+\end{observacion}
+
 \begin{definicion}[Carga ligada]
 Una carga ligada es aquella con estructura interna relevante (típicamente un
 átomo). Se describe mediante la distancia $\ve{r}(t)$ entre los centros de
@@ -1426,7 +1473,7 @@ análoga a la de un oscilador armónico con frecuencia natural $\omega_0$.
             minimum size=14pt, inner sep=0pt] (ep) at (0.6,0) {$-$};
       \draw[->, thick] (-0.5,-0.6) -- (0.6,-0.6);
     \end{scope}
-    \node[align=left, anchor=west] at (5.1,0.9)
+    \node[align=left, anchor=west] at (4.6,0.9)
       {\footnotesize Izquierda: equilibrio ($t=0$, $\ve{r}=0$)\\
        \footnotesize Derecha: átomo polarizado ($t>0$)\\
        \footnotesize Flecha inferior: $\mathbb{p}=q\ve{r}$};
@@ -1446,6 +1493,10 @@ un \textbf{oscilador armónico amortiguado y forzado}. Aunque su base es
 clásica, reproduce con gran precisión fenomenológica la dispersión y la
 absorción fuera de resonancias cuánticas finas, por lo que sigue siendo la
 puerta de entrada estándar al comportamiento óptico de la materia.
+En lo que sigue se separan explícitamente tres niveles: hipótesis de
+modelización (qué idealizaciones físicas se adoptan), resolución matemática
+de la ecuación dinámica (qué se deduce del modelo) e interpretación física
+de los parámetros obtenidos.
 
 \subsubsection{Hipótesis del modelo}
 
@@ -1520,7 +1571,8 @@ Para \emph{cargas ligadas} (electrones de valencia), $\ve{r}$ es el desplazamien
 
 \subsubsection{Aproximaciones para resolver la ecuación}
 
-La ecuación~\eqref{eq:lorentz_atom} se simplifica con dos aproximaciones:
+La resolución de~\eqref{eq:lorentz_atom} se apoya en dos aproximaciones
+controladas, cada una asociada a una escala física distinta:
 
 \begin{description}
   \item[\textbf{Ap. 1: Aproximación dipolar.}]
@@ -1538,6 +1590,11 @@ La ecuación~\eqref{eq:lorentz_atom} se simplifica con dos aproximaciones:
         de la fuerza de Lorentz es despreciable frente al eléctrico
         (ecuación~\eqref{eq:fuerza_libre}).
 \end{description}
+
+La primera aproximación controla la variación espacial del campo en escala
+atómica; la segunda controla la jerarquía de términos dinámicos en el régimen
+no relativista. Juntas delimitan cuándo~\eqref{eq:lorentz_atom} describe
+correctamente la respuesta del oscilador ligado.
 
 \subsubsection{Solución de la ecuación de evolución}
 
@@ -1638,6 +1695,17 @@ a como se hace con el vector de Poynting:
 \]
 \end{definicion}
 
+\begin{observacion}
+La potencia transferida cuantifica la energía extraída del campo incidente por
+unidad de tiempo. En general, esta energía puede repartirse entre disipación
+interna y reradiación. En forma de balance promedio:
+\[
+  \langle W\rangle = P_{\text{dis}} + P_{\text{esp}},
+\]
+donde $P_{\text{dis}}$ recoge pérdidas irreversibles internas y
+$P_{\text{esp}}$ la energía reradiada hacia el exterior.
+\end{observacion}
+
 \begin{proposicion}[Potencia media transferida]
 La potencia media transferida a la carga es:
 \begin{mdframed}[style=resultado]
@@ -1735,6 +1803,13 @@ en~\eqref{eq:potencia_transferida}:
 Este fenómeno —la reemisión de radiación en todas las direcciones por una
 carga excitada— se denomina \textbf{esparcimiento} o \emph{scattering}.
 
+\begin{observacion}
+Conviene distinguir potencia absorbida, potencia disipada y potencia esparcida.
+En el límite lineal diluido tratado aquí, el balance energético se simplifica a
+$\langle W\rangle = P_{\text{esp}}$: la energía extraída del campo incidente se
+reradia casi por completo y la disipación interna es despreciable.
+\end{observacion}
+
 \subsubsection{Casos particulares}
 
 Analizamos tres regímenes de frecuencia:
@@ -1824,37 +1899,34 @@ A menor longitud de onda, mayor esparcimiento:
 
 \subsubsection{Los tres casos del cielo}
 
-La dependencia $P_\text{esp} \propto 1/\lambda^4$ del esparcimiento de Rayleigh
-implica que la luz de corta longitud de onda (violeta, azul) se esparce con
-mucha más eficacia que la de larga longitud de onda (rojo, naranja). La
-relación de intensidades esparcidas entre el azul ($\lambda\approx450$ nm) y
-el rojo ($\lambda\approx650$ nm) es aproximadamente $(650/450)^4 \approx 4.4$:
-el azul se esparce más de cuatro veces más que el rojo.
+La dependencia $P_\text{esp} \propto 1/\lambda^4$ implica que las longitudes de
+onda cortas (azul-violeta) se esparcen con mucha mayor eficacia que las largas
+(rojo-naranja). Cuantitativamente, la razón de esparcimiento entre azul
+($\lambda\approx450$ nm) y rojo ($\lambda\approx650$ nm) es
+$(650/450)^4 \approx 4.4$.
 
 \begin{description}
   \item[\textbf{Caso 1: Observador mirando al Sol directamente.}]
-        La luz solar (blanca) recorre un camino corto dentro de la atmósfera.
-        El azul y el violeta son preferentemente esparcidos lateralmente,
-        de modo que el haz que llega directamente al observador se empobrece
-        en esas longitudes de onda y resulta enriquecido en amarillo y naranja:
-        el Sol parece \textbf{amarillo-blanco}.
+        La línea de visión atraviesa una columna atmosférica relativamente
+        corta. El esparcimiento lateral elimina con mayor eficacia los
+        componentes de longitud de onda corta, de modo que el haz directo
+        queda relativamente enriquecido en componentes amarillas y rojas.
+        Por ello, el disco solar se percibe \textbf{amarillo-blanco}.
 
   \item[\textbf{Caso 2: Observador mirando en una dirección oblicua.}]
-        La luz llega al observador \emph{indirectamente}, tras haber sido
-        esparcida por las moléculas de la atmósfera en múltiples eventos de
-        Rayleigh. Los fotones azules y violetas son los más esparcidos y los
-        que con mayor probabilidad alcanzan al observador desde cualquier
-        dirección lateral. Por eso el cielo aparece \textbf{azul}. El violeta
-        es aún más esparcido que el azul, pero la sensibilidad del ojo humano
-        es menor en ese extremo del espectro.
+        La luz que llega al observador es predominantemente luz
+        \emph{esparcida} por moléculas atmosféricas. Como la eficiencia de
+        esparcimiento crece al disminuir $\lambda$, la radiancia del cielo
+        lateral está dominada por componentes cortas y el cielo aparece
+        \textbf{azul}. El violeta contribuye menos a la percepción final por la
+        menor sensibilidad visual del ojo humano en ese extremo espectral.
 
   \item[\textbf{Caso 3: Atardecer (luz rasante).}]
-        En el horizonte, la luz solar debe atravesar un espesor de atmósfera
-        unas 40 veces mayor que al mediodía. Tras este largo trayecto, los
-        fotones azules y violetas han sido casi totalmente esparcidos y han
-        abandonado el haz; solo los colores de baja frecuencia (rojo, naranja,
-        amarillo) sobreviven el viaje. El cielo y el Sol aparecen
-        \textbf{naranja-rojizo}.
+        En geometría rasante, la trayectoria óptica en atmósfera es
+        considerablemente mayor que al mediodía. Tras ese recorrido, las
+        componentes azules y violetas han sido fuertemente esparcidas fuera del
+        haz directo, mientras que predominan las longitudes de onda largas.
+        El resultado observado es una tonalidad \textbf{naranja-rojiza}.
 \end{description}
 
 \begin{figure}[H]
@@ -1886,7 +1958,7 @@ el azul se esparce más de cuatro veces más que el rojo.
     \filldraw (0.8,-0.5) circle (2pt) node[below=3pt] {Obs. 1};
     \filldraw (-1.5,-0.5) circle (2pt) node[below=3pt] {Obs. 2};
     \filldraw (-1.0,-0.5) circle (2pt) node[below=3pt] {Obs. 3};
-    \node[align=left, anchor=west] at (5.0,1.1)
+    \node[align=left, anchor=west] at (4.6,1.1)
       {\footnotesize Línea base: superficie terrestre\\
        \footnotesize Línea discontinua: atmósfera\\
        \footnotesize Caso 1 (Obs. 1): luz directa\\
@@ -2002,10 +2074,12 @@ Por tanto, la luz observada queda polarizada en la dirección $\ve{E}_\perp$.
 \end{figure}
 
 \begin{observacion}
-Este efecto es observable experimentalmente: el cielo lateral al Sol
-(a $90^{\circ}$) está parcialmente polarizado y puede detectarse con un
-filtro polarizador. Las abejas y otros insectos usan esta polarización
-para orientarse.
+Este efecto se mide de forma directa: el cielo lateral al Sol
+(cerca de $90^{\circ}$) está polarizado y puede analizarse con un polarizador
+lineal. En términos aplicados, esta estructura de polarización se usa en
+navegación biológica y en teledetección atmosférica.
+El grado de polarización es máximo cerca de $90^\circ$ en atmósfera limpia y
+disminuye cuando aumenta la contribución de aerosoles (esparcimiento Mie).
 \end{observacion}
 
 % ══════════════════════════════════════════════════════════════════════════
@@ -2176,7 +2250,9 @@ microscópicas y definiendo los vectores auxiliares:
   \ve{D} = \varepsilon_0\ve{E} + \ve{P}, \qquad
   \ve{H} = \frac{1}{\mu_0}\ve{B} - \ve{M}, \label{eq:DH}
 \end{equation}
-donde $\ve{D}$ es el desplazamiento eléctrico, $\ve{H}$ el campo magnético auxiliar, $\ve{P}$ la polarización eléctrica y $\ve{M}$ la magnetización del medio.
+donde $\ve{D}$ es el desplazamiento eléctrico, $\ve{H}$ el campo magnético
+auxiliar, $\ve{P}$ la polarización eléctrica y $\ve{M}$ la magnetización del
+medio. Con estas definiciones,
 se obtienen las \textbf{ecuaciones de Maxwell macroscópicas}:
 
 \begin{mdframed}[style=resultado]
@@ -2196,6 +2272,12 @@ Las ecuaciones macroscópicas introducen campos auxiliares ($\ve{D},\ve{H}$),
 pero no cierran el problema sin ecuaciones de material. Las
 \emph{relaciones de constitución} cumplen precisamente esa función: vinculan
 campo aplicado y respuesta interna del medio.
+En esta jerarquía, Maxwell aporta las \emph{leyes fundamentales} de balance y
+acoplamiento, mientras que las relaciones de constitución aportan el
+\emph{modelo material} (fenomenológico o microscópicamente derivado) que cierra
+el sistema.
+Este punto es clave: dos medios con las mismas ecuaciones de Maxwell pueden
+mostrar propagación muy distinta si sus leyes constitutivas son diferentes.
 
 \subsubsection{Primera relación: permitividad eléctrica}
 
@@ -2350,7 +2432,7 @@ Sea un medio con $\varepsilon_\text{gen} = \varepsilon_0\!\left(5 +
 
 \medskip
 \begin{itemize}
-  \item $\varepsilon_\text{gen}\neq\varepsilon_\text{gen}(\ve{r})$:
+  \item $\varepsilon_\text{gen}$ no depende de $\ve{r}$:
         \textbf{homogéneo}.
   \item $\varepsilon_\text{gen}=\varepsilon_\text{gen}(\omega)$:
         \textbf{dispersivo}.
@@ -2364,7 +2446,7 @@ Sea un medio con $\varepsilon_\text{gen} = \varepsilon_0\!\left(5 +
 \subsection{Propagación en Medios Homogéneos e Isótropos}
 % ══════════════════════════════════════════════════════════════════════════
 
-En un medio homogéneo ($\varepsilon_\text{gen}\neq\varepsilon_\text{gen}(\ve{r})$)
+En un medio homogéneo ($\varepsilon_\text{gen}$ no depende de $\ve{r}$)
 e isótropo ($\varepsilon_\text{gen}$ escalar), buscamos soluciones armónicas
 de las ecuaciones de Maxwell.
 
@@ -2391,6 +2473,14 @@ corresponde a la dependencia temporal $e^{+i\omega t}$ adoptada en estos apuntes
 En medios no absorbentes, $\kappa = 0$ y $n_c = \eta \in \R$ es el índice de
 refracción real habitual.
 \end{teorema}
+
+El paso de Maxwell temporal a Helmholtz armónica se apoya en una hipótesis
+operativa precisa: dependencia temporal monocromática
+$\propto e^{i\omega t}$. Bajo esta hipótesis, las derivadas temporales se
+transforman en factores algebraicos y la propagación espacial queda codificada
+en el problema elíptico~\eqref{eq:helmholtz}. En otras palabras, el problema se
+separa en dos niveles: oscilación temporal fijada por $\omega$ y estructura
+espacial gobernada por el operador de Helmholtz.
 
 \begin{proof}
 Aplicamos el rotacional a~\eqref{eq:mat3} y usamos~\eqref{eq:mat4}:
@@ -2443,6 +2533,9 @@ El campo resulta:
 \end{equation}
 Los frentes de \emph{fase constante} vienen dados por $\omega t - \ve{k}\cdot\ve{r} = \mathrm{cte}$,
 y los de \emph{amplitud constante} por $\ve{a}\cdot\ve{r}=\mathrm{cte}$.
+En esta descomposición, $\ve{k}$ controla la oscilación de fase y $\ve{a}$ la
+atenuación espacial; de forma equivalente, en $n_c=\eta-i\kappa$, $\eta$
+controla velocidad de fase y $\kappa$ absorción.
 
 Sustituyendo en las ecuaciones de Maxwell~\eqref{eq:mat1}--\eqref{eq:mat4}
 con el reemplazo $\nabla\to -i\ve{k}_c$:
@@ -2471,6 +2564,9 @@ vectorial se obtienen:
   \label{eq:relaciones_ka}
 \end{equation}
 \end{mdframed}
+\noindent
+La primera igualdad fija el balance entre oscilación y atenuación; la segunda
+cuantifica su acoplamiento geométrico cuando el medio es absorbente.
 \end{proposicion}
 
 \begin{proof}
@@ -2525,7 +2621,7 @@ Igualando parte imaginaria:
 que coincide con~\eqref{eq:relaciones_ka}.
 \end{proof}
 
-\subsubsection{Clasificación de medios según $\kappa$}
+\subsubsection{Clasificación de medios según \texorpdfstring{$\kappa$}{kappa}}
 
 \paragraph{Medios no absorbentes: $\kappa = 0$}
 
@@ -2866,7 +2962,7 @@ espectral respecto al gas diluido. Dos consecuencias principales:
 \end{itemize}
 \end{observacion}
 
-\subsubsection{Medios conductores ($\sigma\neq 0$)}
+\subsubsection{Medios conductores \texorpdfstring{($\sigma\neq 0$)}{(sigma != 0)}}
 
 En un metal o semiconductor, además de los electrones ligados (que contribuyen
 a $\chi_e$ como en un dieléctrico), existen \emph{electrones libres} que pueden
@@ -2880,7 +2976,7 @@ como un término adicional en la ley de Ampère:
 Para una onda armónica $\ve{E} \propto e^{i\omega t}$, este término produce
 una permitividad compleja efectiva:
 \[
-  \varepsilon_\text{ef} = \varepsilon_r + \frac{i\sigma}{\varepsilon_0\omega},
+  \varepsilon_\text{ef} = \varepsilon_r - \frac{i\sigma}{\varepsilon_0\omega},
 \]
 que absorbe la contribución de los libres en el índice complejo $n_c$.
 
@@ -2895,8 +2991,9 @@ conduce, con $\ve{j} = Nq\dot{\ve{r}} = \sigma\ve{E}$, a:
 El índice de refracción complejo resulta:
 \begin{equation}
   n_c^2 = 1 + \chi_e - i\frac{\omega_p^2}{\Gamma\omega + i\omega^2}
-        = 1 - \frac{\omega_p^2}{\Gamma^2\omega^2+\omega^4}(\Gamma^2\omega^2+\omega^4)^{-1}
-          \cdot(\omega^2 + i\Gamma\omega)\omega_p^2.
+        = 1 + \chi_e
+          - \frac{\omega_p^2}{\Gamma^2+\omega^2}
+          - i\,\frac{\Gamma\,\omega_p^2}{\omega(\Gamma^2+\omega^2)}.
   \label{eq:nc_conductor}
 \end{equation}
 
@@ -2906,7 +3003,8 @@ Se distinguen dos regímenes:
 \medskip
 \begin{description}
   \item[\textbf{Caso 1: $\Gamma\ll\omega$ (poco rozamiento).}]
-        $n_c^2 \approx 1 - \omega_p^2/\omega^2 - i\,2\omega_p^2\Gamma/\omega^3$.
+        $n_c^2 \approx 1+\chi_e - \omega_p^2/\omega^2
+        - i\,\Gamma\omega_p^2/\omega^3$.
         \begin{itemize}
           \item Si $\omega>\omega_p$: $\kappa\approx 0$, medio \textbf{transparente}.
           \item Si $\omega<\omega_p$: $\kappa\neq 0$, medio \textbf{absorbente}.
@@ -2982,6 +3080,14 @@ El problema se formula con tres preguntas bien diferenciadas:
 Estas hipótesis delimitan el alcance del tema: interfaz plana, medios lineales
 isótropos y ondas armónicas planas. Los casos anisótropos o con absorción se
 tratan posteriormente.
+\begin{observacion}
+La hipótesis de interfaz plana tiene alcance local general: toda superficie
+suavemente curva puede aproximarse por su plano tangente en una vecindad
+suficientemente pequeña. Por ello, las leyes deducidas aquí constituyen el
+bloque elemental de la óptica de interfaces reales. Además, toda la teoría del
+tema se obtiene de dos ideas estructurales: compatibilidad de fase sobre la
+interfaz y condiciones de contorno de Maxwell para campos tangenciales.
+\end{observacion}
 
 \subsubsection*{Notación geométrica}
 
@@ -3075,6 +3181,9 @@ Esto impone la igualdad de las componentes tangenciales:
 \[
   k_{ix} = k_{rx} = k_{tx}, \qquad k_{iy} = k_{ry} = k_{ty} = 0.
 \]
+Como la interfaz es estacionaria, también se conserva la frecuencia:
+$\omega_i=\omega_r=\omega_t$. Por ello, la interfaz conserva \emph{la
+componente tangencial del vector de onda} y \emph{la frecuencia} de la onda.
 
 La segunda condición confirma que \textbf{el plano de incidencia se conserva}
 (los tres haces son coplanarios). De la primera, con
@@ -3161,6 +3270,8 @@ El campo eléctrico $\ve{E} \perp \ve{k}$ se descompone en dos polarizaciones:
   \item \textbf{Polarización $s$ (TE, perpendicular):} $E_\perp$, componente
         perpendicular al plano de incidencia (dirección $y$).
 \end{itemize}
+Esta descomposición desacopla el problema en dos sistemas lineales
+independientes ($p$ y $s$), cada uno gobernado por dos condiciones de contorno.
 
 En componentes cartesianas los campos incidente y reflejado son:
 \begin{align*}
@@ -3310,7 +3421,10 @@ Luego:
 \begin{observacion}
 Estas expresiones cuantifican, para cada polarización, cómo reparte la
 interfaz la amplitud entre onda reflejada y transmitida. Las diferencias entre
-$s$ y $p$ explican la polarización parcial en reflexión oblicua.
+$s$ y $p$ explican la polarización parcial en reflexión oblicua. El signo de
+$r_j$ codifica un posible salto de fase de $\pi$ en el campo reflejado, y por
+tanto determina si la interferencia con otros haces será constructiva o
+destructiva.
 \end{observacion}
 
 \begin{nota}
@@ -3502,7 +3616,8 @@ penetración es $\delta = 1/a_z$.
 
 Interpretación física: no hay flujo neto de energía hacia el interior del medio
 2 en dirección normal, pero sí existe campo superficial capaz de acoplar energía
-si aparece un segundo medio cercano (túnel óptico).
+si aparece un segundo medio cercano (túnel óptico). Geométricamente, la fase se
+transporta paralela a la interfaz mientras la amplitud decae en la normal.
 
 La ley de reflexión $\theta_i = \theta_r$ sigue siendo válida. Los
 coeficientes de Fresnel resultan ser números complejos de módulo unitario:
@@ -3568,6 +3683,8 @@ que contiene tanto los índices (velocidad de propagación) como el factor
 geométrico $\cos\theta$ (proyección sobre la normal de la interfaz). La relación
 $\mathcal{T} = 1-\mathcal{R}$ es consecuencia de la conservación de la energía
 y puede verificarse directamente sustituyendo las fórmulas de Fresnel.
+Esta distinción amplitud--flujo es esencial: $|t_j|^2$ por sí solo no mide
+energía transmitida salvo en geometrías muy particulares.
 \end{nota}
 
 La reflectancia y transmitancia totales son:
@@ -3809,6 +3926,9 @@ susceptibilidad —y la permitividad— son tensoriales incluso a la frecuencia
 En términos físicos, esto implica que ``índice de refracción'' deja de ser un
 único escalar y pasa a depender de la dirección de propagación y de la
 polarización excitada.
+En continuidad con el Tema~1, esto significa que la polarización no solo
+describe la geometría del campo eléctrico: también selecciona velocidades de
+fase distintas dentro del cristal.
 
 \begin{mdframed}[style=resultado]
 \textbf{Clasificación por simetría del tensor $\boldsymbol{\varepsilon}$:}
@@ -4064,6 +4184,8 @@ polarización resultante al pasar por una secuencia de $N$ elementos es:
 El orden importa (producto de matrices no conmutativo en general). Las
 propiedades físicas relevantes —elipse de polarización, intensidad, desfase—
 se extraen directamente de $\ve{E}_s$.
+Este formalismo unifica de manera compacta la descripción de polarización del
+Tema~1 con los dispositivos anisótropos introducidos en este tema.
 
 \begin{nota}
 El formalismo de Jones es equivalente al formalismo de Stokes--Mueller para
@@ -4171,7 +4293,8 @@ de la naturaleza ondulatoria de la luz. Se distinguen dos regímenes principales
 
 La frontera entre ambos regímenes no es nominal: determina qué términos de fase
 se conservan en el núcleo integral y, por tanto, qué aproximación es
-matemáticamente consistente.
+matemáticamente consistente. Por ello, cada resultado de este tema debe leerse
+siempre junto con su régimen de validez.
 
 \subsection{Principio de Huygens-Fresnel}
 
@@ -4198,6 +4321,9 @@ donde $U$ es la amplitud compleja del campo óptico, $(x_0,y_0)$ las coordenadas
   \item $\frac{e^{-ikr}}{r}$: propagación esférica desde cada punto.
   \item $\cos\theta$: factor de oblicuidad.
 \end{itemize}
+Esta integral es el operador de propagación de referencia del tema; Fresnel y
+Fraunhofer se obtienen como aproximaciones controladas de
+\eqref{eq:hf_integral_t5}.
 
 \begin{figure}[ht]
   \centering
@@ -4284,7 +4410,9 @@ donde $a$ es una escala transversal característica de la abertura.
   \item $N_F\ll 1$: régimen de Fraunhofer (campo lejano), equivalente a
   $z\gg a^2/\lambda$.
 \end{itemize}
-Esta distinción ayuda a escoger directamente el modelo integral adecuado.
+Físicamente, $N_F$ mide la importancia de la fase cuadrática a través de la
+abertura: cuando $N_F\ll 1$ esa curvatura de fase es despreciable y la
+descripción de Fourier (Fraunhofer) es consistente.
 
 \subsection{Principio de Babinet}
 
@@ -4521,6 +4649,8 @@ naturaleza ondulatoria de la luz. En él, una fuente puntual ilumina una
 pantalla con dos ranuras separadas una distancia $d$. Las dos ranuras actúan
 como fuentes secundarias coherentes (mismo origen, mismo desfase inicial) y
 sus ondas se superponen en una segunda pantalla a distancia $D \gg d$.
+Desde el punto de vista metrológico, Young constituye el modelo básico para
+extraer longitudes de onda a partir de una geometría interferencial simple.
 
 En la aproximación paraxial, la diferencia de camino óptico entre las dos
 trayectorias que llegan al punto $x$ de la pantalla vale
@@ -4693,6 +4823,8 @@ los espejos.
 
 La lectura operacional es directa: el dispositivo convierte diferencias de
 camino óptico en modulación de intensidad medible con alta sensibilidad.
+Esa conversión directa fase$\to$intensidad explica su papel central en
+metrología de precisión.
 
 \begin{nota}
 El experimento de Michelson y Morley (1887) intentó medir el movimiento
@@ -4791,6 +4923,8 @@ transmisión, lo que permite resolver detalles espectrales muy finos.
 Desde el punto de vista físico, Fabry-Perot actúa como un filtro resonante en
 frecuencia: solo se transmiten con alta eficiencia las longitudes de onda que
 satisfacen coherencia de fase tras múltiples recorridos.
+En consecuencia, el dispositivo transforma una condición de fase en una
+selectividad espectral extremadamente alta.
 
 La intensidad transmitida es la suma de todas las contribuciones parciales
 (serie geométrica), que conduce a la \emph{función de Airy}:
@@ -4872,7 +5006,7 @@ $R = 0.99$ tiene $\text{FSR} \approx 15\,\text{GHz}$, $\mathcal{F} \approx
 \subsection{Marco de coherencia (complementario)}
 
 La formulación que se ha usado en este tema —ondas monocromáticas con desfase
-constante— es un idealization. Las fuentes reales emiten paquetes de onda de
+constante— es una idealización. Las fuentes reales emiten paquetes de onda de
 duración finita $\tau_c$; distintos paquetes tienen diferencias de fase
 aleatorias entre sí. El \emph{grado complejo de coherencia mútua}
 $\gamma_{12}(\tau)$ generaliza la descripción al caso cuasi-monocromático:

@@ -150,12 +150,11 @@
 \newcommand{\argmin}{\operatorname*{arg\,min}}
 \newcounter{varsprimcount}
 \newenvironment{variablesprimera}{%
-  \begin{mdframed}[style=resultado]
+  \par\smallskip
+  \noindent\textit{Definición de variables (primera aparición): }
   \setcounter{varsprimcount}{0}%
-  \textbf{Definición de variables (primera aparición).} En esta expresión,
 }{%
-  .
-  \end{mdframed}
+  .\par\smallskip
 }
 \newcommand{\varitem}[2]{%
   \ifnum\value{varsprimcount}>0\relax; \fi
@@ -240,19 +239,21 @@
 Para mantener una exposición homogénea en todo el documento, utilizaremos las
 siguientes convenciones formales, que se respetarán en todos los temas:
 \begin{itemize}
-  \item Los \textbf{escalares} se denotan en minúscula ($x,\lambda,r$), los
-        \textbf{vectores} en negrita ($\mathbf{x},\boldsymbol{\mu}$) y las
-        \textbf{matrices} en negrita mayúscula ($\mat{X},\mat{S},\mat{R}$).
-  \item $\mat{X}\in\R^{n\times p}$ representa una matriz de datos con
-        $n$ observaciones (filas) y $p$ variables (columnas).
-  \item El superíndice prima ($'$) indica trasposición; $\mat{A}^{-1}$ indica
-        matriz inversa cuando existe.
+  \item Los \textbf{escalares} se denotan en minúscula ($x,\lambda,r$); los
+        \textbf{vectores}, en negrita minúscula
+        ($\mathbf{x},\boldsymbol{\mu}$); y las \textbf{matrices}, en negrita
+        mayúscula ($\mat{X},\mat{S},\mat{R}$).
+  \item $\mat{X}\in\R^{n\times p}$ representa la matriz de datos con
+        $n$ observaciones (filas) y $p$ variables (columnas); esta convención
+        se mantendrá en todos los temas.
+  \item El superíndice prima ($'$) indica trasposición y
+        $\mat{A}^{-1}$ indica inversa cuando existe.
   \item $\tr(\mat{A})$, $|\mat{A}|$ y $\rg(\mat{A})$ denotan, respectivamente,
         traza, determinante y rango de $\mat{A}$.
   \item $E(\mathbf{X})$, $\Var(\mathbf{X})$ y $\Cov(\mathbf{X},\mathbf{Y})$
-        representan esperanza, varianza y covarianza.
-  \item En contextos muestrales, se usará barra superior para medias
-        ($\bar{\mathbf{x}}$) y letras con sombrero para estimadores
+        denotan esperanza, varianza y covarianza poblacionales.
+  \item En contexto muestral se usa barra superior para medias
+        ($\bar{\mathbf{x}}$) y sombrero para estimadores
         ($\hat{\boldsymbol{\Sigma}}$, $\hat{\pi}_g$).
 \end{itemize}
 
@@ -274,6 +275,10 @@ una combinación lineal de variables observadas, cuyas ponderaciones se ajustan
 según el objetivo inferencial (síntesis, discriminación, predicción o
 descripción estructural). En este documento la denominaremos
 \textbf{valor teórico}.
+Esta construcción aparece de forma explícita en ACP, análisis factorial y
+discriminante, entre otros métodos; no agota toda la disciplina, pero sí
+proporciona un hilo algebraico común para una parte sustancial del análisis
+multivariante.
 
 \begin{mdframed}[style=resultado]
 \[
@@ -286,9 +291,11 @@ descripción estructural). En este documento la denominaremos
   \varitem{p}{número de variables incluidas en la combinación}
 \end{variablesprimera}
 
-El resultado es una variable escalar sintética que resume, en una dirección
-determinada del espacio de variables, la información más relevante para el
-problema estadístico planteado.
+El resultado es una variable escalar sintética que resume información en una
+dirección del espacio de variables definida por el vector de pesos
+$\mathbf{w}=(w_1,\dots,w_p)'$. Geométricamente, se trata de proyectar cada
+observación sobre una dirección y analizar cuánto contenido estadístico retiene
+esa proyección.
 
 \subsection{Objetivos principales}
 
@@ -297,10 +304,10 @@ complementarias:
 
 \begin{enumerate}
   \item \textbf{Resumir} el conjunto original en pocas variables derivadas,
-        minimizando la pérdida de información relevante.
+        minimizando pérdida de información relevante.
         (\textit{ej.: componentes principales, análisis factorial}).
 
-  \item \textbf{Detectar grupos} naturales en los datos, cuando existan.
+  \item \textbf{Detectar grupos} naturales en los datos cuando existan.
         (\textit{ej.: tipología de procesos productivos, de clientes, de
         partículas}).
 
@@ -309,7 +316,7 @@ complementarias:
         (\textit{ej.: clientes de un banco como fiables o no, personas como
         enfermas o no, partículas subatómicas como fermión o bosón}).
 
-  \item \textbf{Relacionar} dos bloques de variables para estudiar estructura
+  \item \textbf{Relacionar} bloques de variables para estudiar estructura
         común y dependencia cruzada.
         (\textit{ej.: un conjunto de variables de capacidad intelectual y otro de
         resultados profesionales}).
@@ -319,8 +326,9 @@ complementarias:
 
 Existen diversas taxonomías. Seguimos la propuesta de \textbf{Hair, Tathan y
 Black (1998)}, que organiza las técnicas según el \emph{tipo de relación entre
-variables} y distingue entre modelos de dependencia, interdependencia y
-estructura no lineal.
+variables}. La lógica es distinguir tres marcos: dependencia (hay respuesta y
+predictores), interdependencia (se analiza estructura interna sin respuesta
+prefijada) y modelos no lineales.
 
 % ─── Árbol de clasificación simplificado ─────────────────────────────────
 \begin{figure}[H]
@@ -343,7 +351,8 @@ estructura no lineal.
 En este bloque se distingue explícitamente una variable respuesta (o un bloque
 de respuestas) y un conjunto de variables explicativas. El objetivo es modelar
 la distribución o el valor esperado de la respuesta condicionado a los
-predictores.
+predictores. Es, por tanto, el marco natural cuando el problema estadístico es
+de predicción o clasificación supervisada.
 
 \paragraph{Una variable dependiente.}
 
@@ -391,11 +400,15 @@ predictores.
         \textbf{Modelos de ecuaciones estructurales.}
 \end{description}
 
+En síntesis, los métodos de dependencia se organizan por el tipo de variable
+respuesta y por la cantidad de respuestas modeladas simultáneamente.
+
 \subsubsection{Interdependencia entre variables}
 
 En interdependencia no se fija a priori la dicotomía respuesta--explicativa; el
 interés se desplaza a la geometría y estructura interna del conjunto de
-variables.
+variables. En este marco la interpretación geométrica (proyecciones,
+distancias, agrupamientos) adquiere un papel central.
 
 \begin{description}
   \item[\textbf{Estudio de la relación entre variables.}]
@@ -423,6 +436,9 @@ variables.
   \item \textbf{Análisis factorial no lineal:} relaciones de interdependencia.
 \end{itemize}
 
+Esta tercera familia recoge situaciones donde la relación entre variables no se
+describe adecuadamente mediante estructura lineal global.
+
 % ══════════════════════════════════════════════════════════════════════════
 \section{Pasos del análisis}
 % ══════════════════════════════════════════════════════════════════════════
@@ -449,6 +465,10 @@ siguientes:
   \item \textbf{Interpretación de los resultados.}
 \end{enumerate}
 
+Aunque se presentan en orden secuencial, estas etapas deben entenderse como una
+guía iterativa: en práctica, el diagnóstico de supuestos y la interpretación
+suelen obligar a volver a etapas previas.
+
 \begin{observacion}
 Las etapas 6 y 7 son críticas: los métodos multivariantes son muy sensibles a
 la presencia de outliers y al incumplimiento de los supuestos distribucionales.
@@ -463,7 +483,8 @@ Un análisis exploratorio previo riguroso ahorra errores de interpretación.
 
 Si disponemos de $n$ observaciones numéricas de una variable escalar $X$, cada
 dato puede identificarse con la componente $i$-ésima de un \textbf{vector
-columna} en $\R^n$:
+columna} en $\R^n$. En términos formales, una muestra univariante es un
+elemento de $\R^n$:
 \[
   \mathbf{x} = \begin{pmatrix} x_1 \\ x_2 \\ \vdots \\ x_n \end{pmatrix}
   \in \R^n.
@@ -481,7 +502,9 @@ Edades de 3 personas:
 Cuando se miden $p$ variables sobre cada una de las $n$ unidades
 observacionales, los datos se organizan naturalmente en una tabla de $n$ filas
 y $p$ columnas. Cada columna recoge una variable y cada fila el perfil
-multivariante completo de una unidad.
+multivariante completo de una unidad. Esta representación matricial permite
+escribir de manera compacta medias, centrado, covarianzas, proyecciones y
+transformaciones lineales.
 
 \begin{definicion}[Matriz de datos]
 Los valores de las $p$ variables escalares en cada uno de los $n$ elementos se
@@ -509,8 +532,7 @@ También se escribe $\mat{X} = [\mat{X}_{(1)},\dots,\mat{X}_{(p)}] =
 [\mathbf{x}_{ij}]$, donde $\mat{X}_{(j)}$ es la columna asociada a la variable
 $j$ y la fila $i$ contiene el perfil multivariante de la observación $i$.
 Esta convención (filas = individuos, columnas = variables) se mantendrá en todo
-el documento porque permite expresar con claridad medias, centrado, covarianzas
-y proyecciones lineales.
+el documento para conservar una lectura algebraica uniforme.
 \end{definicion}
 
 % ══════════════════════════════════════════════════════════════════════════
@@ -538,6 +560,8 @@ En particular,
   \mathbf{x}'\mathbf{x}=\sum_{i=1}^n x_i^2\ge 0,
 \]
 con igualdad si y solo si $\mathbf{x}=\mathbf{0}$.
+Esta definición fija simultáneamente una estructura algebraica (bilineal) y una
+estructura geométrica (ángulos, normas y proyecciones).
 \end{definicion}
 
 \begin{observacion}
@@ -590,7 +614,8 @@ Este polinomio cuadrático en $t$ debe tener discriminante no positivo, luego
   |\mathbf{x}'\mathbf{y}| \le \|\mathbf{x}\|\,\|\mathbf{y}\|.
 \]
 La igualdad equivale a discriminante nulo, que ocurre exactamente cuando existe
-$t$ tal que $\mathbf{x}=t\mathbf{y}$.
+$t$ tal que $\mathbf{x}=t\mathbf{y}$. Es decir, la igualdad caracteriza la
+colinealidad entre ambos vectores.
 \end{proof}
 
 \begin{ejemplo}
@@ -637,7 +662,9 @@ tienen norma 1 (normalizados).
 \subsection{Matrices}
 
 \begin{definicion}[Tipos básicos de matrices]
-En esta materia aparecen de forma recurrente varios tipos de matrices:
+En esta materia aparecen de forma recurrente varias familias de matrices. No
+son una lista aislada: reaparecen de forma sistemática en covarianzas,
+correlaciones, proyecciones y cambios de base:
 \begin{itemize}
   \item \textbf{Cuadrada de orden $p$}: dimensión $p\times p$ (si $n\neq p$,
         la matriz es rectangular).
@@ -674,6 +701,9 @@ Las propiedades de rango más usadas en estos apuntes son:
 \end{align}
 \end{mdframed}
 
+Estas identidades se usarán de forma recurrente al estudiar colinealidad,
+redundancia de variables y dimensión efectiva de representación.
+
 \begin{observacion}
 El rango cuantifica la dimensión efectiva del subespacio generado por las
 variables. En términos estadísticos, detectar rango deficiente equivale a
@@ -697,7 +727,9 @@ determinante. La equivalencia $(2)\Leftrightarrow(3)$ se sigue de que, para
 matrices cuadradas, tener determinante no nulo equivale a tener rango máximo.
 Finalmente, $(3)\Leftrightarrow(4)$ expresa que la nulidad es cero
 (\emph{teorema rango--nulidad}), por lo que el núcleo contiene solo
-$\mathbf{0}$.
+$\mathbf{0}$. En consecuencia, invertibilidad, rango máximo y unicidad de
+solución en el sistema homogéneo son tres formulaciones de un mismo hecho
+estructural.
 \end{proof}
 
 \begin{observacion}
@@ -709,6 +741,10 @@ variables sin pérdida de información.
 
 % ─────────────────────────────────────────────────────────────────────────
 \subsection{Operaciones con matrices}
+
+Las operaciones matriciales no son meramente formales: constituyen el lenguaje
+operativo de todo el análisis multivariante (centrado, covarianzas,
+estandarización, proyecciones y reglas discriminantes).
 
 \subsubsection{Suma de matrices}
 
@@ -763,6 +799,12 @@ debe coincidir con el número de filas de $\mat{B}$:
   \item $(\mat{A}\mat{B}\mat{C})' = \mat{C}'\mat{B}'\mat{A}'$
 \end{itemize}
 
+\begin{observacion}
+La no conmutatividad de la multiplicación es clave: el orden de las operaciones
+codifica qué espacio se transforma (variables, observaciones o subespacios
+proyectados).
+\end{observacion}
+
 % ─────────────────────────────────────────────────────────────────────────
 \subsection{Determinantes}
 
@@ -775,7 +817,9 @@ cuadrada.
 \begin{observacion}
 En multivariante, el determinante de una matriz de covarianzas mide volumen
 generalizado y aparece de forma natural en densidades gaussianas y en criterios
-de dependencia global.
+de dependencia global. En particular, $|\mat{S}|^{1/2}$ se interpreta como
+escala volumétrica de la nube de datos tras incorporar la geometría de
+covarianza.
 \end{observacion}
 
 \begin{ejemplo}
@@ -823,7 +867,8 @@ orden $n-1$ obtenida eliminando la fila $i$ y la columna $j$ de $\mat{A}'$.
 \begin{observacion}
 La inversa de la covarianza (matriz de precisión) codifica dependencias
 condicionales lineales y tiene papel central en inferencia gaussiana y
-discriminación lineal.
+discriminación lineal. Por ello, su existencia y estabilidad numérica no son un
+detalle técnico, sino una condición metodológica relevante.
 \end{observacion}
 
 \begin{ejemplo}
@@ -845,6 +890,11 @@ $|\mat{B}|=9$:
 
 % ─────────────────────────────────────────────────────────────────────────
 \subsection{Autovalores y autovectores}
+
+La lógica interna de este bloque es la siguiente: primero se define el problema
+espectral ($|\mat{A}-\lambda\mat{I}|=0$), después se identifican direcciones
+invariantes (autovectores), y finalmente se interpreta el resultado como cambio
+de base adaptado a la transformación lineal.
 
 \subsubsection{Autovalores (valores propios)}
 
@@ -910,7 +960,8 @@ $|\mat{A}-\lambda\mat{I}|=0$.
 
 En general, la multiplicidad geométrica puede ser menor que la algebraica. En
 el caso simétrico real, el teorema espectral garantiza una base ortonormal
-completa de autovectores.
+completa de autovectores, hecho crucial para ACP y para la diagonalización de
+formas cuadráticas.
 
 \begin{ejemplo}
 Para $\mat{A} = \begin{pmatrix}1&4\\9&1\end{pmatrix}$ con
@@ -1008,6 +1059,13 @@ La expresión $Q = \mathbf{x}'\mat{A}\mathbf{x}$ se denomina \textbf{forma
 cuadrática} asociada a $\mat{A}$. Si $\mat{A}$ es simétrica, su signo queda
 completamente determinado por el signo de sus autovalores.
 \end{definicion}
+
+\begin{observacion}
+Desde el punto de vista geométrico, una forma cuadrática define niveles
+elipsoidales (o degenerados) según la estructura espectral de $\mat{A}$; esta
+lectura reaparece continuamente en covarianzas y en distancias tipo
+Mahalanobis.
+\end{observacion}
 
 \subsubsection{Desarrollo explícito}
 
@@ -1109,10 +1167,10 @@ distribución conjunta se define como:
   = P(X_1 \le x_1^0, \dots, X_p \le x_p^0).
 \]
 \end{mdframed}
-$P(\mathbf{X}\le\mathbf{x}^0)$ es la probabilidad de que la variable tome
-valores menores o iguales al valor particular $\mathbf{x}^0$. La función de
-distribución acumula las probabilidades de todos los valores menores o iguales
-al punto considerado, y será no decreciente.
+$P(\mathbf{X}\le\mathbf{x}^0)$ representa la probabilidad acumulada sobre la
+región ortante inferior determinada por $\mathbf{x}^0$. La función de
+distribución conjunta es no decreciente en cada coordenada y contiene toda la
+información probabilística del vector aleatorio.
 \begin{variablesprimera}
   \varitem{\mathbf{X}}{vector aleatorio de dimensión $p$}
   \varitem{\mathbf{x}^0}{valor concreto del vector en el que se evalúa la distribución}
@@ -1135,6 +1193,9 @@ Habitualmente se trabaja con:
         \]
 \end{itemize}
 
+La distribución conjunta es el objeto completo; las marginales y condicionadas
+se obtienen de ella por integración y cociente, respectivamente.
+
 \subsection{Distribuciones marginales}
 
 \begin{definicion}[Distribución marginal]
@@ -1149,7 +1210,9 @@ univariante de dicho componente, sin tener en cuenta los otros. Para $p=2$:
 \end{definicion}
 
 Las marginales describen el comportamiento de cada componente por separado; la
-conjunta añade, además, la estructura de dependencia entre componentes.
+conjunta añade, además, la estructura de dependencia entre componentes. Pasar de
+conjunta a marginal simplifica descripción, pero elimina información de
+interacción entre variables.
 
 \subsection{Distribuciones condicionadas}
 
@@ -1170,6 +1233,10 @@ $\mathbf{X}_2=\mathbf{x}_2^0$ se define como:
   \varitem{f_{\mathbf{X}_1 \mid \mathbf{X}_2}(\mathbf{x}_1 \mid \mathbf{x}_2^0)}{densidad condicionada}
 \end{variablesprimera}
 \end{definicion}
+
+La distribución condicionada cuantifica cómo cambia la ley de un bloque de
+variables al fijar otro bloque: es la herramienta natural para inferencia
+predictiva y para reglas de clasificación bayesianas.
 
 % ══════════════════════════════════════════════════════════════════════════
 \section{Independencia}
@@ -1203,6 +1270,12 @@ componente a componente, las variables transformadas siguen siendo independiente
 \begin{observacion}
 Cuando las variables son independientes, no ganamos nada con su estudio
 conjunto, y conviene estudiarlas individualmente.
+\end{observacion}
+
+\begin{observacion}
+Independencia e incorrelación no son equivalentes en general. La equivalencia
+solo se recupera bajo hipótesis adicionales (por ejemplo, normalidad
+multivariante), que se explicitarán más adelante.
 \end{observacion}
 
 % ══════════════════════════════════════════════════════════════════════════
@@ -1241,6 +1314,10 @@ Propiedades del vector de medias:
   \item Es un \textbf{operador lineal}:
         $E[\mat{A}\mathbf{X}+\mathbf{b}] = \mat{A}E[\mathbf{X}]+\mathbf{b}$.
 \end{itemize}
+
+En interpretación geométrica, $\boldsymbol{\mu}$ fija la localización de la
+nube de puntos; la matriz de covarianzas fijará su forma, orientación y escala
+en cada dirección.
 
 \subsection{Variabilidad: matriz de varianzas y covarianzas}
 
@@ -1331,6 +1408,12 @@ Como toda varianza es no negativa y $\mathbf{w}$ es arbitrario,
 $\mat{S}$ es semidefinida positiva.
 \end{proof}
 
+\begin{observacion}
+Este resultado no es accesorio: garantiza varianzas no negativas para toda
+combinación lineal y asegura autovalores reales no negativos, base matemática
+de ACP, Mahalanobis y discriminante gaussiano.
+\end{observacion}
+
 Consecuencias:
 \begin{itemize}
   \item Si $\mat{S}\mathbf{w}_i = \lambda_i\mathbf{w}_i$: $\lambda_i\ge0$,
@@ -1414,6 +1497,13 @@ Tiene en cuenta variabilidad y correlación, y es invariante frente a cambios
 lineales de coordenadas no singulares.
 \end{definicion}
 
+\begin{observacion}
+Interpretación: la distancia euclídea mide separación en coordenadas
+originales, mientras que Mahalanobis mide separación en la geometría inducida
+por $\mat{S}$; por eso penaliza menos direcciones de alta varianza y más las de
+baja varianza.
+\end{observacion}
+
 Para $p=2$, siendo $s_{1,2}=rs_1s_2$:
 \[
   \mat{S}^{-1} = \frac{1}{1-r^2}
@@ -1467,6 +1557,8 @@ dependencias pueden estudiarse:
   \item Entre pares de variables eliminando el efecto de las demás.
   \item Entre el conjunto de todas las variables.
 \end{itemize}
+En esta sección se pasa de dependencia bivariante a dependencia condicional y,
+finalmente, a medidas globales del sistema completo.
 
 \subsection{Dependencia entre pares: coeficiente de correlación}
 
@@ -1620,6 +1712,12 @@ Sus elementos tienen la siguiente interpretación:
         $r_{ij,R} = -s^{ij}/\sqrt{s^{ii}s^{jj}}$,
         donde $R$ denota el conjunto de $p-2$ variables $x_k$ con $k\neq i,j$.
 \end{itemize}
+
+\begin{observacion}
+En términos de modelización probabilística, la matriz de precisión resume la
+estructura de dependencia condicional lineal; por ello es central en modelos
+gaussianos, redes gaussianas y reglas discriminantes lineales.
+\end{observacion}
 
 \begin{ejemplo}
 \[
@@ -1814,7 +1912,9 @@ Propiedades:
 
 La distribución más importante en el análisis multivariante es la
 \textbf{distribución normal multivariante}, base teórica de la mayoría de
-las técnicas clásicas.
+las técnicas clásicas. Su centralidad se debe a estabilidad bajo
+transformaciones lineales, tractabilidad analítica y relación directa con
+distancias cuadráticas y reglas de decisión.
 
 \begin{definicion}[Normal multivariante]
 Un vector aleatorio $\mathbf{X}$ de dimensión $p$ sigue una distribución
@@ -1908,7 +2008,8 @@ dimensión reducida con pérdida controlada.
 
 La idea geométrica central es proyectar los datos sobre subespacios de menor
 dimensión maximizando la varianza retenida (equivalentemente, minimizando error
-cuadrático de reconstrucción).
+cuadrático de reconstrucción). Es decir, ACP resuelve un problema simultáneo de
+síntesis estadística y aproximación geométrica.
 
 \begin{nota}
 El origen de la técnica se debe a \textbf{Karl Pearson (1901)}, que la
@@ -1980,6 +2081,9 @@ $\mathbf{y}_1,\mathbf{y}_2,\dots,\mathbf{y}_p$ que:
         \sum_{i=1}^p\operatorname{var}(\mathbf{x}_i)$.
 \end{enumerate}
 
+En resumen, el problema formal combina tres restricciones: ortogonalidad,
+ordenación por varianza explicada e invariancia de la varianza total.
+
 Suponemos variables centradas (media 0), de modo que
 $\mathbf{X}$ tiene covarianza $\frac{1}{n}\mathbf{X}'\mathbf{X}$.
 Se trata de encontrar un \textbf{subespacio de dimensión menor que $p$} tal
@@ -2018,6 +2122,9 @@ Como las $z_i$ tienen media 0 ($\bar{z}=\mathbf{a}_1'\bar{\mathbf{x}}=0$),
 \textbf{maximizar la suma de cuadrados de las proyecciones equivale a
 maximizar su varianza}.
 \end{mdframed}
+
+Este paso conecta explícitamente formulación geométrica (proyecciones) con
+formulación estadística (varianza explicada).
 
 % ══════════════════════════════════════════════════════════════════════════
 \section{Cálculo de los componentes}
@@ -2115,6 +2222,8 @@ vectores propios de norma uno: $\mathcal{L}=\lambda_1+\lambda_2$.
 Como $\mathbf{a}_1'\mathbf{a}_2=0$:
 $\operatorname{cov}(\mathbf{z}_1,\mathbf{z}_2)=\mathbf{a}_1'\mat{S}\mathbf{a}_2=0$,
 con lo que $\mathbf{z}_1$ y $\mathbf{z}_2$ están \textbf{incorreladas}.
+La construcción se repite inductivamente para componentes sucesivos: cada nueva
+dirección maximiza varianza residual bajo ortogonalidad con las anteriores.
 
 \subsection{Generalización}
 
@@ -2226,6 +2335,12 @@ $\mat{A}'\mat{S}\mat{A}=\mat{A}'\mat{A}\boldsymbol{\Lambda}
         \textbf{predicción lineal óptima} del conjunto de variables $\mathbf{X}$.
 \end{enumerate}
 
+\begin{observacion}
+La lectura conjunta de estas propiedades es clave: ACP no solo reduce
+dimensión, sino que reorganiza la variabilidad en ejes ortogonales ordenados,
+lo que facilita análisis, visualización e interpretación estadística.
+\end{observacion}
+
 % ══════════════════════════════════════════════════════════════════════════
 \section{Análisis con correlaciones (análisis normado)}
 % ══════════════════════════════════════════════════════════════════════════
@@ -2253,6 +2368,10 @@ En términos prácticos:
   \item ACP sobre $\mat{R}$ responde a ``qué direcciones maximizan estructura
         correlacional, eliminando efecto de escala''.
 \end{itemize}
+
+Así, la elección entre $\mat{S}$ y $\mat{R}$ no es un detalle técnico, sino
+una decisión de modelización sobre qué noción de variabilidad se desea
+priorizar.
 
 \begin{mdframed}[style=resultado]
 \begin{itemize}
@@ -2315,6 +2434,12 @@ latente correspondiente.
         siendo $\mat{D}=\diag(s_1^2,\dots,s_p^2)$ la matriz diagonal de
         varianzas de las variables originales.
 \end{itemize}
+
+\begin{observacion}
+Las cargas factoriales son el puente entre formulación algebraica e
+interpretación sustantiva: permiten nombrar componentes a partir del patrón de
+variables que más contribuye a cada eje.
+\end{observacion}
 
 % ══════════════════════════════════════════════════════════════════════════
 \section{Resumen: cálculo de los componentes principales}
@@ -2452,6 +2577,12 @@ componentes a extraer. Los criterios más habituales son:
         aportan información adicional relevante.
 \end{enumerate}
 
+\begin{observacion}
+En práctica, la selección final combina criterios numéricos y criterio
+interpretativo: una solución útil debe ser simultáneamente parsimoniosa y
+sustantivamente legible.
+\end{observacion}
+
 % ══════════════════════════════════════════════════════════════════════════
 \section{Rotaciones}
 % ══════════════════════════════════════════════════════════════════════════
@@ -2499,6 +2630,10 @@ El \textbf{Análisis Discriminante Lineal} (ADL o \emph{LDA}) es una técnica
 de \textbf{clasificación supervisada}: los grupos están definidos a priori y
 se construye una regla para asignar nuevas observaciones al grupo más probable
 según sus variables explicativas.
+
+Desde un punto de vista metodológico, el problema central es construir una
+regla de decisión con buen equilibrio entre separabilidad geométrica de clases
+y riesgo de clasificación.
 
 \begin{itemize}
   \item Es un método clásico de \textbf{reconocimiento de patrones}.
@@ -2583,6 +2718,9 @@ a posteriori; equivalentemente, al grupo que maximiza
 $\pi_i f_i(\mathbf{x}_0)$. Esta equivalencia permite pasar de una regla
 probabilística a una regla operativa de decisión.
 
+La secuencia conceptual es: hipótesis probabilística sobre clases, cálculo de
+posteriores y, finalmente, regla de asignación por minimización de riesgo.
+
 \subsubsection{Regla con costes de clasificación}
 
 Si el coste de clasificar en 2 algo de 1 es $c(2|1)$ y el coste inverso es
@@ -2615,6 +2753,9 @@ es decir:
   \item Si además $\pi_1=\pi_2$, la regla se reduce a comparar densidades:
         clasificar en la población con mayor verosimilitud en $\mathbf{x}_0$.
 \end{itemize}
+
+Por tanto, priori y costes no son correcciones accesorias: desplazan
+explícitamente la frontera de decisión.
 
 \subsection{Enfoque bayesiano en poblaciones normales}
 
@@ -2761,9 +2902,12 @@ Para $\mathbf{x}_0=(2.1,\,0.75)'$:
   D_A^2(\mathbf{x}_0)\approx0.520,\qquad
   D_B^2(\mathbf{x}_0)\approx0.813.
 \]
-Como $D_A^2<D_B^2$, se clasifica en el grupo $A$. El ejemplo ilustra que la
-regla no se basa en distancia euclídea, sino en distancia reescalada por la
-estructura de covarianza común.
+Como $D_A^2<D_B^2$, se clasifica en el grupo $A$. El orden lógico del cálculo
+es: (i) estimar/usar $\boldsymbol{\Sigma}^{-1}$, (ii) evaluar ambas distancias
+cuadráticas, y (iii) aplicar la regla de mínima distancia bajo hipótesis de
+covarianza común.
+El ejemplo ilustra que la regla no se basa en distancia euclídea, sino en
+distancia reescalada por la estructura de covarianza común.
 
 Si $\pi_A=\pi_B$:
 \[
@@ -2772,6 +2916,8 @@ Si $\pi_A=\pi_B$:
   \approx 0.537.
 \]
 La asignación es razonable, pero con incertidumbre apreciable.
+Interpretativamente, el punto está más cerca de $A$ en geometría de Mahalanobis
+pero no muy alejado de la frontera, de ahí la posterior moderada.
 
 \subsubsection{Probabilidad teórica de error (caso simétrico)}
 
@@ -2815,6 +2961,9 @@ Para $G$ poblaciones, la región de decisión de la clase $g$ es:
   \item También puede implementarse por comparaciones dos a dos entre
         poblaciones, pero la regla global anterior es la forma canónica.
 \end{itemize}
+
+Esta extensión preserva la misma lógica del caso binario: maximizar
+probabilidad a posteriori (o minimizar riesgo) en todo el conjunto de clases.
 
 Si $f_g$ son normales con \textbf{covarianza común} $\boldsymbol{\Sigma}$:
 \[
@@ -2862,6 +3011,10 @@ El criterio de Fisher puede leerse como una reformulación geométrica del
 objetivo bayesiano gaussiano: hallar una proyección escalar
 $z=\boldsymbol{\alpha}'\mathbf{x}$ que maximice separación intergrupos
 relativa a dispersión intragrupo.
+
+Así, el paso desde el enfoque bayesiano al de Fisher no es un cambio de
+problema, sino un cambio de formulación: de regla probabilística a criterio
+variacional geométrico.
 
 Con medias muestrales $\bar{\mathbf{x}}_1,\bar{\mathbf{x}}_2$ y matriz
 intra-grupos agrupada $\mat{S}_w$, el criterio es:
@@ -2976,6 +3129,10 @@ Para una observación $\mathbf{x}$:
 Geométricamente, la transformación canónica busca un espacio de dimensión baja
 donde los centroides queden lo más separados posible con métrica intragrupo.
 
+Comparado con ACP, aquí las direcciones no se eligen por varianza total, sino
+por capacidad de separación entre clases; esa diferencia de objetivo explica
+por qué ambos métodos producen ejes distintos en general.
+
 \begin{observacion}
 Las variables canónicas quedan ordenadas por potencia discriminante
 (autovalores decrecientes) y son incorreladas respecto a la métrica
@@ -3030,6 +3187,9 @@ exactitud; deben reportarse también sensibilidad, especificidad, precisión
 y $F_1$, idealmente junto con validación cruzada estratificada.
 \end{nota}
 
+Este bloque cierra la metodología de clasificación: una buena regla teórica
+debe validarse con métricas acordes al objetivo aplicado y al balance de clases.
+
 % ══════════════════════════════════════════════════════════════════════════
 \section{Estudio de las dimensiones necesarias}
 % ══════════════════════════════════════════════════════════════════════════
@@ -3055,6 +3215,9 @@ $\mathbf{v}_j'\mat{W}\mathbf{v}_j=1$, entonces:
 \]
 de forma que cada $\lambda_j$ cuantifica la separación adicional aportada
 por la dimensión canónica $j$.
+
+En consecuencia, la selección de dimensiones canónicas debe equilibrar potencia
+discriminante, estabilidad muestral e interpretabilidad sustantiva.
 
 % ══════════════════════════════════════════════════════════════════════════
 \section{Algunas consideraciones prácticas}
@@ -3098,6 +3261,11 @@ no paramétricos.
         clasificación hacia los grupos más frecuentes si no se corrigen las
         probabilidades a priori o los pesos de coste.
 \end{itemize}
+
+\begin{observacion}
+Estas recomendaciones no son reglas rígidas; su función es controlar varianza
+de estimación y evitar sobreajuste en escenarios de alta dimensión.
+\end{observacion}
 
 \begin{mdframed}[style=resultado]
 Resumen operativo del Tema 4:

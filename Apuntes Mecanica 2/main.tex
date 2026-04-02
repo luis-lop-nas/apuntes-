@@ -323,8 +323,8 @@ donde $A$ y $\delta$ quedan fijadas por las condiciones iniciales.
 \end{proof}
 
 En esta expresión, $\omega_0$ es la \emph{frecuencia propia} o \emph{pulsación natural}. La proposición
-anterior fija la forma formal de la solución; de manera equivalente, para trabajar con
-condiciones iniciales puede escribirse:
+anterior fija la forma formal de la solución; en lo que sigue la emplearemos como punto de
+partida para imponer condiciones iniciales y extraer parámetros medibles:
 \begin{mdframed}[style=resultado]
 \begin{equation}
   x(t) = A\,\sen(\omega_0 t - \delta)
@@ -356,6 +356,8 @@ En cada período hay intercambio reversible entre energía cinética
 $E_c=\tfrac12 m\dot{x}^2$ y potencial elástica $E_p=\tfrac12 kx^2$; su suma permanece
 constante en el modelo no disipativo.
 \end{observacion}
+En este sentido, el OAS no es solo una ecuación resoluble: es el prototipo universal de
+linealización local para oscilaciones pequeñas en mecánica.
 
 \subsection{Oscilaciones amortiguadas}
 
@@ -457,7 +459,8 @@ medida experimental.
 \end{figure}
 
 La interpretación física homogénea de este régimen es: \emph{oscilación con disipación},
-esto es, persiste la alternancia cinética--potencial pero con pérdida continua de energía.
+esto es, persiste la alternancia cinética--potencial pero cada ciclo transfiere parte de la
+energía al entorno mediante fricción.
 
 \begin{figure}[H]
   \centering
@@ -484,7 +487,8 @@ Este régimen separa cualitativamente las trayectorias oscilantes de las no osci
 es un punto crítico en el espacio de parámetros.
 \end{observacion}
 La interpretación física homogénea de este régimen es: \emph{retorno aperiódico óptimo},
-sin sobreoscilación y con tiempo de asentamiento mínimo dentro de los regímenes no oscilantes.
+sin sobreoscilación y con el tiempo de asentamiento mínimo dentro de los regímenes no
+oscilantes.
 
 \subsubsection{Sobreamortiguado \texorpdfstring{($\omega_0^2 < \beta^2$)}{}}
 
@@ -494,7 +498,7 @@ Con $\gamma = \sqrt{\beta^2 - \omega_0^2}$, las dos raíces son reales y negativ
 \end{equation}
 El sistema vuelve al equilibrio sin oscilar, pero más lentamente que en el caso crítico.
 La interpretación física homogénea de este régimen es: \emph{retorno aperiódico lento},
-dominado por la disipación y sin intercambio oscilatorio apreciable.
+dominado por la disipación y con relajación más lenta que en el caso crítico.
 
 \subsection{Oscilaciones forzadas}
 
@@ -777,13 +781,14 @@ acoplamiento. También aparecerán $q_1,q_2$ como coordenadas normales.
 \subsection{Introducción}
 
 Un sistema de osciladores acoplados está formado por grados de libertad que intercambian
-energía mediante términos de interacción lineales. En consecuencia, el movimiento de cada
-oscilador deja de ser independiente y pasa a describirse por un sistema de ecuaciones
-diferenciales acopladas.
+energía mediante términos lineales de interacción. Por ello, el movimiento de cada
+oscilador deja de ser autónomo: la evolución completa queda gobernada por un sistema
+lineal acoplado.
 
-Desde el punto de vista físico, la idea central del tema es que un mismo sistema puede
-vibrar en varios \emph{modos normales}, cada uno con frecuencia propia y estructura espacial
-bien definidas. Como puente con el Tema 1, recordamos los tres modelos elementales:
+La herramienta estructural del tema son los \emph{modos normales}: una base dinámica en la
+que el sistema se desacopla y cada coordenada modal evoluciona con frecuencia propia.
+Con esta idea, el paso de dos osciladores al caso discreto y al límite continuo se vuelve
+conceptualmente uniforme. Como puente con el Tema 1, recordamos los tres modelos elementales:
 \begin{itemize}
   \item \textbf{Oscilador armónico simple:}
         $x(t) = A\,\sen(\omega t + \delta)$
@@ -799,10 +804,11 @@ Consideremos dos péndulos idénticos de longitud $l$ y masa $m$, unidos por un 
 de constante $k$ en sus posiciones de equilibrio. Sean $x_A$ y $x_B$ los desplazamientos
 horizontales respecto al equilibrio.
 
-Las fuerzas sobre cada masa son la fuerza restauradora del péndulo $(-m\omega_0^2 x)$ y
-la del resorte de acoplamiento $(\pm k(x_A-x_B))$, con $\omega_0^2 = g/l$. El signo del
-término de acoplamiento se fija por la elongación relativa del resorte: sobre A actúa
-$-k(x_A-x_B)$ y sobre B actúa $+k(x_A-x_B)$. Aplicando la segunda ley de Newton:
+El paso de sistema físico a modelo se fija así: la elongación del resorte de acoplamiento
+es $\Delta\ell=x_A-x_B$, luego la fuerza elástica sobre A vale
+$F_{A,\text{ac}}=-k\Delta\ell=-k(x_A-x_B)$ y, por acción-reacción, sobre B
+$F_{B,\text{ac}}=+k(x_A-x_B)$. Sumando además la restauración gravitatoria linealizada
+$-m\omega_0^2x$ (con $\omega_0^2=g/l$), y aplicando Newton:
 \begin{align}
   m\frac{d^2x_A}{dt^2} + m\omega_0^2 x_A + k(x_A - x_B) &= 0 \\
   m\frac{d^2x_B}{dt^2} + m\omega_0^2 x_B - k(x_A - x_B) &= 0
@@ -815,6 +821,9 @@ Definiendo $\omega_c^2 = k/m$ (frecuencia de acoplamiento):
   \frac{d^2x_B}{dt^2} + (\omega_0^2+\omega_c^2)x_B - \omega_c^2 x_A &= 0
 \end{align}
 \end{mdframed}
+En formulación energética, el término de interacción es
+$U_{\text{ac}}=\tfrac12k(x_A-x_B)^2$, lo que confirma que el acoplamiento penaliza la
+deformación relativa y fija de forma coherente los signos en las ecuaciones.
 En forma matricial:
 \begin{equation}
   \ddot{\mathbf{x}}+\mathbf{K}\mathbf{x}=0,\qquad
@@ -870,6 +879,8 @@ Este modo corresponde a movimiento colectivo del sistema: el acoplamiento no alm
 energía elástica adicional y la frecuencia coincide con la no acoplada.
 \end{observacion}
 
+El segundo modo se obtiene imponiendo la simetría complementaria del sistema.
+
 \subsubsection{Modo antisimétrico (en antifase): \texorpdfstring{$\omega'=\sqrt{\omega_0^2+2\omega_c^2}$}{}}
 
 El segundo modo normal se obtiene imponiendo la simetría opuesta, $x_A=-x_B$, de modo que
@@ -897,6 +908,8 @@ osciladores independientes mediante el cambio de variable:
   q_1 = x_A + x_B,\qquad q_2 = x_A - x_B
 \end{equation}
 \end{mdframed}
+No se trata de un truco algebraico aislado: es un cambio de base adaptado a la simetría
+del problema que diagonaliza la matriz dinámica.
 
 Sumando y restando las ecuaciones de movimiento:
 \begin{align}
@@ -964,6 +977,11 @@ Las soluciones se reescriben usando suma-a-producto:
 Si el acoplamiento es débil ($\omega_c \ll \omega_0$), la diferencia
 $\omega'-\omega_0 \ll \omega_0$ y se producen \textbf{batidos}: la energía oscila
 lentamente de A a B y viceversa con frecuencia de modulación $(\omega'-\omega_0)/2$.
+El orden lógico de lectura es: primero se obtiene la superposición modal, luego se separan
+escala rápida y envolvente lenta, y finalmente se interpreta el intercambio energético.
+En esta aproximación, las envolventes de energía son proporcionales a
+$E_A(t)\propto \cos^2\!\bigl((\omega'-\omega_0)t/2\bigr)$ y
+$E_B(t)\propto \sen^2\!\bigl((\omega'-\omega_0)t/2\bigr)$.
 \begin{observacion}
 En este régimen hay separación clara de escalas: oscilación rápida a frecuencia media
 $\tfrac{\omega'+\omega_0}{2}$ y transferencia energética lenta controlada por
@@ -1004,6 +1022,8 @@ Si el determinante fuera distinto de cero, la matriz sería invertible y el úni
 posible sería $C=C'=0$, que no representa vibración. Por tanto, para obtener amplitudes
 modales no nulas debe anularse el determinante.
 \end{proof}
+Este criterio coincide con la interpretación modal: la condición $\det=0$ selecciona
+exactamente las frecuencias para las que existe oscilación colectiva no trivial.
 
 De las ecuaciones anteriores se pueden extraer dos expresiones para $C/C'$:
 \begin{equation}
@@ -1033,6 +1053,8 @@ La solución general es:
   x_A = C\cos\omega_0 t + D\cos\omega' t,\qquad
   x_B = C\cos\omega_0 t - D\cos\omega' t
 \end{equation}
+Por tanto, el enfoque por simetría y el enfoque por determinante no son métodos
+competidores: son dos lecturas equivalentes de la misma estructura lineal.
 \subsection{Oscilaciones forzadas en sistemas acoplados}
 
 Supongamos que sobre la masa A actúa una fuerza $F(t) = F_0\cos\omega t$. Las ecuaciones
@@ -1117,6 +1139,8 @@ En esta subsección usamos $N$ para número de masas móviles, $p$ para índice 
 ($p=1,\dots,N$), $l$ para separación entre partículas, $T$ para tensión, $m$ para masa de cada
 partícula, $y_p(t)$ para desplazamiento transversal de la partícula $p$ y $\omega_n$ para las
 frecuencias normales.
+Este bloque generaliza el caso de dos osciladores: la misma lógica modal se extiende a
+$N$ grados de libertad y prepara el paso al límite continuo.
 
 \subsubsection{Principio de superposición de Bernoulli}
 
@@ -1326,6 +1350,8 @@ $\ddot y_p=\omega_0^2(y_{p+1}-2y_p+y_{p-1})$ pasa al límite:
   \frac{\partial^2 y}{\partial t^2}
   =\frac{T}{\mu}\frac{\partial^2 y}{\partial x^2}.
 \end{equation}
+En este tránsito, $l\to0$ y $m\to0$ de forma acoplada, pero permanecen finitas las
+magnitudes macroscópicas $L$, $M$, $\mu$ y $T$: esa es la clave física del límite.
 Los desplazamientos pasan de forma discreta a forma continua:
 \begin{mdframed}[style=resultado]
 \begin{equation}
@@ -1502,6 +1528,8 @@ $\omega = \omega_0\sqrt{3}$.
 Además de los modos normales discretos, en medios extensos es útil describir la onda como
 superposición de ondas armónicas cercanas en número de onda. Denotamos por
 $k=2\pi/\lambda$ el número de onda y por $\omega=2\pi\nu$ la frecuencia angular.
+Esta formulación conecta directamente con observables experimentales: la portadora fija la
+fase local y la envolvente gobierna la propagación del pulso.
 
 Si sumamos dos ondas de amplitud $A$ con parámetros próximos $(k_1,\omega_1)$ y
 $(k_2,\omega_2)$:
@@ -1528,6 +1556,8 @@ En medios débilmente dispersivos, la velocidad de grupo gobierna el transporte 
 información del paquete, mientras que la velocidad de fase describe el avance de la fase de
 la portadora.
 \end{observacion}
+Con esta distinción, el análisis modal discreto conecta de forma natural con la propagación
+de pulsos en medios extendidos.
 
 \subsection{Relación de dispersión de la cadena discreta (ampliación)}
 
@@ -1550,6 +1580,8 @@ Por tanto:
   v_g(\kappa)=\frac{d\omega}{d\kappa}
   =\omega_0 l\cos\!\left(\frac{\kappa l}{2}\right)
 \end{equation}
+La dependencia explícita en $\kappa$ muestra que no todas las componentes espectrales
+viajan igual: la red discreta es intrínsecamente dispersiva.
 
 \begin{proof}
 De
@@ -1601,7 +1633,7 @@ En el límite de longitudes de onda largas ($\kappa l\ll 1$):
 de modo que se recupera el medio continuo no dispersivo. Cerca del borde de zona
 ($\kappa l\to\pi$), $v_g\to 0$ y la dispersión es máxima \cite{mit803_ch6}.
 
-\subsection{Solución general de dAlembert y balance de energía (ampliación)}
+\subsection{Solución general de d'Alembert y balance de energía (ampliación)}
 
 Para la ecuación unidimensional $\partial_t^2 y=v^2\partial_x^2 y$, la solución general en
 línea infinita es:
@@ -1687,6 +1719,8 @@ En 3D esféricas:
   +\frac{1}{r^2\sen^2\theta}\frac{\partial^2\Psi}{\partial\phi^2}
   -\frac{1}{v^2}\frac{\partial^2\Psi}{\partial t^2}=0
 \end{equation}
+Este bloque amplía el formalismo 1D: la misma dinámica ondulatoria se conserva, pero la
+geometría de propagación y de frentes queda codificada en el laplaciano correspondiente.
 \subsection{Interferencia y difracción}
 
 Las interferencias siguen el principio de superposición: la perturbación total es la suma de
@@ -1703,6 +1737,8 @@ En este bloque usamos $\Delta r$ para diferencia de caminos ópticos.
 \end{equation}
 La difracción aparece cuando una onda atraviesa una abertura o bordea un obstáculo de tamaño
 comparable con $\lambda$, propagándose también hacia zonas geométricamente en sombra.
+Así, interferencia y difracción no son fenómenos independientes: ambas emergen de la misma
+estructura lineal, pero en escalas geométricas distintas del problema de propagación.
 
 \subsection{Ejemplos adicionales de ondas}
 
@@ -1851,6 +1887,11 @@ y bajo qué condiciones recupera su forma original al retirar la carga. Conviene
 desde el inicio, entre sistema físico real, idealización constitutiva y modelo matemático:
 en el régimen lineal (pequeñas deformaciones) se adopta ley de Hooke como aproximación
 de primer orden.
+En particular, \emph{esfuerzo} y \emph{deformación} no describen lo mismo: el esfuerzo mide
+acción interna por unidad de área (causa mecánica) y la deformación mide cambio geométrico
+del cuerpo (respuesta cinemática).
+La estructura del tema seguirá de forma sistemática el esquema
+modelo constitutivo + ecuaciones de balance + régimen de validez.
 
 En este bloque usaremos la notación $\sigma$ para esfuerzo normal, $\tau$ para esfuerzo
 cortante, $\varepsilon$ para deformación normal relativa, $\gamma$ para deformación por
@@ -1917,6 +1958,8 @@ La tracción sobre un elemento de área con normal unitaria $\ve{n}$ viene dada 
 \begin{equation}
   \ve{t}^{(n)} = \boldsymbol{\sigma}\,\ve{n}
 \end{equation}
+Esta formulación tensorial no es solo elegante: es necesaria para describir de forma
+coherente cómo cambia la tracción al rotar el plano de corte.
 \begin{proposicion}[Teorema de Cauchy para la tracción]
 Existe un tensor de segundo orden $\boldsymbol{\sigma}$ tal que, para cualquier orientación
 de plano con normal $\ve{n}$, la tracción es lineal en $\ve{n}$ y viene dada por
@@ -2057,6 +2100,8 @@ Para sólido isótropo lineal, la ley constitutiva puede escribirse como:
   + 2G\,\boldsymbol{\varepsilon}
 \end{equation}
 donde $\lambda$ y $G$ son los parámetros de Lamé.
+Las hipótesis aquí son explícitas: isotropía material, pequeñas deformaciones y respuesta
+lineal. Fuera de este régimen aparecen términos constitutivos adicionales.
 \begin{observacion}
 La expresión anterior separa de forma natural respuesta volumétrica
 ($\lambda\,\mathrm{tr}(\varepsilon)\mathbf{I}$) y respuesta desviadora
@@ -2081,6 +2126,9 @@ y sustituyendo la ley constitutiva se obtiene la ecuación de Navier--Cauchy:
   = (\lambda+G)\nabla(\nabla\cdot\ve{u}) + G\nabla^2\ve{u} + \rho\,\ve{g}
 \end{equation}
 \end{mdframed}
+La ecuación de Navier--Cauchy juega en el continuo el mismo papel estructural que las
+ecuaciones acopladas en sistemas discretos: fija la dinámica a partir de una ley local de
+interacción y de un balance de cantidad de movimiento.
 
 \begin{proof}
 Partimos de $\rho\,\partial_t^2\ve{u}=\nabla\cdot\boldsymbol{\sigma}+\rho\ve{g}$ y de
@@ -2143,6 +2191,8 @@ $\rho\simeq 2{,}7\times10^3\,\mathrm{kg/m^3}$:
 
 Un fluido se deforma continuamente ante cualquier esfuerzo cortante no nulo. Se distingue
 entre hidrostática (fluidos en reposo) e hidrodinámica (fluidos en movimiento).
+El modelo parte de la hipótesis de continuo; sobre esa base se distinguen dos niveles:
+fluido ideal (sin viscosidad) y fluido real (con disipación viscosa).
 
 En esta parte usaremos $\ve{v}(\ve{r},t)$ para velocidad, $p$ para presión, $\mu$ para
 viscosidad dinámica, $\nu=\mu/\rho$ para viscosidad cinemática, $Q$ para caudal y
@@ -2165,6 +2215,8 @@ Para flujo estacionario en una tubería:
 \begin{equation}
   Q = A v = \text{cte}
 \end{equation}
+La ecuación local y su forma $Q=Av$ para conductos son dos expresiones del mismo balance de
+masa, en versiones diferencial e integral.
 
 \begin{proof}
 Tomamos un volumen de control fijo $V$ con frontera $S$. Conservación de masa:
@@ -2201,6 +2253,7 @@ En un fluido ideal (sin viscosidad), la ecuación de movimiento es:
   \rho\left(\frac{\partial \ve{v}}{\partial t}+(\ve{v}\cdot\nabla)\ve{v}\right)
   = -\nabla p + \rho\ve{g}
 \end{equation}
+Aquí se modela explícitamente un fluido ideal: no hay esfuerzos viscosos ni disipación.
 Para flujo estacionario, incompresible y a lo largo de una línea de corriente:
 \begin{mdframed}[style=resultado]
 \begin{equation}
@@ -2212,6 +2265,8 @@ Bernoulli no es una identidad universal: requiere hipótesis concretas (flujo id
 estacionario e integración sobre una línea de corriente). Fuera de ese régimen deben
 incorporarse pérdidas o términos adicionales.
 \end{observacion}
+En términos de modelización, Euler y Bernoulli constituyen el cierre ideal; Navier--Stokes
+aparece al reintroducir explícitamente disipación viscosa.
 
 \begin{proof}
 Para flujo estacionario de densidad constante, tomamos la componente tangencial de Euler en
@@ -2261,6 +2316,8 @@ La ecuación de Navier--Stokes para fluido incompresible de $\mu$ constante es:
   = -\nabla p + \mu\nabla^2\ve{v} + \rho\ve{g}
 \end{equation}
 \end{mdframed}
+El término $\mu\nabla^2\ve{v}$ es el aporte diferencial respecto a Euler: representa
+difusión viscosa de momento lineal y, por tanto, disipación mecánica.
 \begin{observacion}
 El número de Reynolds organiza los regímenes dinámicos: para $\mathrm{Re}$ bajo domina
 la difusión viscosa del momento; para $\mathrm{Re}$ alto ganan peso los términos inerciales
@@ -2297,6 +2354,8 @@ $\mathrm{Re}\gg 1$ dominan los términos inerciales \cite{mit12005_lec25}.
 Esta reescritura no añade física nueva, pero sí clarifica qué combinaciones de parámetros
 controlan la dinámica y por qué escalados distintos pueden describirse con el mismo modelo
 adimensional.
+Por ello, la adimensionalización no se introduce como apéndice formal: es la forma natural
+de comparar experimentos y escalas de flujo distintas con un único parámetro de control.
 
 \begin{ejemplo}[Estrechamiento de una tubería]
 Por una tubería circula agua con $v_1=4\,\mathrm{m/s}$ y $p_1=200\,\mathrm{kPa}$. El diámetro
@@ -2407,6 +2466,9 @@ La relatividad especial proporciona el marco cinemático y dinámico coherente c
 velocidades son comparables con $c$. Su objetivo no es corregir pequeños detalles de la
 mecánica clásica, sino sustituir la estructura espacio--tiempo galileana por una
 formulación compatible con la invariancia de la velocidad de la luz.
+La motivación histórica precisa es la incompatibilidad entre transformaciones de Galileo y
+electromagnetismo de Maxwell, confirmada experimentalmente por resultados nulos tipo
+Michelson--Morley.
 
 En este tema usaremos $c$ para la velocidad de la luz en el vacío, $\gamma$ para el factor de
 Lorentz, $m_0$ para masa en reposo, $m=\gamma m_0$ para la masa relativista (notación
@@ -2478,6 +2540,10 @@ Para dos sistemas inerciales $S$ y $S'$ con velocidad relativa constante $v$ en 
   \gamma=\frac{1}{\sqrt{1-\frac{v^2}{c^2}}}
 \end{equation}
 \end{mdframed}
+Estas expresiones se obtienen imponiendo linealidad (homogeneidad del espacio-tiempo),
+isotropía y conservación de la forma de la ecuación de la luz.
+La constante $\gamma$ queda así determinada de manera única por la condición de invariancia
+de la velocidad de la luz.
 
 Consecuencias directas:
 \begin{equation}
@@ -2560,6 +2626,8 @@ $\eta_{\mu\nu}=\mathrm{diag}(-1,1,1,1)$. El intervalo se escribe:
 La ventaja conceptual de este paso es que reemplaza una colección de resultados cinemáticos
 aislados por una estructura geométrica única: cantidades escalares de Minkowski invariantes
 bajo transformaciones de Lorentz.
+En particular, dilatación temporal, contracción longitudinal y composición de velocidades
+aparecen como consecuencias coordinadas de una misma geometría espacio-temporal.
 Para trayectorias temporales ($ds^2<0$), el tiempo propio cumple:
 \begin{equation}
   d\tau=\frac{1}{c}\sqrt{-ds^2}=\frac{dt}{\gamma}
@@ -2592,6 +2660,8 @@ Si en $S'$ una partícula tiene velocidad $u'_x$, en $S$ se observa:
   u_x=\frac{u'_x+v}{1+\frac{u'_x v}{c^2}}
 \end{equation}
 Esta ley garantiza que ninguna composición de velocidades sublumínicas supera $c$.
+De este modo, la estructura cinemática deducida de Lorentz se mantiene cerrada bajo cambio
+de sistema de referencia.
 
 \begin{proof}
 Partimos de las transformaciones de Lorentz diferenciales:
@@ -2631,6 +2701,8 @@ La forma consistente con los postulados para la cantidad de movimiento es:
 \begin{equation}
   \ve{p}=\gamma m_0\ve{v}
 \end{equation}
+Este bloque marca el paso de la cinemática relativista (cómo se transforman eventos) a la
+dinámica relativista (cómo evolucionan momento y energía).
 La energía total y la cinética quedan:
 \begin{equation}
   E=\gamma m_0 c^2,\qquad E_0=m_0c^2,\qquad K=E-E_0=(\gamma-1)m_0c^2
@@ -2646,6 +2718,8 @@ La relación invariante energía--momento es:
 \begin{equation}
   E^2=(pc)^2+(m_0c^2)^2
 \end{equation}
+Esta identidad no es un resultado aislado: es la proyección dinámica del invariante de
+Minkowski aplicado al cuatro-momento.
 \begin{observacion}
 La ecuación anterior separa con claridad tres casos físicos: partículas masivas
 ($m_0>0$), partículas sin masa ($m_0=0$, como el fotón) y límite no relativista
@@ -2662,6 +2736,8 @@ con $p=\gamma m_0 v$. Entonces:
   v(t)=\frac{Ft}{m_0\sqrt{1+\left(\frac{Ft}{m_0c}\right)^2}}
       = c\,\frac{Ft}{\sqrt{(m_0c)^2+(Ft)^2}}
 \end{equation}
+Este ejemplo separa con claridad qué magnitud crece linealmente (momento) y cuál satura
+cinemáticamente (velocidad), rasgo distintivo de la dinámica relativista.
 
 \begin{proof}
 Como $dp/dt=F$ y la partícula parte del reposo, $p(t)=Ft$. Usando
