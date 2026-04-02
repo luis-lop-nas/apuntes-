@@ -198,55 +198,45 @@
 % ─────────────────────────────────────────────────────────────────────────
 \begin{document}
 
-% ══════════════════════════════════════════════════════════════════════════
-%  PORTADA GENERAL
-% ══════════════════════════════════════════════════════════════════════════
+% ── PORTADA ───────────────────────────────────────────────────────────────
+\hypersetup{pageanchor=false}
 \begin{titlepage}
-  \thispagestyle{plain}
+  \thispagestyle{empty}
   \centering
-  \vspace*{1.6cm}
+  \vspace*{2.4cm}
 
-  \begin{tikzpicture}[remember picture,overlay]
-    \draw[line width=0.8pt]
-      ($(current page.north west)+(1.6cm,-1.6cm)$)
-      rectangle
-      ($(current page.south east)+(-1.6cm,1.6cm)$);
-  \end{tikzpicture}
-
-  {\Large\scshape Óptica\par}
+  {\Large\scshape Grado en Física\par}
   \vspace{0.25cm}
-  {\large Curso 2025--2026\par}
+  {\normalsize Curso 2025--2026\par}
 
-  \vspace{0.9cm}
-  {\Huge\bfseries Apuntes Unificados\par}
-  \vspace{0.4cm}
-  {\large Teoría, demostraciones y formulario\par}
+  \vspace{1.35cm}
+  {\Huge\bfseries Óptica\par}
+  \vspace{0.25cm}
+  {\Large\bfseries Apuntes Unificados\par}
+  \vspace{0.55cm}
+  {\normalsize Teoría, demostraciones y formulario\par}
 
-  \vspace{0.8cm}
-  \rule{0.78\linewidth}{0.8pt}
-  \vspace{0.6cm}
-  {\normalsize
-  Temas 1--6: ondas en vacío, interacción radiación-materia,\\
-  medios materiales, refracción y reflexión, difracción e interferencia\par}
-  \vspace{0.6cm}
-  \rule{0.78\linewidth}{0.8pt}
+  \vspace{1.0cm}
+  \rule{0.54\linewidth}{0.6pt}
+  \vspace{0.95cm}
 
-  \vspace{1.2cm}
-  \begin{tikzpicture}[>=Stealth, scale=1.25]
-    \draw[->] (-0.3,0) -- (5.4,0) node[right] {$\ve{k}$};
-    \draw[->] (0,-1.15) -- (0,1.15) node[above] {$\ve{E}$};
-    \draw[domain=0:5, samples=120, thick] plot (\x, {sin(3.14159*\x r)});
-    \draw[->] (0,0) -- (0,0,-1.0) node[below right] {$\ve{B}$};
-    \node[opticslabel, anchor=west] at (3.55,0.68) {Onda plana armónica};
-  \end{tikzpicture}
+  \begin{minipage}{0.78\linewidth}
+    \centering
+    \normalsize
+    Tema 1: Ondas electromagnéticas en el vacío\\
+    Tema 2: Interacción radiación--materia\\
+    Tema 3: Propagación en medios materiales\\
+    Tema 4 y 4.2: Reflexión, refracción y anisotropía\\
+    Tema 5: Difracción\\
+    Tema 6: Interferencia
+  \end{minipage}
 
   \vfill
-  \begin{tabular}{@{}rl@{}}
-    \textbf{Autor:} & Luis López \\
-    \textbf{Titulación:} & Grado en Física \\
-    \textbf{Fecha:} & Marzo 2026
-  \end{tabular}
+  {\normalsize Luis López\par}
+  \vspace{0.15cm}
+  {\small Abril 2026\par}
 \end{titlepage}
+\hypersetup{pageanchor=true}
 
 % ══════════════════════════════════════════════════════════════════════════
 %  ÍNDICE
